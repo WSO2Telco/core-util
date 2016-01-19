@@ -1,0 +1,25 @@
+<MCCConfiguration>
+    <PathFinderHost>156.154.59.224</PathFinderHost>
+    <Port>7007</Port>
+    <TermDomain>e164enum.net</TermDomain>    
+    <MobileCountryCodes>
+        <Mcc>
+            <Code>413</Code>
+            <CallingCode>+94</CallingCode>                
+            <Stage>1</Stage>
+            <DefaultMnc>Dialog</DefaultMnc>                
+        </Mcc>
+        <Mcc>
+            <Code>502</Code>
+            <CallingCode>+60</CallingCode>                
+            <Stage>0</Stage>
+            <DefaultMnc>Celcom</DefaultMnc>                            
+        </Mcc>
+        <Mcc>
+            <Code>470</Code>
+            <CallingCode>+880</CallingCode>                
+            <Stage>0</Stage>
+            <DefaultMnc>Celcom</DefaultMnc>                            
+        </Mcc>
+    </MobileCountryCodes>	
+</MCCConfiguration>
