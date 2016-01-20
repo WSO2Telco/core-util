@@ -1,100 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <groupId>com.axiata.dialog</groupId>
-    <artifactId>mnc-resolver</artifactId>
-    <version>1.0.0</version>
+	<parent>
+		<groupId>com.wso2telco.core</groupId>
+		<artifactId>core-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
 
-    <packaging>bundle</packaging>
-    <name>Mobile Network Resolver</name>
-    <description>Mobile Network Resolver</description>
+	<modelVersion>4.0.0</modelVersion>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.wso2.carbon</groupId>
-            <artifactId>org.wso2.carbon.utils</artifactId>
-            <version>4.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>dnsjava</groupId>
-            <artifactId>dnsjava</artifactId>
-            <version>2.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon</groupId>
-            <artifactId>org.wso2.carbon.apimgt.impl</artifactId>
-            <version>1.2.2</version>
-            <type>jar</type>
-        </dependency>
-    </dependencies>
+	<groupId>com.axiata.dialog</groupId>
+	<artifactId>mnc-resolver</artifactId>
+	<!--version>1.0.0</version -->
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Bundle-Name>${project.artifactId}</Bundle-Name>
-                        <Private-Package>
-                            com.axiata.dialog.mife.mnc.resolver.internal
-                        </Private-Package>
-                        <Export-Package>
-                            !com.axiata.dialog.mife.mnc.resolver.internal,
-                            com.axiata.dialog.mife.mnc.resolver.*
-                        </Export-Package>
-                        <Import-Package>
-                            javax.servlet;version="[2.6.0, 3.0.0)",
-                            javax.servlet.http;version="[2.6.0, 3.0.0)",
-                            javax.servlet.resources;version="[2.6.0, 3.0.0)",
-                            org.eclipse.equinox.http.helper,
-                            *;resolution:=optional
-                        </Import-Package>
-                        <DynamicImport-Package>*</DynamicImport-Package>
-                    </instructions>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.0.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-scr-plugin</artifactId>
-                <version>1.7.4</version>
-                <executions>
-                    <execution>
-                        <id>generate-scr-scrdescriptor</id>
-                        <goals>
-                            <goal>scr</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+	<name>Mobile Network Resolver</name>
+	<description>Mobile Network Resolver</description>
 
+	<properties>
+		<org.wso2.carbon.utils.version>4.2.0</org.wso2.carbon.utils.version>
+		<org.wso2.carbon.apimgt.imp.version>1.2.2</org.wso2.carbon.apimgt.imp.version>
+		<dnsjava.version>2.0.6</dnsjava.version>
+		<org.osgi.core.version>2.0.2</org.osgi.core.version>
+	</properties>
 
-    <repositories>
-        <repository>
-            <id>wso2-nexus</id>
-            <url>http://maven.wso2.org/nexus/content/groups/wso2-public/</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-                <checksumPolicy>ignore</checksumPolicy>
-            </releases>
-        </repository>
-    </repositories>
+	<dependencies>
+		<dependency>
+			<groupId>org.wso2.carbon</groupId>
+			<artifactId>org.wso2.carbon.utils</artifactId>
+			<version> ${org.wso2.carbon.utils.version} </version>
+		</dependency>
+		<dependency>
+			<groupId>dnsjava</groupId>
+			<artifactId>dnsjava</artifactId>
+			<version>${dnsjava.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.wso2.carbon</groupId>
+			<artifactId>org.wso2.carbon.apimgt.impl</artifactId>
+			<version>${org.wso2.carbon.apimgt.imp.version}</version>
+			<type>jar</type>
+		</dependency>
+            <dependency>
+               <groupId>org.apache.felix</groupId>
+               <artifactId>org.apache.felix.framework</artifactId>
+               <version>${org.osgi.core.version}</version>
+            </dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-Name>${project.artifactId}</Bundle-Name>
+						<Private-Package>
+							com.axiata.dialog.mife.mnc.resolver.internal
+						</Private-Package>
+						<Export-Package>
+							!com.axiata.dialog.mife.mnc.resolver.internal,
+							com.axiata.dialog.mife.mnc.resolver.*
+						</Export-Package>
+						<Import-Package>
+							javax.servlet;version="[2.6.0, 3.0.0)",
+							javax.servlet.http;version="[2.6.0, 3.0.0)",
+							javax.servlet.resources;version="[2.6.0, 3.0.0)",
+							org.eclipse.equinox.http.helper,
+							*;resolution:=optional
+						</Import-Package>
+						<DynamicImport-Package>*</DynamicImport-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-scr-plugin</artifactId>
+				<version>1.7.4</version>
+				<executions>
+					<execution>
+						<id>generate-scr-scrdescriptor</id>
+						<goals>
+							<goal>scr</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
 
 </project>
