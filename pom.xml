@@ -13,6 +13,13 @@
     <description>WSO2Telco Core Aggregate Pom</description>
     <url>http://wso2telco.com</url>
 
+    <developers>
+	<developer>
+		<name>WSO2Telco</name>
+		<email>dev@wso2telco.com</email>
+	</developer>
+    </developers>
+
     <prerequisites>
         <maven>3.0.0</maven>
     </prerequisites>
@@ -149,5 +156,40 @@
 <maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
 <junit.version>3.8.1</junit.version>
     </properties>
+
+<profiles>
+		<profile>
+			<id>notify</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-changes-plugin</artifactId>
+						<version>2.11</version>
+						<configuration>
+							<smtpHost>${smtphost}</smtpHost>
+							<smtpPort implementation="java.lang.Integer">${smtpport}</smtpPort>
+							<toAddresses>
+								<toAddress implementation="java.lang.String">${toemail}</toAddress>								
+							</toAddresses>
+							<username>${username}</username>
+							<password>${password}</password>
+							<template>announcement.vm</template>
+							<templateDirectory>emailtemplates</templateDirectory>
+						</configuration>
+						<executions>
+							<execution>
+								<id>check-changes</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>changes-check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
