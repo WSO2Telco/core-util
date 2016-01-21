@@ -34,7 +34,7 @@
 	<description>Mobile Network Resolver</description>
 
 	<properties>
-		<org.wso2.carbon.utils.version>4.2.0</org.wso2.carbon.utils.version>
+		<org.wso2.carbon.utils.version>4.4.0</org.wso2.carbon.utils.version>
 		<org.wso2.carbon.apimgt.imp.version>1.2.2</org.wso2.carbon.apimgt.imp.version>
 		<dnsjava.version>2.0.6</dnsjava.version>
 		<org.osgi.core.version>2.0.2</org.osgi.core.version>

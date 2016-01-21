@@ -26,7 +26,6 @@
 
 	<groupId>org.wso2telco.core</groupId>
 	<artifactId>core-dutils</artifactId>
-	<version>1.0-SNAPSHOT</version>
 	<name>Wso2Telco Core utility service</name>
 	<url>http://maven.apache.org</url>
 
