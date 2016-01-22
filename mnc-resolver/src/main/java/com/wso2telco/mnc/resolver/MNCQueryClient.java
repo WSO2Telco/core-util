@@ -13,13 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-/*
- * MNCQueryClient.java
- * Nov 17, 2014  10:48:39 AM
- * Roshan.Saputhanthri
- *
- * Copyright (C) Dialog Axiata PLC. All Rights Reserved.
- */
+
 package com.wso2telco.mnc.resolver;
 
 import java.util.List;

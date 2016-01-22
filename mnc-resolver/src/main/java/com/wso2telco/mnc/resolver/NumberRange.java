@@ -13,13 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-/*
- * NumberRange.java
- * Nov 19, 2014  2:14:08 PM
- * Roshan.Saputhanthri
- *
- * Copyright (C) Dialog Axiata PLC. All Rights Reserved.
- */
 
 package com.wso2telco.mnc.resolver;
 

@@ -14,13 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 package com.wso2telco.mnc.resolver.mncrange;
-/*
- * McnRangeDbUtil.java
- * Nov 19, 2014  12:01:53 PM
- * Roshan.Saputhanthri
- *
- * Copyright (C) Dialog Axiata PLC. All Rights Reserved.
- */
+
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

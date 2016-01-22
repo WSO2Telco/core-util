@@ -15,37 +15,6 @@
  ******************************************************************************/
 package com.wso2telco.mnc.resolver.dnsssl;
 
-// TODO: Auto-generated Javadoc
-/*
- * Copyright (c) 2013 Neustar, Inc.  All Rights Reserved.
- *
- * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED.  IN NO EVENT SHALL NEUSTAR BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- */
-
-
-
-/**
- * 
- * Utility class for providing functions to transform the TN to a
- * domain name (e164 format) Please refer RFC 3761
- * 
- * For instance, if term domain is "e164enum.net", TN "+15714345400" will
- * be transformed to 0.0.4.5.4.3.4.1.7.5.1.e164enum.net
- * 
- * @author rrsharma
- * 
- * @version $Revision: 1.3 $
- */
 public class TNUtils {
 
 	/**

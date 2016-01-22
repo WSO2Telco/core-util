@@ -51,13 +51,6 @@ import com.wso2telco.mnc.resolver.dnsssl.SSLClient;
 import com.wso2telco.mnc.resolver.dnsssl.SSLResolver;
 import com.wso2telco.mnc.resolver.dnsssl.DNSResponseCode.RCODE;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class DNSSSLQueryClient.
- *
- * @author rrsharma
- * @version $Revision: 1.5 $
- */
 public class DNSSSLQueryClient implements IProviderNetwork {
 
     /** The Constant USAGE_BULK_QUERY. */

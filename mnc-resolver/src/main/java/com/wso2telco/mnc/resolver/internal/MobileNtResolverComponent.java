@@ -22,14 +22,6 @@ import org.osgi.service.component.ComponentContext;
 import com.wso2telco.mnc.resolver.ConfigLoader;
 import com.wso2telco.mnc.resolver.DataHolder;
 
-
-// TODO: Auto-generated Javadoc
-/**
- * The Class MobileNtResolverComponent.
- *
- * @scr.component name="com.axiata.dialog.mnc.component" immediate="true"
- */
-
 public class MobileNtResolverComponent {
 
     /** The Constant log. */

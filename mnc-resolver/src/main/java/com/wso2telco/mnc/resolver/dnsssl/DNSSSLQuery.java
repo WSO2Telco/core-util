@@ -27,17 +27,6 @@ import org.xbill.DNS.Type;
 import com.wso2telco.mnc.resolver.Configuration;
 import com.wso2telco.mnc.resolver.MCCConfiguration;
 
-
-// TODO: Auto-generated Javadoc
-/**
- * Used to query the NeuStar PathFinder Service to
- * obtain carrier information for a given TN over SSL
- * <p>.
- *
- * @author Chandan Gupta
- * @version $Revision: 1.4 $
- */
-
 public class DNSSSLQuery implements DNSResponseCode {
 
 	/**

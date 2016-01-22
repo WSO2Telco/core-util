@@ -13,13 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-/*
- * AxataDBUtilException.java
- * Oct 16, 2014  11:56:32 AM
- * Roshan.Saputhanthri
- *
- * Copyright (C) Dialog Axiata PLC. All Rights Reserved.
- */
+
 
 package com.wso2telco.dbutils;
 

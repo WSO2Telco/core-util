@@ -13,13 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-/*
- * Operatorsubs.java
- * Mar 6, 2014  1:53:16 PM
- * Roshan.Saputhanthri
- *
- * Copyright (C) Dialog Axiata PLC. All Rights Reserved.
- */
 
 package com.wso2telco.dbutils;
 

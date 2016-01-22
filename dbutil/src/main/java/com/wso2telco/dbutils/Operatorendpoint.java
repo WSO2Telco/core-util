@@ -13,13 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-/*
- * Operatorendpoint.java
- * Mar 6, 2014  3:34:06 PM
- * Roshan.Saputhanthri
- *
- * Copyright (C) Dialog Axiata PLC. All Rights Reserved.
- */
 
 package com.wso2telco.dbutils;
 

@@ -21,14 +21,6 @@ import java.util.List;
 import com.wso2telco.mnc.resolver.Configuration;
 import com.wso2telco.mnc.resolver.MCCConfiguration;
 
-
-// TODO: Auto-generated Javadoc
-/**
- * Provides bulk query capability for SSL queries.
- *
- * @author dsingh
- * @version $Revision: 1.4 $
- */
 public class DNSSSLBulkQuery {
 
 	/**
