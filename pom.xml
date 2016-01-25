@@ -7,7 +7,7 @@
     <groupId>com.wso2telco.core</groupId>
     <artifactId>core-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.4</version>
+    <version>1.0.5-SNAPSHOT</version>
     <name>WSO2Telco Core - Aggregate Pom</name>
     <description>WSO2Telco Core Aggregate Pom</description>
     <url>http://wso2telco.com</url>
