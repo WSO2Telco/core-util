@@ -1,22 +1,19 @@
-/*******************************************************************************
- * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
- * 
- * WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
-package com.wso2telco.mnc.resolver.dnsssl;
 
+package com.axiata.dialog.mife.mnc.resolver.dnsssl;
+
+import com.axiata.dialog.mife.mnc.resolver.dnsssl.SSLResolver;
+import com.axiata.dialog.mife.mnc.resolver.dnsssl.RequestBean;
+import com.axiata.dialog.mife.mnc.resolver.Configuration;
+import com.axiata.dialog.mife.mnc.resolver.Configuration;
+import com.axiata.dialog.mife.mnc.resolver.DataHolder;
+import com.axiata.dialog.mife.mnc.resolver.IProviderNetwork;
+import com.axiata.dialog.mife.mnc.resolver.MCCConfiguration;
+import com.axiata.dialog.mife.mnc.resolver.dnsssl.DNSSSLBulkQuery;
+import com.axiata.dialog.mife.mnc.resolver.dnsssl.DNSSSLQuery;
+import com.axiata.dialog.mife.mnc.resolver.dnsssl.DNSQueryResult;
+import com.axiata.dialog.mife.mnc.resolver.dnsssl.DNSResponseCode.RCODE;
+import com.axiata.dialog.mife.mnc.resolver.dnsssl.SSLClient;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,46 +26,21 @@ import java.util.List;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.wso2.carbon.utils.CarbonUtils;
 
-import com.wso2telco.mnc.resolver.ConfigLoader;
-import com.wso2telco.mnc.resolver.Configuration;
-import com.wso2telco.mnc.resolver.DataHolder;
-import com.wso2telco.mnc.resolver.IProviderNetwork;
-import com.wso2telco.mnc.resolver.MCCConfiguration;
-import com.wso2telco.mnc.resolver.MNCQueryClient;
-import com.wso2telco.mnc.resolver.dnsssl.DNSQueryResult;
-import com.wso2telco.mnc.resolver.dnsssl.DNSSSLBulkQuery;
-import com.wso2telco.mnc.resolver.dnsssl.DNSSSLQuery;
-import com.wso2telco.mnc.resolver.dnsssl.RequestBean;
-import com.wso2telco.mnc.resolver.dnsssl.SSLClient;
-import com.wso2telco.mnc.resolver.dnsssl.SSLResolver;
-import com.wso2telco.mnc.resolver.dnsssl.DNSResponseCode.RCODE;
-
+/**
+ * @author rrsharma
+ * @version $Revision: 1.5 $
+ *
+ */
 public class DNSSSLQueryClient implements IProviderNetwork {
 
-    /** The Constant USAGE_BULK_QUERY. */
     private static final String USAGE_BULK_QUERY = "Parameters required for Bulk Query :\n\t -i <inputfilepath> -o <outputfilepath>\n";
-    
-    /** The Constant USAGE_SINGLE_QUERY. */
     private static final String USAGE_SINGLE_QUERY = "Parameters required for Single Query :\n\t -c <countrycode> -t <tn>\n";
-    
-    /** The Constant log. */
-    private static final Log log = LogFactory.getLog(DNSSSLQueryClient.class);
 
     /**
      * Method main. Entry point for the DNS query client
      *
-     * @param inputFile the input file
-     * @param outPutFile the out put file
-     * @param config the config
-     * @param sslResolver the ssl resolver
+     * @param args String[]
      */
     
 
@@ -199,7 +171,6 @@ public class DNSSSLQueryClient implements IProviderNetwork {
      * @param config Configuration object encapsulating host, port and
      * terminating domain information
      * @param sslResolver SSLResolver the SSL resolver
-     * @return the string
      */
     private static String performSingleQuery(final String countryCode, final String tn,
             final MCCConfiguration config, final SSLResolver sslResolver) {
@@ -262,9 +233,6 @@ public class DNSSSLQueryClient implements IProviderNetwork {
         return TN;
     }
 
-    /* (non-Javadoc)
-     * @see com.wso2telco.mnc.resolver.IProviderNetwork#queryNetwork(java.lang.String, java.lang.String)
-     */
     @Override
     public String queryNetwork(String countryCode, String endUser) {
         SSLClient sslClient = new SSLClient();
@@ -274,87 +242,18 @@ public class DNSSSLQueryClient implements IProviderNetwork {
         try {
             
             MCCConfiguration MCCconfig = DataHolder.getInstance().getMobileCountryConfig();
-            System.out.println("host: "+MCCconfig.getPathFinderHost()+",port:"+MCCconfig.getPort()+",coutryCode:"+countryCode+",termDomain:"+MCCconfig.getTermDomain());
-            sslClient.initialize(MCCconfig.getPathFinderHost(), MCCconfig.getPort());
-
-            // Create SSLResolver and set host and port
-            
-            sslResolver = new SSLResolver(sslClient);
-             // perform query for ingle TN
-            log.debug("QueryNetwor, beforeperformSingleQuery: ");
-            String tnResult = performSingleQuery(countryCode.replace("+", "").trim(), endUser.replace("+", "").trim(), MCCconfig, sslResolver);
-            log.debug("QueryNetwor, tnsResult: "+tnResult);
-            if ( (tnResult !=null) && (!tnResult.isEmpty()) ){
-                TN=getEndpointMnc(tnResult);
-            }
-            
-        } catch (Exception ioe) {
-            System.err.println("Error while creating SSL socket");
-            ioe.printStackTrace();            
-        }
-       
-        return TN;
-    }
-    
-    /**
-     * Query network standalone.
-     *
-     * @param countryCode the country code
-     * @param endUser the end user
-     * @return the string
-     */
-    public String queryNetworkStandalone(String countryCode, String endUser) {
-        SSLClient sslClient = new SSLClient();
-        String TN = null;
-        SSLResolver sslResolver = null;
-        
-        try {
-            
-            //DataHolder.getInstance().setMobileCountryConfig(ConfigLoader.getInstance().getMobileCountryConfig());
-            String configPath = "MobileCountryConfig.xml";
-            File file = new File(configPath);
-            JAXBContext ctx = JAXBContext.newInstance(MCCConfiguration.class);
-            Unmarshaller um = ctx.createUnmarshaller();
-            
-            MCCConfiguration MCCconfig = (MCCConfiguration) um.unmarshal(file);
-            System.out.println("host: "+MCCconfig.getPathFinderHost()+",port:"+MCCconfig.getPort()+",coutryCode:"+countryCode+",termDomain:"+MCCconfig.getTermDomain());
             sslClient.initialize(MCCconfig.getPathFinderHost(), MCCconfig.getPort());
 
             // Create SSLResolver and set host and port
             sslResolver = new SSLResolver(sslClient);
              // perform query for ingle TN
-            
-            String tnResult = performSingleQuery(countryCode, endUser, MCCconfig, sslResolver);
-            System.out.println("tnResult:"+tnResult);
-            if ( (tnResult !=null) && (!tnResult.isEmpty()) ){
-                TN=getEndpointMnc(tnResult);
-            }
-            
+            TN = performSingleQuery(countryCode, endUser, MCCconfig, sslResolver);
         } catch (Exception ioe) {
             System.err.println("Error while creating SSL socket");
             ioe.printStackTrace();            
         }
        
-        return TN;
-    }    
-    
-    /**
-     * Gets the endpoint mnc.
-     *
-     * @param strMnc the str mnc
-     * @return the endpoint mnc
-     */
-    public static String getEndpointMnc(String strMnc) {
-        
-        String mnc = null;
-        
-        Pattern p = Pattern.compile("(mnc=)(\\d+)");
-        Matcher m = p.matcher(strMnc);
-        while (m.find()) {
-            mnc = m.group(2);           
-        }
-                
-        return mnc;
+        return null;
     }
     
     

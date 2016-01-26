@@ -1,20 +1,25 @@
-/*******************************************************************************
- * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
- * 
- * WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
-package com.wso2telco.mnc.resolver.dnsssl;
+package com.axiata.dialog.mife.mnc.resolver.dnsssl;
 
+/*
+ * Copyright (c) 2013 Neustar, Inc.  All Rights Reserved.
+ *
+ * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED.  IN NO EVENT SHALL NEUSTAR BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+
+
+import com.axiata.dialog.mife.mnc.resolver.Configuration;
+import com.axiata.dialog.mife.mnc.resolver.MCCConfiguration;
 import java.util.ArrayList;
 
 import org.xbill.DNS.DClass;
@@ -24,22 +29,33 @@ import org.xbill.DNS.Record;
 import org.xbill.DNS.Section;
 import org.xbill.DNS.Type;
 
-import com.wso2telco.mnc.resolver.Configuration;
-import com.wso2telco.mnc.resolver.MCCConfiguration;
+
+/**
+ * Used to query the NeuStar PathFinder Service to
+ * obtain carrier information for a given TN over SSL
+ * <p>
+ * 
+ * @author Chandan Gupta
+ * @version $Revision: 1.4 $
+ */
 
 public class DNSSSLQuery implements DNSResponseCode {
 
 	/**
 	 * Execute method which demonstrates usage of SSLResolver to retrieve ENUM
 	 * results
-	 * <p>.
-	 *
-	 * @param countryCode            the country code
-	 * @param tn            the TN
-	 * @param config            Configuration object encapsulating host, port and terminating domain information
-	 * @param sslResolver            SSLResolver the SSL resolver
+	 * <p>
+	 * 
+	 * @param countryCode
+	 *            the country code
+	 * @param tn
+	 *            the TN
+	 * @param config
+	 *            Configuration object encapsulating host, port and terminating domain information
+	 * @param sslResolver
+	 *            SSLResolver the SSL resolver
 	 * @return DNSQueryResult Query result object that encapsulates the query results
-	 * @throws Exception the exception
+	 * @throws Exception
 	 */
 	public DNSQueryResult execute(final String countryCode,
 			final String tn, final MCCConfiguration config,

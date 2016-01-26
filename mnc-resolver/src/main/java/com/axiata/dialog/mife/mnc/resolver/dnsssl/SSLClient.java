@@ -1,19 +1,22 @@
-/*******************************************************************************
- * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
- * 
- * WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
-package com.wso2telco.mnc.resolver.dnsssl;
+package com.axiata.dialog.mife.mnc.resolver.dnsssl;
+
+/*
+ * Copyright (c) 2013 Neustar, Inc.  All Rights Reserved.
+ *
+ * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED.  IN NO EVENT SHALL NEUSTAR BE LIABLE FOR ANY DIRECT,
+ * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,44 +34,39 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class SSLClient.
- *
  * @author dsingh
+ * 
  * @version $Revision: 1.4 $
  */
 
 public class SSLClient {
 
-	/** The Constant OFFSET. */
 	private static final int OFFSET = 0;
 
-	/** The sslsocket. */
 	private SSLSocket sslsocket;
 
-	/** The sslis. */
 	private InputStream sslis = null;
 
-	/** The sslos. */
 	private OutputStream sslos = null;
 
 	/**
 	 * Method initialize. initialize the SSL client creates SSL socket and sets
 	 * keep alive to true
-	 *
-	 * @param host            DNS server host
-	 * @param port            port for DNS server
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws NoSuchAlgorithmException the no such algorithm exception
-	 * @throws KeyManagementException the key management exception
+	 * 
+	 * @param host
+	 *            DNS server host
+	 * @param port
+	 *            port for DNS server
+	 * @throws IOException
 	 */
 	public void initialize(final String host, final int port)
 			throws IOException, NoSuchAlgorithmException, KeyManagementException {
-		SSLSocketFactory socketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+		//SSLSocketFactory socketFactory = (SSLSocketFactory) SSLSocketFactory
+		//		.getDefault();
 
 		if (sslsocket == null) {
-        /*            
+                    
                     //temp to bypass proxy
                                     TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
                 public java.security.cert.X509Certificate[] getAcceptedIssuers() {
@@ -98,8 +96,8 @@ public class SSLClient {
                 // Install the all-trusting host verifier
                 //HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
                     
-                   SSLSocketFactory socketFactory = sc.getSocketFactory(); 
-  */
+                   SSLSocketFactory socketFactory = sc.getSocketFactory();
+
 			synchronized (SSLClient.class) {
 
 				if (sslsocket == null) {
@@ -118,9 +116,10 @@ public class SSLClient {
 
 	/**
 	 * Method send. Sends the message
-	 *
-	 * @param data            message passed as byte array
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * 
+	 * @param data
+	 *            message passed as byte array
+	 * @throws IOException
 	 */
 	private void send(final byte[] data) throws IOException {
 		byte[] byteArray = new byte[data.length + 2];
@@ -135,10 +134,11 @@ public class SSLClient {
 	 * Method recvBuffer. Utility method to receive the message called internally by
 	 * recv method to read the length of message first and then the message
 	 * itself
-	 *
-	 * @param length            length of message
+	 * 
+	 * @param length
+	 *            length of message
 	 * @return byte[] message as byte array
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
 	 */
 	private byte[] recvBuffer(final int length) throws IOException {
 
@@ -149,9 +149,9 @@ public class SSLClient {
 
 	/**
 	 * Method recv. Receive the message
-	 *
+	 * 
 	 * @return byte[] message as byte array
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
 	 */
 	private byte[] recv() throws IOException {
 
@@ -164,10 +164,11 @@ public class SSLClient {
 
 	/**
 	 * Method sendrecv. Send and receive the message
-	 *
-	 * @param data            byte[] message to send as byte array
+	 * 
+	 * @param data
+	 *            byte[] message to send as byte array
 	 * @return byte[] received message as byte array
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
 	 */
 	public byte[] sendrecv(final byte[] data) throws IOException {
 		send(data);
@@ -177,9 +178,6 @@ public class SSLClient {
 
 	// clean up the resources, close
 	// the socket input/output streams
-	/**
-	 * Clean up.
-	 */
 	// and socket
 	public void cleanUp() {
 		try {
