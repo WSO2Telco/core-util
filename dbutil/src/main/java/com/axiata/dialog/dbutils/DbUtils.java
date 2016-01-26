@@ -1,19 +1,4 @@
-/*******************************************************************************
- * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
- * 
- * WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- ******************************************************************************/
-package com.wso2telco.dbutils;
+package com.axiata.dialog.dbutils;
 
 import java.lang.*;
 import java.util.*;
@@ -28,48 +13,26 @@ import javax.sql.DataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class DbUtils.
- */
 public class DbUtils {
 
-    /** The resdb. */
     private static DbUtils resdb;
 
-    /** The driver class. */
     String driverClass;
-    
-    /** The connection url. */
     String connectionUrl;
-    
-    /** The connection username. */
     String connectionUsername;
-    
-    /** The connection password. */
     String connectionPassword;
 
-    /** The axiata datasource. */
     private static volatile DataSource axiataDatasource = null;
-    
-    /** The Constant AXIATA_DATA_SOURCE. */
     private static final String AXIATA_DATA_SOURCE = "jdbc/AXIATA_MIFE_DB";
-    
-    /** The Constant log. */
     private static final Log log = LogFactory.getLog(DbUtils.class);
 
-    /**
-     * Initialize datasources.
-     *
-     * @throws SQLException the SQL exception
-     * @throws AxataDBUtilException the axata db util exception
-     */
     public static void initializeDatasources() throws SQLException, AxataDBUtilException {
         if (axiataDatasource != null) {
             return;
         }
 
         try {
+            log.info("Before DB Initialize");
             Context ctx = new InitialContext();
             axiataDatasource = (DataSource) ctx.lookup(AXIATA_DATA_SOURCE);
         } catch (NamingException e) {
@@ -77,13 +40,6 @@ public class DbUtils {
         }
     }
 
-    /**
-     * Gets the axiata db connection.
-     *
-     * @return the axiata db connection
-     * @throws SQLException the SQL exception
-     * @throws AxataDBUtilException the axata db util exception
-     */
     public static Connection getAxiataDBConnection() throws SQLException, AxataDBUtilException {
         initializeDatasources();
 
@@ -93,14 +49,6 @@ public class DbUtils {
         throw new SQLException("Axiata Datasource not initialized properly");
     }
 
-    /**
-     * Format.
-     *
-     * @param strData the str data
-     * @param finalLen the final len
-     * @return the string
-     * @throws Exception the exception
-     */
     public static String format(String strData, int finalLen) throws Exception {
         String finalStr;
         if (finalLen <= strData.length()) {
@@ -114,14 +62,6 @@ public class DbUtils {
         return (finalStr);
     } // format(String, int)
 
-    /**
-     * Format.
-     *
-     * @param intData the int data
-     * @param finalLen the final len
-     * @return the string
-     * @throws Exception the exception
-     */
     public static String format(int intData, int finalLen) throws Exception {
         String strData = String.valueOf(intData);
         String finalStr;
@@ -137,14 +77,6 @@ public class DbUtils {
         return (finalStr);
     } // format(int, int)
 
-    /**
-     * Format.
-     *
-     * @param integerData the integer data
-     * @param finalLen the final len
-     * @return the string
-     * @throws Exception the exception
-     */
     public static String format(Integer integerData, int finalLen)
             throws Exception {
         int intData;
@@ -156,15 +88,6 @@ public class DbUtils {
         return (finalStr);
     } // format(Integer, int)
 
-    /**
-     * Format.
-     *
-     * @param doubData the doub data
-     * @param precision the precision
-     * @param scale the scale
-     * @return the string
-     * @throws Exception the exception
-     */
     public static String format(double doubData, int precision, int scale)
             throws Exception {
         BigDecimal decData = new BigDecimal(doubData);
@@ -187,15 +110,6 @@ public class DbUtils {
         return (finalStr);
     } // format(double, int, int)
 
-    /**
-     * Format.
-     *
-     * @param decData the dec data
-     * @param precision the precision
-     * @param scale the scale
-     * @return the string
-     * @throws Exception the exception
-     */
     public static String format(BigDecimal decData, int precision, int scale)
             throws Exception {
         decData = decData.setScale(scale, BigDecimal.ROUND_HALF_EVEN);
@@ -217,15 +131,6 @@ public class DbUtils {
         return (finalStr);
     } // format(BigDecimal, int, int)
 
-    /**
-     * Format.
-     *
-     * @param doubleData the double data
-     * @param precision the precision
-     * @param scale the scale
-     * @return the string
-     * @throws Exception the exception
-     */
     public static String format(Double doubleData, int precision, int scale)
             throws Exception {
         double doubData;
@@ -235,12 +140,6 @@ public class DbUtils {
         return (format(doubData, precision, scale));
     } // format(Double, int, int)
 
-    /**
-     * Connect.
-     *
-     * @return the connection
-     * @throws Exception the exception
-     */
     public Connection connect() throws Exception {
         System.out.println("-------- JDBC Connection Init ------------");
         Connection connection = null;
@@ -263,12 +162,6 @@ public class DbUtils {
         return connection;
     } // connect
 
-    /**
-     * Disconnect.
-     *
-     * @param con the con
-     * @throws Exception the exception
-     */
     public void disconnect(Connection con) throws Exception {
         System.out.println();
         //System.out.println("  Disconnect from database.");
@@ -281,25 +174,11 @@ public class DbUtils {
         con.close();
     } // disconnect
 
-    /**
-     * Handle exception.
-     *
-     * @param msg the msg
-     * @param t the t
-     * @throws AxataDBUtilException the axata db util exception
-     */
     public static void handleException(String msg, Throwable t) throws AxataDBUtilException {
         log.error(msg, t);
         throw new AxataDBUtilException(msg, t);
     }
 
-    /**
-     * Close all connections.
-     *
-     * @param preparedStatement the prepared statement
-     * @param connection the connection
-     * @param resultSet the result set
-     */
     public static void closeAllConnections(PreparedStatement preparedStatement,
             Connection connection, ResultSet resultSet) {
 
@@ -308,13 +187,6 @@ public class DbUtils {
         closeResultSet(resultSet);
     }
 
-    /**
-     * Close all connections.
-     *
-     * @param statement the statement
-     * @param connection the connection
-     * @param resultSet the result set
-     */
     public static void closeAllConnections(Statement statement,
             Connection connection, ResultSet resultSet) {
 
@@ -324,7 +196,7 @@ public class DbUtils {
     }
 
     /**
-     * Close Connection.
+     * Close Connection
      *
      * @param dbConnection Connection
      */
@@ -340,7 +212,7 @@ public class DbUtils {
     }
 
     /**
-     * Close ResultSet.
+     * Close ResultSet
      *
      * @param resultSet ResultSet
      */
@@ -356,7 +228,7 @@ public class DbUtils {
     }
 
     /**
-     * Close PreparedStatement.
+     * Close PreparedStatement
      *
      * @param preparedStatement PreparedStatement
      */
@@ -371,11 +243,6 @@ public class DbUtils {
         }
     }
 
-    /**
-     * Close statement.
-     *
-     * @param statement the statement
-     */
     private static void closeStatement(Statement statement) {
         if (statement != null) {
             try {
