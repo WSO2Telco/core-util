@@ -9,6 +9,9 @@ package com.axiata.dialog.mife.mnc.resolver.mncrange;
 
 import com.axiata.dialog.mife.mnc.resolver.MobileNtException;
 import com.axiata.dialog.mife.mnc.resolver.NumberRange;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -19,9 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.wso2.carbon.apimgt.impl.utils.APIMgtDBUtil;
+//import org.wso2.carbon.apimgt.impl.utils.APIMgtDBUtil;
 
 
 
@@ -85,8 +86,64 @@ public class McnRangeDbUtil {
         } catch (SQLException e) {
             handleException("Error occured while getting Number ranges for mcc: " + mcc + " from the database", e);
         } finally {
-            APIMgtDBUtil.closeAllConnections(ps, conn, rs);
+            McnRangeDbUtil.closeAllConnections(ps, conn, rs);
         }
         return lstranges;
+    }
+
+    public static void closeAllConnections(PreparedStatement preparedStatement,
+                                           Connection connection, ResultSet resultSet) {
+
+        closeConnection(connection);
+        closeStatement(preparedStatement);
+        closeResultSet(resultSet);
+    }
+
+    /**
+     * Close Connection
+     *
+     * @param dbConnection Connection
+     */
+    private static void closeConnection(Connection dbConnection) {
+        if (dbConnection != null) {
+            try {
+                dbConnection.close();
+            } catch (SQLException e) {
+                log.warn("Database error. Could not close database connection. Continuing with "
+                        + "others. - " + e.getMessage(), e);
+            }
+        }
+    }
+
+    /**
+     * Close ResultSet
+     *
+     * @param resultSet ResultSet
+     */
+    private static void closeResultSet(ResultSet resultSet) {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                log.warn("Database error. Could not close ResultSet  - " + e.getMessage(), e);
+            }
+        }
+
+    }
+
+    /**
+     * Close PreparedStatement
+     *
+     * @param preparedStatement PreparedStatement
+     */
+    private static void closeStatement(PreparedStatement preparedStatement) {
+        if (preparedStatement != null) {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                log.warn("Database error. Could not close PreparedStatement. Continuing with"
+                        + " others. - " + e.getMessage(), e);
+            }
+        }
     }
 }
