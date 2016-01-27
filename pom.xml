@@ -24,8 +24,8 @@
     </prerequisites>
 
     <modules>
-                <module>dbutil</module>
-		<module>mnc-resolver</module>
+                <module>components/dbutil</module>
+		<module>components/mnc-resolver</module>
             </modules>
 
 <dependencies>
