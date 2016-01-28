@@ -65,24 +65,12 @@
 						<Export-Package>
 						</Export-Package>
 						<Import-Package>
-							
+						org.osgi.framework,
+    			                            *;resolution:=optional	
 						</Import-Package>
 						<DynamicImport-Package>*</DynamicImport-Package>
 					</instructions>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-scr-plugin</artifactId>
-				<version>1.7.4</version>
-				<executions>
-					<execution>
-						<id>generate-scr-scrdescriptor</id>
-						<goals>
-							<goal>scr</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
