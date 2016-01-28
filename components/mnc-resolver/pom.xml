@@ -20,7 +20,7 @@
 	<parent>
 		<groupId>com.wso2telco.core</groupId>
 		<artifactId>core-parent</artifactId>
-		<version>1.0.5-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
@@ -35,7 +35,7 @@
 
 	<properties>
 		<org.wso2.carbon.utils.version>4.4.3</org.wso2.carbon.utils.version>
-		<dnsjava.version>2.0.6</dnsjava.version>
+		<dnsjava.version>2.1.7</dnsjava.version>
 
 	</properties>
 
@@ -51,6 +51,7 @@
 			<artifactId>dnsjava</artifactId>
 			<version>${dnsjava.version}</version>
 		</dependency>
+
 
 	</dependencies>
 

@@ -17,10 +17,13 @@
 
     <modules>
         <module>com.wso2telco.core.dbutils.feature</module>
+	<module>com.wso2telco.core.mnc-resolver.feature</module>
     </modules>
 
     <properties>
-		<com.wso2telco.core.version>1.0.0-SNAPSHOT</com.wso2telco.core.version>
+	<com.wso2telco.core.version>1.0.0-SNAPSHOT</com.wso2telco.core.version>
+	<dnsjava.version>2.1.7</dnsjava.version>
+        <com.wso2telco.core.version>1.0.0-SNAPSHOT</com.wso2telco.core.version>
     </properties>
 
 </project>
