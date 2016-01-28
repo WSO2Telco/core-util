@@ -29,16 +29,14 @@
     <packaging>bundle</packaging>
 	<groupId>com.wso2telco.core</groupId>
 	<artifactId>mnc-resolver</artifactId>
-	<!--version>1.0.0</version -->
 
 	<name>Mobile Network Resolver</name>
 	<description>Mobile Network Resolver</description>
 
 	<properties>
 		<org.wso2.carbon.utils.version>4.4.3</org.wso2.carbon.utils.version>
-		<org.wso2.carbon.apimgt.imp.version>1.2.2</org.wso2.carbon.apimgt.imp.version>
 		<dnsjava.version>2.0.6</dnsjava.version>
-		<org.osgi.core.version>2.0.2</org.osgi.core.version>
+
 	</properties>
 
 	<dependencies>
@@ -52,19 +50,6 @@
 			<groupId>dnsjava</groupId>
 			<artifactId>dnsjava</artifactId>
 			<version>${dnsjava.version}</version>
-		</dependency>
-		<!--<dependency>
-			<groupId>org.wso2.carbon</groupId>
-			<artifactId>org.wso2.carbon.apimgt.impl</artifactId>
-			<version>${org.wso2.carbon.apimgt.imp.version}</version>
-			<type>jar</type>
-			<scope>provided</scope>
-		</dependency>-->
-
-		<dependency>
-			<groupId>org.apache.felix</groupId>
-			<artifactId>org.apache.felix.framework</artifactId>
-			<version>${org.osgi.core.version}</version>
 		</dependency>
 
 	</dependencies>
@@ -87,40 +72,13 @@
 							com.wso2telco.mnc.resolver.*
 						</Export-Package>
 						<Import-Package>
-							javax.servlet;version="[2.6.0, 3.0.0)",
-							javax.servlet.http;version="[2.6.0, 3.0.0)",
-							javax.servlet.resources;version="[2.6.0, 3.0.0)",
-							org.eclipse.equinox.http.helper,
-							*;resolution:=optional
-                            org.osgi.framework,
+							org.osgi.framework,
                             *;resolution:=optional
 						</Import-Package>
 						<DynamicImport-Package>*</DynamicImport-Package>
 					</instructions>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-scr-plugin</artifactId>
-				<version>1.7.4</version>
-				<executions>
-					<execution>
-						<id>generate-scr-scrdescriptor</id>
-						<goals>
-							<goal>scr</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!--<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-			</plugin>-->
 
 		</plugins>
 	</build>
