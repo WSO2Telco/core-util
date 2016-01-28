@@ -7,7 +7,7 @@
     <groupId>com.wso2telco.core</groupId>
     <artifactId>core-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>WSO2Telco Core - Aggregate Pom</name>
     <description>WSO2Telco Core Aggregate Pom</description>
     <url>http://wso2telco.com</url>
@@ -27,7 +27,7 @@
                 <module>components/dbutil</module>
 		        <module>components/mnc-resolver</module>
                 <module>features</module>
-            </modules>
+    </modules>
 
 <dependencies>
 			
@@ -58,7 +58,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-		<version>${maven.compiler.plugin.version}</version>
+		        <version>${maven.compiler.plugin.version}</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -133,6 +133,7 @@
 				<enabled>false</enabled>
 			</releases>
 		</repository>
+
 	</repositories>
 
 	<distributionManagement>
@@ -150,11 +151,12 @@
 	</distributionManagement>
    
       
-    <properties>
+    <properties>        
+        <carbon.p2.plugin.version>1.5.3</carbon.p2.plugin.version>
         <maven.checkstyle.plugin.version>2.17</maven.checkstyle.plugin.version>
-<commons.logging>1.2</commons.logging>
-<maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
-<junit.version>3.8.1</junit.version>
+        <commons.logging>1.2</commons.logging>
+        <maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
+        <junit.version>3.8.1</junit.version>
     </properties>
 
 <profiles>
