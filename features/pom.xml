@@ -17,7 +17,8 @@
 
     <modules>
         <module>com.wso2telco.core.dbutils.feature</module>
-	<module>com.wso2telco.core.mnc-resolver.feature</module>
+	    <module>com.wso2telco.core.mncresolver.feature</module>
+	    <module>com.wso2telco.core.coreparent.feature</module>
     </modules>
 
     <properties>

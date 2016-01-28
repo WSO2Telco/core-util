@@ -10,7 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>com.wso2telco.core.mnc-resolver.feature</artifactId>
+    <artifactId>com.wso2telco.core.mncresolver.feature</artifactId>
     <packaging>pom</packaging>
     <name>MNC Resolver Feature</name>
     <url>http://wso2.org</url>
