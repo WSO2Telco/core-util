@@ -19,4 +19,8 @@
         <module>com.wso2telco.core.dbutils.feature</module>
     </modules>
 
+    <properties>
+		<com.wso2telco.core.version>1.0.0-SNAPSHOT</com.wso2telco.core.version>
+    </properties>
+
 </project>
