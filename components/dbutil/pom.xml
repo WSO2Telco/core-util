@@ -26,7 +26,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.wso2telco.core</groupId>
-	<artifactId>core-dbutils</artifactId>
+	<artifactId>dbutils</artifactId>
 	<name>Core db utility service</name>
 	<url>http://maven.apache.org</url>
 	<packaging>bundle</packaging>
