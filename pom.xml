@@ -1,36 +1,61 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
+  
+  WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+    http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-   
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.wso2telco.core</groupId>
-    <artifactId>core-parent</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
-    <name>WSO2Telco Core - Aggregate Pom</name>
-    <description>WSO2Telco Core Aggregate Pom</description>
-    <url>http://wso2telco.com</url>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.wso2telco.core</groupId>
+	<artifactId>core-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<name>WSO2Telco Core Utility - Aggregate Pom</name>
+	<description>WSO2Telco Core Utility Aggregate Pom</description>
+	<url>http://wso2telco.com</url>
 
-    <developers>
-	<developer>
-		<name>WSO2Telco</name>
-		<email>dev@wso2telco.com</email>
-	</developer>
-    </developers>
+	<developers>
+		<developer>
+			<name>WSO2Telco</name>
+			<email>dev@wso2telco.com</email>
+		</developer>
+	</developers>
 
-    <prerequisites>
-        <maven>3.0.0</maven>
-    </prerequisites>
+	<prerequisites>
+		<maven>3.0.0</maven>
+	</prerequisites>
 
-    <modules>
-                <module>components/dbutil</module>
-		        <module>components/mnc-resolver</module>
-                <module>features</module>
-    </modules>
+	<modules>
+		<module>components/dbutil</module>
+		<module>components/mnc-resolver</module>
+		<module>features</module>
+	</modules>
 
-<dependencies>
-			
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>dnsjava</groupId>
+				<artifactId>dnsjava</artifactId>
+				<version>${dnsjava.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.wso2.carbon</groupId>
+				<artifactId>org.wso2.carbon.utils</artifactId>
+				<version> ${org.wso2.carbon.utils.version} </version>
+			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
@@ -42,63 +67,50 @@
 				<artifactId>commons-logging</artifactId>
 				<version>${commons.logging}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.wso2.carbon</groupId>
+				<artifactId>javax.cache.wso2</artifactId>
+				<version>${javax.cache.wso2}</version>
+			</dependency>
 		</dependencies>
+	</dependencyManagement>
 
-
-
-   <scm>
+	<scm>
 		<url>https://github.com/WSO2Telco/core-util.git</url>
 		<developerConnection>scm:git:https://github.com/WSO2Telco/core-util.git</developerConnection>
 		<connection>scm:git:https://github.com/WSO2Telco/core-util.git</connection>
 		<tag>HEAD</tag>
 	</scm>
 
-   <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-		        <version>${maven.compiler.plugin.version}</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-            <!--plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven.checkstyle.plugin.version}</version>
-            </plugin-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <configuration>
-                    <preparationGoals>clean install</preparationGoals>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                </configuration>
-            </plugin>
-            <!--plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>docs</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>javadoc</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin-->
-        </plugins>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<!--plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-checkstyle-plugin</artifactId> 
+				<version>${maven.checkstyle.plugin.version}</version> </plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<preparationGoals>clean install</preparationGoals>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
+			<!--plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-deploy-plugin</artifactId> 
+				</plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
+				<executions> <execution> <id>docs</id> <phase>compile</phase> <goals> <goal>javadoc</goal> 
+				</goals> </execution> </executions> </plugin -->
+		</plugins>
+	</build>
 
 	<repositories>
-
 		<repository>
 			<id>wso2telco-nexus</id>
 			<name>WSO2Telco internal Repository</name>
@@ -109,7 +121,6 @@
 				<checksumPolicy>ignore</checksumPolicy>
 			</releases>
 		</repository>
-
 		<repository>
 			<id>wso2telco.releases</id>
 			<name>WSO2 internal Repository</name>
@@ -120,7 +131,6 @@
 				<checksumPolicy>ignore</checksumPolicy>
 			</releases>
 		</repository>
-
 		<repository>
 			<id>wso2Telco.snapshots</id>
 			<name>WSO2Telco Snapshot Repository</name>
@@ -133,12 +143,11 @@
 				<enabled>false</enabled>
 			</releases>
 		</repository>
-
 	</repositories>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>wso2telco-nexus</id>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>wso2telco-nexus</id>
 			<name>WSO2Telco internal Repository</name>
 			<url>http://maven.wso2telco.com:8081/nexus/content/groups/public/</url>
 			<releases>
@@ -146,10 +155,10 @@
 				<updatePolicy>daily</updatePolicy>
 				<checksumPolicy>ignore</checksumPolicy>
 			</releases>
-        </pluginRepository>
+		</pluginRepository>
 
-        <pluginRepository>
-            <id>wso2telco.releases</id>
+		<pluginRepository>
+			<id>wso2telco.releases</id>
 			<name>WSO2 internal Repository</name>
 			<url>http://maven.wso2telco.com:8081/nexus/content/repositories/releases/</url>
 			<releases>
@@ -157,9 +166,9 @@
 				<updatePolicy>daily</updatePolicy>
 				<checksumPolicy>ignore</checksumPolicy>
 			</releases>
-        </pluginRepository>
-        <pluginRepository>
-            <id>wso2Telco.snapshots</id>
+		</pluginRepository>
+		<pluginRepository>
+			<id>wso2Telco.snapshots</id>
 			<name>WSO2Telco Snapshot Repository</name>
 			<url>http://maven.wso2telco.com:8081/nexus/content/repositories/snapshots/</url>
 			<snapshots>
@@ -169,33 +178,36 @@
 			<releases>
 				<enabled>false</enabled>
 			</releases>
-        </pluginRepository>
-    </pluginRepositories>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<distributionManagement>
 		<snapshotRepository>
-		<id>wso2Telco.snapshots</id>
-		<name>Snapshot repo</name>
-		<url>http://maven.wso2telco.com:8081/nexus/content/repositories/snapshots</url>
+			<id>wso2Telco.snapshots</id>
+			<name>Snapshot repo</name>
+			<url>http://maven.wso2telco.com:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
-		 <!-- Publish the versioned releases here -->
-	<repository>
-		<id>wso2telco.releases</id>
-		<name>release repo</name>
-		<url>http://maven.wso2telco.com:8081/nexus/content/repositories/releases/</url>
-	</repository>
+		<!-- Publish the versioned releases here -->
+		<repository>
+			<id>wso2telco.releases</id>
+			<name>release repo</name>
+			<url>http://maven.wso2telco.com:8081/nexus/content/repositories/releases/</url>
+		</repository>
 	</distributionManagement>
-   
-      
-    <properties>        
-        <carbon.p2.plugin.version>1.5.3</carbon.p2.plugin.version>
-        <maven.checkstyle.plugin.version>2.17</maven.checkstyle.plugin.version>
-        <commons.logging>1.2</commons.logging>
-        <maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
-        <junit.version>3.8.1</junit.version>
-    </properties>
 
-<profiles>
+	<properties>
+		<carbon.p2.plugin.version>1.5.3</carbon.p2.plugin.version>
+		<maven.checkstyle.plugin.version>2.17</maven.checkstyle.plugin.version>
+		<commons.logging>1.2</commons.logging>
+		<maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
+		<junit.version>3.8.1</junit.version>
+		<org.wso2.carbon.utils.version>4.4.3</org.wso2.carbon.utils.version>
+		<dnsjava.version>2.1.7</dnsjava.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<javax.cache.wso2>4.4.3</javax.cache.wso2>
+	</properties>
+
+	<profiles>
 		<profile>
 			<id>notify</id>
 			<build>
@@ -208,7 +220,7 @@
 							<smtpHost>${smtphost}</smtpHost>
 							<smtpPort implementation="java.lang.Integer">${smtpport}</smtpPort>
 							<toAddresses>
-								<toAddress implementation="java.lang.String">${toemail}</toAddress>								
+								<toAddress implementation="java.lang.String">${toemail}</toAddress>
 							</toAddresses>
 							<username>${username}</username>
 							<password>${password}</password>

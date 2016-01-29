@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
   
@@ -25,27 +26,16 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.wso2telco.core</groupId>
 	<artifactId>dbutils</artifactId>
-	<name>Core db utility service</name>
+	<name>Core Db Utility service</name>
 	<url>http://maven.apache.org</url>
 	<packaging>bundle</packaging>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<javax.cache.wso2>4.4.3</javax.cache.wso2>
-		<junit>3.8.1</junit>
-	</properties>
-
-
-	<!-- dependencyManagement -->
 	<dependencies>
 		<dependency>
 			<groupId>org.wso2.carbon</groupId>
 			<artifactId>javax.cache.wso2</artifactId>
-			<version>${javax.cache.wso2}</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -64,8 +54,8 @@
 						<Export-Package>
 						</Export-Package>
 						<Import-Package>
-						org.osgi.framework,
-    			                            *;resolution:=optional	
+							org.osgi.framework,
+							*;resolution:=optional
 						</Import-Package>
 						<DynamicImport-Package>*</DynamicImport-Package>
 					</instructions>

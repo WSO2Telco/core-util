@@ -14,6 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
@@ -26,33 +27,21 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-    <packaging>bundle</packaging>
-	<groupId>com.wso2telco.core</groupId>
+	<packaging>bundle</packaging>
 	<artifactId>mnc-resolver</artifactId>
 
 	<name>Mobile Network Resolver</name>
 	<description>Mobile Network Resolver</description>
 
-	<properties>
-		<org.wso2.carbon.utils.version>4.4.3</org.wso2.carbon.utils.version>
-		<dnsjava.version>2.1.7</dnsjava.version>
-
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.wso2.carbon</groupId>
 			<artifactId>org.wso2.carbon.utils</artifactId>
-			<version> ${org.wso2.carbon.utils.version} </version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>dnsjava</groupId>
 			<artifactId>dnsjava</artifactId>
-			<version>${dnsjava.version}</version>
 		</dependency>
-
-
 	</dependencies>
 
 	<build>
@@ -74,15 +63,13 @@
 						</Export-Package>
 						<Import-Package>
 							org.osgi.framework,
-                            *;resolution:=optional
+							*;resolution:=optional
 						</Import-Package>
 						<DynamicImport-Package>*</DynamicImport-Package>
 					</instructions>
 				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
-
 
 </project>
