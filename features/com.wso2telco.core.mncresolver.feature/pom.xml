@@ -56,7 +56,7 @@
                                 </properties>
                             </adviceFile>
                             <bundles>
-                                <bundleDef>com.wso2telco.core:mnc-resolver:${com.wso2telco.core.version}</bundleDef>
+                                <bundleDef>com.wso2telco.core:mnc-resolver</bundleDef>
                                 <bundleDef>dnsjava:dnsjava:${dnsjava.version}</bundleDef>
                             </bundles>
                         </configuration>

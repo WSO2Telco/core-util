@@ -30,20 +30,6 @@
 	<url>http://wso2.org</url>
 	<description>This feature contains features of Db utility and MNC Resolver as the Core Utility Feature</description>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.wso2telco.core</groupId>
-			<artifactId>com.wso2telco.core.dbutils.feature</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-			<type>zip</type>
-		</dependency>
-		<dependency>
-			<groupId>com.wso2telco.core</groupId>
-			<artifactId>com.wso2telco.core.mncresolver.feature</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-			<type>zip</type>
-		</dependency>
-	</dependencies>
 
 	<build>
 		<plugins>
