@@ -124,6 +124,7 @@
 				<configuration>
 					<preparationGoals>clean install</preparationGoals>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
+          				<preparationGoals>javadoc:javadoc</preparationGoals>
 				</configuration>
 			</plugin>
 			<plugin>
