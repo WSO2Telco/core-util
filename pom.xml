@@ -45,6 +45,17 @@
 
 	<dependencyManagement>
 		<dependencies>
+
+			<dependency>
+				<groupId>com.wso2telco.core</groupId>
+				<artifactId>mnc-resolver</artifactId>
+				<version>${com.wso2telco.core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.wso2telco.core</groupId>
+				<artifactId>dbutils</artifactId>
+				<version>${com.wso2telco.core.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>dnsjava</groupId>
 				<artifactId>dnsjava</artifactId>
@@ -229,6 +240,7 @@
 		<dnsjava.version>2.1.7</dnsjava.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<javax.cache.wso2>4.4.3</javax.cache.wso2>
+		<com.wso2telco.core.version>2.0.8-SNAPSHOT</com.wso2telco.core.version>
 	</properties>
 
 	<profiles>

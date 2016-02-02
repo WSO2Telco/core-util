@@ -56,7 +56,7 @@
                                 </properties>
                             </adviceFile>
                             <bundles>
-                                <bundleDef>com.wso2telco.core:dbutils</bundleDef>
+                                <bundleDef>org.wso2telco.core:dbutils:${com.wso2telco.core.version}</bundleDef>
                             </bundles>
                         </configuration>
                     </execution>
