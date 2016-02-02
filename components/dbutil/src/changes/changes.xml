@@ -23,7 +23,7 @@
 	<body>
 		<release version="1.0.0" date="2016-01-31" description="Subsequent release">
 			<action dev="Isuru" type="add"  issue="PRODEV-44">
-				Introduced dbutils component as OSGI feature
+				Introduced dbutils component as OSGI feature.
 
 			</action>
 		</release>
