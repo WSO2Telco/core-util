@@ -14,7 +14,7 @@
 ## KIND, either express or implied.  See the License for the
 ## specific language governing permissions and limitations
 ## under the License.
-The ${developmentTeam} is pleased to announce the ${finalName} release!
+The WSO2Telco Team is pleased to announce the ${finalName} release!
 
 
 #if ($release.getActions().size() == 0)
@@ -114,4 +114,4 @@ ${urlDownload}
 #end
 
 Have fun!
--${developmentTeam}
+-WSO2Telco Team
