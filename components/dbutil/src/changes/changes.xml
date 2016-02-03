@@ -21,10 +21,10 @@
 		 <author email="core-product-tech@wso2telco.com">Core Team</author>		
 	</properties>
 	<body>
+
 		<release version="2.0.5" date="2016-01-31" description="Subsequent release">
 			<action dev="Isuru" type="add"  issue="PRODEV-44">
 				Introduced dbutils component as OSGI feature.
-
 			</action>
 		</release>
 
