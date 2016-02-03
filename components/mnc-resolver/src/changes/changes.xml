@@ -21,7 +21,7 @@
 		 <author email="core-product-tech@wso2telco.com">Core Team</author>		
 	</properties>
 	<body>
-		<release version="1.0.0" date="2016-01-31" description="Subsequent release">
+		<release version="2.0.4" date="2016-02-02" description="Subsequent release">
 			<action dev="Wasantha" type="add"  issue="PRODEV-45">
 				Introduced mnc resolver as OSGI feature
 
