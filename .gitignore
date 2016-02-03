@@ -21,3 +21,9 @@ target
 *.iws
 *.ipr
 .idea
+*pom.xml.next
+*pom.xml.tag
+
+*pom.xml.releaseBackup
+*release.properties
+
