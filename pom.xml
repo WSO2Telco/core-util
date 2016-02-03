@@ -71,7 +71,7 @@
 		<url>https://github.com/WSO2Telco/core-util.git</url>
 		<developerConnection>scm:git:https://github.com/WSO2Telco/core-util.git</developerConnection>
 		<connection>scm:git:https://github.com/WSO2Telco/core-util.git</connection>
-		<tag>core-parent-2.0.1-SNAPSHOT</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<build>
