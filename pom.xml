@@ -18,7 +18,11 @@
 	<name>WSO2Telco Core Utility - Aggregate Pom</name>
 	<description>WSO2Telco Core Utility Aggregate Pom</description>
 	<url>http://wso2telco.com</url>
-
+	 <parent>
+        	<groupId>org.wso2</groupId>
+	        <artifactId>wso2</artifactId>
+        	<version>1</version>
+	</parent>
 	<developers>
 		<developer>
 			<name>WSO2Telco</name>
