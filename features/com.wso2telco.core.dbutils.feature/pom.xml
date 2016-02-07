@@ -47,7 +47,7 @@
                             <goal>p2-feature-gen</goal>
                         </goals>
                         <configuration>
-                            <id>com.wso2telco.core.dbutils.feature</id>
+                            <id>com.wso2telco.core.dbutils</id>
                             <propertiesFile>../feature.properties</propertiesFile>
                             <adviceFile>
                                 <properties>

@@ -61,7 +61,7 @@
 							<goal>p2-feature-gen</goal>
 						</goals>
 						<configuration>
-							<id>com.wso2telco.core.coreparent.feature</id>
+							<id>com.wso2telco.core.coreparent</id>
 							<propertiesFile>../feature.properties</propertiesFile>
 							<adviceFile>
 								<properties>
