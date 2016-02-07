@@ -38,7 +38,7 @@
 			<artifactId>org.wso2.carbon.utils</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>dnsjava</groupId>
+			<groupId>dnsjava.wso2</groupId>
 			<artifactId>dnsjava</artifactId>
 		</dependency>
 	</dependencies>
