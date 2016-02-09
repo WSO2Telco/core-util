@@ -47,17 +47,16 @@
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Name>${project.artifactId}</Bundle-Name>
-						<Private-Package>
-							com.wso2telco.dbutils
-						</Private-Package>
-						<Export-Package>
-						</Export-Package>
+						<Export-Package>com.wso2telco.dbutils.*</Export-Package>
 						<Import-Package>
 							org.osgi.framework,
 							*;resolution:=optional
 						</Import-Package>
 						<DynamicImport-Package>*</DynamicImport-Package>
 					</instructions>
+				    <excludes>
+				        <exclude>src/main/resources/**</exclude>
+				    </excludes>
 				</configuration>
 			</plugin>
 		</plugins>
