@@ -38,6 +38,7 @@
 	</dependencies>
 
 	<build>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.felix</groupId>
@@ -54,9 +55,6 @@
 						</Import-Package>
 						<DynamicImport-Package>*</DynamicImport-Package>
 					</instructions>
-				    <excludes>
-				        <exclude>src/main/resources/**</exclude>
-				    </excludes>
 				</configuration>
 			</plugin>
 		</plugins>
