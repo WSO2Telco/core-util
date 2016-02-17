@@ -25,7 +25,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.wso2telco.mnc.resolver.Configuration;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.wso2telco.mnc.resolver.DataHolder;
 import com.wso2telco.mnc.resolver.IProviderNetwork;
 import com.wso2telco.mnc.resolver.MCCConfiguration;
@@ -37,10 +39,7 @@ import com.wso2telco.mnc.resolver.dnsssl.SSLClient;
 import com.wso2telco.mnc.resolver.dnsssl.SSLResolver;
 import com.wso2telco.mnc.resolver.dnsssl.DNSResponseCode.RCODE;
 
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 
- 
 // TODO: Auto-generated Javadoc
 /**
  * The Class DNSSSLQueryClient.
@@ -52,9 +51,9 @@ public class DNSSSLQueryClient implements IProviderNetwork {
     
     /** The Constant USAGE_SINGLE_QUERY. */
     private static final String USAGE_SINGLE_QUERY = "Parameters required for Single Query :\n\t -c <countrycode> -t <tn>\n";
-
-     
-    
+   
+    /** The log. */
+    private static Log log = LogFactory.getLog(DNSSSLQueryClient.class);
 
      
     /**
@@ -86,9 +85,10 @@ public class DNSSSLQueryClient implements IProviderNetwork {
 
             // read the list of queries from input file
             while ((dataStr = reader.readLine()) != null) {
-
-                System.out.println("Processing line - " + dataStr);
-
+            	
+            	if (log.isDebugEnabled()) {
+            		log.debug("Processing line - " + dataStr);
+            	}
                 String[] fields = dataStr.split(",");
 
                 if (fields.length > 1) {
@@ -97,7 +97,7 @@ public class DNSSSLQueryClient implements IProviderNetwork {
                     request.setTn(fields[1]);
                     queriesRequest.add(request);
                 } else {
-                    System.err.print("Invalid line in input file - " + dataStr);
+                    log.error("Invalid line in input file - " + dataStr);
                 }
             }
 
@@ -157,8 +157,7 @@ public class DNSSSLQueryClient implements IProviderNetwork {
             }
             writer.flush();
         } catch (Exception e) {
-            System.err.println("Exception occured while sending bulk query");
-            e.printStackTrace();
+            log.error("Exception occured while sending bulk query " + e);
         } finally {
             try {
                 if (reader != null) {
@@ -168,8 +167,7 @@ public class DNSSSLQueryClient implements IProviderNetwork {
                     writer.close();
                 }
             } catch (IOException e) {
-                System.err
-                        .println("Problem occured while closing output stream.");
+               log.error("Problem occured while closing output stream.");
             }
         }
     }
@@ -199,30 +197,35 @@ public class DNSSSLQueryClient implements IProviderNetwork {
             Iterator<String> naptIt = naptrArray.listIterator();
 
             if ((queryResult != null) && (queryResult.getRcode() == RCODE.REFUSED)) {
-                System.err
-                        .println("Got refused response from server.\n "
+            	
+            	log.error("Got refused response from server.\n "
                         + "Please contact NeuStar customer support, "
                         + "with the IP address and X.509 cert of the client machine");
             } else if (queryResult.getRcode() == RCODE.NXDOMAIN) {
-                System.err
-                        .println("TN not found.\n"
+            	
+            	log.error("TN not found.\n"
                         + " Please verify with NeuStar customer support that "
                         + "the terminating domain setting above matches the profile configuration");
             } else if (queryResult.getRcode() == RCODE.FORMAT_ERROR) {
-                System.err
-                        .println("The query format appears to be incorrect,\n"
+                
+            	log.error("The query format appears to be incorrect,\n"
                         + " please verify whether you are using correct ENUM format for queries");
 
             } else if (queryResult.getRcode() == RCODE.SERVFAIL) {
-                System.err
-                        .println("There was an internal server error which caused a failure to respond\n"
+            	
+            	log.error("There was an internal server error which caused a failure to respond\n"
                         + " Please report to NeuStar customer support.");
 
             } else if (queryResult.getRcode() == RCODE.SERVER_NOT_FOUND) {
-                System.err
-                        .println("Server could not be found, please check host name and port.");
+                
+            	log.error("Server could not be found, please check host name and port.");
+            	
             } else if (queryResult.getRcode() == RCODE.NO_ERROR) {
-                System.out.println("TN match success. Route = ");
+            	
+            	if(log.isDebugEnabled()){
+            		log.debug("TN match success. Route = ");
+            	}
+            	
                 naptrArray = queryResult.getNaptrArray();
                 naptIt = naptrArray.listIterator();
                 while (naptIt.hasNext()) {
@@ -230,7 +233,7 @@ public class DNSSSLQueryClient implements IProviderNetwork {
                     TN += " | " + naptrResult;
                 }
             } else {
-                System.err.println("Unanticipated error: "
+                log.error("Unanticipated error: "
                         + queryResult.getRcode()
                         + ". Please contact NeuStar customer support");
             }
@@ -239,8 +242,7 @@ public class DNSSSLQueryClient implements IProviderNetwork {
             sslResolver.cleanUp();
 
         } catch (Exception e) {
-            System.err.println("Exception occured while sending single query");
-            e.printStackTrace();
+            log.error("Exception occured while sending single query" + e);
         }
         return TN;
     }
@@ -264,8 +266,7 @@ public class DNSSSLQueryClient implements IProviderNetwork {
              // perform query for ingle TN
             TN = performSingleQuery(countryCode, endUser, MCCconfig, sslResolver);
         } catch (Exception ioe) {
-            System.err.println("Error while creating SSL socket");
-            ioe.printStackTrace();            
+            log.error("Error while creating SSL socket" + ioe);           
         }
        
         return null;
