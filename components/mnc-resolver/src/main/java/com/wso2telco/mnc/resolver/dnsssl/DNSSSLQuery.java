@@ -17,6 +17,8 @@ package com.wso2telco.mnc.resolver.dnsssl;
 
 import java.util.ArrayList;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.xbill.DNS.DClass;
 import org.xbill.DNS.Message;
 import org.xbill.DNS.Name;
@@ -47,6 +49,10 @@ public class DNSSSLQuery implements DNSResponseCode {
 	 * @return the DNS query result
 	 * @throws Exception the exception
 	 */
+	
+    /** The log. */
+    private static Log log = LogFactory.getLog(DNSSSLQuery.class);
+	
 	public DNSQueryResult execute(final String countryCode,
 			final String tn, final MCCConfiguration config,
 			final SSLResolver sslResolver)
@@ -59,7 +65,8 @@ public class DNSSSLQuery implements DNSResponseCode {
 			Integer.parseInt(countryCode);
 			Long.parseLong(tn);
 		} catch (NumberFormatException ne) {
-			System.err.println("TN or country code should be numeric");
+			//System.err.println("TN or country code should be numeric");
+			log.error("TN or country code should be numeric");
 			throw new NumberFormatException("TN or country code should be numeric");
 		}
 
@@ -123,12 +130,11 @@ public class DNSSSLQuery implements DNSResponseCode {
 				}
 
 			}  catch (Exception e) {
-				System.err.println("Error occured in bulk queries flow ");
-				e.printStackTrace();
+				log.error("Error occured in bulk queries flow "  + e);
 				queryResult.setRcode(RCODE.UNANTICIPATED);
 			}
 		} else {
-			System.err.println("Error in parsing the number: CC["
+			log.error("Error in parsing the number: CC["
 					+ countryCode + "] Number["
 					+ tn + "]");
 		}
