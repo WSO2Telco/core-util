@@ -35,6 +35,9 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
  
 
 // TODO: Auto-generated Javadoc
@@ -42,6 +45,9 @@ import javax.net.ssl.X509TrustManager;
  * The Class SSLClient.
  */
 public class SSLClient {
+	
+    /** The log. */
+    private static Log log = LogFactory.getLog(SSLClient.class);
 
 	/** The Constant OFFSET. */
 	private static final int OFFSET = 0;
@@ -198,7 +204,7 @@ public class SSLClient {
 				sslis.close();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("Error occurred "+e );
 		}
 	}
 }
