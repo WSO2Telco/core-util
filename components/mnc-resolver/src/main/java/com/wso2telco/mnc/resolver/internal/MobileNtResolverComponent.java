@@ -42,7 +42,9 @@ public class MobileNtResolverComponent {
     protected void activate(ComponentContext ctx) {
         try {
             DataHolder.getInstance().setMobileCountryConfig(ConfigLoader.getInstance().getMobileCountryConfig());
+            if (log.isDebugEnabled()) {
             log.debug("Mobile Network Resover configuration is activated ");
+            }
         } catch (Throwable e) {
             log.error("Mobile Network Resover configuration ", e);
         }
