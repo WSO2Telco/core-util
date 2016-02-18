@@ -73,6 +73,7 @@ public class DbUtils {
             log.info("Before DB Initialize");
             Context ctx = new InitialContext();
             axiataDatasource = (DataSource) ctx.lookup(AXIATA_DATA_SOURCE);
+            log.debug("Successfully initialized the data source: " + AXIATA_DATA_SOURCE);
         } catch (NamingException e) {
             handleException("Error while looking up the data source: " + AXIATA_DATA_SOURCE, e);
         }
@@ -251,11 +252,11 @@ public class DbUtils {
             connection = DriverManager.getConnection(connectionUrl, connectionUsername, connectionPassword);
 
         } catch (ClassNotFoundException e) {
-            System.out.println("JDBC Driver Error");
+            log.error("JDBC Driver Error " + e);
             e.printStackTrace();
             return null;
         } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console");
+            log.error("Connection Failed! Check output console " + e);
             e.printStackTrace();
             return null;
         }
@@ -274,6 +275,7 @@ public class DbUtils {
         System.out.println();
         //System.out.println("  Disconnect from database.");
 
+        log.debug("Disconnect from database");
         // makes all changes made since the previous commit/rollback permanent
         // and releases any database locks currrently held by the Connection.
         con.commit();

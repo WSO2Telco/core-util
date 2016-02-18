@@ -96,6 +96,7 @@ public class AxiataDbService {
 
             sql = "INSERT INTO ussd_request_entry (axiataid,notifyurl) "
                     + "VALUES (" + newid + ",'" + notifyurl + "')";
+            log.debug("Inserting into ussd_request_entry : " + sql);
             st.executeUpdate(sql);
 
         } catch (Exception e) {
@@ -133,6 +134,7 @@ public class AxiataDbService {
             String sql = "DELETE FROM ussd_request_entry "
                     + "WHERE axiataid = " + axiataid + "";
 
+            log.debug("Deleting from ussd_request_entry : " + sql);
             st.executeUpdate(sql);
 
         } catch (Exception e) {
@@ -167,6 +169,7 @@ public class AxiataDbService {
             String sql = "SELECT notifyurl "
                     + "FROM ussd_request_entry "
                     + "WHERE axiataid = " + axiataid + "";
+            log.debug("Retrieving from ussd_request_entry : " + sql);
 
             rs = st.executeQuery(sql);
 
@@ -216,6 +219,7 @@ public class AxiataDbService {
 
             sql = "INSERT INTO subscriptions (axiataid,notifyurl) "
                     + "VALUES (" + newid + ",'" + notifyurl + "')";
+            log.debug("Inserting into subscriptions : " + sql);
             st.executeUpdate(sql);
 
         } catch (Exception e) {
@@ -260,6 +264,7 @@ public class AxiataDbService {
 
             sql = "INSERT INTO outbound_subscriptions (axiataid,notifyurl) "
                     + "VALUES (" + newid + ",'" + notifyurl + "')";
+            log.debug("Inserting into outbound subscriptions : " + sql);
             st.executeUpdate(sql);
 
         } catch (Exception e) {
@@ -298,6 +303,7 @@ public class AxiataDbService {
             for (Operatorsubs d : domainsubs) {
                 sql = "INSERT INTO operatorsubs (axiataid,domainurl,operator) "
                         + "VALUES (" + axiataid + "," + "'" + d.getDomain() + "','" + d.getOperator() + "')";
+                log.debug("Inserting into operatorsubs : " + sql);
                 st.executeUpdate(sql);
             }
 
@@ -376,6 +382,7 @@ public class AxiataDbService {
             String sql = "UPDATE operators "
                     + "SET refreshtoken='" + refreshtoken + "',tokenvalidity=" + tokenvalidity + ",tokentime=" + tokentime + ",token='" + token + "' "
                     + "WHERE id =" + id;
+            log.debug("Updating operators : " + sql);
 
             st.executeUpdate(sql);
 
@@ -411,6 +418,7 @@ public class AxiataDbService {
             String sql = "SELECT domainurl,operator "
                     + "FROM operatorsubs "
                     + "WHERE axiataid = " + axiataid + "";
+            log.debug("Retrieving from operatorsubs : " + sql);
 
             rs = st.executeQuery(sql);
             //boolean first = true;
@@ -419,7 +427,7 @@ public class AxiataDbService {
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while selecting selecting from operatorsubs. ", e);
+            DbUtils.handleException("Error while selecting from operatorsubs. ", e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -452,6 +460,7 @@ public class AxiataDbService {
                     + "FROM outbound_operatorsubs "
                     + "WHERE axiataid = " + axiataid + "";
 
+            log.debug("Retrieving from outbound_operatorsubs : " + sql);
             rs = st.executeQuery(sql);
             //boolean first = true;
             while (rs.next()) {
@@ -459,7 +468,7 @@ public class AxiataDbService {
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while selecting selecting from operatorsubs. ", e);
+            DbUtils.handleException("Error while selecting from outbound_operatorsubs. ", e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -493,8 +502,9 @@ public class AxiataDbService {
             String sql = "SELECT oa.id id,oa.applicationid,oa.operatorid,o.operatorname,o.refreshtoken,o.tokenvalidity,o.tokentime,o.token, o.tokenurl, o.tokenauth "
                     + "FROM operatorapps oa, operators o "
                     + "WHERE oa.operatorid = o.id AND oa.isactive = 1  AND oa.applicationid = '" + axiataid + "'";
+            log.debug("Retrieving from operatorapps, operators : " + sql);
             
-            System.out.println(sql);
+//            System.out.println(sql);
             rs = st.executeQuery(sql);
 
             while (rs.next()) {
@@ -547,6 +557,7 @@ public class AxiataDbService {
             String sql = "SELECT notifyurl "
                     + "FROM outbound_subscriptions "
                     + "WHERE axiataid = " + axiataid + "";
+            log.debug("Retrieving from outbound_subscriptions : " + sql);
 
             rs = st.executeQuery(sql);
 
@@ -555,7 +566,7 @@ public class AxiataDbService {
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from subscriptions. ", e);
+            DbUtils.handleException("Error while selecting from outbound_subscriptions. ", e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -587,6 +598,7 @@ public class AxiataDbService {
             String sql = "SELECT notifyurl "
                     + "FROM subscriptions "
                     + "WHERE axiataid = " + axiataid + "";
+            log.debug("Retrieving from subscriptions : " + sql);
 
             rs = st.executeQuery(sql);
 
@@ -627,11 +639,13 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "DELETE FROM subscriptions "
                     + "WHERE axiataid = " + axiataid + "";
+            log.debug("Deleting from subscriptions : " + sql);
 
             st.executeUpdate(sql);
 
             sql = "DELETE FROM operatorsubs "
                     + "WHERE axiataid = " + axiataid + "";
+            log.debug("Deleting from operatorsubs : " + sql);
 
             st.executeUpdate(sql);
 
@@ -667,11 +681,13 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "DELETE FROM outbound_subscriptions "
                     + "WHERE axiataid = " + axiataid + "";
+            log.debug("Deletng from outbound_subscriptions : " + sql);
 
             st.executeUpdate(sql);
 
             sql = "DELETE FROM outbound_operatorsubs "
                     + "WHERE axiataid = " + axiataid + "";
+            log.debug("Retrieving from outbound_operatorsubs : " + sql);
 
             st.executeUpdate(sql);
 
@@ -712,6 +728,7 @@ public class AxiataDbService {
                     + "WHERE applicationid = " + appid + " "
                     + "AND isactive = 1"
                     + ")";
+            log.debug("Retrieving from operatorendpoints, operators : " + sql);
 
             rs = st.executeQuery(sql);
 
@@ -758,6 +775,7 @@ public class AxiataDbService {
                 String sql = "SELECT operatorid,operatorname,api,endpoint "
                         + "FROM operatorendpoints, operators "
                         + "WHERE operatorendpoints.operatorid = operators.id";
+                log.debug("Retrieving from operatorendpoints, operators : " + sql);
 
                 rs = st.executeQuery(sql);
 
@@ -805,6 +823,7 @@ public class AxiataDbService {
                     + "SET isactive=" + opactive + " "
                     + "WHERE applicationid =" + axiataid + " "
                     + "AND operatorid = " + operatorid + "";
+            log.debug("Updating operatorapps : " + sql);
 
             st.executeUpdate(sql);
 
@@ -876,6 +895,7 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "SELECT ID, operatorname "
                     + "FROM operators";
+            log.debug("Retrieving from operators : " + sql);
 
             rs = st.executeQuery(sql);
 
@@ -930,7 +950,8 @@ public class AxiataDbService {
             log.debug("Final inputStr : " + inputStr);
             
             String sql = "INSERT INTO endpointapps (endpointid, applicationid, isactive) VALUES " + inputStr;
-            log.debug("sql : " + sql);
+            log.debug("Inserting into endpointapps : " + sql);
+//            log.debug("sql : " + sql);
             
             st = con.createStatement();
             st.executeUpdate(sql);
@@ -962,6 +983,7 @@ public class AxiataDbService {
             String sql = "UPDATE endpointapps SET isactive=" + status
                     + " WHERE endpointid=" + opEndpointID
                     + " AND applicationid=" + appID;
+            log.debug("Updating endpointapps : " + sql);
 
             st = con.createStatement();
             st.executeUpdate(sql);
@@ -994,6 +1016,7 @@ public class AxiataDbService {
 
             st = con.createStatement();
             String sql = "SELECT ID,operatorid,api FROM operatorendpoints";
+            log.debug("Retrieving from operatorendpoints : " + sql);
 
             rs = st.executeQuery(sql);
 
@@ -1037,6 +1060,7 @@ public class AxiataDbService {
                     + "SET isactive=" + status + " "
                     + "WHERE applicationid =" + axiataId + " "
                     + "AND operatorid = " + operatorId + "";
+            log.debug("Retrieving from operatorapps : " + sql);
 
             st.executeUpdate(sql);
 
@@ -1067,6 +1091,7 @@ public class AxiataDbService {
 
             String sql = "INSERT INTO subscription_validator (application_id, api_id, validator_id) VALUES "
                     + "(" + appID + "," + apiID + "," + validatorID + ")";
+            log.debug("Inserting into subscription_validator : " + sql);
             st = con.createStatement();
             st.executeUpdate(sql);
 
@@ -1116,6 +1141,7 @@ public class AxiataDbService {
                     + "AND operatorname = '" + operatorid + "' "
                     + "AND subscriber = '" + subscriber + "' "
                     + "AND lower(merchant) = '" + merchant.toLowerCase() + "'";
+            log.debug("Retrieving from merchantopco_blacklist, operators : " + sql);
 
             rs = st.executeQuery(sql);
             if (rs.next()) {
@@ -1128,6 +1154,7 @@ public class AxiataDbService {
                         + "AND subscriber = '" + subscriber + "' "
                         + "AND operatorname = '" + operatorid + "' "
                         + "AND lower(merchant) = '" + merchant.toLowerCase() + "'";
+                log.debug("Retrieving from merchantopco_blacklist, operators : " + sql);
 
                 rs = st.executeQuery(sql);
                 if (rs.next()) {
@@ -1302,6 +1329,7 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "SELECT id, category "
                     + "FROM valid_payment_categories";
+            log.debug("Retrieving from valid_payment_categories : " + sql);
 
             rs = st.executeQuery(sql);
 
@@ -1337,6 +1365,7 @@ public class AxiataDbService {
             }
             st = con.createStatement();
             String sql = "SELECT prefix FROM operatorcodes where countrycode='"+countryCode+"';";
+            log.debug("Retrieving from operatorcodes : " + sql);
 
             rs = st.executeQuery(sql);
 
@@ -1545,7 +1574,7 @@ public class AxiataDbService {
             String sql = "SELECT o.operatorid FROM endpointapps e,operatorendpoints o "
             		+ " where o.id = e.endpointid AND e.applicationid = " + appId + " AND e.isactive = 1 AND o.api='" + apitype + "'";
             
-            log.debug("[Dbutils] sql : " + sql);
+            log.debug("Retrieving from endpointapps, operatorendpoints : " + sql);
             rs = st.executeQuery(sql);
 
             while (rs.next()) {
@@ -1586,7 +1615,7 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "SELECT consumer_key, token FROM sp_token ";
 
-            log.debug("[Dbutils] sql : " + sql);
+            log.debug("Retrieving from sp_token : " + sql);
             rs = st.executeQuery(sql);
 
             while (rs.next()) {
