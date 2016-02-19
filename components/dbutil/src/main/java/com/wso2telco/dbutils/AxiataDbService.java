@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.wso2telco.dbutils;
 
+import com.wso2telco.dbutils.enums.DBTableNames;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -39,15 +40,25 @@ public class AxiataDbService {
     
     /** The Constant AXIATA_MEDIATOR_CACHE_MANAGER. */
     private static final String AXIATA_MEDIATOR_CACHE_MANAGER = "AxiataMediatorCacheManager";
+
+    private static final String TABLE_INSERT_LOG = "Inserting into table ";
+    private static final String TABLE_UPDATE_LOG = "Updating table ";
+    private static final String TABLE_RETRIEVE_LOG = "Retrieving from table ";
+    private static final String TABLE_DELETE_LOG = "Deleting from table ";
+    private static final String TABLE_INSERT_ERROR_LOG = "Error while inserting into table ";
+    private static final String TABLE_UPDATE_ERROR_LOG = "Error while updating table ";
+    private static final String TABLE_RETRIEVE_ERROR_LOG = "Error while retrieving from table ";
+    private static final String TABLE_DELETE_ERROR_LOG = "Error while deleting from table ";
+    private static final String COLAN = " : ";
     
     /** The Constant MSISDN_SPEND_LIMIT_TABLE. */
-    private static final String MSISDN_SPEND_LIMIT_TABLE = "spendlimitexceeded_msisdn";
+//    private static final String MSISDN_SPEND_LIMIT_TABLE = "spendlimitexceeded_msisdn";
     
     /** The Constant APPLICATION_SPEND_LIMIT_TABLE. */
-    private static final String APPLICATION_SPEND_LIMIT_TABLE = "spendlimitexceeded_application";
+//    private static final String APPLICATION_SPEND_LIMIT_TABLE = "spendlimitexceeded_application";
     
     /** The Constant OPERATOR_SPEND_LIMIT_TABLE. */
-    private static final String OPERATOR_SPEND_LIMIT_TABLE = "spendlimitexceeded_operator";
+//    private static final String OPERATOR_SPEND_LIMIT_TABLE = "spendlimitexceeded_operator";
 
 
     /**
@@ -56,9 +67,7 @@ public class AxiataDbService {
      * @param args the arguments
      */
     public static void main(String[] args) {
-
         try {
-             
             new AxiataDbService().insertMerchantProvision(9, "admin", "DIALOG", new String[]{"mahesh", "roshan"});
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,21 +95,29 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT MAX(axiataid) maxid "
-                    + "FROM ussd_request_entry";
+            StringBuffer sql = new StringBuffer("SELECT MAX(axiataid) maxid ")
+                                .append("FROM ")
+                                .append(DBTableNames.USSD_REQUEST_ENTRY.getTableName());
 
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery(sql.toString());
             if (rs.next()) {
                 newid = rs.getInt("maxid") + 1;
             }
 
-            sql = "INSERT INTO ussd_request_entry (axiataid,notifyurl) "
-                    + "VALUES (" + newid + ",'" + notifyurl + "')";
-            log.debug("Inserting into ussd_request_entry : " + sql);
-            st.executeUpdate(sql);
+            sql = new StringBuffer("INSERT INTO ")
+                    .append(DBTableNames.USSD_REQUEST_ENTRY.getTableName())
+                    .append(" (axiataid,notifyurl) ")
+                    .append("VALUES (")
+                    .append(newid)
+                    .append(",'")
+                    .append(notifyurl)
+                    .append("')");
+
+            log.debug(TABLE_INSERT_LOG + DBTableNames.USSD_REQUEST_ENTRY.getTableName() + COLAN + sql);
+            st.executeUpdate(sql.toString());
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to ussd_request_entry. ", e);
+            DbUtils.handleException(TABLE_INSERT_ERROR_LOG + DBTableNames.USSD_REQUEST_ENTRY.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -131,14 +148,16 @@ public class AxiataDbService {
             Integer newid = 0;
 
             st = con.createStatement();
-            String sql = "DELETE FROM ussd_request_entry "
-                    + "WHERE axiataid = " + axiataid + "";
+            StringBuffer sql = new StringBuffer("DELETE FROM ")
+                    .append(DBTableNames.USSD_REQUEST_ENTRY.getTableName())
+                    .append(" WHERE axiataid = ")
+                    .append(axiataid);
 
-            log.debug("Deleting from ussd_request_entry : " + sql);
-            st.executeUpdate(sql);
+            log.debug(TABLE_DELETE_LOG + DBTableNames.USSD_REQUEST_ENTRY.getTableName() + COLAN + sql);
+            st.executeUpdate(sql.toString());
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while deleting ussd_request_entry. ", e);
+            DbUtils.handleException(TABLE_DELETE_ERROR_LOG + DBTableNames.USSD_REQUEST_ENTRY.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, null);
         }
@@ -166,19 +185,22 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT notifyurl "
-                    + "FROM ussd_request_entry "
-                    + "WHERE axiataid = " + axiataid + "";
-            log.debug("Retrieving from ussd_request_entry : " + sql);
+            StringBuffer sql = new StringBuffer("SELECT notifyurl ")
+                    .append("FROM ")
+                    .append(DBTableNames.USSD_REQUEST_ENTRY.getTableName())
+                    .append(" WHERE axiataid = ")
+                    .append(axiataid);
 
-            rs = st.executeQuery(sql);
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.USSD_REQUEST_ENTRY.getTableName() + COLAN + sql);
+
+            rs = st.executeQuery(sql.toString());
 
             if (rs.next()) {
                 notifyurls = rs.getString("notifyurl");
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from ussd_request_entry. ", e);
+            DbUtils.handleException(TABLE_RETRIEVE_ERROR_LOG + DBTableNames.USSD_REQUEST_ENTRY.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -209,21 +231,28 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT MAX(axiataid) maxid "
-                    + "FROM subscriptions";
+            StringBuffer sql = new StringBuffer("SELECT MAX(axiataid) maxid FROM ")
+                    .append(DBTableNames.SUBSCRIPTIONS.getTableName());
 
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery(sql.toString());
             if (rs.next()) {
                 newid = rs.getInt("maxid") + 1;
             }
 
-            sql = "INSERT INTO subscriptions (axiataid,notifyurl) "
-                    + "VALUES (" + newid + ",'" + notifyurl + "')";
-            log.debug("Inserting into subscriptions : " + sql);
-            st.executeUpdate(sql);
+            sql = new StringBuffer("INSERT INTO ")
+                    .append(DBTableNames.SUBSCRIPTIONS.getTableName())
+                    .append(" (axiataid,notifyurl) ")
+                    .append("VALUES (")
+                    .append(newid)
+                    .append(",'")
+                    .append(notifyurl)
+                    .append("')");
+
+            log.debug(TABLE_INSERT_LOG +  DBTableNames.SUBSCRIPTIONS.getTableName() + COLAN + sql);
+            st.executeUpdate(sql.toString());
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to subscriptions. ", e);
+            DbUtils.handleException(TABLE_INSERT_ERROR_LOG + DBTableNames.SUBSCRIPTIONS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -254,21 +283,28 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT MAX(axiataid) maxid "
-                    + "FROM outbound_subscriptions";
+            StringBuffer sql = new StringBuffer("SELECT MAX(axiataid) maxid FROM ")
+                    .append(DBTableNames.OUTBOUND_SUBSCRIPTIONS.getTableName());
 
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery(sql.toString());
             if (rs.next()) {
                 newid = rs.getInt("maxid") + 1;
             }
 
-            sql = "INSERT INTO outbound_subscriptions (axiataid,notifyurl) "
-                    + "VALUES (" + newid + ",'" + notifyurl + "')";
-            log.debug("Inserting into outbound subscriptions : " + sql);
-            st.executeUpdate(sql);
+            sql = new StringBuffer("INSERT INTO ")
+                    .append(DBTableNames.OUTBOUND_SUBSCRIPTIONS.getTableName())
+                    .append(" (axiataid,notifyurl) ")
+                    .append("VALUES (")
+                    .append(newid)
+                    .append(",'")
+                    .append(notifyurl)
+                    .append("')");
+
+            log.debug(TABLE_INSERT_LOG + DBTableNames.OUTBOUND_SUBSCRIPTIONS.getTableName() + COLAN + sql);
+            st.executeUpdate(sql.toString());
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to subscriptions. ", e);
+            DbUtils.handleException(TABLE_INSERT_ERROR_LOG + DBTableNames.OUTBOUND_SUBSCRIPTIONS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -298,17 +334,27 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = null;
+            StringBuffer sql = null;
 
             for (Operatorsubs d : domainsubs) {
-                sql = "INSERT INTO operatorsubs (axiataid,domainurl,operator) "
-                        + "VALUES (" + axiataid + "," + "'" + d.getDomain() + "','" + d.getOperator() + "')";
-                log.debug("Inserting into operatorsubs : " + sql);
-                st.executeUpdate(sql);
+                sql = new StringBuffer("INSERT INTO ")
+                        .append(DBTableNames.OPERATORSUBS.getTableName())
+                        .append(" (axiataid,domainurl,operator) ")
+                        .append("VALUES (")
+                        .append(axiataid)
+                        .append(",")
+                        .append("'")
+                        .append(d.getDomain())
+                        .append("','")
+                        .append(d.getOperator())
+                        .append("')");
+
+                log.debug(TABLE_INSERT_LOG + DBTableNames.OPERATORSUBS.getTableName() + COLAN + sql);
+                st.executeUpdate(sql.toString());
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to operatorsubs. ", e);
+            DbUtils.handleException(TABLE_INSERT_ERROR_LOG + DBTableNames.OPERATORSUBS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, null);
         }
@@ -337,16 +383,25 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = null;
+            StringBuffer sql = null;
 
             for (Operatorsubs d : domainsubs) {
-                sql = "INSERT INTO outbound_operatorsubs (axiataid,domainurl,operator) "
-                        + "VALUES (" + axiataid + "," + "'" + d.getDomain() + "','" + d.getOperator() + "')";
-                st.executeUpdate(sql);
+                sql = new StringBuffer("INSERT INTO ")
+                        .append(DBTableNames.OUTBOUND_OPERATORSUBS.getTableName())
+                        .append(" (axiataid,domainurl,operator) ")
+                        .append("VALUES (")
+                        .append(axiataid)
+                        .append(",")
+                        .append("'")
+                        .append(d.getDomain())
+                        .append("','")
+                        .append(d.getOperator())
+                        .append("')");
+                st.executeUpdate(sql.toString());
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to operatorsubs. ", e);
+            DbUtils.handleException(TABLE_INSERT_ERROR_LOG + DBTableNames.OUTBOUND_OPERATORSUBS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, null);
         }
@@ -379,15 +434,25 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "UPDATE operators "
-                    + "SET refreshtoken='" + refreshtoken + "',tokenvalidity=" + tokenvalidity + ",tokentime=" + tokentime + ",token='" + token + "' "
-                    + "WHERE id =" + id;
-            log.debug("Updating operators : " + sql);
+            StringBuffer sql = new StringBuffer("UPDATE ")
+                    .append(DBTableNames.OPERATORS.getTableName())
+                    .append(" SET refreshtoken='")
+                    .append(refreshtoken)
+                    .append("',tokenvalidity=")
+                    .append(tokenvalidity)
+                    .append(",tokentime=")
+                    .append(tokentime)
+                    .append(",token='")
+                    .append(token)
+                    .append("' ")
+                    .append("WHERE id =")
+                    .append(id);
 
-            st.executeUpdate(sql);
+            log.debug(TABLE_UPDATE_LOG + DBTableNames.OPERATORS.getTableName() + COLAN + sql);
+            st.executeUpdate(sql.toString());
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while updating operators. ", e);
+            DbUtils.handleException(TABLE_UPDATE_ERROR_LOG + DBTableNames.OPERATORS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, null);
         }
@@ -415,19 +480,21 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT domainurl,operator "
-                    + "FROM operatorsubs "
-                    + "WHERE axiataid = " + axiataid + "";
-            log.debug("Retrieving from operatorsubs : " + sql);
+            StringBuffer sql = new StringBuffer("SELECT domainurl,operator ")
+                    .append("FROM ")
+                    .append(DBTableNames.OPERATORSUBS.getTableName())
+                    .append(" WHERE axiataid = ")
+                    .append(axiataid);
 
-            rs = st.executeQuery(sql);
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.OPERATORSUBS.getTableName() + COLAN + sql);
+            rs = st.executeQuery(sql.toString());
             //boolean first = true;
             while (rs.next()) {
                 domainsubs.add(new Operatorsubs(rs.getString("operator"), rs.getString("domainurl")));
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from operatorsubs. ", e);
+            DbUtils.handleException(TABLE_RETRIEVE_ERROR_LOG + DBTableNames.OPERATORSUBS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -456,19 +523,21 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT domainurl,operator "
-                    + "FROM outbound_operatorsubs "
-                    + "WHERE axiataid = " + axiataid + "";
+            StringBuffer sql = new StringBuffer("SELECT domainurl,operator ")
+                    .append("FROM ")
+                    .append(DBTableNames.OUTBOUND_OPERATORSUBS.getTableName())
+                    .append(" WHERE axiataid = ")
+                    .append(axiataid);
 
-            log.debug("Retrieving from outbound_operatorsubs : " + sql);
-            rs = st.executeQuery(sql);
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.OUTBOUND_OPERATORSUBS.getTableName() + COLAN + sql);
+            rs = st.executeQuery(sql.toString());
             //boolean first = true;
             while (rs.next()) {
                 domainsubs.add(new Operatorsubs(rs.getString("operator"), rs.getString("domainurl")));
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from outbound_operatorsubs. ", e);
+            DbUtils.handleException(TABLE_RETRIEVE_ERROR_LOG + DBTableNames.OUTBOUND_OPERATORSUBS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -499,13 +568,19 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT oa.id id,oa.applicationid,oa.operatorid,o.operatorname,o.refreshtoken,o.tokenvalidity,o.tokentime,o.token, o.tokenurl, o.tokenauth "
-                    + "FROM operatorapps oa, operators o "
-                    + "WHERE oa.operatorid = o.id AND oa.isactive = 1  AND oa.applicationid = '" + axiataid + "'";
-            log.debug("Retrieving from operatorapps, operators : " + sql);
-            
+            StringBuffer sql = new StringBuffer("SELECT oa.id id,oa.applicationid,oa.operatorid,o.operatorname,o.refreshtoken,o.tokenvalidity,o.tokentime,o.token, o.tokenurl, o.tokenauth ")
+                    .append("FROM ")
+                    .append(DBTableNames.OPERATOR_APPS.getTableName())
+                    .append(" oa, ")
+                    .append(DBTableNames.OPERATORS.getTableName())
+                    .append(" o ")
+                    .append("WHERE oa.operatorid = o.id AND oa.isactive = 1  AND oa.applicationid = '")
+                    .append(axiataid)
+                    .append("'");
+
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.OPERATOR_APPS.getTableName() + ", " + DBTableNames.OPERATORS.getTableName() + COLAN + sql);
 //            System.out.println(sql);
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery(sql.toString());
 
             while (rs.next()) {
                 Operator oper = new Operator();
@@ -554,12 +629,14 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT notifyurl "
-                    + "FROM outbound_subscriptions "
-                    + "WHERE axiataid = " + axiataid + "";
-            log.debug("Retrieving from outbound_subscriptions : " + sql);
+            StringBuffer sql = new StringBuffer("SELECT notifyurl ")
+                    .append("FROM ")
+                    .append(DBTableNames.OUTBOUND_SUBSCRIPTIONS.getTableName())
+                    .append(" WHERE axiataid = ")
+                    .append(axiataid);
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.OUTBOUND_SUBSCRIPTIONS.getTableName()+ COLAN + sql);
 
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery(sql.toString());
 
             if (rs.next()) {
                 notifyurls = rs.getString("notifyurl");
@@ -595,19 +672,21 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT notifyurl "
-                    + "FROM subscriptions "
-                    + "WHERE axiataid = " + axiataid + "";
-            log.debug("Retrieving from subscriptions : " + sql);
+            StringBuffer sql = new StringBuffer("SELECT notifyurl ")
+                    .append("FROM ")
+                    .append(DBTableNames.SUBSCRIPTIONS.getTableName())
+                    .append(" WHERE axiataid = ")
+                    .append(axiataid);
 
-            rs = st.executeQuery(sql);
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.SUBSCRIPTIONS.getTableName() + COLAN + sql);
+            rs = st.executeQuery(sql.toString());
 
             if (rs.next()) {
                 notifyurls = rs.getString("notifyurl");
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from subscriptions. ", e);
+            DbUtils.handleException(TABLE_RETRIEVE_ERROR_LOG + DBTableNames.SUBSCRIPTIONS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -637,20 +716,24 @@ public class AxiataDbService {
             Integer newid = 0;
 
             st = con.createStatement();
-            String sql = "DELETE FROM subscriptions "
-                    + "WHERE axiataid = " + axiataid + "";
-            log.debug("Deleting from subscriptions : " + sql);
+            StringBuffer sql = new StringBuffer("DELETE FROM ")
+                    .append(DBTableNames.SUBSCRIPTIONS.getTableName())
+                    .append(" WHERE axiataid = ")
+                    .append(axiataid);
 
-            st.executeUpdate(sql);
+            log.debug(TABLE_DELETE_LOG + DBTableNames.SUBSCRIPTIONS.getTableName() + COLAN + sql);
+            st.executeUpdate(sql.toString());
 
-            sql = "DELETE FROM operatorsubs "
-                    + "WHERE axiataid = " + axiataid + "";
-            log.debug("Deleting from operatorsubs : " + sql);
+            sql = new StringBuffer("DELETE FROM ")
+                    .append(DBTableNames.OPERATORSUBS.getTableName())
+                    .append(" WHERE axiataid = ")
+                    .append(axiataid);
 
-            st.executeUpdate(sql);
+            log.debug(TABLE_DELETE_LOG +  DBTableNames.SUBSCRIPTIONS.getTableName() + COLAN + sql);
+            st.executeUpdate(sql.toString());
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while deleting subscriptions. ", e);
+            DbUtils.handleException(TABLE_DELETE_ERROR_LOG + DBTableNames.OPERATORSUBS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, null);
         }
@@ -679,17 +762,21 @@ public class AxiataDbService {
             Integer newid = 0;
 
             st = con.createStatement();
-            String sql = "DELETE FROM outbound_subscriptions "
-                    + "WHERE axiataid = " + axiataid + "";
-            log.debug("Deletng from outbound_subscriptions : " + sql);
+            StringBuffer sql = new StringBuffer("DELETE FROM ")
+                    .append(DBTableNames.OUTBOUND_SUBSCRIPTIONS.getTableName())
+                    .append(" WHERE axiataid = ")
+                    .append(axiataid);
 
-            st.executeUpdate(sql);
+            log.debug(TABLE_DELETE_LOG + DBTableNames.OUTBOUND_SUBSCRIPTIONS.getTableName() + COLAN + sql);
+            st.executeUpdate(sql.toString());
 
-            sql = "DELETE FROM outbound_operatorsubs "
-                    + "WHERE axiataid = " + axiataid + "";
-            log.debug("Retrieving from outbound_operatorsubs : " + sql);
+            sql = new StringBuffer("DELETE FROM ")
+                    .append(DBTableNames.OUTBOUND_OPERATORSUBS.getTableName())
+                    .append(" WHERE axiataid = ")
+                    .append(axiataid);
 
-            st.executeUpdate(sql);
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.OUTBOUND_OPERATORSUBS.getTableName() + COLAN + sql);
+            st.executeUpdate(sql.toString());
 
         } catch (Exception e) {
             DbUtils.handleException("Error while deleting subscriptions. ", e);
@@ -720,17 +807,18 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT operatorendpoints.ID as ID, operatorid,operatorname,api,endpoint "
-                    + "FROM operatorendpoints, operators "
-                    + "WHERE operatorendpoints.operatorid = operators.id "
-                    + "AND operatorendpoints.id in ("
-                    + "SELECT endpointid FROM endpointapps "
-                    + "WHERE applicationid = " + appid + " "
-                    + "AND isactive = 1"
-                    + ")";
-            log.debug("Retrieving from operatorendpoints, operators : " + sql);
+            StringBuffer sql = new StringBuffer("SELECT operatorendpoints.ID as ID, operatorid,operatorname,api,endpoint ")
+                    .append("FROM operatorendpoints, operators ")
+                    .append("WHERE operatorendpoints.operatorid = operators.id ")
+                    .append("AND operatorendpoints.id in (")
+                    .append("SELECT endpointid FROM endpointapps ")
+                    .append("WHERE applicationid = ")
+                    .append(appid)
+                    .append(" AND isactive = 1")
+                    .append(")");
 
-            rs = st.executeQuery(sql);
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.OPERATOR_ENDPOINTS.getTableName() +", " + DBTableNames.OPERATORS.getTableName() + COLAN + sql);
+            rs = st.executeQuery(sql.toString());
 
             while (rs.next()) {
                 Operatorendpoint endpoint = new Operatorendpoint(rs.getInt("operatorid"), rs.getString("operatorname"), rs.getString("api"), rs.getString("endpoint"));
@@ -739,7 +827,7 @@ public class AxiataDbService {
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while retrieving operator endpoints. ", e);
+            DbUtils.handleException(TABLE_RETRIEVE_ERROR_LOG + DBTableNames.OPERATOR_ENDPOINTS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -772,12 +860,15 @@ public class AxiataDbService {
                 }
 
                 st = con.createStatement();
-                String sql = "SELECT operatorid,operatorname,api,endpoint "
-                        + "FROM operatorendpoints, operators "
-                        + "WHERE operatorendpoints.operatorid = operators.id";
-                log.debug("Retrieving from operatorendpoints, operators : " + sql);
+                StringBuffer sql = new StringBuffer("SELECT operatorid,operatorname,api,endpoint ")
+                        .append("FROM ")
+                        .append(DBTableNames.OPERATOR_ENDPOINTS.getTableName())
+                        .append(", ")
+                        .append(DBTableNames.OPERATORS.getTableName())
+                        .append(" WHERE operatorendpoints.operatorid = operators.id");
 
-                rs = st.executeQuery(sql);
+                log.debug(TABLE_RETRIEVE_LOG + DBTableNames.OPERATOR_ENDPOINTS.getTableName() + ", " + DBTableNames.OPERATORS.getTableName() + " : " + sql);
+                rs = st.executeQuery(sql.toString());
 
                 while (rs.next()) {
                     endpoints.add(new Operatorendpoint(rs.getInt("operatorid"), rs.getString("operatorname"), rs.getString("api"), rs.getString("endpoint")));
@@ -819,16 +910,23 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "UPDATE operatorapps "
-                    + "SET isactive=" + opactive + " "
-                    + "WHERE applicationid =" + axiataid + " "
-                    + "AND operatorid = " + operatorid + "";
-            log.debug("Updating operatorapps : " + sql);
+            StringBuffer sql = new StringBuffer("UPDATE ")
+                    .append(DBTableNames.OPERATOR_APPS.getTableName())
+                    .append(" SET isactive=")
+                    .append(opactive)
+                    .append(" ")
+                    .append("WHERE applicationid =")
+                    .append(axiataid)
+                    .append(" ")
+                    .append("AND operatorid = ")
+                    .append(operatorid)
+                    .append("");
+            log.debug(TABLE_UPDATE_LOG + DBTableNames.OPERATOR_APPS.getTableName() + COLAN + sql);
 
-            st.executeUpdate(sql);
+            st.executeUpdate(sql.toString());
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while updating operatorapps. ", e);
+            DbUtils.handleException(TABLE_UPDATE_ERROR_LOG + DBTableNames.OPERATOR_APPS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, null);
         }
@@ -857,15 +955,21 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = null;
+            StringBuffer sql = null;
             for (Integer d : operators) {
-                sql = "INSERT INTO operatorapps (applicationid,operatorid) "
-                        + "VALUES (" + applicationid + "," + d + ")";
-                st.executeUpdate(sql);
+                sql = new StringBuffer("INSERT INTO ")
+                        .append(DBTableNames.OPERATOR_APPS.getTableName())
+                        .append(" (applicationid,operatorid) ")
+                        .append("VALUES (")
+                        .append(applicationid)
+                        .append(",")
+                        .append(d)
+                        .append(")");
+                st.executeUpdate(sql.toString());
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to operatorapps. ", e);
+            DbUtils.handleException(TABLE_INSERT_ERROR_LOG + DBTableNames.OPERATOR_APPS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, null);
         }
@@ -893,11 +997,12 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT ID, operatorname "
-                    + "FROM operators";
-            log.debug("Retrieving from operators : " + sql);
+            StringBuffer sql = new StringBuffer("SELECT ID, operatorname ")
+                    .append("FROM ")
+                    .append(DBTableNames.OPERATORS.getTableName());
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.OPERATORS.getTableName() + COLAN + sql);
 
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery(sql.toString());
 
             while (rs.next()) {
                 Operator operator = new Operator();
@@ -907,7 +1012,7 @@ public class AxiataDbService {
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while retrieving operators. ", e);
+            DbUtils.handleException(TABLE_RETRIEVE_ERROR_LOG + DBTableNames.OPERATORS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -949,15 +1054,18 @@ public class AxiataDbService {
 
             log.debug("Final inputStr : " + inputStr);
             
-            String sql = "INSERT INTO endpointapps (endpointid, applicationid, isactive) VALUES " + inputStr;
-            log.debug("Inserting into endpointapps : " + sql);
+            StringBuffer sql = new StringBuffer("INSERT INTO ")
+                    .append(DBTableNames.ENDPOINT_APPS.getTableName())
+                    .append(" (endpointid, applicationid, isactive) VALUES ")
+                    .append(inputStr);
+            log.debug(TABLE_INSERT_LOG + DBTableNames.ENDPOINT_APPS.getTableName() + COLAN + sql);
 //            log.debug("sql : " + sql);
             
             st = con.createStatement();
-            st.executeUpdate(sql);
+            st.executeUpdate(sql.toString());
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to endpointapps. ", e);
+            DbUtils.handleException(TABLE_INSERT_ERROR_LOG + DBTableNames.ENDPOINT_APPS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, null);
         }
@@ -980,16 +1088,21 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            String sql = "UPDATE endpointapps SET isactive=" + status
-                    + " WHERE endpointid=" + opEndpointID
-                    + " AND applicationid=" + appID;
-            log.debug("Updating endpointapps : " + sql);
+            StringBuffer sql = new StringBuffer("UPDATE ")
+                    .append(DBTableNames.ENDPOINT_APPS.getTableName())
+                    .append(" SET isactive=")
+                    .append(status)
+                    .append(" WHERE endpointid=")
+                    .append(opEndpointID)
+                    .append(" AND applicationid=")
+                    .append(appID);
+            log.debug(TABLE_UPDATE_LOG + DBTableNames.ENDPOINT_APPS.getTableName() + COLAN + sql);
 
             st = con.createStatement();
-            st.executeUpdate(sql);
+            st.executeUpdate(sql.toString());
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while updating endpointapps. ", e);
+            DbUtils.handleException(TABLE_UPDATE_ERROR_LOG + DBTableNames.ENDPOINT_APPS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, null);
         }
@@ -1015,10 +1128,11 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT ID,operatorid,api FROM operatorendpoints";
-            log.debug("Retrieving from operatorendpoints : " + sql);
+            StringBuffer sql = new StringBuffer("SELECT ID,operatorid,api FROM ")
+                    .append(DBTableNames.OPERATOR_ENDPOINTS.getTableName());
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.OPERATOR_ENDPOINTS.getTableName() + COLAN + sql);
 
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery(sql.toString());
 
             while (rs.next()) {
                 Operatorendpoint endpoint = new Operatorendpoint(rs.getInt("operatorid"), null, rs.getString("api"), null);
@@ -1027,7 +1141,7 @@ public class AxiataDbService {
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from operatorendpoints. ", e);
+            DbUtils.handleException(TABLE_RETRIEVE_ERROR_LOG + DBTableNames.OPERATOR_ENDPOINTS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -1056,16 +1170,22 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "UPDATE operatorapps "
-                    + "SET isactive=" + status + " "
-                    + "WHERE applicationid =" + axiataId + " "
-                    + "AND operatorid = " + operatorId + "";
-            log.debug("Retrieving from operatorapps : " + sql);
+            StringBuffer sql = new StringBuffer("UPDATE ")
+                    .append(DBTableNames.OPERATOR_APPS.getTableName())
+                    .append(" SET isactive=")
+                    .append(status)
+                    .append(" ")
+                    .append("WHERE applicationid =")
+                    .append(axiataId)
+                    .append(" ")
+                    .append("AND operatorid = ")
+                    .append(operatorId);
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.OPERATOR_APPS.getTableName() + COLAN + sql);
 
-            st.executeUpdate(sql);
+            st.executeUpdate(sql.toString());
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while updating operatorapps. ", e);
+            DbUtils.handleException(TABLE_UPDATE_ERROR_LOG + DBTableNames.OPERATOR_APPS.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, null);
         }
@@ -1089,14 +1209,22 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            String sql = "INSERT INTO subscription_validator (application_id, api_id, validator_id) VALUES "
-                    + "(" + appID + "," + apiID + "," + validatorID + ")";
-            log.debug("Inserting into subscription_validator : " + sql);
+            StringBuffer sql = new StringBuffer("INSERT INTO ")
+                    .append(DBTableNames.SUBSCRIPTION_VALIDATOR.getTableName())
+                    .append(" (application_id, api_id, validator_id) VALUES ")
+                    .append("(")
+                    .append(appID)
+                    .append(",")
+                    .append(apiID)
+                    .append(",")
+                    .append(validatorID)
+                    .append(")");
+            log.debug(TABLE_INSERT_LOG + DBTableNames.SUBSCRIPTION_VALIDATOR.getTableName() + COLAN + sql);
             st = con.createStatement();
-            st.executeUpdate(sql);
+            st.executeUpdate(sql.toString());
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to subscription_validator. ", e);
+            DbUtils.handleException(TABLE_INSERT_ERROR_LOG + DBTableNames.SUBSCRIPTION_VALIDATOR.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, null);
         }
@@ -1134,29 +1262,35 @@ public class AxiataDbService {
 
             //is aggrigator
             st = con.createStatement();
-            String sql = "SELECT merchantopco_blacklist.id id "
-                    + "FROM merchantopco_blacklist, operators "
-                    + "WHERE merchantopco_blacklist.operator_id = operators.id "
-                    + "AND application_id = " + appid + " "
-                    + "AND operatorname = '" + operatorid + "' "
-                    + "AND subscriber = '" + subscriber + "' "
-                    + "AND lower(merchant) = '" + merchant.toLowerCase() + "'";
-            log.debug("Retrieving from merchantopco_blacklist, operators : " + sql);
+            StringBuffer sql = new StringBuffer("SELECT merchantopco_blacklist.id id ")
+                    .append("FROM ")
+                    .append(DBTableNames.MERCHANTOPCO_BLACKLIST.getTableName())
+                    .append(", ")
+                    .append(DBTableNames.OPERATORS.getTableName())
+                    .append(" WHERE merchantopco_blacklist.operator_id = operators.id ")
+                    .append("AND application_id = ").append(appid).append(" ")
+                    .append("AND operatorname = '").append(operatorid).append("' ")
+                    .append("AND subscriber = '").append(subscriber).append("' ")
+                    .append("AND lower(merchant) = '").append(merchant.toLowerCase()).append("'");
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.MERCHANTOPCO_BLACKLIST.getTableName() + ", " + DBTableNames.OPERATORS.getTableName() + COLAN + sql);
 
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery(sql.toString());
             if (rs.next()) {
                 resultcode = String.valueOf(rs.getInt("id"));
             } else {
-                sql = "SELECT merchantopco_blacklist.id id "
-                        + "FROM merchantopco_blacklist, operators "
-                        + "WHERE merchantopco_blacklist.operator_id = operators.id "
-                        + "AND application_id is null "
-                        + "AND subscriber = '" + subscriber + "' "
-                        + "AND operatorname = '" + operatorid + "' "
-                        + "AND lower(merchant) = '" + merchant.toLowerCase() + "'";
-                log.debug("Retrieving from merchantopco_blacklist, operators : " + sql);
+                sql = new StringBuffer("SELECT merchantopco_blacklist.id id ")
+                        .append("FROM ")
+                        .append(DBTableNames.MERCHANTOPCO_BLACKLIST.getTableName())
+                        .append(", ")
+                        .append(DBTableNames.OPERATORS.getTableName())
+                        .append(" WHERE merchantopco_blacklist.operator_id = operators.id ")
+                        .append("AND application_id is null ")
+                        .append("AND subscriber = '").append(subscriber).append("' ")
+                        .append("AND operatorname = '").append(operatorid).append("' ")
+                        .append("AND lower(merchant) = '").append( merchant.toLowerCase()).append("'");
+                log.debug(TABLE_RETRIEVE_LOG + DBTableNames.MERCHANTOPCO_BLACKLIST.getTableName() + ", " + DBTableNames.OPERATORS.getTableName() + COLAN + sql);
 
-                rs = st.executeQuery(sql);
+                rs = st.executeQuery(sql.toString());
                 if (rs.next()) {
                     resultcode = String.valueOf(rs.getInt("id"));
                 }
@@ -1193,11 +1327,14 @@ public class AxiataDbService {
             con = DbUtils.getAxiataDBConnection();
 
             st = con.createStatement();
-            String sql = "SELECT id "
-                    + "FROM operators "
-                    + "WHERE operatorname = '" + operator + "'";
+            StringBuffer sql = new StringBuffer("SELECT id ")
+                    .append("FROM ")
+                    .append(DBTableNames.OPERATORS.getTableName())
+                    .append(" WHERE operatorname = '")
+                    .append(operator)
+                    .append("'");
 
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery(sql.toString());
 
             int operatorid = 0;
             if (rs.next()) {
@@ -1208,10 +1345,12 @@ public class AxiataDbService {
 
             pst = null;
             for (int i = 0; i < merchants.length; i++) {
-                sql = "INSERT INTO merchantopco_blacklist (application_id, operator_id, subscriber, merchant) VALUES "
-                        + "(?, ?, ?, ?)";
+                sql = new StringBuffer("INSERT INTO ")
+                        .append(DBTableNames.MERCHANTOPCO_BLACKLIST.getTableName())
+                        .append(" (application_id, operator_id, subscriber, merchant) VALUES ")
+                        .append("(?, ?, ?, ?)");
 
-                pst = con.prepareStatement(sql);
+                pst = con.prepareStatement(sql.toString());
                 if (appID == null) {
                     pst.setNull(1, Types.INTEGER);
                 } else {
@@ -1255,11 +1394,14 @@ public class AxiataDbService {
             con = DbUtils.getAxiataDBConnection();
 
             st = con.createStatement();
-            String sql = "SELECT id "
-                    + "FROM operators "
-                    + "WHERE operatorname = '" + operator + "'";
+            StringBuffer sql = new StringBuffer("SELECT id ")
+                    .append("FROM ")
+                    .append(DBTableNames.OPERATORS.getTableName())
+                    .append(" WHERE operatorname = '")
+                    .append(operator)
+                    .append("'");
 
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery(sql.toString());
 
             int operatorid = 0;
             if (rs.next()) {
@@ -1273,10 +1415,11 @@ public class AxiataDbService {
             for (int i = 0; i < merchants.length; i++) {
 
                 if (appID == null) {
-                    sql = "DELETE FROM merchantopco_blacklist "
-                            + "WHERE application_id is null AND operator_id = ? AND subscriber = ? AND merchant = ?";
+                    sql = new StringBuffer("DELETE FROM ")
+                            .append(DBTableNames.MERCHANTOPCO_BLACKLIST.getTableName())
+                            .append(" WHERE application_id is null AND operator_id = ? AND subscriber = ? AND merchant = ?");
 
-                    pst = con.prepareStatement(sql);
+                    pst = con.prepareStatement(sql.toString());
 
                     pst.setInt(1, operatorid);
                     pst.setString(2, subscriber);
@@ -1284,10 +1427,11 @@ public class AxiataDbService {
                     pst.executeUpdate();
 
                 } else {
-                    sql = "DELETE FROM merchantopco_blacklist "
-                            + "WHERE application_id = ? AND operator_id = ? AND subscriber = ? AND merchant = ?";
+                    sql = new StringBuffer("DELETE FROM ")
+                            .append(DBTableNames.MERCHANTOPCO_BLACKLIST.getTableName())
+                            .append(" WHERE application_id = ? AND operator_id = ? AND subscriber = ? AND merchant = ?");
 
-                    pst = con.prepareStatement(sql);
+                    pst = con.prepareStatement(sql.toString());
 
                     pst.setInt(1, appID);
                     pst.setInt(2, operatorid);
@@ -1327,18 +1471,19 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT id, category "
-                    + "FROM valid_payment_categories";
-            log.debug("Retrieving from valid_payment_categories : " + sql);
+            StringBuffer sql = new StringBuffer("SELECT id, category ")
+                    .append("FROM ")
+                    .append(DBTableNames.VALID_PAYMENT_CATEGORIES.getTableName());
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.VALID_PAYMENT_CATEGORIES.getTableName() + COLAN + sql);
 
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery(sql.toString());
 
             while (rs.next()) {                
                 categories.add(rs.getString("category"));
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while retrieving valid payment categories. ", e);
+            DbUtils.handleException(TABLE_RETRIEVE_ERROR_LOG + DBTableNames.VALID_PAYMENT_CATEGORIES.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -1364,10 +1509,14 @@ public class AxiataDbService {
                 throw new Exception("Connection not found");
             }
             st = con.createStatement();
-            String sql = "SELECT prefix FROM operatorcodes where countrycode='"+countryCode+"';";
-            log.debug("Retrieving from operatorcodes : " + sql);
+            StringBuffer sql = new StringBuffer("SELECT prefix FROM ")
+                    .append(DBTableNames.OPERATOR_CODES.getTableName())
+                    .append(" where countrycode='")
+                    .append(countryCode)
+                    .append("';");
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.OPERATOR_CODES.getTableName() + COLAN + sql);
 
-            rs = st.executeQuery(sql);
+            rs = st.executeQuery(sql.toString());
 
             if (rs.next()) {
                 prefix = rs.getString("prefix");
@@ -1398,8 +1547,10 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            String sql = "SELECT exists (SELECT 1 FROM " + MSISDN_SPEND_LIMIT_TABLE + " where msisdn=? LIMIT 1)";
-            ps = con.prepareStatement(sql);
+            StringBuffer sql = new StringBuffer("SELECT exists (SELECT 1 FROM ")
+                    .append(DBTableNames.MSISDN_SPEND_LIMIT.getTableName())
+                    .append(" where msisdn=? LIMIT 1)");
+            ps = con.prepareStatement(sql.toString());
             ps.setString(1, msisdn);
             rs = ps.executeQuery();
 
@@ -1429,8 +1580,10 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            String sql = "SELECT exists (SELECT 1 FROM " + APPLICATION_SPEND_LIMIT_TABLE + " where consumerKey=? LIMIT 1)";
-            ps = con.prepareStatement(sql);
+            StringBuffer sql = new StringBuffer("SELECT exists (SELECT 1 FROM ")
+                    .append(DBTableNames.APPLICATION_SPEND_LIMIT.getTableName())
+                    .append(" where consumerKey=? LIMIT 1)");
+            ps = con.prepareStatement(sql.toString());
             ps.setString(1, consumerKey);
             rs = ps.executeQuery();
 
@@ -1460,8 +1613,10 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            String sql = "SELECT exists (SELECT 1 FROM " + OPERATOR_SPEND_LIMIT_TABLE + " where operatorId=? LIMIT 1)";
-            ps = con.prepareStatement(sql);
+            StringBuffer sql = new StringBuffer("SELECT exists (SELECT 1 FROM ")
+                    .append(DBTableNames.OPERATOR_SPEND_LIMIT.getTableName())
+                    .append(" where operatorId=? LIMIT 1)");
+            ps = con.prepareStatement(sql.toString());
             ps.setString(1, operatorId);
             rs = ps.executeQuery();
 
@@ -1493,9 +1648,11 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            String sql = "INSERT INTO sendsms_reqid (hub_requestid,sender_address,delivery_address,plugin_requestid) " +
-                    "VALUES (?,?,?,?)";
-            ps = con.prepareStatement(sql);
+            StringBuffer sql = new StringBuffer("INSERT INTO ")
+                    .append(DBTableNames.SENDSMS_REQID.getTableName())
+                    .append(" (hub_requestid,sender_address,delivery_address,plugin_requestid) ")
+                    .append("VALUES (?,?,?,?)");
+            ps = con.prepareStatement(sql.toString());
             ps.setString(1, requestID);
             ps.setString(2, senderAddress);
             for (Map.Entry<String, String> entry : pluginRequestIDs.entrySet()) {
@@ -1505,7 +1662,7 @@ public class AxiataDbService {
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to sendsms_reqid. ", e);
+            DbUtils.handleException(TABLE_INSERT_ERROR_LOG + DBTableNames.SENDSMS_REQID.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(ps, con, null);
         }
@@ -1530,9 +1687,11 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            String sql = "SELECT delivery_address, plugin_requestid from sendsms_reqid where hub_requestid=? AND " +
-                    "sender_address=?";
-            ps = con.prepareStatement(sql);
+            StringBuffer sql = new StringBuffer("SELECT delivery_address, plugin_requestid from ")
+                    .append(DBTableNames.SENDSMS_REQID.getTableName())
+                    .append(" where hub_requestid=? AND ")
+                    .append("sender_address=?");
+            ps = con.prepareStatement(sql.toString());
             ps.setString(1, requestID);
             ps.setString(2, senderAddress);
             rs = ps.executeQuery();
@@ -1541,7 +1700,7 @@ public class AxiataDbService {
                 pluginRequestIDs.put(rs.getString("delivery_address"), rs.getString("plugin_requestid"));
             }
         } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to sendsms_reqid. ", e);
+            DbUtils.handleException(TABLE_INSERT_ERROR_LOG + DBTableNames.SENDSMS_REQID.getTableName() , e);
         } finally {
             DbUtils.closeAllConnections(ps, con, rs);
         }
@@ -1571,11 +1730,17 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT o.operatorid FROM endpointapps e,operatorendpoints o "
-            		+ " where o.id = e.endpointid AND e.applicationid = " + appId + " AND e.isactive = 1 AND o.api='" + apitype + "'";
+            StringBuffer sql = new StringBuffer("SELECT o.operatorid FROM ")
+                    .append(DBTableNames.ENDPOINT_APPS.getTableName()).append(" e, ")
+                    .append(DBTableNames.OPERATOR_ENDPOINTS.getTableName()).append(" o ")
+                    .append(" where o.id = e.endpointid AND e.applicationid = ")
+                    .append(appId)
+                    .append(" AND e.isactive = 1 AND o.api='")
+                    .append(apitype)
+                    .append("'");
             
-            log.debug("Retrieving from endpointapps, operatorendpoints : " + sql);
-            rs = st.executeQuery(sql);
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.ENDPOINT_APPS.getTableName() + ", " + DBTableNames.OPERATOR_ENDPOINTS.getTableName() + COLAN + sql);
+            rs = st.executeQuery(sql.toString());
 
             while (rs.next()) {
                 Integer operatorid = (rs.getInt("operatorid"));
@@ -1584,7 +1749,7 @@ public class AxiataDbService {
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from endpointapps, operatorendpoints ", e);
+            DbUtils.handleException(TABLE_RETRIEVE_ERROR_LOG + DBTableNames.ENDPOINT_APPS.getTableName() + ", " + DBTableNames.OPERATOR_ENDPOINTS.getTableName() + " ", e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
@@ -1613,10 +1778,12 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            String sql = "SELECT consumer_key, token FROM sp_token ";
+            StringBuffer sql = new StringBuffer("SELECT consumer_key, token FROM ")
+                    .append(DBTableNames.SP_TOKEN.getTableName())
+                    .append(" ");
 
-            log.debug("Retrieving from sp_token : " + sql);
-            rs = st.executeQuery(sql);
+            log.debug(TABLE_RETRIEVE_LOG + DBTableNames.SP_TOKEN.getTableName() + COLAN + sql);
+            rs = st.executeQuery(sql.toString());
 
             while (rs.next()) {
                 String  consumerKey = (rs.getString("consumer_key"));
@@ -1625,7 +1792,7 @@ public class AxiataDbService {
             }
 
         } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from sp_token ", e);
+            DbUtils.handleException(TABLE_RETRIEVE_ERROR_LOG + DBTableNames.SP_TOKEN.getTableName() + " ", e);
         } finally {
             DbUtils.closeAllConnections(st, con, rs);
         }
