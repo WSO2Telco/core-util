@@ -95,7 +95,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT MAX(axiataid) maxid ")
+            StringBuilder sql = new StringBuilder("SELECT MAX(axiataid) maxid ")
                                 .append("FROM ")
                                 .append(DBTableNames.USSD_REQUEST_ENTRY.getTableName());
 
@@ -104,7 +104,7 @@ public class AxiataDbService {
                 newid = rs.getInt("maxid") + 1;
             }
 
-            sql = new StringBuffer("INSERT INTO ")
+            sql = new StringBuilder("INSERT INTO ")
                     .append(DBTableNames.USSD_REQUEST_ENTRY.getTableName())
                     .append(" (axiataid,notifyurl) ")
                     .append("VALUES (")
@@ -148,7 +148,7 @@ public class AxiataDbService {
             Integer newid = 0;
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("DELETE FROM ")
+            StringBuilder sql = new StringBuilder("DELETE FROM ")
                     .append(DBTableNames.USSD_REQUEST_ENTRY.getTableName())
                     .append(" WHERE axiataid = ")
                     .append(axiataid);
@@ -185,7 +185,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT notifyurl ")
+            StringBuilder sql = new StringBuilder("SELECT notifyurl ")
                     .append("FROM ")
                     .append(DBTableNames.USSD_REQUEST_ENTRY.getTableName())
                     .append(" WHERE axiataid = ")
@@ -231,7 +231,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT MAX(axiataid) maxid FROM ")
+            StringBuilder sql = new StringBuilder("SELECT MAX(axiataid) maxid FROM ")
                     .append(DBTableNames.SUBSCRIPTIONS.getTableName());
 
             rs = st.executeQuery(sql.toString());
@@ -239,7 +239,7 @@ public class AxiataDbService {
                 newid = rs.getInt("maxid") + 1;
             }
 
-            sql = new StringBuffer("INSERT INTO ")
+            sql = new StringBuilder("INSERT INTO ")
                     .append(DBTableNames.SUBSCRIPTIONS.getTableName())
                     .append(" (axiataid,notifyurl) ")
                     .append("VALUES (")
@@ -283,7 +283,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT MAX(axiataid) maxid FROM ")
+            StringBuilder sql = new StringBuilder("SELECT MAX(axiataid) maxid FROM ")
                     .append(DBTableNames.OUTBOUND_SUBSCRIPTIONS.getTableName());
 
             rs = st.executeQuery(sql.toString());
@@ -291,7 +291,7 @@ public class AxiataDbService {
                 newid = rs.getInt("maxid") + 1;
             }
 
-            sql = new StringBuffer("INSERT INTO ")
+            sql = new StringBuilder("INSERT INTO ")
                     .append(DBTableNames.OUTBOUND_SUBSCRIPTIONS.getTableName())
                     .append(" (axiataid,notifyurl) ")
                     .append("VALUES (")
@@ -334,10 +334,10 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = null;
+            StringBuilder sql = null;
 
             for (Operatorsubs d : domainsubs) {
-                sql = new StringBuffer("INSERT INTO ")
+                sql = new StringBuilder("INSERT INTO ")
                         .append(DBTableNames.OPERATORSUBS.getTableName())
                         .append(" (axiataid,domainurl,operator) ")
                         .append("VALUES (")
@@ -383,10 +383,10 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = null;
+            StringBuilder sql = null;
 
             for (Operatorsubs d : domainsubs) {
-                sql = new StringBuffer("INSERT INTO ")
+                sql = new StringBuilder("INSERT INTO ")
                         .append(DBTableNames.OUTBOUND_OPERATORSUBS.getTableName())
                         .append(" (axiataid,domainurl,operator) ")
                         .append("VALUES (")
@@ -434,7 +434,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("UPDATE ")
+            StringBuilder sql = new StringBuilder("UPDATE ")
                     .append(DBTableNames.OPERATORS.getTableName())
                     .append(" SET refreshtoken='")
                     .append(refreshtoken)
@@ -480,7 +480,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT domainurl,operator ")
+            StringBuilder sql = new StringBuilder("SELECT domainurl,operator ")
                     .append("FROM ")
                     .append(DBTableNames.OPERATORSUBS.getTableName())
                     .append(" WHERE axiataid = ")
@@ -523,7 +523,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT domainurl,operator ")
+            StringBuilder sql = new StringBuilder("SELECT domainurl,operator ")
                     .append("FROM ")
                     .append(DBTableNames.OUTBOUND_OPERATORSUBS.getTableName())
                     .append(" WHERE axiataid = ")
@@ -568,7 +568,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT oa.id id,oa.applicationid,oa.operatorid,o.operatorname,o.refreshtoken,o.tokenvalidity,o.tokentime,o.token, o.tokenurl, o.tokenauth ")
+            StringBuilder sql = new StringBuilder("SELECT oa.id id,oa.applicationid,oa.operatorid,o.operatorname,o.refreshtoken,o.tokenvalidity,o.tokentime,o.token, o.tokenurl, o.tokenauth ")
                     .append("FROM ")
                     .append(DBTableNames.OPERATOR_APPS.getTableName())
                     .append(" oa, ")
@@ -629,7 +629,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT notifyurl ")
+            StringBuilder sql = new StringBuilder("SELECT notifyurl ")
                     .append("FROM ")
                     .append(DBTableNames.OUTBOUND_SUBSCRIPTIONS.getTableName())
                     .append(" WHERE axiataid = ")
@@ -672,7 +672,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT notifyurl ")
+            StringBuilder sql = new StringBuilder("SELECT notifyurl ")
                     .append("FROM ")
                     .append(DBTableNames.SUBSCRIPTIONS.getTableName())
                     .append(" WHERE axiataid = ")
@@ -716,7 +716,7 @@ public class AxiataDbService {
             Integer newid = 0;
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("DELETE FROM ")
+            StringBuilder sql = new StringBuilder("DELETE FROM ")
                     .append(DBTableNames.SUBSCRIPTIONS.getTableName())
                     .append(" WHERE axiataid = ")
                     .append(axiataid);
@@ -724,7 +724,7 @@ public class AxiataDbService {
             log.debug(TABLE_DELETE_LOG + DBTableNames.SUBSCRIPTIONS.getTableName() + COLAN + sql);
             st.executeUpdate(sql.toString());
 
-            sql = new StringBuffer("DELETE FROM ")
+            sql = new StringBuilder("DELETE FROM ")
                     .append(DBTableNames.OPERATORSUBS.getTableName())
                     .append(" WHERE axiataid = ")
                     .append(axiataid);
@@ -762,7 +762,7 @@ public class AxiataDbService {
             Integer newid = 0;
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("DELETE FROM ")
+            StringBuilder sql = new StringBuilder("DELETE FROM ")
                     .append(DBTableNames.OUTBOUND_SUBSCRIPTIONS.getTableName())
                     .append(" WHERE axiataid = ")
                     .append(axiataid);
@@ -770,7 +770,7 @@ public class AxiataDbService {
             log.debug(TABLE_DELETE_LOG + DBTableNames.OUTBOUND_SUBSCRIPTIONS.getTableName() + COLAN + sql);
             st.executeUpdate(sql.toString());
 
-            sql = new StringBuffer("DELETE FROM ")
+            sql = new StringBuilder("DELETE FROM ")
                     .append(DBTableNames.OUTBOUND_OPERATORSUBS.getTableName())
                     .append(" WHERE axiataid = ")
                     .append(axiataid);
@@ -807,7 +807,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT operatorendpoints.ID as ID, operatorid,operatorname,api,endpoint ")
+            StringBuilder sql = new StringBuilder("SELECT operatorendpoints.ID as ID, operatorid,operatorname,api,endpoint ")
                     .append("FROM operatorendpoints, operators ")
                     .append("WHERE operatorendpoints.operatorid = operators.id ")
                     .append("AND operatorendpoints.id in (")
@@ -860,7 +860,7 @@ public class AxiataDbService {
                 }
 
                 st = con.createStatement();
-                StringBuffer sql = new StringBuffer("SELECT operatorid,operatorname,api,endpoint ")
+                StringBuilder sql = new StringBuilder("SELECT operatorid,operatorname,api,endpoint ")
                         .append("FROM ")
                         .append(DBTableNames.OPERATOR_ENDPOINTS.getTableName())
                         .append(", ")
@@ -910,7 +910,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("UPDATE ")
+            StringBuilder sql = new StringBuilder("UPDATE ")
                     .append(DBTableNames.OPERATOR_APPS.getTableName())
                     .append(" SET isactive=")
                     .append(opactive)
@@ -955,9 +955,9 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = null;
+            StringBuilder sql = null;
             for (Integer d : operators) {
-                sql = new StringBuffer("INSERT INTO ")
+                sql = new StringBuilder("INSERT INTO ")
                         .append(DBTableNames.OPERATOR_APPS.getTableName())
                         .append(" (applicationid,operatorid) ")
                         .append("VALUES (")
@@ -997,7 +997,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT ID, operatorname ")
+            StringBuilder sql = new StringBuilder("SELECT ID, operatorname ")
                     .append("FROM ")
                     .append(DBTableNames.OPERATORS.getTableName());
             log.debug(TABLE_RETRIEVE_LOG + DBTableNames.OPERATORS.getTableName() + COLAN + sql);
@@ -1054,7 +1054,7 @@ public class AxiataDbService {
 
             log.debug("Final inputStr : " + inputStr);
             
-            StringBuffer sql = new StringBuffer("INSERT INTO ")
+            StringBuilder sql = new StringBuilder("INSERT INTO ")
                     .append(DBTableNames.ENDPOINT_APPS.getTableName())
                     .append(" (endpointid, applicationid, isactive) VALUES ")
                     .append(inputStr);
@@ -1088,7 +1088,7 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            StringBuffer sql = new StringBuffer("UPDATE ")
+            StringBuilder sql = new StringBuilder("UPDATE ")
                     .append(DBTableNames.ENDPOINT_APPS.getTableName())
                     .append(" SET isactive=")
                     .append(status)
@@ -1128,7 +1128,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT ID,operatorid,api FROM ")
+            StringBuilder sql = new StringBuilder("SELECT ID,operatorid,api FROM ")
                     .append(DBTableNames.OPERATOR_ENDPOINTS.getTableName());
             log.debug(TABLE_RETRIEVE_LOG + DBTableNames.OPERATOR_ENDPOINTS.getTableName() + COLAN + sql);
 
@@ -1170,7 +1170,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("UPDATE ")
+            StringBuilder sql = new StringBuilder("UPDATE ")
                     .append(DBTableNames.OPERATOR_APPS.getTableName())
                     .append(" SET isactive=")
                     .append(status)
@@ -1209,7 +1209,7 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            StringBuffer sql = new StringBuffer("INSERT INTO ")
+            StringBuilder sql = new StringBuilder("INSERT INTO ")
                     .append(DBTableNames.SUBSCRIPTION_VALIDATOR.getTableName())
                     .append(" (application_id, api_id, validator_id) VALUES ")
                     .append("(")
@@ -1262,7 +1262,7 @@ public class AxiataDbService {
 
             //is aggrigator
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT merchantopco_blacklist.id id ")
+            StringBuilder sql = new StringBuilder("SELECT merchantopco_blacklist.id id ")
                     .append("FROM ")
                     .append(DBTableNames.MERCHANTOPCO_BLACKLIST.getTableName())
                     .append(", ")
@@ -1278,7 +1278,7 @@ public class AxiataDbService {
             if (rs.next()) {
                 resultcode = String.valueOf(rs.getInt("id"));
             } else {
-                sql = new StringBuffer("SELECT merchantopco_blacklist.id id ")
+                sql = new StringBuilder("SELECT merchantopco_blacklist.id id ")
                         .append("FROM ")
                         .append(DBTableNames.MERCHANTOPCO_BLACKLIST.getTableName())
                         .append(", ")
@@ -1327,7 +1327,7 @@ public class AxiataDbService {
             con = DbUtils.getAxiataDBConnection();
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT id ")
+            StringBuilder sql = new StringBuilder("SELECT id ")
                     .append("FROM ")
                     .append(DBTableNames.OPERATORS.getTableName())
                     .append(" WHERE operatorname = '")
@@ -1345,7 +1345,7 @@ public class AxiataDbService {
 
             pst = null;
             for (int i = 0; i < merchants.length; i++) {
-                sql = new StringBuffer("INSERT INTO ")
+                sql = new StringBuilder("INSERT INTO ")
                         .append(DBTableNames.MERCHANTOPCO_BLACKLIST.getTableName())
                         .append(" (application_id, operator_id, subscriber, merchant) VALUES ")
                         .append("(?, ?, ?, ?)");
@@ -1394,7 +1394,7 @@ public class AxiataDbService {
             con = DbUtils.getAxiataDBConnection();
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT id ")
+            StringBuilder sql = new StringBuilder("SELECT id ")
                     .append("FROM ")
                     .append(DBTableNames.OPERATORS.getTableName())
                     .append(" WHERE operatorname = '")
@@ -1415,7 +1415,7 @@ public class AxiataDbService {
             for (int i = 0; i < merchants.length; i++) {
 
                 if (appID == null) {
-                    sql = new StringBuffer("DELETE FROM ")
+                    sql = new StringBuilder("DELETE FROM ")
                             .append(DBTableNames.MERCHANTOPCO_BLACKLIST.getTableName())
                             .append(" WHERE application_id is null AND operator_id = ? AND subscriber = ? AND merchant = ?");
 
@@ -1427,7 +1427,7 @@ public class AxiataDbService {
                     pst.executeUpdate();
 
                 } else {
-                    sql = new StringBuffer("DELETE FROM ")
+                    sql = new StringBuilder("DELETE FROM ")
                             .append(DBTableNames.MERCHANTOPCO_BLACKLIST.getTableName())
                             .append(" WHERE application_id = ? AND operator_id = ? AND subscriber = ? AND merchant = ?");
 
@@ -1471,7 +1471,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT id, category ")
+            StringBuilder sql = new StringBuilder("SELECT id, category ")
                     .append("FROM ")
                     .append(DBTableNames.VALID_PAYMENT_CATEGORIES.getTableName());
             log.debug(TABLE_RETRIEVE_LOG + DBTableNames.VALID_PAYMENT_CATEGORIES.getTableName() + COLAN + sql);
@@ -1509,7 +1509,7 @@ public class AxiataDbService {
                 throw new Exception("Connection not found");
             }
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT prefix FROM ")
+            StringBuilder sql = new StringBuilder("SELECT prefix FROM ")
                     .append(DBTableNames.OPERATOR_CODES.getTableName())
                     .append(" where countrycode='")
                     .append(countryCode)
@@ -1547,7 +1547,7 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            StringBuffer sql = new StringBuffer("SELECT exists (SELECT 1 FROM ")
+            StringBuilder sql = new StringBuilder("SELECT exists (SELECT 1 FROM ")
                     .append(DBTableNames.MSISDN_SPEND_LIMIT.getTableName())
                     .append(" where msisdn=? LIMIT 1)");
             ps = con.prepareStatement(sql.toString());
@@ -1580,7 +1580,7 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            StringBuffer sql = new StringBuffer("SELECT exists (SELECT 1 FROM ")
+            StringBuilder sql = new StringBuilder("SELECT exists (SELECT 1 FROM ")
                     .append(DBTableNames.APPLICATION_SPEND_LIMIT.getTableName())
                     .append(" where consumerKey=? LIMIT 1)");
             ps = con.prepareStatement(sql.toString());
@@ -1613,7 +1613,7 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            StringBuffer sql = new StringBuffer("SELECT exists (SELECT 1 FROM ")
+            StringBuilder sql = new StringBuilder("SELECT exists (SELECT 1 FROM ")
                     .append(DBTableNames.OPERATOR_SPEND_LIMIT.getTableName())
                     .append(" where operatorId=? LIMIT 1)");
             ps = con.prepareStatement(sql.toString());
@@ -1648,7 +1648,7 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            StringBuffer sql = new StringBuffer("INSERT INTO ")
+            StringBuilder sql = new StringBuilder("INSERT INTO ")
                     .append(DBTableNames.SENDSMS_REQID.getTableName())
                     .append(" (hub_requestid,sender_address,delivery_address,plugin_requestid) ")
                     .append("VALUES (?,?,?,?)");
@@ -1687,7 +1687,7 @@ public class AxiataDbService {
         try {
             con = DbUtils.getAxiataDBConnection();
 
-            StringBuffer sql = new StringBuffer("SELECT delivery_address, plugin_requestid from ")
+            StringBuilder sql = new StringBuilder("SELECT delivery_address, plugin_requestid from ")
                     .append(DBTableNames.SENDSMS_REQID.getTableName())
                     .append(" where hub_requestid=? AND ")
                     .append("sender_address=?");
@@ -1730,7 +1730,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT o.operatorid FROM ")
+            StringBuilder sql = new StringBuilder("SELECT o.operatorid FROM ")
                     .append(DBTableNames.ENDPOINT_APPS.getTableName()).append(" e, ")
                     .append(DBTableNames.OPERATOR_ENDPOINTS.getTableName()).append(" o ")
                     .append(" where o.id = e.endpointid AND e.applicationid = ")
@@ -1778,7 +1778,7 @@ public class AxiataDbService {
             }
 
             st = con.createStatement();
-            StringBuffer sql = new StringBuffer("SELECT consumer_key, token FROM ")
+            StringBuilder sql = new StringBuilder("SELECT consumer_key, token FROM ")
                     .append(DBTableNames.SP_TOKEN.getTableName())
                     .append(" ");
 
