@@ -18,7 +18,7 @@
 	xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/xsd/changes-1.0.0.xsd">
 	<properties>
 		<title>Core Team - Build Report</title>
-		 <author email="core-product-tech@wso2telco.com">Core Team</author>		
+		 <author email="dev@wso2telco.org">Core Team</author>		
 	</properties>
 	<body>
 		<release version="2.0.4" date="2016-02-02" description="Subsequent release">
