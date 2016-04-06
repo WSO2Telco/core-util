@@ -225,8 +225,42 @@ public class AxiataDbService {
         }
 
         return newid;
+    }
 
+    public Integer subscriptionEntry(String notifyurl, String serviceProvider) throws Exception {
 
+        Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
+        Integer newid = 0;
+
+        try {
+            con = DbUtils.getAxiataDBConnection();
+            if (con == null) {
+                throw new Exception("Connection not found");
+            }
+
+            st = con.createStatement();
+            String sql = "SELECT MAX(axiataid) maxid "
+                    + "FROM subscriptions";
+
+            rs = st.executeQuery(sql);
+            if (rs.next()) {
+                newid = rs.getInt("maxid") + 1;
+            }
+
+            sql = "INSERT INTO subscriptions (axiataid,notifyurl,service_provider) "
+                    + "VALUES (" + newid + ",'" + notifyurl + "', '" + serviceProvider + "')";
+
+            st.executeUpdate(sql);
+
+        } catch (Exception e) {
+            DbUtils.handleException("Error while inserting in to subscriptions. ", e);
+        } finally {
+            DbUtils.closeAllConnections(st, con, rs);
+        }
+
+        return newid;
     }
 
     /**
@@ -269,10 +303,44 @@ public class AxiataDbService {
         }
 
         return newid;
-
-
     }
     
+    public Integer outboundSubscriptionEntry(String notifyurl, String serviceProvider) throws Exception {
+
+        Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
+        Integer newid = 0;
+
+        try {
+            con = DbUtils.getAxiataDBConnection();
+            if (con == null) {
+                throw new Exception("Connection not found");
+            }
+
+            st = con.createStatement();
+            String sql = "SELECT MAX(axiataid) maxid "
+                    + "FROM outbound_subscriptions";
+
+            rs = st.executeQuery(sql);
+            if (rs.next()) {
+                newid = rs.getInt("maxid") + 1;
+            }
+
+            sql = "INSERT INTO outbound_subscriptions (axiataid,notifyurl,service_provider) "
+                    + "VALUES (" + newid + ",'" + notifyurl + "', '" + serviceProvider + "')";
+            st.executeUpdate(sql);
+
+        } catch (Exception e) {
+            DbUtils.handleException("Error while inserting in to subscriptions. ", e);
+        } finally {
+            DbUtils.closeAllConnections(st, con, rs);
+        }
+
+        return newid;
+    }
+
+
     /**
      * Operatorsubs entry.
      *
@@ -564,6 +632,44 @@ public class AxiataDbService {
 
     }
     
+    public HashMap<String, String> subscriptionDNNotifiMap(Integer axiataid) throws Exception {
+
+        HashMap<String, String> dnSubscriptionDetails = new HashMap<String, String>();
+        Connection con = DbUtils.getAxiataDBConnection();
+        Statement st = null;
+        ResultSet rs = null;
+        //String notifyurls = "";
+        try {
+
+            if (con == null) {
+                throw new Exception("Connection not found");
+            }
+
+            st = con.createStatement();
+            String sql = "SELECT notifyurl, service_provider "
+                    + "FROM outbound_subscriptions "
+                    + "WHERE axiataid = " + axiataid + "";
+            log.debug("subscriptionDNNotifi --> sql query : " + sql);
+            
+            rs = st.executeQuery(sql);
+
+            if (rs.next()) {
+                //notifyurls = rs.getString("notifyurl");
+                dnSubscriptionDetails.put("notifyurl", rs.getString("notifyurl"));
+                dnSubscriptionDetails.put("serviceProvider", rs.getString("service_provider"));
+            }
+
+        } catch (Exception e) {
+
+            DbUtils.handleException("Error while selecting from subscriptions. ", e);
+        } finally {
+
+            DbUtils.closeAllConnections(st, con, rs);
+        }
+
+        return dnSubscriptionDetails;
+    }
+
     /**
      * Subscription notifi.
      *
@@ -602,6 +708,43 @@ public class AxiataDbService {
 
         return notifyurls;
 
+    }
+
+    public HashMap<String, String> subscriptionNotifiMap(Integer axiataid) throws Exception {
+
+        HashMap<String, String> subscriptionDetails = new HashMap<String, String>();
+        Connection con = DbUtils.getAxiataDBConnection();
+        Statement st = null;
+        ResultSet rs = null;
+        //String notifyurls = "";
+        try {
+
+            if (con == null) {
+                throw new Exception("Connection not found");
+            }
+
+            st = con.createStatement();
+            String sql = "SELECT notifyurl, service_provider "
+                    + "FROM subscriptions "
+                    + "WHERE axiataid = " + axiataid + "";
+            log.debug("subscriptionNotifi --> sql query : " + sql);
+
+            rs = st.executeQuery(sql);
+
+            if (rs.next()) {
+                //notifyurls = rs.getString("notifyurl");
+                subscriptionDetails.put("notifyurl", rs.getString("notifyurl"));
+                subscriptionDetails.put("serviceProvider", rs.getString("service_provider"));
+            }
+        } catch (Exception e) {
+
+            DbUtils.handleException("Error while selecting from subscriptions. ", e);
+        } finally {
+
+            DbUtils.closeAllConnections(st, con, rs);
+        }
+
+        return subscriptionDetails;
     }
 
     /**
