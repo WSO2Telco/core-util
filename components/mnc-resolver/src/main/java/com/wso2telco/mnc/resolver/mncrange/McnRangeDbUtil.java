@@ -131,6 +131,34 @@ public class McnRangeDbUtil {
         return lstranges;
     }
 
+    public static String getMncBrand(String mcc, String mnc) throws MobileNtException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT operatorname "
+                + "FROM operators "
+                + "WHERE mcc = ? AND mnc = ?";
+
+        
+        String mncBrand = null;
+
+        try {
+            conn = getAxiataDBConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, mcc);
+            ps.setString(2, mnc);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                mncBrand = rs.getString("operatorname");
+            }
+        } catch (SQLException e) {
+            handleException("Error occured while getting Brand for for mcc: and mnc: " + mcc + ":" + mnc + " from the database", e);
+        } finally {
+        	McnRangeDbUtil.closeAllConnections(ps, conn, rs);
+        }
+        return mncBrand;
+  }
+    
     /**
      * Close all connections.
      *
