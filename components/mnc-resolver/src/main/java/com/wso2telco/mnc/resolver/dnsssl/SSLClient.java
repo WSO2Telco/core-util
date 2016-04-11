@@ -15,27 +15,13 @@
  ******************************************************************************/
 package com.wso2telco.mnc.resolver.dnsssl;
 
- 
-
-
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-
- 
 
 // TODO: Auto-generated Javadoc
 /**
@@ -67,11 +53,10 @@ public class SSLClient {
 	 */
 	public void initialize(final String host, final int port)
 			throws IOException, NoSuchAlgorithmException, KeyManagementException {
-		//SSLSocketFactory socketFactory = (SSLSocketFactory) SSLSocketFactory
-		//		.getDefault();
+		SSLSocketFactory socketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
 		if (sslsocket == null) {
-                    
+        /*            
                     //temp to bypass proxy
                                     TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
                 public java.security.cert.X509Certificate[] getAcceptedIssuers() {
@@ -101,8 +86,8 @@ public class SSLClient {
                 // Install the all-trusting host verifier
                 //HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
                     
-                   SSLSocketFactory socketFactory = sc.getSocketFactory();
-
+                   SSLSocketFactory socketFactory = sc.getSocketFactory(); 
+  */
 			synchronized (SSLClient.class) {
 
 				if (sslsocket == null) {
