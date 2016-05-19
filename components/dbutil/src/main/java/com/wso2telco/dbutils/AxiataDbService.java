@@ -38,15 +38,19 @@ public class AxiataDbService {
 	private static Log log = LogFactory.getLog(AxiataDbService.class);
     
     /** The Constant AXIATA_MEDIATOR_CACHE_MANAGER. */
+	@Deprecated
     private static final String AXIATA_MEDIATOR_CACHE_MANAGER = "AxiataMediatorCacheManager";
     
     /** The Constant MSISDN_SPEND_LIMIT_TABLE. */
+	@Deprecated
     private static final String MSISDN_SPEND_LIMIT_TABLE = "spendlimitexceeded_msisdn";
     
     /** The Constant APPLICATION_SPEND_LIMIT_TABLE. */
+	@Deprecated
     private static final String APPLICATION_SPEND_LIMIT_TABLE = "spendlimitexceeded_application";
     
     /** The Constant OPERATOR_SPEND_LIMIT_TABLE. */
+	@Deprecated
     private static final String OPERATOR_SPEND_LIMIT_TABLE = "spendlimitexceeded_operator";
 
 
@@ -72,6 +76,7 @@ public class AxiataDbService {
      * @return the integer
      * @throws Exception the exception
      */
+    @Deprecated
     public Integer ussdRequestEntry(String notifyurl) throws Exception {
 
         Connection con = null;
@@ -116,6 +121,7 @@ public class AxiataDbService {
      * @return true, if successful
      * @throws Exception the exception
      */
+    @Deprecated
     public boolean ussdEntryDelete(Integer axiataid) throws Exception {
 
         Connection con = DbUtils.getAxiataDBConnection();
@@ -151,6 +157,7 @@ public class AxiataDbService {
      * @return the USSD notify
      * @throws Exception the exception
      */
+    @Deprecated
     public String getUSSDNotify(Integer axiataid) throws Exception {
 
         Connection con = DbUtils.getAxiataDBConnection();
@@ -227,6 +234,7 @@ public class AxiataDbService {
         return newid;
     }
 
+    @Deprecated
     public Integer subscriptionEntry(String notifyurl, String serviceProvider) throws Exception {
 
         Connection con = null;
@@ -305,6 +313,7 @@ public class AxiataDbService {
         return newid;
     }
     
+    @Deprecated
     public Integer outboundSubscriptionEntry(String notifyurl, String serviceProvider) throws Exception {
 
         Connection con = null;
@@ -349,6 +358,7 @@ public class AxiataDbService {
      * @return true, if successful
      * @throws Exception the exception
      */
+    @Deprecated
     public boolean operatorsubsEntry(List<Operatorsubs> domainsubs, Integer axiataid) throws Exception {
 
         Connection con = null;
@@ -387,6 +397,7 @@ public class AxiataDbService {
      * @return true, if successful
      * @throws Exception the exception
      */
+    @Deprecated
     public boolean outboundOperatorsubsEntry(List<Operatorsubs> domainsubs, Integer axiataid) throws Exception {
 
         Connection con = null;
@@ -428,6 +439,7 @@ public class AxiataDbService {
      * @return the integer
      * @throws Exception the exception
      */
+    @Deprecated
     public Integer tokenUpdate(int id, String refreshtoken, long tokenvalidity, long tokentime, String token) throws Exception {
 
         Connection con = null;
@@ -463,6 +475,7 @@ public class AxiataDbService {
      * @return the list
      * @throws Exception the exception
      */
+    @Deprecated
     public List<Operatorsubs> subscriptionQuery(Integer axiataid) throws Exception {
 
         Connection con = DbUtils.getAxiataDBConnection();
@@ -503,6 +516,7 @@ public class AxiataDbService {
      * @return the list
      * @throws Exception the exception
      */
+    @Deprecated
     public List<Operatorsubs> outboudSubscriptionQuery(Integer axiataid) throws Exception {
 
         Connection con = DbUtils.getAxiataDBConnection();
@@ -543,6 +557,7 @@ public class AxiataDbService {
      * @return the list
      * @throws Exception the exception
      */
+    @Deprecated
     public List<Operator> applicationOperators(Integer axiataid) throws Exception {
 
         Connection con = DbUtils.getAxiataDBConnection();   //.getInstance().connect();
@@ -632,6 +647,7 @@ public class AxiataDbService {
 
     }
     
+    @Deprecated
     public HashMap<String, String> subscriptionDNNotifiMap(Integer axiataid) throws Exception {
 
         HashMap<String, String> dnSubscriptionDetails = new HashMap<String, String>();
@@ -710,6 +726,7 @@ public class AxiataDbService {
 
     }
 
+    @Deprecated
     public HashMap<String, String> subscriptionNotifiMap(Integer axiataid) throws Exception {
 
         HashMap<String, String> subscriptionDetails = new HashMap<String, String>();
@@ -754,6 +771,7 @@ public class AxiataDbService {
      * @return true, if successful
      * @throws Exception the exception
      */
+    @Deprecated
     public boolean subscriptionDelete(Integer axiataid) throws Exception {
 
         Connection con = DbUtils.getAxiataDBConnection();
@@ -794,6 +812,7 @@ public class AxiataDbService {
      * @return true, if successful
      * @throws Exception the exception
      */
+    @Deprecated
     public boolean outboundSubscriptionDelete(Integer axiataid) throws Exception {
 
         Connection con = DbUtils.getAxiataDBConnection();
@@ -879,6 +898,7 @@ public class AxiataDbService {
      * @return the list
      * @throws Exception the exception
      */
+    @Deprecated
     public List<Operatorendpoint> operatorEndpoints() throws Exception {
         final int opEndpointsID = 0;
 
@@ -1232,6 +1252,7 @@ public class AxiataDbService {
      * @return the string
      * @throws Exception the exception
      */
+    @Deprecated
     public String blacklistedmerchant(int appid, String operatorid, String subscriber, String merchant) throws Exception {
 
 
@@ -1430,6 +1451,7 @@ public class AxiataDbService {
      * @return the valid pay categories
      * @throws Exception the exception
      */
+    @Deprecated
     public List<String> getValidPayCategories() throws Exception {
 
         Connection con = DbUtils.getAxiataDBConnection();
@@ -1599,6 +1621,7 @@ public class AxiataDbService {
      * @return true, if successful
      * @throws AxataDBUtilException the axata db util exception
      */
+    @Deprecated
     public boolean insertSmsRequestIds(String requestID, String senderAddress, Map<String, String> pluginRequestIDs)
             throws AxataDBUtilException {
         Connection con = null;
@@ -1634,6 +1657,7 @@ public class AxiataDbService {
      * @return the sms request ids
      * @throws AxataDBUtilException the axata db util exception
      */
+    @Deprecated
     public Map<String, String> getSmsRequestIds(String requestID, String senderAddress)
             throws AxataDBUtilException {
         Connection con = null;
@@ -1671,6 +1695,7 @@ public class AxiataDbService {
 	 * @throws SQLException the SQL exception
 	 * @throws AxataDBUtilException the axata db util exception
 	 */
+    @Deprecated
 	public List<Integer> activeApplicationOperators(Integer appId,String apitype) throws SQLException, AxataDBUtilException {
 
         Connection con = null; 
