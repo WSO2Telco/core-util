@@ -37,6 +37,7 @@
 	<modules>
 		<module>components/dbutil</module>
 		<module>components/mnc-resolver</module>
+		<module>components/msisdn-validator</module>
 		<module>features</module>
 	</modules>
 
