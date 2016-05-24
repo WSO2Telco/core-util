@@ -42,15 +42,12 @@ public class AxiataDbService {
     private static final String AXIATA_MEDIATOR_CACHE_MANAGER = "AxiataMediatorCacheManager";
     
     /** The Constant MSISDN_SPEND_LIMIT_TABLE. */
-	@Deprecated
     private static final String MSISDN_SPEND_LIMIT_TABLE = "spendlimitexceeded_msisdn";
     
     /** The Constant APPLICATION_SPEND_LIMIT_TABLE. */
-	@Deprecated
     private static final String APPLICATION_SPEND_LIMIT_TABLE = "spendlimitexceeded_application";
     
     /** The Constant OPERATOR_SPEND_LIMIT_TABLE. */
-	@Deprecated
     private static final String OPERATOR_SPEND_LIMIT_TABLE = "spendlimitexceeded_operator";
 
 
