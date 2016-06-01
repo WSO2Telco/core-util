@@ -22,6 +22,7 @@ import java.io.Serializable;
 /**
  * The Class Operatorendpoint.
  */
+@Deprecated
 public class Operatorendpoint implements Serializable {
 
 	/** The id. */

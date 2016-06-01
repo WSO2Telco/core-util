@@ -92,6 +92,7 @@ public class DbUtils {
      * @throws SQLException the SQL exception
      * @throws AxataDBUtilException the axata db util exception
      */
+    @Deprecated
     public static Connection getAxiataDBConnection() throws SQLException, AxataDBUtilException {
         initializeDatasources();
 

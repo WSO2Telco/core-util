@@ -20,6 +20,7 @@ package com.wso2telco.dbutils;
 /**
  * The Class Operatorsubs.
  */
+@Deprecated
 public class Operatorsubs {
     
     /** The operator. */
