@@ -25,7 +25,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import com.wso2telco.dbutils.util.DataSourceNames;
 
 // TODO: Auto-generated Javadoc
@@ -118,19 +117,24 @@ public class DbUtils {
 
 		try {
 			if (!dbDataSourceMap.containsKey(dataSourceName)) {
+
 				Context ctx = new InitialContext();
 				dbDataSourceMap.put(dataSourceName, (DataSource) ctx.lookup(dataSourceName.jndiName()));
 			}
+
 			DataSource dbDatasource = dbDataSourceMap.get(dataSourceName);
+
 			if (dbDatasource != null) {
+
 				log.info(dataSourceName.toString() + " DB Initialize successfully.");
 				return dbDatasource.getConnection();
 			} else {
+
 				log.info(dataSourceName.toString() + " DB NOT Initialize successfully.");
 				return null;
 			}
-
 		} catch (Exception e) {
+
 			log.info("Error while looking up the data source: " + dataSourceName.toString(), e);
 			throw e;
 		}

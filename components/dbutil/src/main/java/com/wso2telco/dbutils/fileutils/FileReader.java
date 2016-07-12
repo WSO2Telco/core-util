@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.wso2telco.dbutils.fileutils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,6 +24,7 @@ import java.util.Map;
 import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.wso2.carbon.utils.CarbonUtils;
 import com.wso2telco.dbutils.util.PropertyFileNames;
 
 public class FileReader {
@@ -35,8 +37,8 @@ public class FileReader {
 		Properties props = new Properties();
 		FileInputStream fileStream = null;
 
-		String carbonHome = System.getProperty("user.dir");
-		String filePath = carbonHome + "/repository/conf/" + PropertyFileNames.MEDIATOR_CONF_FILE.getFileName();
+		String filePath = CarbonUtils.getCarbonConfigDirPath() + File.separator
+				+ PropertyFileNames.MEDIATOR_CONF_FILE.getFileName();
 
 		try {
 
