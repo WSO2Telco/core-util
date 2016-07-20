@@ -51,10 +51,10 @@ public class FileReader {
 			mediatorConfMap.put("sendSMSResourceURL", props.getProperty("sendSMSResourceURL"));
 		} catch (FileNotFoundException e) {
 
-			LOG.debug(PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " FILE NOT FOUND IN " + filePath, e);
+			LOG.debug(PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " file not found in " + filePath, e);
 		} catch (IOException e) {
 
-			LOG.debug("UNABLE TO READ " + PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " FILE ", e);
+			LOG.debug("unable to close " + PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " file ", e);
 		} finally {
 
 			try {
@@ -62,7 +62,7 @@ public class FileReader {
 				fileStream.close();
 			} catch (IOException e) {
 
-				LOG.debug("UNABLE TO CLOSE " + PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " FILE ", e);
+				LOG.debug("unable to close " + PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " file ", e);
 			}
 		}
 
