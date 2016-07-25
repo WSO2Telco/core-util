@@ -14,13 +14,10 @@
  * limitations under the License.
  ******************************************************************************/
 package com.wso2telco.dbutils;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import javax.cache.Cache;
 import javax.cache.Caching;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;

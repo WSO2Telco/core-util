@@ -15,7 +15,6 @@
  ******************************************************************************/
 package com.wso2telco.dbutils;
 
-
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +25,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import com.wso2telco.dbutils.util.DataSourceNames;
 
 // TODO: Auto-generated Javadoc
@@ -35,395 +33,456 @@ import com.wso2telco.dbutils.util.DataSourceNames;
  */
 public class DbUtils {
 
-    /** The resdb. */
-    private static DbUtils resdb;
+	/** The resdb. */
+	private static DbUtils resdb;
 
-    /** The driver class. */
-    String driverClass;
-    
-    /** The connection url. */
-    String connectionUrl;
-    
-    /** The connection username. */
-    String connectionUsername;
-    
-    /** The connection password. */
-    String connectionPassword;
+	/** The driver class. */
+	String driverClass;
 
-    /** The axiata datasource. */
-    private static volatile DataSource axiataDatasource = null;
-    
-    /** The Constant AXIATA_DATA_SOURCE. */
-    private static final String AXIATA_DATA_SOURCE = "jdbc/AXIATA_MIFE_DB";
-    
-    /** The Constant log. */
-    private static final Log log = LogFactory.getLog(DbUtils.class);
+	/** The connection url. */
+	String connectionUrl;
 
-    private static Map<DataSourceNames,DataSource> dbDataSourceMap;
-    static{
-    	dbDataSourceMap = new HashMap<DataSourceNames, DataSource>();
-    }
-    
-    /**
-     * Initialize datasources.
-     *
-     * @throws SQLException the SQL exception
-     * @throws AxataDBUtilException the axata db util exception
-     */
-    public static void initializeDatasources() throws SQLException, AxataDBUtilException {
-        if (axiataDatasource != null) {
-            return;
-        }
+	/** The connection username. */
+	String connectionUsername;
 
-        try {
-            log.info("Before DB Initialize");
-            Context ctx = new InitialContext();
-            axiataDatasource = (DataSource) ctx.lookup(AXIATA_DATA_SOURCE);
-        } catch (NamingException e) {
-            handleException("Error while looking up the data source: " + AXIATA_DATA_SOURCE, e);
-        }
-    }
+	/** The connection password. */
+	String connectionPassword;
 
-    /**
-     *  IMPORTANT : This method must be deprecated. going forward use "getDbConnection(DataSourceNames dataSourceName)" method
-     * Gets the axiata db connection.
-     *
-     * @return the axiata db connection
-     * @throws SQLException the SQL exception
-     * @throws AxataDBUtilException the axata db util exception
-     */
-    @Deprecated
-    public static Connection getAxiataDBConnection() throws SQLException, AxataDBUtilException {
-        initializeDatasources();
+	/** The axiata datasource. */
+	private static volatile DataSource axiataDatasource = null;
 
-        if (axiataDatasource != null) {
-            return axiataDatasource.getConnection();
-        }
-        throw new SQLException("Axiata Datasource not initialized properly");
-    }
+	/** The Constant AXIATA_DATA_SOURCE. */
+	private static final String AXIATA_DATA_SOURCE = "jdbc/AXIATA_MIFE_DB";
 
-    /**
-     * Gets the  db connection.
-     *
-     * @return the db connection
-     * @throws SQLException the SQL exception
-     */
-    public static synchronized Connection getDbConnection(DataSourceNames dataSourceName) throws Exception {
+	/** The Constant log. */
+	private static final Log log = LogFactory.getLog(DbUtils.class);
 
-        try {
-            if(!dbDataSourceMap.containsKey(dataSourceName)){
-            	Context ctx = new InitialContext();
-            	dbDataSourceMap.put(dataSourceName, (DataSource) ctx.lookup(dataSourceName.jndiName()));
-            }            
-            DataSource dbDatasource = dbDataSourceMap.get(dataSourceName);
-            if (dbDatasource != null) {
-           	 	log.info(dataSourceName.toString()+" DB Initialize successfully.");
-           	 	return dbDatasource.getConnection();
-           } else {
-        	   log.info(dataSourceName.toString()+" DB NOT Initialize successfully.");
-        	   return null;
-           }
+	private static Map<DataSourceNames, DataSource> dbDataSourceMap;
 
-        } catch (Exception e) {
-            log.info("Error while looking up the data source: " + dataSourceName.toString(), e);
-            throw e;
-        }
-    }
-    
-    /**
-     * Format.
-     *
-     * @param strData the str data
-     * @param finalLen the final len
-     * @return the string
-     * @throws Exception the exception
-     */
-    public static String format(String strData, int finalLen) throws Exception {
-        String finalStr;
-        if (finalLen <= strData.length()) {
-            finalStr = strData.substring(0, finalLen);
-        } else {
-            finalStr = strData;
-            for (int i = strData.length(); i < finalLen; i++) {
-                finalStr = finalStr + " ";
-            }
-        }
-        return (finalStr);
-    } // format(String, int)
+	static {
+		dbDataSourceMap = new HashMap<DataSourceNames, DataSource>();
+	}
 
-    /**
-     * Format.
-     *
-     * @param intData the int data
-     * @param finalLen the final len
-     * @return the string
-     * @throws Exception the exception
-     */
-    public static String format(int intData, int finalLen) throws Exception {
-        String strData = String.valueOf(intData);
-        String finalStr;
-        if (finalLen <= strData.length()) {
-            finalStr = strData.substring(0, finalLen);
-        } else {
-            finalStr = "";
-            for (int i = 0; i < finalLen - strData.length(); i++) {
-                finalStr = finalStr + " ";
-            }
-            finalStr = finalStr + strData;
-        }
-        return (finalStr);
-    } // format(int, int)
+	/**
+	 * Initialize datasources.
+	 *
+	 * @throws SQLException
+	 *             the SQL exception
+	 * @throws AxataDBUtilException
+	 *             the axata db util exception
+	 */
+	public static void initializeDatasources() throws SQLException, AxataDBUtilException {
+		if (axiataDatasource != null) {
+			return;
+		}
 
-    /**
-     * Format.
-     *
-     * @param integerData the integer data
-     * @param finalLen the final len
-     * @return the string
-     * @throws Exception the exception
-     */
-    public static String format(Integer integerData, int finalLen)
-            throws Exception {
-        int intData;
-        String finalStr;
+		try {
+			log.info("Before DB Initialize");
+			Context ctx = new InitialContext();
+			axiataDatasource = (DataSource) ctx.lookup(AXIATA_DATA_SOURCE);
+		} catch (NamingException e) {
+			handleException("Error while looking up the data source: " + AXIATA_DATA_SOURCE, e);
+		}
+	}
 
-        intData = integerData.intValue();
-        finalStr = format(intData, finalLen);
+	/**
+	 * IMPORTANT : This method must be deprecated. going forward use
+	 * "getDbConnection(DataSourceNames dataSourceName)" method Gets the axiata
+	 * db connection.
+	 *
+	 * @return the axiata db connection
+	 * @throws SQLException
+	 *             the SQL exception
+	 * @throws AxataDBUtilException
+	 *             the axata db util exception
+	 */
+	@Deprecated
+	public static Connection getAxiataDBConnection() throws SQLException, AxataDBUtilException {
+		initializeDatasources();
 
-        return (finalStr);
-    } // format(Integer, int)
+		if (axiataDatasource != null) {
+			return axiataDatasource.getConnection();
+		}
+		throw new SQLException("Axiata Datasource not initialized properly");
+	}
 
-    /**
-     * Format.
-     *
-     * @param doubData the doub data
-     * @param precision the precision
-     * @param scale the scale
-     * @return the string
-     * @throws Exception the exception
-     */
-    public static String format(double doubData, int precision, int scale)
-            throws Exception {
-        BigDecimal decData = new BigDecimal(doubData);
-        decData = decData.setScale(scale, BigDecimal.ROUND_HALF_EVEN);
-        String strData = decData.toString();
+	/**
+	 * Gets the db connection.
+	 *
+	 * @return the db connection
+	 * @throws SQLException
+	 *             the SQL exception
+	 */
+	public static synchronized Connection getDbConnection(DataSourceNames dataSourceName) throws Exception {
 
-        // prepare the final string
-        int finalLen = precision + 1;
-        String finalStr;
-        if (finalLen <= strData.length()) {
-            finalStr = strData.substring(0, finalLen);
-        } else {
-            finalStr = "";
-            for (int i = 0; i < finalLen - strData.length(); i++) {
-                finalStr = finalStr + " ";
-            }
-            finalStr = finalStr + strData;
-        }
+		try {
+			if (!dbDataSourceMap.containsKey(dataSourceName)) {
 
-        return (finalStr);
-    } // format(double, int, int)
+				Context ctx = new InitialContext();
+				dbDataSourceMap.put(dataSourceName, (DataSource) ctx.lookup(dataSourceName.jndiName()));
+			}
 
-    /**
-     * Format.
-     *
-     * @param decData the dec data
-     * @param precision the precision
-     * @param scale the scale
-     * @return the string
-     * @throws Exception the exception
-     */
-    public static String format(BigDecimal decData, int precision, int scale)
-            throws Exception {
-        decData = decData.setScale(scale, BigDecimal.ROUND_HALF_EVEN);
-        String strData = decData.toString();
+			DataSource dbDatasource = dbDataSourceMap.get(dataSourceName);
 
-        // prepare the final string
-        int finalLen = precision + 1;
-        String finalStr;
-        if (finalLen <= strData.length()) {
-            finalStr = strData.substring(0, finalLen);
-        } else {
-            finalStr = "";
-            for (int i = 0; i < finalLen - strData.length(); i++) {
-                finalStr = finalStr + " ";
-            }
-            finalStr = finalStr + strData;
-        }
+			if (dbDatasource != null) {
 
-        return (finalStr);
-    } // format(BigDecimal, int, int)
+				log.info(dataSourceName.toString() + " DB Initialize successfully.");
+				return dbDatasource.getConnection();
+			} else {
 
-    /**
-     * Format.
-     *
-     * @param doubleData the double data
-     * @param precision the precision
-     * @param scale the scale
-     * @return the string
-     * @throws Exception the exception
-     */
-    public static String format(Double doubleData, int precision, int scale)
-            throws Exception {
-        double doubData;
-        String finalStr;
+				log.info(dataSourceName.toString() + " DB NOT Initialize successfully.");
+				return null;
+			}
+		} catch (Exception e) {
 
-        doubData = doubleData.doubleValue();
-        return (format(doubData, precision, scale));
-    } // format(Double, int, int)
+			log.info("Error while looking up the data source: " + dataSourceName.toString(), e);
+			throw e;
+		}
+	}
 
-    /**
-     * Connect.
-     *
-     * @return the connection
-     * @throws Exception the exception
-     */
-    public Connection connect() throws Exception {
-        System.out.println("-------- JDBC Connection Init ------------");
-        Connection connection = null;
+	/**
+	 * Format.
+	 *
+	 * @param strData
+	 *            the str data
+	 * @param finalLen
+	 *            the final len
+	 * @return the string
+	 * @throws Exception
+	 *             the exception
+	 */
+	public static String format(String strData, int finalLen) throws Exception {
+		String finalStr;
+		if (finalLen <= strData.length()) {
+			finalStr = strData.substring(0, finalLen);
+		} else {
+			finalStr = strData;
+			for (int i = strData.length(); i < finalLen; i++) {
+				finalStr = finalStr + " ";
+			}
+		}
+		return (finalStr);
+	} // format(String, int)
 
-        try {
-            Class.forName(driverClass);
-            connection = DriverManager.getConnection(connectionUrl, connectionUsername, connectionPassword);
+	/**
+	 * Format.
+	 *
+	 * @param intData
+	 *            the int data
+	 * @param finalLen
+	 *            the final len
+	 * @return the string
+	 * @throws Exception
+	 *             the exception
+	 */
+	public static String format(int intData, int finalLen) throws Exception {
+		String strData = String.valueOf(intData);
+		String finalStr;
+		if (finalLen <= strData.length()) {
+			finalStr = strData.substring(0, finalLen);
+		} else {
+			finalStr = "";
+			for (int i = 0; i < finalLen - strData.length(); i++) {
+				finalStr = finalStr + " ";
+			}
+			finalStr = finalStr + strData;
+		}
+		return (finalStr);
+	} // format(int, int)
 
-        } catch (ClassNotFoundException e) {
-            System.out.println("JDBC Driver Error");
-            e.printStackTrace();
-            return null;
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console");
-            e.printStackTrace();
-            return null;
-        }
-        connection.setAutoCommit(false);
+	/**
+	 * Format.
+	 *
+	 * @param integerData
+	 *            the integer data
+	 * @param finalLen
+	 *            the final len
+	 * @return the string
+	 * @throws Exception
+	 *             the exception
+	 */
+	public static String format(Integer integerData, int finalLen) throws Exception {
+		int intData;
+		String finalStr;
 
-        return connection;
-    } // connect
+		intData = integerData.intValue();
+		finalStr = format(intData, finalLen);
 
-    /**
-     * Disconnect.
-     *
-     * @param con the con
-     * @throws Exception the exception
-     */
-    public void disconnect(Connection con) throws Exception {
-        System.out.println();
-        //System.out.println("  Disconnect from database.");
+		return (finalStr);
+	} // format(Integer, int)
 
-        // makes all changes made since the previous commit/rollback permanent
-        // and releases any database locks currrently held by the Connection.
-        con.commit();
+	/**
+	 * Format.
+	 *
+	 * @param doubData
+	 *            the doub data
+	 * @param precision
+	 *            the precision
+	 * @param scale
+	 *            the scale
+	 * @return the string
+	 * @throws Exception
+	 *             the exception
+	 */
+	public static String format(double doubData, int precision, int scale) throws Exception {
+		BigDecimal decData = new BigDecimal(doubData);
+		decData = decData.setScale(scale, BigDecimal.ROUND_HALF_EVEN);
+		String strData = decData.toString();
 
-        // immediately disconnects from database and releases JDBC resources
-        con.close();
-    } // disconnect
+		// prepare the final string
+		int finalLen = precision + 1;
+		String finalStr;
+		if (finalLen <= strData.length()) {
+			finalStr = strData.substring(0, finalLen);
+		} else {
+			finalStr = "";
+			for (int i = 0; i < finalLen - strData.length(); i++) {
+				finalStr = finalStr + " ";
+			}
+			finalStr = finalStr + strData;
+		}
 
-    /**
-     * Handle exception.
-     *
-     * @param msg the msg
-     * @param t the t
-     * @throws AxataDBUtilException the axata db util exception
-     */
-    public static void handleException(String msg, Throwable t) throws AxataDBUtilException {
-        log.error(msg, t);
-        throw new AxataDBUtilException(msg, t);
-    }
+		return (finalStr);
+	} // format(double, int, int)
 
-    /**
-     * Close all connections.
-     *
-     * @param preparedStatement the prepared statement
-     * @param connection the connection
-     * @param resultSet the result set
-     */
-    public static void closeAllConnections(PreparedStatement preparedStatement,
-            Connection connection, ResultSet resultSet) {
+	/**
+	 * Format.
+	 *
+	 * @param decData
+	 *            the dec data
+	 * @param precision
+	 *            the precision
+	 * @param scale
+	 *            the scale
+	 * @return the string
+	 * @throws Exception
+	 *             the exception
+	 */
+	public static String format(BigDecimal decData, int precision, int scale) throws Exception {
+		decData = decData.setScale(scale, BigDecimal.ROUND_HALF_EVEN);
+		String strData = decData.toString();
 
-        closeConnection(connection);
-        closeStatement(preparedStatement);
-        closeResultSet(resultSet);
-    }
+		// prepare the final string
+		int finalLen = precision + 1;
+		String finalStr;
+		if (finalLen <= strData.length()) {
+			finalStr = strData.substring(0, finalLen);
+		} else {
+			finalStr = "";
+			for (int i = 0; i < finalLen - strData.length(); i++) {
+				finalStr = finalStr + " ";
+			}
+			finalStr = finalStr + strData;
+		}
 
-    /**
-     * Close all connections.
-     *
-     * @param statement the statement
-     * @param connection the connection
-     * @param resultSet the result set
-     */
-    public static void closeAllConnections(Statement statement,
-            Connection connection, ResultSet resultSet) {
+		return (finalStr);
+	} // format(BigDecimal, int, int)
 
-        closeConnection(connection);
-        closeStatement(statement);
-        closeResultSet(resultSet);
-    }
+	/**
+	 * Format.
+	 *
+	 * @param doubleData
+	 *            the double data
+	 * @param precision
+	 *            the precision
+	 * @param scale
+	 *            the scale
+	 * @return the string
+	 * @throws Exception
+	 *             the exception
+	 */
+	public static String format(Double doubleData, int precision, int scale) throws Exception {
+		double doubData;
+		String finalStr;
 
-     
-    /**
-     * Close connection.
-     *
-     * @param dbConnection the db connection
-     */
-    private static void closeConnection(Connection dbConnection) {
-        if (dbConnection != null) {
-            try {
-                dbConnection.close();
-            } catch (SQLException e) {
-                log.warn("Database error. Could not close database connection. Continuing with "
-                        + "others. - " + e.getMessage(), e);
-            }
-        }
-    }
+		doubData = doubleData.doubleValue();
+		return (format(doubData, precision, scale));
+	} // format(Double, int, int)
 
-     
-    /**
-     * Close result set.
-     *
-     * @param resultSet the result set
-     */
-    private static void closeResultSet(ResultSet resultSet) {
-        if (resultSet != null) {
-            try {
-                resultSet.close();
-            } catch (SQLException e) {
-                log.warn("Database error. Could not close ResultSet  - " + e.getMessage(), e);
-            }
-        }
+	/**
+	 * Connect.
+	 *
+	 * @return the connection
+	 * @throws Exception
+	 *             the exception
+	 */
+	public Connection connect() throws Exception {
+		System.out.println("-------- JDBC Connection Init ------------");
+		Connection connection = null;
 
-    }
+		try {
+			Class.forName(driverClass);
+			connection = DriverManager.getConnection(connectionUrl, connectionUsername, connectionPassword);
 
-     
-    /**
-     * Close statement.
-     *
-     * @param preparedStatement the prepared statement
-     */
-    private static void closeStatement(PreparedStatement preparedStatement) {
-        if (preparedStatement != null) {
-            try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                log.warn("Database error. Could not close PreparedStatement. Continuing with"
-                        + " others. - " + e.getMessage(), e);
-            }
-        }
-    }
+		} catch (ClassNotFoundException e) {
+			System.out.println("JDBC Driver Error");
+			e.printStackTrace();
+			return null;
+		} catch (SQLException e) {
+			System.out.println("Connection Failed! Check output console");
+			e.printStackTrace();
+			return null;
+		}
+		connection.setAutoCommit(false);
 
-    /**
-     * Close statement.
-     *
-     * @param statement the statement
-     */
-    private static void closeStatement(Statement statement) {
-        if (statement != null) {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                log.warn("Database error. Could not close Statement. Continuing with"
-                        + " others. - " + e.getMessage(), e);
-            }
-        }
-    }
+		return connection;
+	} // connect
+
+	/**
+	 * Disconnect.
+	 *
+	 * @param con
+	 *            the con
+	 * @throws Exception
+	 *             the exception
+	 */
+	public void disconnect(Connection con) throws Exception {
+		System.out.println();
+		// System.out.println(" Disconnect from database.");
+
+		// makes all changes made since the previous commit/rollback permanent
+		// and releases any database locks currrently held by the Connection.
+		con.commit();
+
+		// immediately disconnects from database and releases JDBC resources
+		con.close();
+	} // disconnect
+
+	/**
+	 * Handle exception.
+	 *
+	 * @param msg
+	 *            the msg
+	 * @param t
+	 *            the t
+	 * @throws AxataDBUtilException
+	 *             the axata db util exception
+	 */
+	public static void handleException(String msg, Throwable t) throws AxataDBUtilException {
+		log.error(msg, t);
+		throw new AxataDBUtilException(msg, t);
+	}
+
+	/**
+	 * Close all connections.
+	 *
+	 * @param preparedStatement
+	 *            the prepared statement
+	 * @param connection
+	 *            the connection
+	 * @param resultSet
+	 *            the result set
+	 */
+	public static void closeAllConnections(PreparedStatement preparedStatement, Connection connection,
+			ResultSet resultSet) {
+
+		closeConnection(connection);
+		closeStatement(preparedStatement);
+		closeResultSet(resultSet);
+	}
+
+	/**
+	 * Close all connections.
+	 *
+	 * @param statement
+	 *            the statement
+	 * @param connection
+	 *            the connection
+	 * @param resultSet
+	 *            the result set
+	 */
+	public static void closeAllConnections(Statement statement, Connection connection, ResultSet resultSet) {
+
+		closeConnection(connection);
+		closeStatement(statement);
+		closeResultSet(resultSet);
+	}
+
+	/**
+	 * Close connection.
+	 *
+	 * @param dbConnection
+	 *            the db connection
+	 */
+	private static void closeConnection(Connection dbConnection) {
+
+		try {
+
+			if (dbConnection != null && dbConnection.getAutoCommit() != true) {
+
+				log.debug("DATABASE CONNECTION ACTIVE AND AUTO COMMIT FALSE");
+				dbConnection.setAutoCommit(true);
+				dbConnection.close();
+				log.debug("DATABASE CONNECTION CLOSED AND AUTO COMMIT TRUE");
+			} else if (dbConnection != null) {
+
+				log.debug("DATABASE CONNECTION ACTIVE");
+				dbConnection.close();
+				log.debug("DATABASE CONNECTION CLOSED");
+			}
+		} catch (SQLException e) {
+
+			log.error(
+					"Database error. Could not close database connection. Continuing with others. - " + e.getMessage(),
+					e);
+		}
+
+		/*
+		 * if (dbConnection != null) { try { dbConnection.close(); } catch
+		 * (SQLException e) { log.warn(
+		 * "Database error. Could not close database connection. Continuing with "
+		 * + "others. - " + e.getMessage(), e); } }
+		 */
+	}
+
+	/**
+	 * Close result set.
+	 *
+	 * @param resultSet
+	 *            the result set
+	 */
+	private static void closeResultSet(ResultSet resultSet) {
+		if (resultSet != null) {
+			try {
+				resultSet.close();
+			} catch (SQLException e) {
+				log.warn("Database error. Could not close ResultSet  - " + e.getMessage(), e);
+			}
+		}
+
+	}
+
+	/**
+	 * Close statement.
+	 *
+	 * @param preparedStatement
+	 *            the prepared statement
+	 */
+	private static void closeStatement(PreparedStatement preparedStatement) {
+		if (preparedStatement != null) {
+			try {
+				preparedStatement.close();
+			} catch (SQLException e) {
+				log.warn("Database error. Could not close PreparedStatement. Continuing with" + " others. - "
+						+ e.getMessage(), e);
+			}
+		}
+	}
+
+	/**
+	 * Close statement.
+	 *
+	 * @param statement
+	 *            the statement
+	 */
+	private static void closeStatement(Statement statement) {
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				log.warn("Database error. Could not close Statement. Continuing with" + " others. - " + e.getMessage(),
+						e);
+			}
+		}
+	}
 }
