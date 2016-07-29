@@ -410,20 +410,20 @@ public class DbUtils {
 
 			if (dbConnection != null && dbConnection.getAutoCommit() != true) {
 
-				log.debug("DATABASE CONNECTION ACTIVE AND AUTO COMMIT FALSE");
+				log.debug("database connection is active and auto commit is false");
 				dbConnection.setAutoCommit(true);
 				dbConnection.close();
-				log.debug("DATABASE CONNECTION CLOSED AND AUTO COMMIT TRUE");
+				log.debug("database connection set to close and auto commit set to true");
 			} else if (dbConnection != null) {
 
-				log.debug("DATABASE CONNECTION ACTIVE");
+				log.debug("database connection is active");
 				dbConnection.close();
-				log.debug("DATABASE CONNECTION CLOSED");
+				log.debug("database connection set to closed");
 			}
 		} catch (SQLException e) {
 
 			log.error(
-					"Database error. Could not close database connection. Continuing with others. - " + e.getMessage(),
+					"database error. Could not close database connection. continuing with others. - " + e.getMessage(),
 					e);
 		}
 
