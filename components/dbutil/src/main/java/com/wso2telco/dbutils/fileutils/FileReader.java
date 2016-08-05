@@ -29,7 +29,7 @@ import com.wso2telco.dbutils.util.PropertyFileNames;
 
 public class FileReader {
 
-	private Log LOG = LogFactory.getLog(FileReader.class);
+	private Log log = LogFactory.getLog(FileReader.class);
 
 	public Map<String, String> readMediatorConfFile() {
 
@@ -43,7 +43,9 @@ public class FileReader {
 		try {
 
 			fileStream = new FileInputStream(filePath);
+
 			props.load(fileStream);
+
 			mediatorConfMap.put("ussdGatewayEndpoint", props.getProperty("ussdGatewayEndpoint"));
 			mediatorConfMap.put("hubSubsGatewayEndpoint", props.getProperty("hubSubsGatewayEndpoint"));
 			mediatorConfMap.put("hubGateway", props.getProperty("hubGateway"));
@@ -51,10 +53,10 @@ public class FileReader {
 			mediatorConfMap.put("sendSMSResourceURL", props.getProperty("sendSMSResourceURL"));
 		} catch (FileNotFoundException e) {
 
-			LOG.debug(PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " file not found in " + filePath, e);
+			log.debug(PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " file not found in " + filePath, e);
 		} catch (IOException e) {
 
-			LOG.debug("unable to close " + PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " file ", e);
+			log.debug("unable to close " + PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " file ", e);
 		} finally {
 
 			try {
@@ -62,10 +64,83 @@ public class FileReader {
 				fileStream.close();
 			} catch (IOException e) {
 
-				LOG.debug("unable to close " + PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " file ", e);
+				log.debug("unable to close " + PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " file ", e);
 			}
 		}
 
 		return mediatorConfMap;
+	}
+
+	public Map<String, String> readOneAPIValidationConfFile() throws FileNotFoundException, IOException {
+
+		Map<String, String> oneAPIValidationConfMap = new HashMap<String, String>();
+		Properties props = new Properties();
+		FileInputStream fileStream = null;
+
+		String filePath = CarbonUtils.getCarbonConfigDirPath() + File.separator
+				+ PropertyFileNames.ONEAPI_VALIDATION_CONF_FILE.getFileName();
+
+		try {
+
+			fileStream = new FileInputStream(filePath);
+
+			props.load(fileStream);
+
+			// SMS max batch size for sendSMS
+			oneAPIValidationConfMap.put("sms.batchSize", props.getProperty("sms.batchSize"));
+			oneAPIValidationConfMap.put("sms.limitToOne", props.getProperty("sms.limitToOne"));
+
+			// API operations availability
+			oneAPIValidationConfMap.put("payment.charge", props.getProperty("payment.charge"));
+			oneAPIValidationConfMap.put("payment.refund", props.getProperty("payment.refund"));
+			oneAPIValidationConfMap.put("payment.reserve_amount", props.getProperty("payment.reserve_amount"));
+			oneAPIValidationConfMap.put("payment.reserve_additional_amount",
+					props.getProperty("payment.reserve_additional_amount"));
+			oneAPIValidationConfMap.put("payment.charge_against_reservation",
+					props.getProperty("payment.charge_against_reservation"));
+			oneAPIValidationConfMap.put("payment.release_reservation",
+					props.getProperty("payment.release_reservation"));
+			oneAPIValidationConfMap.put("payment.list_transactions", props.getProperty("payment.list_transactions"));
+
+			oneAPIValidationConfMap.put("sms.send_sms", props.getProperty("sms.send_sms"));
+			oneAPIValidationConfMap.put("sms.retrive_sms", props.getProperty("sms.retrive_sms"));
+			oneAPIValidationConfMap.put("sms.query_sms_delivery", props.getProperty("sms.query_sms_delivery"));
+			oneAPIValidationConfMap.put("sms.start_delivery_subscription",
+					props.getProperty("sms.start_delivery_subscription"));
+			oneAPIValidationConfMap.put("sms.stop_delivery_subscription",
+					props.getProperty("sms.stop_delivery_subscription"));
+			oneAPIValidationConfMap.put("sms.retrive_sms_subscriptions",
+					props.getProperty("sms.retrive_sms_subscriptions"));
+			oneAPIValidationConfMap.put("sms.cancel_retrive_sms_subscriptions",
+					props.getProperty("sms.cancel_retrive_sms_subscriptions"));
+
+			oneAPIValidationConfMap.put("lbs.location", props.getProperty("lbs.location"));
+
+			oneAPIValidationConfMap.put("ussd.ussd_send", props.getProperty("ussd.ussd_send"));
+			oneAPIValidationConfMap.put("ussd.ussd_subscription", props.getProperty("ussd.ussd_subscription"));
+			oneAPIValidationConfMap.put("ussd.stop_ussd_subscription",
+					props.getProperty("ussd.stop_ussd_subscription"));
+		} catch (FileNotFoundException e) {
+
+			log.debug(PropertyFileNames.ONEAPI_VALIDATION_CONF_FILE.getFileName() + " file not found in " + filePath,
+					e);
+			throw e;
+		} catch (IOException e) {
+
+			log.debug("unable to close " + PropertyFileNames.ONEAPI_VALIDATION_CONF_FILE.getFileName() + " file ", e);
+			throw e;
+		} finally {
+
+			try {
+
+				fileStream.close();
+			} catch (IOException e) {
+
+				log.debug("unable to close " + PropertyFileNames.ONEAPI_VALIDATION_CONF_FILE.getFileName() + " file ",
+						e);
+			}
+		}
+
+		return oneAPIValidationConfMap;
 	}
 }

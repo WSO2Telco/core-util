@@ -17,7 +17,8 @@ package com.wso2telco.dbutils.util;
 
 public enum PropertyFileNames {
 
-	MEDIATOR_CONF_FILE("mediator-conf.properties");
+	MEDIATOR_CONF_FILE("mediator-conf.properties"), 
+	ONEAPI_VALIDATION_CONF_FILE("oneapi-validation-conf.properties");
 
 	PropertyFileNames(String fileName) {
 
