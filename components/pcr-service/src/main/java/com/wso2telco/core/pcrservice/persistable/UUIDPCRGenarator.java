@@ -1,0 +1,15 @@
+package com.wso2telco.core.pcrservice.persistable;
+
+import com.wso2telco.core.pcrservice.PCRGeneratable;
+import com.wso2telco.core.pcrservice.exception.PCRException;
+import com.wso2telco.core.pcrservice.model.RequestDTO;
+
+class UUIDPCRGenarator implements PCRGeneratable{
+
+	@Override
+	public Returnable getPCR(RequestDTO dto) throws PCRException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
