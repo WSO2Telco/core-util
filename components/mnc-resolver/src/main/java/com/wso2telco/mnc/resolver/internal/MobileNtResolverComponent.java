@@ -25,9 +25,8 @@ import com.wso2telco.mnc.resolver.DataHolder;
 
  
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class MobileNtResolverComponent.
+ * @scr.component name="mnc.component" immediate="true"
  */
 public class MobileNtResolverComponent {
 

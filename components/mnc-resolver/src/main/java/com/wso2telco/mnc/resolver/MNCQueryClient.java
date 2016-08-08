@@ -16,10 +16,14 @@
 package com.wso2telco.mnc.resolver;
 
 import java.util.List;
-
 import com.wso2telco.mnc.resolver.MCCConfiguration.MobileCountryCodes.Mcc;
 import com.wso2telco.mnc.resolver.dnsssl.DNSSSLQueryClient;
 import com.wso2telco.mnc.resolver.mncrange.MNCRangeCheck;
+import com.wso2telco.mnc.resolver.mncrange.McnRangeDbUtil;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
  
 // TODO: Auto-generated Javadoc
@@ -27,6 +31,8 @@ import com.wso2telco.mnc.resolver.mncrange.MNCRangeCheck;
  * The Class MNCQueryClient.
  */
 public class MNCQueryClient {
+
+    private static final Log log = LogFactory.getLog(MNCQueryClient.class);
 
     /**
      * Query network.
@@ -37,6 +43,8 @@ public class MNCQueryClient {
      * @throws MobileNtException the mobile nt exception
      */
     public String QueryNetwork(String countryCode, String endUser) throws MobileNtException {
+
+	log.debug("MNCQueryClient : QueryNetwork : " + countryCode+","+endUser);
 
         MCCConfiguration MCCconfig = DataHolder.getInstance().getMobileCountryConfig();
         String MobileNetwork = null;
@@ -63,6 +71,9 @@ public class MNCQueryClient {
             }
         }
         
+	log.debug("MNCQueryClient : QueryNetwork : getStage :"+mcc.getStage());
+
+
         if (mcc.getStage() == 0) {
             //only one operator for the country
             MobileNetwork = mcc.getDefaultMnc();
@@ -73,7 +84,13 @@ public class MNCQueryClient {
         } else if (mcc.getStage() == 2) {
             //path finder
             IProviderNetwork networkprovider = new DNSSSLQueryClient();
-            MobileNetwork = networkprovider.queryNetwork(String.valueOf(mcc.getCode()), endUser);
+            String pfapiMnc = networkprovider.queryNetwork(String.valueOf(mcc.getCallingCode()), endUser.substring(mcc.getCallingCode().length()) );
+            log.debug("MNCQueryClient : QueryNetwork : pfapiMnc :"+pfapiMnc);
+            
+            if (pfapiMnc != null) {
+                MobileNetwork = McnRangeDbUtil.getMncBrand(String.valueOf(mcc.getCode()), pfapiMnc);
+            }
+
 
         } else if (mcc.getStage() == 3) {
             //range checker with fallback
@@ -86,5 +103,16 @@ public class MNCQueryClient {
         }
 
         return MobileNetwork;
+    }
+
+    public static void main(String arg[]) {
+        
+        //IProviderNetwork networkprovider = new DNSSSLQueryClient();
+        try {
+            String pfapiMnc = new DNSSSLQueryClient().queryNetworkStandalone(String.valueOf(arg[0]), arg[1].substring(arg[0].length() ) );
+            System.out.println("Mnc:"+pfapiMnc);
+        } catch (Exception ex) {
+            Logger.getLogger(MNCQueryClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

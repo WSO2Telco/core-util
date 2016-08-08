@@ -24,8 +24,8 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import com.wso2telco.mnc.resolver.Configuration;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import com.wso2telco.mnc.resolver.DataHolder;
 import com.wso2telco.mnc.resolver.IProviderNetwork;
 import com.wso2telco.mnc.resolver.MCCConfiguration;
@@ -36,9 +36,11 @@ import com.wso2telco.mnc.resolver.dnsssl.RequestBean;
 import com.wso2telco.mnc.resolver.dnsssl.SSLClient;
 import com.wso2telco.mnc.resolver.dnsssl.SSLResolver;
 import com.wso2telco.mnc.resolver.dnsssl.DNSResponseCode.RCODE;
-
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.io.File;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
 
  
 // TODO: Auto-generated Javadoc
@@ -53,9 +55,7 @@ public class DNSSSLQueryClient implements IProviderNetwork {
     /** The Constant USAGE_SINGLE_QUERY. */
     private static final String USAGE_SINGLE_QUERY = "Parameters required for Single Query :\n\t -c <countrycode> -t <tn>\n";
 
-     
-    
-
+    private static final Log log = LogFactory.getLog(DNSSSLQueryClient.class);
      
     /**
      * Perform bulk query.
@@ -262,14 +262,65 @@ public class DNSSSLQueryClient implements IProviderNetwork {
             // Create SSLResolver and set host and port
             sslResolver = new SSLResolver(sslClient);
              // perform query for ingle TN
-            TN = performSingleQuery(countryCode, endUser, MCCconfig, sslResolver);
+            log.debug("QueryNetwor, beforeperformSingleQuery: ");
+            String tnResult = performSingleQuery(countryCode.replace("+", "").trim(), endUser.replace("+", "").trim(), MCCconfig, sslResolver);
+            log.debug("QueryNetwor, tnsResult: "+tnResult);
+            if ( (tnResult !=null) && (!tnResult.isEmpty()) ){
+                TN = getEndpointMnc(tnResult);
+            }
         } catch (Exception ioe) {
             System.err.println("Error while creating SSL socket");
             ioe.printStackTrace();            
         }
        
-        return null;
+        return TN;
     }
     
+    public String queryNetworkStandalone(String countryCode, String endUser) {
+        SSLClient sslClient = new SSLClient();
+        String TN = null;
+        SSLResolver sslResolver = null;
+        
+        try {
+            
+            //DataHolder.getInstance().setMobileCountryConfig(ConfigLoader.getInstance().getMobileCountryConfig());
+            String configPath = "MobileCountryConfig.xml";
+            File file = new File(configPath);
+            JAXBContext ctx = JAXBContext.newInstance(MCCConfiguration.class);
+            Unmarshaller um = ctx.createUnmarshaller();
+            
+            MCCConfiguration MCCconfig = (MCCConfiguration) um.unmarshal(file);
+            System.out.println("host: "+MCCconfig.getPathFinderHost()+",port:"+MCCconfig.getPort()+",coutryCode:"+countryCode+",termDomain:"+MCCconfig.getTermDomain());
+            sslClient.initialize(MCCconfig.getPathFinderHost(), MCCconfig.getPort());
+
+            // Create SSLResolver and set host and port
+            sslResolver = new SSLResolver(sslClient);
+             // perform query for ingle TN
+            
+            String tnResult = performSingleQuery(countryCode, endUser, MCCconfig, sslResolver);
+            System.out.println("tnResult:"+tnResult);
+            if ( (tnResult !=null) && (!tnResult.isEmpty()) ){
+                TN=getEndpointMnc(tnResult);
+            }
+            
+        } catch (Exception ioe) {
+            System.err.println("Error while creating SSL socket");
+            ioe.printStackTrace();            
+        }
+       
+        return TN;
+    }
     
+    public static String getEndpointMnc(String strMnc) {
+        
+        String mnc = null;
+        
+        Pattern p = Pattern.compile("(mnc=)(\\d+)");
+        Matcher m = p.matcher(strMnc);
+        while (m.find()) {
+            mnc = m.group(2);           
+        }
+          
+        return mnc;
+    }
 }

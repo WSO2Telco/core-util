@@ -20,7 +20,7 @@
 	<parent>
 		<groupId>com.wso2telco.core</groupId>
 		<artifactId>core-parent</artifactId>
-		<version>2.0.1-SNAPSHOT</version>
+		<version>2.0.03-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
@@ -38,7 +38,7 @@
 			<artifactId>org.wso2.carbon.utils</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>dnsjava</groupId>
+			<groupId>dnsjava.wso2</groupId>
 			<artifactId>dnsjava</artifactId>
 		</dependency>
 	</dependencies>
@@ -51,7 +51,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Name>${project.artifactId}</Bundle-Name>
 						<Private-Package>
 							com.wso2telco.mnc.resolver.internal
@@ -67,6 +67,19 @@
 						<DynamicImport-Package>*</DynamicImport-Package>
 					</instructions>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-scr-plugin</artifactId>
+				<version>1.7.4</version>
+				<executions>
+					<execution>
+						<id>generate-scr-scrdescriptor</id>
+						<goals>
+							<goal>scr</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

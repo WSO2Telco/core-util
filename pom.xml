@@ -14,11 +14,15 @@
 	<groupId>com.wso2telco.core</groupId>
 	<artifactId>core-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>2.0.1-SNAPSHOT</version>
+	<version>2.0.03-SNAPSHOT</version>
 	<name>WSO2Telco Core Utility - Aggregate Pom</name>
 	<description>WSO2Telco Core Utility Aggregate Pom</description>
 	<url>http://wso2telco.com</url>
-
+	 <parent>
+        	<groupId>org.wso2</groupId>
+	        <artifactId>wso2</artifactId>
+        	<version>1</version>
+	</parent>
 	<developers>
 		<developer>
 			<name>WSO2Telco</name>
@@ -33,13 +37,14 @@
 	<modules>
 		<module>components/dbutil</module>
 		<module>components/mnc-resolver</module>
+		<module>components/msisdn-validator</module>
 		<module>features</module>
 	</modules>
 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>dnsjava</groupId>
+				<groupId>dnsjava.wso2</groupId>
 				<artifactId>dnsjava</artifactId>
 				<version>${dnsjava.version}</version>
 			</dependency>
@@ -64,6 +69,24 @@
 				<artifactId>javax.cache.wso2</artifactId>
 				<version>${javax.cache.wso2}</version>
 			</dependency>
+			<dependency>
+				<groupId>commons-io.wso2</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.wso2.version}</version>
+				<scope>provided</scope>
+			</dependency>
+				<!-- http://mvnrepository.com/artifact/com.googlecode.libphonenumber/libphonenumber -->
+		<dependency>
+			<groupId>com.googlecode.libphonenumber</groupId>
+			<artifactId>libphonenumber</artifactId>
+			<version>${com.googlecode.libphonenumber.version}</version>
+		</dependency>
+			<dependency>
+			<groupId>com.wso2telco.core</groupId>
+			<artifactId>dbutils</artifactId>
+			<scope>provided</scope>
+			<version>${com.wso2telco.core.version}</version>
+		</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -71,18 +94,11 @@
 		<url>https://github.com/WSO2Telco/core-util.git</url>
 		<developerConnection>scm:git:https://github.com/WSO2Telco/core-util.git</developerConnection>
 		<connection>scm:git:https://github.com/WSO2Telco/core-util.git</connection>
-		<tag>core-parent-2.0.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<build>
 		<plugins>
-			<!--plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-checkstyle-plugin</artifactId> 
-				<version>2.17</version> <executions> <execution> <id>validate</id> <phase>validate</phase> 
-				<configuration> <configLocation>sun_checks.xml</configLocation> <encoding>UTF-8</encoding> 
-				<consoleOutput>true</consoleOutput> <failsOnError>false</failsOnError> <failOnViolation>false</failOnViolation> 
-				<outputFile>../Checkstyle-result.xml</outputFile> <outputFileFormat>xml</outputFileFormat> 
-				<linkXRef>false</linkXRef> </configuration> <goals> <goal>check</goal> </goals> 
-				</execution> </executions> </plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -225,10 +241,13 @@
 		<maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
 		<junit.version>3.8.1</junit.version>
 		<org.wso2.carbon.utils.version>4.4.3</org.wso2.carbon.utils.version>
-		<dnsjava.version>2.1.7</dnsjava.version>
+		<dnsjava.version>2.1.1.wso2v1</dnsjava.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<javax.cache.wso2>4.4.3</javax.cache.wso2>
-		<com.wso2telco.core.version>2.0.1</com.wso2telco.core.version>
+		<com.wso2telco.core.version>2.0.02</com.wso2telco.core.version>
+		<com.googlecode.libphonenumber.version>7.4.0</com.googlecode.libphonenumber.version>
+		<commons-io.wso2.version>2.4.0.wso2v1</commons-io.wso2.version>
+		<com.wso2telco.core.version>2.0.03-SNAPSHOT</com.wso2telco.core.version>
 	</properties>
 
 	<profiles>
@@ -266,7 +285,7 @@
 			</build>
 		</profile>
 
-		<profile>
+		<!--profile>
 			<id>release</id>
 			<build>
 				<plugins>
@@ -309,6 +328,6 @@
 					</plugin>
 				</plugins>
 			</build>
-		</profile>
+		</profile-->
 	</profiles>
 </project>
