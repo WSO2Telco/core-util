@@ -27,16 +27,16 @@ import java.util.Map;
  
 // TODO: Auto-generated Javadoc
 /**
- * The Class AxiataDbService.
+ * The Class DbService.
  */
-public class AxiataDbService {
+public class DbService {
 
 	/** The log. */
-	private static Log log = LogFactory.getLog(AxiataDbService.class);
+	private static Log log = LogFactory.getLog(DbService.class);
     
-    /** The Constant AXIATA_MEDIATOR_CACHE_MANAGER. */
+    /** The Constant MEDIATOR_CACHE_MANAGER. */
 	@Deprecated
-    private static final String AXIATA_MEDIATOR_CACHE_MANAGER = "AxiataMediatorCacheManager";
+    private static final String MEDIATOR_CACHE_MANAGER = "MediatorCacheManager";
     
     /** The Constant MSISDN_SPEND_LIMIT_TABLE. */
     private static final String MSISDN_SPEND_LIMIT_TABLE = "spendlimitexceeded_msisdn";
@@ -53,15 +53,15 @@ public class AxiataDbService {
      *
      * @param args the arguments
      */
-    public static void main(String[] args) {
+    /**public static void main(String[] args) {
 
         try {
              
-            new AxiataDbService().insertMerchantProvision(9, "admin", "DIALOG", new String[]{"mahesh", "roshan"});
+            new DbService().insertMerchantProvision(9, "admin", "DIALOG", new String[]{"mahesh", "roshan"});
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }**/
 
     /**
      * Ussd request entry.
@@ -79,13 +79,13 @@ public class AxiataDbService {
         Integer newid = 0;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found");
             }
 
             st = con.createStatement();
-            String sql = "SELECT MAX(axiataid) maxid "
+            String sql = "SELECT MAX(subscription_did) maxid "
                     + "FROM ussd_request_entry";
 
             rs = st.executeQuery(sql);
@@ -93,7 +93,7 @@ public class AxiataDbService {
                 newid = rs.getInt("maxid") + 1;
             }
 
-            sql = "INSERT INTO ussd_request_entry (axiataid,notifyurl) "
+            sql = "INSERT INTO ussd_request_entry (subscription_did,notifyurl) "
                     + "VALUES (" + newid + ",'" + notifyurl + "')";
             st.executeUpdate(sql);
 
@@ -111,14 +111,14 @@ public class AxiataDbService {
     /**
      * Ussd entry delete.
      *
-     * @param axiataid the axiataid
+     * @param subscription_did the subscription_did
      * @return true, if successful
      * @throws Exception the exception
      */
     @Deprecated
-    public boolean ussdEntryDelete(Integer axiataid) throws Exception {
+    public boolean ussdEntryDelete(Integer subscription_did) throws Exception {
 
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
 
         try {
@@ -131,7 +131,7 @@ public class AxiataDbService {
 
             st = con.createStatement();
             String sql = "DELETE FROM ussd_request_entry "
-                    + "WHERE axiataid = " + axiataid + "";
+                    + "WHERE subscription_did = " + subscription_did + "";
 
             st.executeUpdate(sql);
 
@@ -147,14 +147,14 @@ public class AxiataDbService {
     /**
      * Gets the USSD notify.
      *
-     * @param axiataid the axiataid
+     * @param subscription_did the subscription_did
      * @return the USSD notify
      * @throws Exception the exception
      */
     @Deprecated
-    public String getUSSDNotify(Integer axiataid) throws Exception {
+    public String getUSSDNotify(Integer subscription_did) throws Exception {
 
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
         ResultSet rs = null;
         String notifyurls = "";
@@ -167,7 +167,7 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "SELECT notifyurl "
                     + "FROM ussd_request_entry "
-                    + "WHERE axiataid = " + axiataid + "";
+                    + "WHERE subscription_did = " + subscription_did + "";
 
             rs = st.executeQuery(sql);
 
@@ -201,13 +201,13 @@ public class AxiataDbService {
         Integer newid = 0;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found");
             }
 
             st = con.createStatement();
-            String sql = "SELECT MAX(axiataid) maxid "
+            String sql = "SELECT MAX(mo_subscription_did) maxid "
                     + "FROM subscriptions";
 
             rs = st.executeQuery(sql);
@@ -215,7 +215,7 @@ public class AxiataDbService {
                 newid = rs.getInt("maxid") + 1;
             }
 
-            sql = "INSERT INTO subscriptions (axiataid,notifyurl) "
+            sql = "INSERT INTO subscriptions (mo_subscription_did,notifyurl) "
                     + "VALUES (" + newid + ",'" + notifyurl + "')";
             st.executeUpdate(sql);
 
@@ -237,13 +237,13 @@ public class AxiataDbService {
         Integer newid = 0;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found");
             }
 
             st = con.createStatement();
-            String sql = "SELECT MAX(axiataid) maxid "
+            String sql = "SELECT MAX(mo_subscription_did) maxid "
                     + "FROM subscriptions";
 
             rs = st.executeQuery(sql);
@@ -251,7 +251,7 @@ public class AxiataDbService {
                 newid = rs.getInt("maxid") + 1;
             }
 
-            sql = "INSERT INTO subscriptions (axiataid,notifyurl,service_provider) "
+            sql = "INSERT INTO subscriptions (mo_subscription_did,notifyurl,service_provider) "
                     + "VALUES (" + newid + ",'" + notifyurl + "', '" + serviceProvider + "')";
 
             st.executeUpdate(sql);
@@ -280,13 +280,13 @@ public class AxiataDbService {
         Integer newid = 0;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found");
             }
 
             st = con.createStatement();
-            String sql = "SELECT MAX(axiataid) maxid "
+            String sql = "SELECT MAX(dn_subscription_did) maxid "
                     + "FROM outbound_subscriptions";
 
             rs = st.executeQuery(sql);
@@ -294,7 +294,7 @@ public class AxiataDbService {
                 newid = rs.getInt("maxid") + 1;
             }
 
-            sql = "INSERT INTO outbound_subscriptions (axiataid,notifyurl) "
+            sql = "INSERT INTO outbound_subscriptions (dn_subscription_did,notifyurl) "
                     + "VALUES (" + newid + ",'" + notifyurl + "')";
             st.executeUpdate(sql);
 
@@ -316,13 +316,13 @@ public class AxiataDbService {
         Integer newid = 0;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found");
             }
 
             st = con.createStatement();
-            String sql = "SELECT MAX(axiataid) maxid "
+            String sql = "SELECT MAX(dn_subscription_did) maxid "
                     + "FROM outbound_subscriptions";
 
             rs = st.executeQuery(sql);
@@ -330,7 +330,7 @@ public class AxiataDbService {
                 newid = rs.getInt("maxid") + 1;
             }
 
-            sql = "INSERT INTO outbound_subscriptions (axiataid,notifyurl,service_provider) "
+            sql = "INSERT INTO outbound_subscriptions (dn_subscription_did,notifyurl,service_provider) "
                     + "VALUES (" + newid + ",'" + notifyurl + "', '" + serviceProvider + "')";
             st.executeUpdate(sql);
 
@@ -348,18 +348,18 @@ public class AxiataDbService {
      * Operatorsubs entry.
      *
      * @param domainsubs the domainsubs
-     * @param axiataid the axiataid
+     * @param mo_subscription_did the mo_subscription_did
      * @return true, if successful
      * @throws Exception the exception
      */
     @Deprecated
-    public boolean operatorsubsEntry(List<Operatorsubs> domainsubs, Integer axiataid) throws Exception {
+    public boolean operatorsubsEntry(List<Operatorsubs> domainsubs, Integer mo_subscription_did) throws Exception {
 
         Connection con = null;
         Statement st = null;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found");
             }
@@ -368,8 +368,8 @@ public class AxiataDbService {
             String sql = null;
 
             for (Operatorsubs d : domainsubs) {
-                sql = "INSERT INTO operatorsubs (axiataid,domainurl,operator) "
-                        + "VALUES (" + axiataid + "," + "'" + d.getDomain() + "','" + d.getOperator() + "')";
+                sql = "INSERT INTO operatorsubs (mo_subscription_did,domainurl,operator) "
+                        + "VALUES (" + mo_subscription_did + "," + "'" + d.getDomain() + "','" + d.getOperator() + "')";
                 st.executeUpdate(sql);
             }
 
@@ -387,18 +387,18 @@ public class AxiataDbService {
      * Outbound operatorsubs entry.
      *
      * @param domainsubs the domainsubs
-     * @param axiataid the axiataid
+     * @param dn_subscription_did the dn_subscription_did
      * @return true, if successful
      * @throws Exception the exception
      */
     @Deprecated
-    public boolean outboundOperatorsubsEntry(List<Operatorsubs> domainsubs, Integer axiataid) throws Exception {
+    public boolean outboundOperatorsubsEntry(List<Operatorsubs> domainsubs, Integer dn_subscription_did) throws Exception {
 
         Connection con = null;
         Statement st = null;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found");
             }
@@ -407,8 +407,8 @@ public class AxiataDbService {
             String sql = null;
 
             for (Operatorsubs d : domainsubs) {
-                sql = "INSERT INTO outbound_operatorsubs (axiataid,domainurl,operator) "
-                        + "VALUES (" + axiataid + "," + "'" + d.getDomain() + "','" + d.getOperator() + "')";
+                sql = "INSERT INTO outbound_operatorsubs (dn_subscription_did,domainurl,operator) "
+                        + "VALUES (" + dn_subscription_did + "," + "'" + d.getDomain() + "','" + d.getOperator() + "')";
                 st.executeUpdate(sql);
             }
 
@@ -441,7 +441,7 @@ public class AxiataDbService {
         Integer newid = 0;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found");
             }
@@ -465,14 +465,14 @@ public class AxiataDbService {
     /**
      * Subscription query.
      *
-     * @param axiataid the axiataid
+     * @param mo_subscription_did the mo_subscription_did
      * @return the list
      * @throws Exception the exception
      */
     @Deprecated
-    public List<Operatorsubs> subscriptionQuery(Integer axiataid) throws Exception {
+    public List<Operatorsubs> subscriptionQuery(Integer mo_subscription_did) throws Exception {
 
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
         ResultSet rs = null;
         List<Operatorsubs> domainsubs = new ArrayList();
@@ -485,7 +485,7 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "SELECT domainurl,operator "
                     + "FROM operatorsubs "
-                    + "WHERE axiataid = " + axiataid + "";
+                    + "WHERE mo_subscription_did = " + mo_subscription_did + "";
 
             rs = st.executeQuery(sql);
             //boolean first = true;
@@ -506,14 +506,14 @@ public class AxiataDbService {
     /**
      * Outboud subscription query.
      *
-     * @param axiataid the axiataid
+     * @param dn_subscription_did the dn_subscription_did
      * @return the list
      * @throws Exception the exception
      */
     @Deprecated
-    public List<Operatorsubs> outboudSubscriptionQuery(Integer axiataid) throws Exception {
+    public List<Operatorsubs> outboudSubscriptionQuery(Integer dn_subscription_did) throws Exception {
 
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
         ResultSet rs = null;
         List<Operatorsubs> domainsubs = new ArrayList();
@@ -526,7 +526,7 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "SELECT domainurl,operator "
                     + "FROM outbound_operatorsubs "
-                    + "WHERE axiataid = " + axiataid + "";
+                    + "WHERE dn_subscription_did = " + dn_subscription_did + "";
 
             rs = st.executeQuery(sql);
             //boolean first = true;
@@ -547,14 +547,14 @@ public class AxiataDbService {
     /**
      * Application operators.
      *
-     * @param axiataid the axiataid
+     * @param operatorid the operatorid
      * @return the list
      * @throws Exception the exception
      */
     @Deprecated
-    public List<Operator> applicationOperators(Integer axiataid) throws Exception {
+    public List<Operator> applicationOperators(Integer operatorid) throws Exception {
 
-        Connection con = DbUtils.getAxiataDBConnection();   //.getInstance().connect();
+        Connection con = DbUtils.getDBConnection();   //.getInstance().connect();
         Statement st = null;
         ResultSet rs = null;
         String domainurls = "";
@@ -569,7 +569,7 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "SELECT oa.id id,oa.applicationid,oa.operatorid,o.operatorname,o.refreshtoken,o.tokenvalidity,o.tokentime,o.token, o.tokenurl, o.tokenauth "
                     + "FROM operatorapps oa, operators o "
-                    + "WHERE oa.operatorid = o.id AND oa.isactive = 1  AND oa.applicationid = '" + axiataid + "'";
+                    + "WHERE oa.operatorid = o.id AND oa.isactive = 1  AND oa.applicationid = '" + operatorid + "'";
             
             System.out.println(sql);
             rs = st.executeQuery(sql);
@@ -604,13 +604,13 @@ public class AxiataDbService {
     /**
      * Subscription dn notifi.
      *
-     * @param axiataid the axiataid
+     * @param dn_subscription_did the dn_subscription_did
      * @return the string
      * @throws Exception the exception
      */
-    public String subscriptionDNNotifi(Integer axiataid) throws Exception {
+    public String subscriptionDNNotifi(Integer dn_subscription_did) throws Exception {
 
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
         ResultSet rs = null;
         String notifyurls = "";
@@ -623,7 +623,7 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "SELECT notifyurl "
                     + "FROM outbound_subscriptions "
-                    + "WHERE axiataid = " + axiataid + "";
+                    + "WHERE dn_subscription_did = " + dn_subscription_did + "";
 
             rs = st.executeQuery(sql);
 
@@ -642,10 +642,10 @@ public class AxiataDbService {
     }
     
     @Deprecated
-    public HashMap<String, String> subscriptionDNNotifiMap(Integer axiataid) throws Exception {
+    public HashMap<String, String> subscriptionDNNotifiMap(Integer dn_subscription_did) throws Exception {
 
         HashMap<String, String> dnSubscriptionDetails = new HashMap<String, String>();
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
         ResultSet rs = null;
         //String notifyurls = "";
@@ -658,7 +658,7 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "SELECT notifyurl, service_provider "
                     + "FROM outbound_subscriptions "
-                    + "WHERE axiataid = " + axiataid + "";
+                    + "WHERE dn_subscription_did = " + dn_subscription_did + "";
             log.debug("subscriptionDNNotifi --> sql query : " + sql);
             
             rs = st.executeQuery(sql);
@@ -683,13 +683,13 @@ public class AxiataDbService {
     /**
      * Subscription notifi.
      *
-     * @param axiataid the axiataid
+     * @param mo_subscription_did the mo_subscription_did
      * @return the string
      * @throws Exception the exception
      */
-    public String subscriptionNotifi(Integer axiataid) throws Exception {
+    public String subscriptionNotifi(Integer mo_subscription_did) throws Exception {
 
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
         ResultSet rs = null;
         String notifyurls = "";
@@ -702,7 +702,7 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "SELECT notifyurl "
                     + "FROM subscriptions "
-                    + "WHERE axiataid = " + axiataid + "";
+                    + "WHERE mo_subscription_did = " + mo_subscription_did + "";
 
             rs = st.executeQuery(sql);
 
@@ -721,10 +721,10 @@ public class AxiataDbService {
     }
 
     @Deprecated
-    public HashMap<String, String> subscriptionNotifiMap(Integer axiataid) throws Exception {
+    public HashMap<String, String> subscriptionNotifiMap(Integer mo_subscription_did) throws Exception {
 
         HashMap<String, String> subscriptionDetails = new HashMap<String, String>();
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
         ResultSet rs = null;
         //String notifyurls = "";
@@ -737,7 +737,7 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "SELECT notifyurl, service_provider "
                     + "FROM subscriptions "
-                    + "WHERE axiataid = " + axiataid + "";
+                    + "WHERE mo_subscription_did = " + mo_subscription_did + "";
             log.debug("subscriptionNotifi --> sql query : " + sql);
 
             rs = st.executeQuery(sql);
@@ -761,14 +761,14 @@ public class AxiataDbService {
     /**
      * Subscription delete.
      *
-     * @param axiataid the axiataid
+     * @param mosubscription_did the mosubscription_did
      * @return true, if successful
      * @throws Exception the exception
      */
     @Deprecated
-    public boolean subscriptionDelete(Integer axiataid) throws Exception {
+    public boolean subscriptionDelete(Integer mosubscription_did) throws Exception {
 
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
 
         try {
@@ -781,12 +781,12 @@ public class AxiataDbService {
 
             st = con.createStatement();
             String sql = "DELETE FROM subscriptions "
-                    + "WHERE axiataid = " + axiataid + "";
+                    + "WHERE mo_subscription_did = " + mosubscription_did + "";
 
             st.executeUpdate(sql);
 
             sql = "DELETE FROM operatorsubs "
-                    + "WHERE axiataid = " + axiataid + "";
+                    + "WHERE mo_subscription_did = " + mosubscription_did + "";
 
             st.executeUpdate(sql);
 
@@ -802,14 +802,14 @@ public class AxiataDbService {
     /**
      * Outbound subscription delete.
      *
-     * @param axiataid the axiataid
+     * @param dn_subscription_did the dn_subscription_did
      * @return true, if successful
      * @throws Exception the exception
      */
     @Deprecated
-    public boolean outboundSubscriptionDelete(Integer axiataid) throws Exception {
+    public boolean outboundSubscriptionDelete(Integer dn_subscription_did) throws Exception {
 
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
 
         try {
@@ -822,12 +822,12 @@ public class AxiataDbService {
 
             st = con.createStatement();
             String sql = "DELETE FROM outbound_subscriptions "
-                    + "WHERE axiataid = " + axiataid + "";
+                    + "WHERE dn_subscription_did = " + dn_subscription_did + "";
 
             st.executeUpdate(sql);
 
             sql = "DELETE FROM outbound_operatorsubs "
-                    + "WHERE axiataid = " + axiataid + "";
+                    + "WHERE dn_subscription_did = " + dn_subscription_did + "";
 
             st.executeUpdate(sql);
 
@@ -843,13 +843,13 @@ public class AxiataDbService {
     /**
      * Operator endpoints.
      *
-     * @param appid the appid
+     * @param appId the appId
      * @return the list
      * @throws Exception the exception
      */
-    public List<Operatorendpoint> operatorEndpoints(Integer appid) throws Exception {
+    public List<Operatorendpoint> operatorEndpoints(Integer appId) throws Exception {
 
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
         ResultSet rs = null;
         List<Operatorendpoint> endpoints = new ArrayList();
@@ -865,7 +865,7 @@ public class AxiataDbService {
                     + "WHERE operatorendpoints.operatorid = operators.id "
                     + "AND operatorendpoints.id in ("
                     + "SELECT endpointid FROM endpointapps "
-                    + "WHERE applicationid = " + appid + " "
+                    + "WHERE applicationid = " + appId + " "
                     + "AND isactive = 1"
                     + ")";
 
@@ -896,12 +896,12 @@ public class AxiataDbService {
     public List<Operatorendpoint> operatorEndpoints() throws Exception {
         final int opEndpointsID = 0;
 
-        Cache<Integer, List<Operatorendpoint>> cache = Caching.getCacheManager(AXIATA_MEDIATOR_CACHE_MANAGER).getCache("axiataDbOperatorEndpoints");
+        Cache<Integer, List<Operatorendpoint>> cache = Caching.getCacheManager(MEDIATOR_CACHE_MANAGER).getCache("DbOperatorEndpoints");
         List<Operatorendpoint> endpoints = cache.get(opEndpointsID);
         System.out.println((endpoints == null ? "== cache miss ==" : "== cache hit ==") + " --- operatorEndpoints");
 
         if (endpoints == null) {
-            Connection con = DbUtils.getAxiataDBConnection();
+            Connection con = DbUtils.getDBConnection();
             Statement st = null;
             ResultSet rs = null;
             endpoints = new ArrayList<Operatorendpoint>();
@@ -938,13 +938,13 @@ public class AxiataDbService {
     /**
      * Update application op.
      *
-     * @param axiataid the axiataid
+     * @param appId the appId
      * @param operatorid the operatorid
      * @param opstat the opstat
      * @return true, if successful
      * @throws Exception the exception
      */
-    public boolean UpdateApplicationOp(int axiataid, int operatorid, boolean opstat) throws Exception {
+    public boolean UpdateApplicationOp(int appId, int operatorid, boolean opstat) throws Exception {
 
         Connection con = null;
         Statement st = null;
@@ -952,7 +952,7 @@ public class AxiataDbService {
         int opactive = (opstat ? 1 : 0);
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found");
             }
@@ -960,7 +960,7 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "UPDATE operatorapps "
                     + "SET isactive=" + opactive + " "
-                    + "WHERE applicationid =" + axiataid + " "
+                    + "WHERE applicationid =" + appId + " "
                     + "AND operatorid = " + operatorid + "";
 
             st.executeUpdate(sql);
@@ -989,7 +989,7 @@ public class AxiataDbService {
         Integer newid = 0;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found");
             }
@@ -1020,7 +1020,7 @@ public class AxiataDbService {
      */
     public List<Operator> getOperators() throws Exception {
 
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
         ResultSet rs = null;
         List<Operator> operators = new ArrayList<Operator>();
@@ -1055,17 +1055,17 @@ public class AxiataDbService {
     /**
      * Insert operator app endpoints.
      *
-     * @param appID the app id
+     * @param appId the app id
      * @param opEndpointIDList the op endpoint id list
      * @throws Exception the exception
      */
-    public void insertOperatorAppEndpoints(int appID, int[] opEndpointIDList) throws Exception {
+    public void insertOperatorAppEndpoints(int appId, int[] opEndpointIDList) throws Exception {
 
         Connection con = null;
         Statement st = null;
         
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             String inputStr = "";
 
             log.debug("opEndpointIDList.length : " + opEndpointIDList.length);
@@ -1075,7 +1075,7 @@ public class AxiataDbService {
             		if (inputStr.length() > 0) {
             			inputStr = inputStr + ",";
             		}
-            		inputStr = inputStr + "(" + opEndpointIDList[i] + "," + appID + ",0)";
+            		inputStr = inputStr + "(" + opEndpointIDList[i] + "," + appId + ",0)";
 
 //                    if (!(i == opEndpointIDList.length - 1)) {
 //                        inputStr = inputStr + ",";
@@ -1103,22 +1103,22 @@ public class AxiataDbService {
     /**
      * Update operator app endpoint status.
      *
-     * @param appID the app id
+     * @param appId the app id
      * @param opEndpointID the op endpoint id
      * @param status the status
      * @throws Exception the exception
      */
-    public void updateOperatorAppEndpointStatus(int appID, int opEndpointID, int status) throws Exception {
+    public void updateOperatorAppEndpointStatus(int appId, int opEndpointID, int status) throws Exception {
 
         Connection con = null;
         Statement st = null;
                 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
 
             String sql = "UPDATE endpointapps SET isactive=" + status
                     + " WHERE endpointid=" + opEndpointID
-                    + " AND applicationid=" + appID;
+                    + " AND applicationid=" + appId;
 
             st = con.createStatement();
             st.executeUpdate(sql);
@@ -1144,7 +1144,7 @@ public class AxiataDbService {
         ResultSet rs = null;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found.");
             }
@@ -1172,19 +1172,19 @@ public class AxiataDbService {
     /**
      * Update app approval status op.
      *
-     * @param axiataId the axiata id
+     * @param appId the appId 
      * @param operatorId the operator id
      * @param status the status
      * @return true, if successful
      * @throws Exception the exception
      */
-    public boolean updateAppApprovalStatusOp(int axiataId, int operatorId, int status) throws Exception {
+    public boolean updateAppApprovalStatusOp(int appId, int operatorId, int status) throws Exception {
 
         Connection con = null;
         Statement st = null;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found.");
             }
@@ -1192,7 +1192,7 @@ public class AxiataDbService {
             st = con.createStatement();
             String sql = "UPDATE operatorapps "
                     + "SET isactive=" + status + " "
-                    + "WHERE applicationid =" + axiataId + " "
+                    + "WHERE applicationid =" + appId + " "
                     + "AND operatorid = " + operatorId + "";
 
             st.executeUpdate(sql);
@@ -1210,20 +1210,20 @@ public class AxiataDbService {
     /**
      * Insert validator for subscription.
      *
-     * @param appID the app id
+     * @param appId the app id
      * @param apiID the api id
      * @param validatorID the validator id
      * @return true, if successful
      * @throws Exception the exception
      */
-    public boolean insertValidatorForSubscription(int appID, int apiID, int validatorID) throws Exception {
+    public boolean insertValidatorForSubscription(int appId, int apiID, int validatorID) throws Exception {
         Connection con = null;
         Statement st = null;
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
 
             String sql = "INSERT INTO subscription_validator (application_id, api_id, validator_id) VALUES "
-                    + "(" + appID + "," + apiID + "," + validatorID + ")";
+                    + "(" + appId + "," + apiID + "," + validatorID + ")";
             st = con.createStatement();
             st.executeUpdate(sql);
 
@@ -1239,7 +1239,7 @@ public class AxiataDbService {
     /**
      * Blacklistedmerchant.
      *
-     * @param appid the appid
+     * @param appId the appId
      * @param operatorid the operatorid
      * @param subscriber the subscriber
      * @param merchant the merchant
@@ -1247,7 +1247,7 @@ public class AxiataDbService {
      * @throws Exception the exception
      */
     @Deprecated
-    public String blacklistedmerchant(int appid, String operatorid, String subscriber, String merchant) throws Exception {
+    public String blacklistedmerchant(int appId, String operatorid, String subscriber, String merchant) throws Exception {
 
 
         String resultcode = null;
@@ -1260,7 +1260,7 @@ public class AxiataDbService {
         }
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found");
             }
@@ -1270,7 +1270,7 @@ public class AxiataDbService {
             String sql = "SELECT merchantopco_blacklist.id id "
                     + "FROM merchantopco_blacklist, operators "
                     + "WHERE merchantopco_blacklist.operator_id = operators.id "
-                    + "AND application_id = " + appid + " "
+                    + "AND application_id = " + appId + " "
                     + "AND operatorname = '" + operatorid + "' "
                     + "AND subscriber = '" + subscriber + "' "
                     + "AND lower(merchant) = '" + merchant.toLowerCase() + "'";
@@ -1305,14 +1305,14 @@ public class AxiataDbService {
     /**
      * Insert merchant provision.
      *
-     * @param appID the app id
+     * @param appId the app id
      * @param subscriber the subscriber
      * @param operator the operator
      * @param merchants the merchants
      * @return true, if successful
      * @throws Exception the exception
      */
-    public boolean insertMerchantProvision(Integer appID, String subscriber, String operator,
+    public boolean insertMerchantProvision(Integer appId, String subscriber, String operator,
             String[] merchants) throws Exception {
 
         Connection con = null;
@@ -1321,7 +1321,7 @@ public class AxiataDbService {
         PreparedStatement pst = null;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
 
             st = con.createStatement();
             String sql = "SELECT id "
@@ -1343,10 +1343,10 @@ public class AxiataDbService {
                         + "(?, ?, ?, ?)";
 
                 pst = con.prepareStatement(sql);
-                if (appID == null) {
+                if (appId == null) {
                     pst.setNull(1, Types.INTEGER);
                 } else {
-                    pst.setInt(1, appID);
+                    pst.setInt(1, appId);
                 }
                 pst.setInt(2, operatorid);
                 pst.setString(3, subscriber);
@@ -1367,14 +1367,14 @@ public class AxiataDbService {
     /**
      * Removes the merchant provision.
      *
-     * @param appID the app id
+     * @param appId the app id
      * @param subscriber the subscriber
      * @param operator the operator
      * @param merchants the merchants
      * @return true, if successful
      * @throws Exception the exception
      */
-    public boolean removeMerchantProvision(Integer appID, String subscriber, String operator,
+    public boolean removeMerchantProvision(Integer appId, String subscriber, String operator,
             String[] merchants) throws Exception {
 
         Connection con = null;
@@ -1383,7 +1383,7 @@ public class AxiataDbService {
         ResultSet rs = null;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
 
             st = con.createStatement();
             String sql = "SELECT id "
@@ -1403,7 +1403,7 @@ public class AxiataDbService {
 
             for (int i = 0; i < merchants.length; i++) {
 
-                if (appID == null) {
+                if (appId == null) {
                     sql = "DELETE FROM merchantopco_blacklist "
                             + "WHERE application_id is null AND operator_id = ? AND subscriber = ? AND merchant = ?";
 
@@ -1420,7 +1420,7 @@ public class AxiataDbService {
 
                     pst = con.prepareStatement(sql);
 
-                    pst.setInt(1, appID);
+                    pst.setInt(1, appId);
                     pst.setInt(2, operatorid);
                     pst.setString(3, subscriber);
                     pst.setString(4, merchants[i]);
@@ -1448,7 +1448,7 @@ public class AxiataDbService {
     @Deprecated
     public List<String> getValidPayCategories() throws Exception {
 
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
         ResultSet rs = null;
         List<String> categories = new ArrayList<String>();
@@ -1484,9 +1484,9 @@ public class AxiataDbService {
 	 * @throws AxataDBUtilException the axata db util exception
 	 * @throws SQLException the SQL exception
 	 */
-	public String getPrefixFromCountryCode(String countryCode) throws AxataDBUtilException, SQLException {
+	public String getPrefixFromCountryCode(String countryCode) throws DBUtilException, SQLException {
 
-        Connection con = DbUtils.getAxiataDBConnection();
+        Connection con = DbUtils.getDBConnection();
         Statement st = null;
         ResultSet rs = null;
         String prefix = "";
@@ -1520,13 +1520,13 @@ public class AxiataDbService {
      * @return true, if successful
      * @throws AxataDBUtilException the axata db util exception
      */
-    public boolean checkMSISDNSpendLimit(String msisdn) throws AxataDBUtilException {
+    public boolean checkMSISDNSpendLimit(String msisdn) throws DBUtilException {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         boolean isExceeded = false;
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
 
             String sql = "SELECT exists (SELECT 1 FROM " + MSISDN_SPEND_LIMIT_TABLE + " where msisdn=? LIMIT 1)";
             ps = con.prepareStatement(sql);
@@ -1549,15 +1549,15 @@ public class AxiataDbService {
      *
      * @param consumerKey the consumer key
      * @return true, if successful
-     * @throws AxataDBUtilException the axata db util exception
+     * @throws AxataDBUtilException the db util exception
      */
-    public boolean checkApplicationSpendLimit(String consumerKey) throws AxataDBUtilException {
+    public boolean checkApplicationSpendLimit(String consumerKey) throws DBUtilException {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         boolean isExceeded = false;
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
 
             String sql = "SELECT exists (SELECT 1 FROM " + APPLICATION_SPEND_LIMIT_TABLE + " where consumerKey=? LIMIT 1)";
             ps = con.prepareStatement(sql);
@@ -1582,13 +1582,13 @@ public class AxiataDbService {
      * @return true, if successful
      * @throws AxataDBUtilException the axata db util exception
      */
-    public boolean checkOperatorSpendLimit(String operatorId) throws AxataDBUtilException {
+    public boolean checkOperatorSpendLimit(String operatorId) throws DBUtilException {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         boolean isExceeded = false;
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
 
             String sql = "SELECT exists (SELECT 1 FROM " + OPERATOR_SPEND_LIMIT_TABLE + " where operatorId=? LIMIT 1)";
             ps = con.prepareStatement(sql);
@@ -1617,12 +1617,12 @@ public class AxiataDbService {
      */
     @Deprecated
     public boolean insertSmsRequestIds(String requestID, String senderAddress, Map<String, String> pluginRequestIDs)
-            throws AxataDBUtilException {
+            throws DBUtilException {
         Connection con = null;
         PreparedStatement ps = null;
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
 
             String sql = "INSERT INTO sendsms_reqid (hub_requestid,sender_address,delivery_address,plugin_requestid) " +
                     "VALUES (?,?,?,?)";
@@ -1653,14 +1653,14 @@ public class AxiataDbService {
      */
     @Deprecated
     public Map<String, String> getSmsRequestIds(String requestID, String senderAddress)
-            throws AxataDBUtilException {
+            throws DBUtilException {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         Map<String, String> pluginRequestIDs = new HashMap<String, String>();
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
 
             String sql = "SELECT delivery_address, plugin_requestid from sendsms_reqid where hub_requestid=? AND " +
                     "sender_address=?";
@@ -1690,7 +1690,7 @@ public class AxiataDbService {
 	 * @throws AxataDBUtilException the axata db util exception
 	 */
     @Deprecated
-	public List<Integer> activeApplicationOperators(Integer appId,String apitype) throws SQLException, AxataDBUtilException {
+	public List<Integer> activeApplicationOperators(Integer appId,String apitype) throws SQLException, DBUtilException {
 
         Connection con = null; 
         Statement st = null;
@@ -1698,7 +1698,7 @@ public class AxiataDbService {
         List<Integer> operators = new ArrayList<Integer>();
         
         try {
-        	con = DbUtils.getAxiataDBConnection();
+        	con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found.");
             }
@@ -1732,7 +1732,7 @@ public class AxiataDbService {
      * @throws SQLException the SQL exception
      * @throws AxataDBUtilException the axata db util exception
      */
-    public Map<String,String> getSPTokenMap() throws SQLException, AxataDBUtilException {
+    public Map<String,String> getSPTokenMap() throws SQLException, DBUtilException {
 
         Connection con = null;
         Statement st = null;
@@ -1740,7 +1740,7 @@ public class AxiataDbService {
         Map<String, String> spToken = new HashMap<String,String>();
 
         try {
-            con = DbUtils.getAxiataDBConnection();
+            con = DbUtils.getDBConnection();
             if (con == null) {
                 throw new Exception("Connection not found.");
             }

@@ -48,11 +48,11 @@ public class DbUtils {
 	/** The connection password. */
 	String connectionPassword;
 
-	/** The axiata datasource. */
-	private static volatile DataSource axiataDatasource = null;
+	/** The  datasource. */
+	private static volatile DataSource Datasource = null;
 
-	/** The Constant AXIATA_DATA_SOURCE. */
-	private static final String AXIATA_DATA_SOURCE = "jdbc/AXIATA_MIFE_DB";
+	/** The Constant DATA_SOURCE. */
+	private static final String DATA_SOURCE = "jdbc/OPERATOR_DB";
 
 	/** The Constant log. */
 	private static final Log log = LogFactory.getLog(DbUtils.class);
@@ -68,40 +68,40 @@ public class DbUtils {
 	 *
 	 * @throws SQLException
 	 *             the SQL exception
-	 * @throws AxataDBUtilException
-	 *             the axata db util exception
+	 * @throws DBUtilException
+	 *             the db util exception
 	 */
-	public static void initializeDatasources() throws SQLException, AxataDBUtilException {
-		if (axiataDatasource != null) {
+	public static void initializeDatasources() throws SQLException, DBUtilException {
+		if (Datasource != null) {
 			return;
 		}
 
 		try {
 			log.info("Before DB Initialize");
 			Context ctx = new InitialContext();
-			axiataDatasource = (DataSource) ctx.lookup(AXIATA_DATA_SOURCE);
+			Datasource = (DataSource) ctx.lookup(DATA_SOURCE);
 		} catch (NamingException e) {
-			handleException("Error while looking up the data source: " + AXIATA_DATA_SOURCE, e);
+			handleException("Error while looking up the data source: " + DATA_SOURCE, e);
 		}
 	}
 
 	/**
 	 * IMPORTANT : This method must be deprecated. going forward use
-	 * "getDbConnection(DataSourceNames dataSourceName)" method Gets the axiata
+	 * "getDbConnection(DataSourceNames dataSourceName)" method Gets the operator
 	 * db connection.
 	 *
-	 * @return the axiata db connection
+	 * @return the operator db connection
 	 * @throws SQLException
 	 *             the SQL exception
 	 * @throws AxataDBUtilException
-	 *             the axata db util exception
+	 *             the operator db util exception
 	 */
 	@Deprecated
-	public static Connection getAxiataDBConnection() throws SQLException, AxataDBUtilException {
+	public static Connection getDBConnection() throws SQLException, DBUtilException {
 		initializeDatasources();
 
-		if (axiataDatasource != null) {
-			return axiataDatasource.getConnection();
+		if (Datasource != null) {
+			return Datasource.getConnection();
 		}
 		throw new SQLException("Axiata Datasource not initialized properly");
 	}
@@ -358,9 +358,9 @@ public class DbUtils {
 	 * @throws AxataDBUtilException
 	 *             the axata db util exception
 	 */
-	public static void handleException(String msg, Throwable t) throws AxataDBUtilException {
+	public static void handleException(String msg, Throwable t) throws DBUtilException {
 		log.error(msg, t);
-		throw new AxataDBUtilException(msg, t);
+		throw new DBUtilException(msg, t);
 	}
 
 	/**

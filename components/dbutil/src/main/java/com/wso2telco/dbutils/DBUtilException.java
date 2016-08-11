@@ -19,35 +19,35 @@ package com.wso2telco.dbutils;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class AxataDBUtilException.
+ * The Class DBUtilException.
  */
-public class AxataDBUtilException extends Exception {
+public class DBUtilException extends Exception {
 
     /**
-     * Instantiates a new axata db util exception.
+     * Instantiates a new db util exception.
      *
      * @param message the message
      */
-    public AxataDBUtilException(String message) {
+    public DBUtilException(String message) {
         super(message);
     }
 
     /**
-     * Instantiates a new axata db util exception.
+     * Instantiates a new  db util exception.
      *
      * @param message the message
      * @param cause the cause
      */
-    public AxataDBUtilException(String message, Throwable cause) {
+    public DBUtilException(String message, Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Instantiates a new axata db util exception.
+     * Instantiates a new  db util exception.
      *
      * @param cause the cause
      */
-    public AxataDBUtilException(Throwable cause) {
+    public DBUtilException(Throwable cause) {
         super(cause);
     }
 }
