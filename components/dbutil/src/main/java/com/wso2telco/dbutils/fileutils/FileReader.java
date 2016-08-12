@@ -143,4 +143,45 @@ public class FileReader {
 
 		return oneAPIValidationConfMap;
 	}
+
+	public Map<String, String> readPublishEventsDataConfFile() {
+
+		Map<String, String> mediatorConfMap = new HashMap<String, String>();
+		Properties props = new Properties();
+		FileInputStream fileStream = null;
+
+		String filePath = CarbonUtils.getCarbonConfigDirPath() + File.separator
+				+ PropertyFileNames.PUBLISH_EVENTS_DATA_CONF_FILE.getFileName();
+
+		try {
+
+			fileStream = new FileInputStream(filePath);
+
+			props.load(fileStream);
+
+			mediatorConfMap.put("com.wso2telco.events.spend.limit.handler.enabled",
+					props.getProperty("com.wso2telco.events.spend.limit.handler.enabled"));
+			mediatorConfMap.put("com.wso2telco.events.cep.url", props.getProperty("com.wso2telco.events.cep.url"));
+			mediatorConfMap.put("com.wso2telco.events.cep.username", props.getProperty("com.wso2telco.events.cep.username"));
+			mediatorConfMap.put("com.wso2telco.events.cep.password", props.getProperty("com.wso2telco.events.cep.password"));
+		} catch (FileNotFoundException e) {
+
+			log.debug(PropertyFileNames.PUBLISH_EVENTS_DATA_CONF_FILE.getFileName() + " file not found in " + filePath,
+					e);
+		} catch (IOException e) {
+
+			log.debug("unable to close " + PropertyFileNames.PUBLISH_EVENTS_DATA_CONF_FILE.getFileName() + " file ", e);
+		} finally {
+
+			try {
+
+				fileStream.close();
+			} catch (IOException e) {
+
+				log.debug("unable to close " + PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " file ", e);
+			}
+		}
+
+		return mediatorConfMap;
+	}
 }
