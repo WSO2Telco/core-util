@@ -7,6 +7,8 @@ import com.wso2telco.core.pcrservice.model.RequestDTO;
 
 class UUIDPCRGenarator implements PCRGeneratable{
 
+	String uuid;
+	
 	@Override
 	public Returnable getPCR(RequestDTO dto) throws PCRException {
 		// TODO Auto-generated method stub
@@ -15,7 +17,7 @@ class UUIDPCRGenarator implements PCRGeneratable{
 			@Override
 			public String getID() {
 				// TODO Auto-generated method stub
-				return "uuild";
+				return uuid;
 			}
 			
 		};
