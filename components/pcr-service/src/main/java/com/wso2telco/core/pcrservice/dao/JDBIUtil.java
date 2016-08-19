@@ -19,20 +19,34 @@ package com.wso2telco.core.pcrservice.dao;
 import org.skife.jdbi.v2.DBI;
 
 import com.wso2telco.core.pcrservice.conf.ConfigReader;
+import com.wso2telco.core.pcrservice.util.YamlReader;
 
 import io.dropwizard.jdbi.DBIFactory;
 
 class JDBIUtil {
-	private static DBI  jdbi; 
+	private static DBI jdbi;
+
 	static {
 		final ConfigReader configReader = ConfigReader.getInstance();
-		final DBIFactory factory = new DBIFactory();
-		jdbi = factory.build(configReader.getEnvironment(), 
-										configReader.getConfigDTO().getDataSourceFactory(), 
-										"mysql");
+		
+		if(configReader == null){
+			
+			String url		= YamlReader.getConfiguration().getDataSourceFactory().getUrl();
+			String user 	= YamlReader.getConfiguration().getDataSourceFactory().getUser();
+			String password = YamlReader.getConfiguration().getDataSourceFactory().getPassword();
+			
+			jdbi = new DBI(url,user,password);
+			
+		}else{
+			
+			final DBIFactory factory = new DBIFactory();
+			jdbi = factory.build(configReader.getEnvironment(), configReader.getConfigDTO().getDataSourceFactory(),
+					"mysql");
+			
+		}
 	}
-	
-	public static DBI getInstance(){
+
+	public static DBI getInstance() {
 		return jdbi;
 	}
 }

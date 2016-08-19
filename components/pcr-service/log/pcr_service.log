@@ -28,3 +28,7 @@ INFO  [2016-08-19 08:16:36,080] org.eclipse.jetty.server.handler.ContextHandler:
 INFO  [2016-08-19 08:16:36,126] org.eclipse.jetty.server.ServerConnector: Started application@3d08f3f5{HTTP/1.1}{localhost:8181}
 INFO  [2016-08-19 08:16:36,126] org.eclipse.jetty.server.ServerConnector: Started admin@119f1f2a{HTTP/1.1}{0.0.0.0:8282}
 INFO  [2016-08-19 08:16:36,126] org.eclipse.jetty.server.Server: Started @4671ms
+INFO  [2016-08-19 08:34:04,607] org.eclipse.jetty.server.ServerConnector: Stopped application@3d08f3f5{HTTP/1.1}{localhost:8181}
+INFO  [2016-08-19 08:34:04,608] org.eclipse.jetty.server.ServerConnector: Stopped admin@119f1f2a{HTTP/1.1}{0.0.0.0:8282}
+INFO  [2016-08-19 08:34:04,610] org.eclipse.jetty.server.handler.ContextHandler: Stopped i.d.j.MutableServletContextHandler@185f7840{/,null,UNAVAILABLE}
+INFO  [2016-08-19 08:34:04,616] org.eclipse.jetty.server.handler.ContextHandler: Stopped i.d.j.MutableServletContextHandler@19569ebd{/,null,UNAVAILABLE}
