@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,13 +28,11 @@ public class FileReader {
 
 	private Log log = LogFactory.getLog(FileReader.class);
 
-	public HashMap<String, String> readPropertyFile(String filePath, String fileName) {
+	public Map<String, String> readPropertyFile(String file) {
 
 		HashMap<String, String> confPropertyMap = new HashMap<String, String>();
 		Properties props = new Properties();
 		FileInputStream fileStream = null;
-
-		String file = filePath + fileName;
 
 		try {
 
@@ -48,10 +47,10 @@ public class FileReader {
 			}
 		} catch (FileNotFoundException e) {
 
-			log.debug(fileName + " file not found in " + filePath, e);
+			log.debug("file not found in " + file, e);
 		} catch (IOException e) {
 
-			log.debug("unable to close " + fileName + " file ", e);
+			log.debug("unable to close " + file, e);
 		} finally {
 
 			try {
@@ -59,7 +58,7 @@ public class FileReader {
 				fileStream.close();
 			} catch (IOException e) {
 
-				log.debug("unable to close " + fileName + " file ", e);
+				log.debug("unable to close " + file, e);
 			}
 		}
 
