@@ -23,7 +23,13 @@ import com.wso2telco.core.pcrservice.util.YamlReader;
 
 import io.dropwizard.jdbi.DBIFactory;
 
+
+/**
+ * The Class JDBIUtil.
+ */
 class JDBIUtil {
+	
+	/** The jdbi. */
 	private static DBI jdbi;
 
 	static {
@@ -46,6 +52,11 @@ class JDBIUtil {
 		}
 	}
 
+	/**
+	 * Gets the single instance of JDBIUtil.
+	 *
+	 * @return single instance of JDBIUtil
+	 */
 	public static DBI getInstance() {
 		return jdbi;
 	}

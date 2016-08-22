@@ -13,30 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.wso2telco.core.pcrservice.conf;
+package com.wso2telco.core.pcrservice;
 
-import java.sql.SQLException;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-import com.wso2telco.core.pcrservice.dao.ApplicationDAO;
-import com.wso2telco.core.pcrservice.model.ApplicationDTO;
 
 /**
- * The Class Initializer.
+ * The Class TestAll.
  */
-public class Initializer{
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+	com.wso2telco.core.pcrservice.dao.TestAll.class,
+})
+public class TestAll {
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
-		
-		ApplicationDAO applicationDAO = new ApplicationDAO();
-		ApplicationDTO applicationDTO = new ApplicationDTO();
-		
-		applicationDTO.setAppId("1223344433");
-		
-		try {
-			applicationDAO.saveNewApplication(applicationDTO);
-		} catch (SQLException e) {			
-			e.printStackTrace();
-		}
+		JUnitCore.runClasses(new Class[] { TestAll.class });
 	}
-
 }
