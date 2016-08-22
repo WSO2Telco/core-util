@@ -39,12 +39,15 @@ public class AxiataDbService {
     private static final String AXIATA_MEDIATOR_CACHE_MANAGER = "AxiataMediatorCacheManager";
     
     /** The Constant MSISDN_SPEND_LIMIT_TABLE. */
+	@Deprecated
     private static final String MSISDN_SPEND_LIMIT_TABLE = "spendlimitexceeded_msisdn";
     
     /** The Constant APPLICATION_SPEND_LIMIT_TABLE. */
+	@Deprecated
     private static final String APPLICATION_SPEND_LIMIT_TABLE = "spendlimitexceeded_application";
     
     /** The Constant OPERATOR_SPEND_LIMIT_TABLE. */
+	@Deprecated
     private static final String OPERATOR_SPEND_LIMIT_TABLE = "spendlimitexceeded_operator";
 
 
@@ -1520,6 +1523,7 @@ public class AxiataDbService {
      * @return true, if successful
      * @throws AxataDBUtilException the axata db util exception
      */
+	@Deprecated
     public boolean checkMSISDNSpendLimit(String msisdn) throws AxataDBUtilException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -1551,6 +1555,7 @@ public class AxiataDbService {
      * @return true, if successful
      * @throws AxataDBUtilException the axata db util exception
      */
+	@Deprecated
     public boolean checkApplicationSpendLimit(String consumerKey) throws AxataDBUtilException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -1582,6 +1587,7 @@ public class AxiataDbService {
      * @return true, if successful
      * @throws AxataDBUtilException the axata db util exception
      */
+	@Deprecated
     public boolean checkOperatorSpendLimit(String operatorId) throws AxataDBUtilException {
         Connection con = null;
         PreparedStatement ps = null;

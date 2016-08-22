@@ -15,7 +15,6 @@
  ******************************************************************************/
 package com.wso2telco.dbutils.fileutils;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,37 +23,34 @@ import java.util.Map;
 import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.wso2.carbon.utils.CarbonUtils;
-import com.wso2telco.dbutils.util.PropertyFileNames;
 
 public class FileReader {
 
-	private Log LOG = LogFactory.getLog(FileReader.class);
+	private Log log = LogFactory.getLog(FileReader.class);
 
-	public Map<String, String> readMediatorConfFile() {
+	public Map<String, String> readPropertyFile(String file) {
 
-		Map<String, String> mediatorConfMap = new HashMap<String, String>();
+		HashMap<String, String> confPropertyMap = new HashMap<String, String>();
 		Properties props = new Properties();
 		FileInputStream fileStream = null;
 
-		String filePath = CarbonUtils.getCarbonConfigDirPath() + File.separator
-				+ PropertyFileNames.MEDIATOR_CONF_FILE.getFileName();
-
 		try {
 
-			fileStream = new FileInputStream(filePath);
+			fileStream = new FileInputStream(file);
+
 			props.load(fileStream);
-			mediatorConfMap.put("ussdGatewayEndpoint", props.getProperty("ussdGatewayEndpoint"));
-			mediatorConfMap.put("hubSubsGatewayEndpoint", props.getProperty("hubSubsGatewayEndpoint"));
-			mediatorConfMap.put("hubGateway", props.getProperty("hubGateway"));
-			mediatorConfMap.put("requestRouterUrl", props.getProperty("requestRouterUrl"));
-			mediatorConfMap.put("sendSMSResourceURL", props.getProperty("sendSMSResourceURL"));
+
+			for (String key : props.stringPropertyNames()) {
+
+				String value = props.getProperty(key);
+				confPropertyMap.put(key, value);
+			}
 		} catch (FileNotFoundException e) {
 
-			LOG.debug(PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " file not found in " + filePath, e);
+			log.debug("file not found in " + file, e);
 		} catch (IOException e) {
 
-			LOG.debug("unable to close " + PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " file ", e);
+			log.debug("unable to close " + file, e);
 		} finally {
 
 			try {
@@ -62,10 +58,10 @@ public class FileReader {
 				fileStream.close();
 			} catch (IOException e) {
 
-				LOG.debug("unable to close " + PropertyFileNames.MEDIATOR_CONF_FILE.getFileName() + " file ", e);
+				log.debug("unable to close " + file, e);
 			}
 		}
 
-		return mediatorConfMap;
+		return confPropertyMap;
 	}
 }
