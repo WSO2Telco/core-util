@@ -15,6 +15,9 @@
  ******************************************************************************/
 package com.wso2telco.core.pcrservice.persistable;
 
+import com.wso2telco.core.pcrservice.dao.SectorDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.wso2telco.core.pcrservice.exception.PCRException;
 import com.wso2telco.core.pcrservice.model.SectorDTO;
 
@@ -24,25 +27,49 @@ import com.wso2telco.core.pcrservice.model.SectorDTO;
  */
 public class SectorService {
 
-	 /**
- 	 * Gets the app.
- 	 *
- 	 * @param sectorID the sector ID
- 	 * @return the app
- 	 * @throws PCRException the PCR exception
- 	 */
- 	public SectorDTO getApp(final String sectorID) throws PCRException{
-		 return null;
-	 }
-	 
-	 /**
- 	 * Creates the sector.
- 	 *
- 	 * @param sectorDTO the sector DTO
- 	 * @return the sector DTO
- 	 * @throws PCRException the PCR exception
- 	 */
- 	public SectorDTO createSector(final SectorDTO sectorDTO) throws PCRException{
-		 return null;
-	 }
+	private static Logger log = LoggerFactory.getLogger(SectorService.class);
+
+	public SectorDTO getSector(final String sectorID) throws PCRException{
+		
+		SectorDTO sectorDTO = new SectorDTO();
+	
+		if (isInvalidString(sectorID)) {
+			 log.debug("sector ID cannot be null or empty");
+			 throw new PCRException("sector ID null or empty");
+		}
+		sectorDTO.setSectorid((Integer.valueOf(sectorID)));
+		try {
+			SectorDAO sectorDAO = new SectorDAO();
+			if(sectorDAO.checkSectorExist(sectorDTO)){
+				return sectorDTO;
+			}else{
+				throw new PCRException("No sector found");
+			}
+		}catch(Exception e){
+			log.error("getSector() failed ", e);
+			throw new PCRException("getSector() failed");
+		}
+
+	}
+
+	public SectorDTO createSector(final SectorDTO sectorDTO) throws PCRException{		
+		return null;
+	}
+
+	/**
+	 * Checks whether the string is null or empty.
+	 * @param str  the string to check.
+	 * @return true if the string is null or empty, false otherwise.
+	 */
+	public static boolean isInvalidString(final String str) {
+		if (str == null) {
+			return true;
+		}
+		String as = str.trim();
+		if ((as.equals("null")) || (as.equals(""))) {
+			return true;
+		}
+		return false;
+	}
+
 }
