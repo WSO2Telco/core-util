@@ -1,0 +1,33 @@
+database:
+  driverClass: com.mysql.cj.jdbc.Driver
+  user: root
+  password: root
+  url: jdbc:mysql://127.0.0.1/pcr_service
+server:
+        applicationConnectors:
+          - type: http
+                # The port the application will listen on
+            port: 8181
+            bindHost: localhost
+        adminConnectors:
+          - type: http
+                # The admin port
+            port: 8282
+logging:
+  level: INFO
+  loggers:
+    io.dropwizard: INFO
+    com.wso2telco: DEBUG
+  appenders:
+    - type: console
+      threshold: ALL
+      timeZone: UTC
+      target: stdout
+# Enable following for file appender
+    - type: file
+      currentLogFilename: log/pcr_service.log #<path to log file>/<filename.log>
+      threshold: ALL
+      archive: true
+      archivedLogFilenamePattern: log/pcr_service-%d.log #<path to log file >/< archive filename.log>
+      archivedFileCount: 5
+      timeZone: UTC

@@ -13,22 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.pcrservice.persistable;
+package com.wso2telco.core.pcrservice.model;
 
-import com.wso2telco.core.pcrservice.PCRGeneratable;
+import java.io.Serializable;
 
 // TODO: Auto-generated Javadoc
 /**
- * A factory for creating PersistableUUIDGenerator objects.
+ * The Class AppDTO.
  */
-public class PersistableUUIDGeneratorFactory {
+public class ApplicationDTO implements Serializable {
 
-/**
- * Creates a new PersistableUUIDGenerator object.
- *
- * @return the PCR generatable
- */
-public PCRGeneratable createGenarator(){
-	return new UUIDPCRGenarator();
-}
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -4841094865588233257L;
+
+	/** The app id. */
+	private String appId;
+
+	/**
+	 * Gets the app id.
+	 *
+	 * @return the app id
+	 */
+	public String getAppId() {
+		return appId;
+	}
+
+	/**
+	 * Sets the app id.
+	 *
+	 * @param appId the new app id
+	 */
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
 }

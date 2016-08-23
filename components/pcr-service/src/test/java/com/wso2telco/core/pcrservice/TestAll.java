@@ -13,22 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.pcrservice.persistable;
+package com.wso2telco.core.pcrservice;
 
-import com.wso2telco.core.pcrservice.PCRGeneratable;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-// TODO: Auto-generated Javadoc
-/**
- * A factory for creating PersistableUUIDGenerator objects.
- */
-public class PersistableUUIDGeneratorFactory {
 
 /**
- * Creates a new PersistableUUIDGenerator object.
- *
- * @return the PCR generatable
+ * The Class TestAll.
  */
-public PCRGeneratable createGenarator(){
-	return new UUIDPCRGenarator();
-}
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+	com.wso2telco.core.pcrservice.dao.TestAll.class,
+})
+public class TestAll {
+
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
+	public static void main(String[] args) {
+		JUnitCore.runClasses(new Class[] { TestAll.class });
+	}
 }

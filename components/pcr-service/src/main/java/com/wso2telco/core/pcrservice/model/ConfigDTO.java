@@ -13,22 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.pcrservice.persistable;
+package com.wso2telco.core.pcrservice.model;
 
-import com.wso2telco.core.pcrservice.PCRGeneratable;
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.dropwizard.Configuration;
+import io.dropwizard.db.DataSourceFactory;
 
 // TODO: Auto-generated Javadoc
 /**
- * A factory for creating PersistableUUIDGenerator objects.
+ * The Class ConfigDTO.
  */
-public class PersistableUUIDGeneratorFactory {
+public class ConfigDTO extends Configuration implements Serializable{
 
-/**
- * Creates a new PersistableUUIDGenerator object.
- *
- * @return the PCR generatable
- */
-public PCRGeneratable createGenarator(){
-	return new UUIDPCRGenarator();
-}
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = -8356032431902326005L;
+	
+
+	/** The database. */
+	@JsonProperty
+	private DataSourceFactory database = new DataSourceFactory();
+	
+	/** The server. */
+	@JsonProperty
+	private Object server;
+	
+	/** The logging. */
+	@JsonProperty
+	private Object logging;
+	
+	/**
+	 * Gets the data source factory.
+	 *
+	 * @return the data source factory
+	 */
+	public DataSourceFactory getDataSourceFactory() {
+		return database;
+	}
+
 }
