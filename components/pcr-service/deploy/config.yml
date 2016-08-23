@@ -2,7 +2,7 @@ database:
   driverClass: com.mysql.cj.jdbc.Driver
   user: root
   password: root
-  url: jdbc:mysql://127.0.0.1/pcr_service?useSSL=false
+  url: jdbc:mysql://127.0.0.1/pcr_service
 server:
         applicationConnectors:
           - type: http

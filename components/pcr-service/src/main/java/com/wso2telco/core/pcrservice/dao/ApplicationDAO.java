@@ -31,6 +31,7 @@ public class ApplicationDAO {
 	 * Save new application.
 	 *
 	 * @param applicationDTO the application DTO
+	 * @return the int
 	 * @throws SQLException the SQL exception
 	 */
 	public int saveNewApplication(ApplicationDTO applicationDTO) throws SQLException{
@@ -43,7 +44,9 @@ public class ApplicationDAO {
 	/**
 	 * Check application exists.
 	 *
+	 * @param applicationDTO the application DTO
 	 * @return true, if successful
+	 * @throws SQLException the SQL exception
 	 */
 	public boolean checkApplicationExists(ApplicationDTO applicationDTO) throws SQLException{
 		DBI dbi = JDBIUtil.getInstance();
@@ -51,4 +54,47 @@ public class ApplicationDAO {
 		
 		return ApplicationHandler.checkApplicationExists(applicationDTO);
 	}
+	
+	
+	/**
+	 * Check application active.
+	 *
+	 * @param applicationDTO the application DTO
+	 * @return true, if successful
+	 * @throws SQLException the SQL exception
+	 */
+	public boolean checkApplicationActive(ApplicationDTO applicationDTO) throws SQLException{
+		DBI dbi = JDBIUtil.getInstance();
+		ApplicationHandler ApplicationHandler = dbi.onDemand(ApplicationHandler.class);
+		
+		return ApplicationHandler.checkApplicationActive(applicationDTO);
+	}
+	
+	/**
+	 * Sets the application active.
+	 *
+	 * @param applicationDTO the new application active
+	 * @throws SQLException the SQL exception
+	 */
+	public void setApplicationActive(ApplicationDTO applicationDTO) throws SQLException{
+		DBI dbi = JDBIUtil.getInstance();
+		ApplicationHandler ApplicationHandler = dbi.onDemand(ApplicationHandler.class);
+		
+		ApplicationHandler.setApplicationActive(applicationDTO);
+	}
+	
+	/**
+	 * Sets the application inctive.
+	 *
+	 * @param applicationDTO the new application inactive
+	 * @throws SQLException the SQL exception
+	 */
+	public void setApplicationInactive(ApplicationDTO applicationDTO) throws SQLException{
+		DBI dbi = JDBIUtil.getInstance();
+		ApplicationHandler ApplicationHandler = dbi.onDemand(ApplicationHandler.class);
+		
+		ApplicationHandler.setApplicationInactive(applicationDTO);
+	}
+	
+	
 }

@@ -26,20 +26,45 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 public interface PersistableApplication {
 
 	/**
-	 * Insert.
+	 * Insert application.
 	 *
 	 * @param appid the appid
 	 * @return the int
 	 */
 	@SqlUpdate("INSERT INTO pctapplication ( appid ) VALUES (:appid)")
-	public int insert(@Bind("appid") String appid);
+	public int insertApplication(@Bind("appid") String appid);
 
 	/**
-	 * Select.
+	 * Select application.
 	 *
 	 * @param appid the appid
 	 * @return true, if successful
 	 */
 	@SqlQuery("select 1 from pctapplication where appid = :appid")
-	public boolean select(@Bind("appid") String appid);
+	public boolean checkApplicationExists(@Bind("appid") String appid);
+	
+	/**
+	 * Check application active.
+	 *
+	 * @param useruuid the useruuid
+	 * @return true, if successful
+	 */
+	@SqlQuery("select isactive from pctapplication where appid = :appid")
+	public boolean checkApplicationActive(@Bind("userid") String useruuid);
+	
+	/**
+	 * Sets the application active.
+	 *
+	 * @param useruuid the new application active
+	 */
+	@SqlQuery("UPDATE pctapplication SET isactive = 1 WHERE appid = :appid")
+	public void setApplicationActive(@Bind("userid") String useruuid);
+	
+	/**
+	 * Sets the application inactive.
+	 *
+	 * @param useruuid the new application inactive
+	 */
+	@SqlQuery("UPDATE pctapplication SET isactive = 0 WHERE appid = :appid")
+	public void setApplicationInactive(@Bind("userid") String useruuid);
 }

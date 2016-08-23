@@ -24,8 +24,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({	
-	ApplicationDAOTest.class,
 	JDBIUtilTest.class,
+	ApplicationDAOTest.class,
 })
 public class TestAll {
 

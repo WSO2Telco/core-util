@@ -41,10 +41,11 @@ public abstract class ApplicationHandler {
 	 *
 	 * @param applicationDTO the application DTO
 	 * @return the int
+	 * @throws SQLException the SQL exception
 	 */
 	public int createNewApplication(ApplicationDTO applicationDTO) throws SQLException{		
 		int newApplicationDid=0;		
-		newApplicationDid = applicationPersister().insert(applicationDTO.getAppId());
+		newApplicationDid = applicationPersister().insertApplication(applicationDTO.getAppId());
 		return newApplicationDid;		
 	}
 	
@@ -53,10 +54,44 @@ public abstract class ApplicationHandler {
 	 *
 	 * @param applicationDTO the application DTO
 	 * @return true, if successful
+	 * @throws SQLException the SQL exception
 	 */
 	public boolean checkApplicationExists(ApplicationDTO applicationDTO) throws SQLException{
 		boolean exists = false;
-		exists = applicationPersister().select(applicationDTO.getAppId());
+		exists = applicationPersister().checkApplicationExists(applicationDTO.getAppId());
 		return exists;
+	}
+	
+	/**
+	 * Check application active.
+	 *
+	 * @param applicationDTO the application DTO
+	 * @return true, if successful
+	 * @throws SQLException the SQL exception
+	 */
+	public boolean checkApplicationActive(ApplicationDTO applicationDTO) throws SQLException{
+		boolean active = false;
+		active = applicationPersister().checkApplicationActive(applicationDTO.getAppId());
+		return active;
+	}
+	
+	/**
+	 * Sets the application active.
+	 *
+	 * @param applicationDTO the new application active
+	 * @throws SQLException the SQL exception
+	 */
+	public void setApplicationActive(ApplicationDTO applicationDTO) throws SQLException{		
+		applicationPersister().setApplicationActive(applicationDTO.getAppId());		
+	}
+	
+	/**
+	 * Sets the application inactive.
+	 *
+	 * @param applicationDTO the new application inactive
+	 * @throws SQLException the SQL exception
+	 */
+	public void setApplicationInactive(ApplicationDTO applicationDTO) throws SQLException{		
+		applicationPersister().setApplicationInactive(applicationDTO.getAppId());		
 	}
 }

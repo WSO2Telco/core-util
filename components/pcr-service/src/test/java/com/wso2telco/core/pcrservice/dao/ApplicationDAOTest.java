@@ -56,7 +56,6 @@ public class ApplicationDAOTest {
 	@Before
 	public void setUp()
 		throws Exception {
-		
 	}
 
 	/**
