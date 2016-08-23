@@ -13,20 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.pcrservice.model;
 
-/**
- * The Class SectorDTO.
- */
-public class SectorDTO {
+package com.wso2telco.core.pcrservice.dao;
 
-    private int sectorid;
 
-    public int getSectorid() {
-        return sectorid;
+import java.sql.SQLException;
+
+import com.wso2telco.core.pcrservice.model.SectorDTO;
+import org.skife.jdbi.v2.DBI;
+
+
+public class SectorDAO {
+
+    public int saveNewSector(SectorDTO sectorDTO) throws SQLException{
+        DBI dbi = JDBIUtil.getInstance();
+        SectorHandler sectorHandler = dbi.onDemand(SectorHandler.class);
+
+        return sectorHandler.createNewSector(sectorDTO);
     }
 
-    public void setSectorid(int sectorid) {
-        this.sectorid = sectorid;
+    public boolean checkSectorExist(final int sectorID) throws SQLException{
+        DBI dbi = JDBIUtil.getInstance();
+        SectorHandler sectorHandler = dbi.onDemand(SectorHandler.class);
+
+        return sectorHandler.checkSectorExists(sectorID);
     }
 }

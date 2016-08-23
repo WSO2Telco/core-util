@@ -13,20 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.pcrservice.model;
 
-/**
- * The Class SectorDTO.
- */
-public class SectorDTO {
+package com.wso2telco.core.pcrservice.dao;
 
-    private int sectorid;
+import org.skife.jdbi.v2.sqlobject.Bind;
+import org.skife.jdbi.v2.sqlobject.SqlQuery;
+import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 
-    public int getSectorid() {
-        return sectorid;
-    }
+public interface PersistableSector {
 
-    public void setSectorid(int sectorid) {
-        this.sectorid = sectorid;
-    }
+    @SqlUpdate("INSERT INTO pctsector ( sectorid ) VALUES (:sectorid)")
+    public int insert(@Bind("sectorid") int sectorid);
+
+    @SqlQuery("select 1 from pctsector where sectorid = :sectorid")
+    public boolean select(@Bind("sectorid") int sectorid);
+
 }
