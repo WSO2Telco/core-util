@@ -37,11 +37,11 @@ public class SectorService {
 			 log.debug("sector ID cannot be null or empty");
 			 throw new PCRException("sector ID null or empty");
 		}
-
+		sectorDTO.setSectorid((Integer.valueOf(sectorID)));
 		try {
 			SectorDAO sectorDAO = new SectorDAO();
-			if(sectorDAO.checkSectorExist((Integer.valueOf(sectorID)))){
-				sectorDTO.setSectorid((Integer.valueOf(sectorID)));
+			if(sectorDAO.checkSectorExist(sectorDTO)){
+				return sectorDTO;
 			}else{
 				throw new PCRException("No sector found");
 			}
@@ -50,7 +50,6 @@ public class SectorService {
 			throw new PCRException("getSector() failed");
 		}
 
-		return sectorDTO;
 	}
 
 	public SectorDTO createSector(final SectorDTO sectorDTO) throws PCRException{		

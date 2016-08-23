@@ -22,10 +22,22 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 
 public interface PersistableSector {
 
+	/**
+	 * Insert sector.
+	 *
+	 * @param sectorid the sectorid
+	 * @return the int
+	 */
     @SqlUpdate("INSERT INTO pctsector ( sectorid ) VALUES (:sectorid)")
-    public int insert(@Bind("sectorid") int sectorid);
+    public int insertSector(@Bind("sectorid") int sectorid);
 
+    /**
+	 * Select sector.
+	 *
+	 * @param sectorid the sectorid
+	 * @return true, if successful
+	 */
     @SqlQuery("select 1 from pctsector where sectorid = :sectorid")
-    public boolean select(@Bind("sectorid") int sectorid);
+    public boolean checkSectorExists(@Bind("sectorid") int sectorid);
 
 }

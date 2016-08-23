@@ -22,9 +22,18 @@ import java.sql.SQLException;
 import com.wso2telco.core.pcrservice.model.SectorDTO;
 import org.skife.jdbi.v2.DBI;
 
-
+/**
+ * The Class SectorDAO.
+ */
 public class SectorDAO {
 
+	/**
+	 * Save new sector.
+	 *
+	 * @param sectorDTO the sector DTO
+	 * @return the int
+	 * @throws SQLException the SQL exception
+	 */
     public int saveNewSector(SectorDTO sectorDTO) throws SQLException{
         DBI dbi = JDBIUtil.getInstance();
         SectorHandler sectorHandler = dbi.onDemand(SectorHandler.class);
@@ -32,10 +41,17 @@ public class SectorDAO {
         return sectorHandler.createNewSector(sectorDTO);
     }
 
-    public boolean checkSectorExist(final int sectorID) throws SQLException{
+	/**
+	 * Check sector exists.
+	 *
+	 * @param sectorDTO the sectorDTO
+	 * @return true, if successful
+	 * @throws SQLException the SQL exception
+	 */
+    public boolean checkSectorExist(SectorDTO sectorDTO) throws SQLException{
         DBI dbi = JDBIUtil.getInstance();
         SectorHandler sectorHandler = dbi.onDemand(SectorHandler.class);
 
-        return sectorHandler.checkSectorExists(sectorID);
+        return sectorHandler.checkSectorExists(sectorDTO);
     }
 }

@@ -45,7 +45,7 @@ public class SectorDAOTest {
 		sectorDTO.setSectorid(Integer.valueOf(sectorId));	
 		
 		assertEquals(1,fixture.saveNewSector(sectorDTO));
-		assertTrue(fixture.checkSectorExist(Integer.valueOf(sectorId)));
+		assertTrue(fixture.checkSectorExist(sectorDTO));
 	}
 
 	/**

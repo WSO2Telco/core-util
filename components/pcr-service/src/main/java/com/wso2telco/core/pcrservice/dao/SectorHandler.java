@@ -16,24 +16,45 @@
 
 package com.wso2telco.core.pcrservice.dao;
 
+import java.sql.SQLException;
+
 import org.skife.jdbi.v2.sqlobject.CreateSqlObject;
 
 import com.wso2telco.core.pcrservice.model.SectorDTO;
 
 public abstract class SectorHandler {
 
+	/**
+	 * Sector persister.
+	 *
+	 * @return the persistable sector
+	 */
     @CreateSqlObject
     abstract PersistableSector  persistableSector();
 
+    /**
+	 * Creates the new sector.
+	 *
+	 * @param sectorDTO the sector DTO
+	 * @return the int
+	 * @throws SQLException the SQL exception
+	 */
     public int createNewSector(SectorDTO sectorDTO){
         int newSectorDid=0;
-        newSectorDid = persistableSector().insert(sectorDTO.getSectorid());
+        newSectorDid = persistableSector().insertSector(sectorDTO.getSectorid());
         return newSectorDid;
     }
-
-    public boolean checkSectorExists(int sectorID){
+    
+	/**
+	 * Check sector exists.
+	 *
+	 * @param sectorDTO the sectorDTO
+	 * @return true, if successful
+	 * @throws SQLException the SQL exception
+	 */
+    public boolean checkSectorExists(SectorDTO sectorDTO){
         boolean exists = false;
-        exists = persistableSector().select(sectorID);
+        exists = persistableSector().checkSectorExists(sectorDTO.getSectorid());
         return exists;
     }
 }
