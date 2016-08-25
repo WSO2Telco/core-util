@@ -16,5 +16,4 @@ public  class BusinessException extends Exception {
 	public ThrowableError getErrorType() {
 		return this.error;
 	}
-
 }

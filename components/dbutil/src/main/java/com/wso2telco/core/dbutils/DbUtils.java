@@ -25,7 +25,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.wso2telco.dbutils.util.DataSourceNames;
+import com.wso2telco.core.dbutils.util.DataSourceNames;
 
 // TODO: Auto-generated Javadoc
 /**
