@@ -9,11 +9,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>msisdn-validator</artifactId>
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 	<name>msisdn-validator</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
-
 		<dependency>
 			<groupId>com.googlecode.libphonenumber.wso2telco</groupId>
 			<artifactId>libphonenumber</artifactId>
@@ -30,4 +29,36 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-Name>${project.artifactId}</Bundle-Name>
+						<Export-Package>com.wso2telco.core.msisdnvalidator.*</Export-Package>					
+						<DynamicImport-Package>*</DynamicImport-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-scr-plugin</artifactId>
+				<version>1.9.0</version>
+				<executions>
+					<execution>
+						<id>generate-scr-scrdescriptor</id>
+						<goals>
+							<goal>scr</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
