@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver.mncrange;
+package com.wso2telco.core.mnc.resolver.mncrange;
  
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.wso2telco.mnc.resolver.MobileNtException;
-import com.wso2telco.mnc.resolver.NumberRange;
-
+import com.wso2telco.core.mnc.resolver.MobileNtException;
+import com.wso2telco.core.mnc.resolver.NumberRange;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -35,11 +32,12 @@ import java.util.List;
 // TODO: Auto-generated Javadoc
 //import org.wso2.carbon.apimgt.impl.utils.APIMgtDBUtil;
 
+
+
+ 
 /**
  * The Class McnRangeDbUtil.
  */
-
-@Deprecated
 public class McnRangeDbUtil {
 
     /** The axiata datasource. */

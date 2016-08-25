@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver;
+package com.wso2telco.core.mnc.resolver;
 
 import java.util.List;
-import com.wso2telco.mnc.resolver.MCCConfiguration.MobileCountryCodes.Mcc;
-import com.wso2telco.mnc.resolver.dnsssl.DNSSSLQueryClient;
-import com.wso2telco.mnc.resolver.mncrange.MNCRangeCheck;
-import com.wso2telco.mnc.resolver.mncrange.McnRangeDbUtil;
+import com.wso2telco.core.mnc.resolver.MCCConfiguration.MobileCountryCodes.Mcc;
+import com.wso2telco.core.mnc.resolver.dnsssl.DNSSSLQueryClient;
+import com.wso2telco.core.mnc.resolver.mncrange.MNCRangeCheck;
+import com.wso2telco.core.mnc.resolver.mncrange.McnRangeDbUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.logging.Log;
@@ -30,8 +30,6 @@ import org.apache.commons.logging.LogFactory;
 /**
  * The Class MNCQueryClient.
  */
-
-@Deprecated
 public class MNCQueryClient {
 
     private static final Log log = LogFactory.getLog(MNCQueryClient.class);

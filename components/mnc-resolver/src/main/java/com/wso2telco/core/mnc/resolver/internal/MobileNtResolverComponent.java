@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver.internal;
+package com.wso2telco.core.mnc.resolver.internal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
+import com.wso2telco.core.mnc.resolver.ConfigLoader;
+import com.wso2telco.core.mnc.resolver.DataHolder;
 
-import com.wso2telco.mnc.resolver.ConfigLoader;
-import com.wso2telco.mnc.resolver.DataHolder;
+
+ 
 
 /**
  * @scr.component name="mnc.component" immediate="true"
  */
-
-@Deprecated
 public class MobileNtResolverComponent {
 
     /** The Constant log. */

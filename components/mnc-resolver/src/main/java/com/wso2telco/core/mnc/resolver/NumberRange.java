@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver;
+package com.wso2telco.core.mnc.resolver;
 
  
 // TODO: Auto-generated Javadoc
 /**
  * The Class NumberRange.
  */
-
-@Deprecated
 public class NumberRange {
 
     /** The rangefrom. */

@@ -24,6 +24,8 @@ package com.wso2telco.mnc.resolver.dnsssl;
 /**
  * The Interface DNSResponseCode.
  */
+
+@Deprecated
 public interface DNSResponseCode {
 
 	 

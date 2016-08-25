@@ -13,44 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver.dnsssl;
+package com.wso2telco.core.mnc.resolver.dnsssl;
 
+ 
+
+
+
+ 
 // TODO: Auto-generated Javadoc
 /**
- * The Class TNUtils.
+ * The Interface DNSResponseCode.
  */
-
-@Deprecated
-public class TNUtils {
+public interface DNSResponseCode {
 
 	 
 	/**
-	 * Gets the e164 tn.
-	 *
-	 * @param cc the cc
-	 * @param tn the tn
-	 * @param termDomain the term domain
-	 * @return the e164 tn
+	 * The Enum RCODE.
 	 */
-	public static String getE164TN(final String cc, final String tn,
-			final String termDomain) {
-
-		StringBuffer out = new StringBuffer();
-
-		char []tnChars = tn.toCharArray();
-
-		for(int idx = tnChars.length - 1; idx >= 0; idx--) {
-			out.append(tnChars[idx]).append(".");
-		}
-
-		char []ccChars = cc.toCharArray();
-
-		for(int idx = ccChars.length - 1; idx >= 0; idx--) {
-			out.append(ccChars[idx]).append(".");
-		}
-
-		out.append(termDomain);
-
-		return out.toString();
-	}
+	public enum RCODE {
+		
+		/** The no error. */
+		NO_ERROR, 
+ /** The format error. */
+ FORMAT_ERROR, 
+ /** The nxdomain. */
+ NXDOMAIN, 
+ /** The servfail. */
+ SERVFAIL, 
+ /** The impl error. */
+ IMPL_ERROR, 
+ /** The refused. */
+ REFUSED, 
+ /** The server not found. */
+ SERVER_NOT_FOUND, 
+ /** The unanticipated. */
+ UNANTICIPATED
+	};
 }

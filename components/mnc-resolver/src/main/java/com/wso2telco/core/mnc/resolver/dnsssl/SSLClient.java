@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver.dnsssl;
+package com.wso2telco.core.mnc.resolver.dnsssl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,8 +27,6 @@ import javax.net.ssl.SSLSocketFactory;
 /**
  * The Class SSLClient.
  */
-
-@Deprecated
 public class SSLClient {
 
 	/** The Constant OFFSET. */

@@ -13,7 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver.dnsssl;
+package com.wso2telco.core.mnc.resolver.dnsssl;
+
+ 
+
+
 
 import java.io.IOException;
 
@@ -22,12 +26,12 @@ import org.xbill.DNS.Message;
 import org.xbill.DNS.Options;
 import org.xbill.DNS.WireParseException;
 
+ 
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class SSLResolver.
  */
-
-@Deprecated
 public class SSLResolver {
 
 	/** The ssl client. */

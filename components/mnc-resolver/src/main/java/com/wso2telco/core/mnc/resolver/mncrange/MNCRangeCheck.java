@@ -13,27 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver.mncrange;
+package com.wso2telco.core.mnc.resolver.mncrange;
 
 import java.util.List;
 
-import com.wso2telco.mnc.resolver.IProviderNetwork;
-import com.wso2telco.mnc.resolver.MCCConfiguration;
-import com.wso2telco.mnc.resolver.MobileNtException;
-import com.wso2telco.mnc.resolver.NumberRange;
+import com.wso2telco.core.mnc.resolver.IProviderNetwork;
+import com.wso2telco.core.mnc.resolver.MobileNtException;
+import com.wso2telco.core.mnc.resolver.NumberRange;
 
  
 // TODO: Auto-generated Javadoc
 /**
  * The Class MNCRangeCheck.
  */
-
-@Deprecated
 public class MNCRangeCheck implements IProviderNetwork {
 
-    /* (non-Javadoc)
-     * @see com.wso2telco.mnc.resolver.IProviderNetwork#queryNetwork(java.lang.String, java.lang.String)
-     */
     @Override
     public String queryNetwork(String countryCode, String endUser) throws MobileNtException {
 

@@ -13,44 +13,73 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver.dnsssl;
+package com.wso2telco.core.mnc.resolver.dnsssl;
+
+ 
+
+
+
+ 
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class TNUtils.
+ * The Class RequestBean.
  */
+public class RequestBean {
 
-@Deprecated
-public class TNUtils {
+	/** The country code. */
+	private String countryCode;
+
+	/** The tn. */
+	private String tn;
+
+	 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "RequestBean [countryCode = " + countryCode + ", TN = " + tn
+				+ "]";
+	}
 
 	 
 	/**
-	 * Gets the e164 tn.
+	 * Gets the country code.
 	 *
-	 * @param cc the cc
-	 * @param tn the tn
-	 * @param termDomain the term domain
-	 * @return the e164 tn
+	 * @return the country code
 	 */
-	public static String getE164TN(final String cc, final String tn,
-			final String termDomain) {
+	public String getCountryCode() {
+		return countryCode;
+	}
 
-		StringBuffer out = new StringBuffer();
+	 
+	/**
+	 * Sets the country code.
+	 *
+	 * @param countryCode the new country code
+	 */
+	public void setCountryCode(final String countryCode) {
+		this.countryCode = countryCode;
+	}
 
-		char []tnChars = tn.toCharArray();
+	 
+	/**
+	 * Gets the tn.
+	 *
+	 * @return the tn
+	 */
+	public String getTn() {
+		return tn;
+	}
 
-		for(int idx = tnChars.length - 1; idx >= 0; idx--) {
-			out.append(tnChars[idx]).append(".");
-		}
-
-		char []ccChars = cc.toCharArray();
-
-		for(int idx = ccChars.length - 1; idx >= 0; idx--) {
-			out.append(ccChars[idx]).append(".");
-		}
-
-		out.append(termDomain);
-
-		return out.toString();
+	 
+	/**
+	 * Sets the tn.
+	 *
+	 * @param number the new tn
+	 */
+	public void setTn(final String number) {
+		this.tn = number;
 	}
 }

@@ -13,23 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver;
-
- 
-
-
+package com.wso2telco.core.mnc.resolver;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
- 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Configuration.
  */
-@Deprecated
 public class Configuration {
 
 	/** The Constant PROPERTY_FILE_PATH. */

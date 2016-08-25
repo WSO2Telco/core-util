@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver.dnsssl;
+package com.wso2telco.core.mnc.resolver.dnsssl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.wso2telco.mnc.resolver.Configuration;
-import com.wso2telco.mnc.resolver.MCCConfiguration;
+import com.wso2telco.core.mnc.resolver.Configuration;
+import com.wso2telco.core.mnc.resolver.MCCConfiguration;
 
 
  
@@ -27,8 +27,6 @@ import com.wso2telco.mnc.resolver.MCCConfiguration;
 /**
  * The Class DNSSSLBulkQuery.
  */
-
-@Deprecated
 public class DNSSSLBulkQuery {
 
 	 

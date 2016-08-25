@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver.dnsssl;
+package com.wso2telco.core.mnc.resolver.dnsssl;
 
 import java.util.ArrayList;
 
@@ -23,9 +23,8 @@ import org.xbill.DNS.Name;
 import org.xbill.DNS.Record;
 import org.xbill.DNS.Section;
 import org.xbill.DNS.Type;
-
-import com.wso2telco.mnc.resolver.Configuration;
-import com.wso2telco.mnc.resolver.MCCConfiguration;
+import com.wso2telco.core.mnc.resolver.Configuration;
+import com.wso2telco.core.mnc.resolver.MCCConfiguration;
 
 
  
@@ -34,8 +33,6 @@ import com.wso2telco.mnc.resolver.MCCConfiguration;
 /**
  * The Class DNSSSLQuery.
  */
-
-@Deprecated
 public class DNSSSLQuery implements DNSResponseCode {
 
 	 

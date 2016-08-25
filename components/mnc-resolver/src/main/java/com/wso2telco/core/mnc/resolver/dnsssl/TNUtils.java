@@ -13,14 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver.dnsssl;
+package com.wso2telco.core.mnc.resolver.dnsssl;
 
+ 
+
+
+
+ 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TNUtils.
  */
-
-@Deprecated
 public class TNUtils {
 
 	 

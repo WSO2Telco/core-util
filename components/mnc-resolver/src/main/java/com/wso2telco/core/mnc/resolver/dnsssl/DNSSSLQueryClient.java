@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver.dnsssl;
+package com.wso2telco.core.mnc.resolver.dnsssl;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -26,16 +26,16 @@ import java.util.Iterator;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.wso2telco.mnc.resolver.DataHolder;
-import com.wso2telco.mnc.resolver.IProviderNetwork;
-import com.wso2telco.mnc.resolver.MCCConfiguration;
-import com.wso2telco.mnc.resolver.dnsssl.DNSQueryResult;
-import com.wso2telco.mnc.resolver.dnsssl.DNSSSLBulkQuery;
-import com.wso2telco.mnc.resolver.dnsssl.DNSSSLQuery;
-import com.wso2telco.mnc.resolver.dnsssl.RequestBean;
-import com.wso2telco.mnc.resolver.dnsssl.SSLClient;
-import com.wso2telco.mnc.resolver.dnsssl.SSLResolver;
-import com.wso2telco.mnc.resolver.dnsssl.DNSResponseCode.RCODE;
+import com.wso2telco.core.mnc.resolver.DataHolder;
+import com.wso2telco.core.mnc.resolver.IProviderNetwork;
+import com.wso2telco.core.mnc.resolver.MCCConfiguration;
+import com.wso2telco.core.mnc.resolver.dnsssl.DNSQueryResult;
+import com.wso2telco.core.mnc.resolver.dnsssl.DNSSSLBulkQuery;
+import com.wso2telco.core.mnc.resolver.dnsssl.DNSSSLQuery;
+import com.wso2telco.core.mnc.resolver.dnsssl.RequestBean;
+import com.wso2telco.core.mnc.resolver.dnsssl.SSLClient;
+import com.wso2telco.core.mnc.resolver.dnsssl.SSLResolver;
+import com.wso2telco.core.mnc.resolver.dnsssl.DNSResponseCode.RCODE;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.File;
@@ -47,8 +47,6 @@ import javax.xml.bind.Unmarshaller;
 /**
  * The Class DNSSSLQueryClient.
  */
-
-@Deprecated
 public class DNSSSLQueryClient implements IProviderNetwork {
 
     /** The Constant USAGE_BULK_QUERY. */
@@ -247,9 +245,6 @@ public class DNSSSLQueryClient implements IProviderNetwork {
         return TN;
     }
 
-    /* (non-Javadoc)
-     * @see com.wso2telco.mnc.resolver.IProviderNetwork#queryNetwork(java.lang.String, java.lang.String)
-     */
     @Override
     public String queryNetwork(String countryCode, String endUser) {
         SSLClient sslClient = new SSLClient();

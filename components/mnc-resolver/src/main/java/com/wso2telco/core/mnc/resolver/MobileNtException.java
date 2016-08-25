@@ -13,51 +13,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.mnc.resolver;
+package com.wso2telco.core.mnc.resolver;
 
-
+ 
 // TODO: Auto-generated Javadoc
 /**
- * The Class DataHolder.
+ * The Class MobileNtException.
  */
-@Deprecated
-public class DataHolder {
+public class MobileNtException extends Exception {
 
-    /** The mobile mcc config. */
-    private MCCConfiguration mobileMccConfig;
-
-    /** The this instance. */
-    private static DataHolder thisInstance = new DataHolder();
 
     /**
-     * Instantiates a new data holder.
-     */
-    private DataHolder() {}
-
-    /**
-     * Gets the single instance of DataHolder.
+     * Instantiates a new mobile nt exception.
      *
-     * @return single instance of DataHolder
+     * @param message the message
      */
-    public static DataHolder getInstance() {
-        return thisInstance;
+    public MobileNtException(String message) {
+        super(message);
     }
 
     /**
-     * Gets the mobile country config.
+     * Instantiates a new mobile nt exception.
      *
-     * @return the mobile country config
+     * @param message the message
+     * @param cause the cause
      */
-    public MCCConfiguration getMobileCountryConfig() {
-        return mobileMccConfig;
+    public MobileNtException(String message, Throwable cause) {
+        super(message, cause);
     }
 
     /**
-     * Sets the mobile country config.
+     * Instantiates a new mobile nt exception.
      *
-     * @param mobileCountryConfig the new mobile country config
+     * @param cause the cause
      */
-    public void setMobileCountryConfig(MCCConfiguration mobileCountryConfig) {
-        this.mobileMccConfig = mobileCountryConfig;
+    public MobileNtException(Throwable cause) {
+        super(cause);
     }
 }
