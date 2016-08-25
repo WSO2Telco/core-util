@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.dbutils;
+package com.wso2telco.core.dbutils;
 
  
 
@@ -21,7 +21,6 @@ package com.wso2telco.dbutils;
 /**
  * The Class AxataDBUtilException.
  */
-@Deprecated
 public class AxataDBUtilException extends Exception {
 
     /**

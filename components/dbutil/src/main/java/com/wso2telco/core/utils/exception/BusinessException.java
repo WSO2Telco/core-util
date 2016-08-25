@@ -1,6 +1,5 @@
-package com.wso2telco.utils.exception;
+package com.wso2telco.core.utils.exception;
 
-@Deprecated
 public  class BusinessException extends Exception {
 
 	/**

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.dbutils;
+package com.wso2telco.core.dbutils;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -31,7 +31,6 @@ import com.wso2telco.dbutils.util.DataSourceNames;
 /**
  * The Class DbUtils.
  */
-@Deprecated
 public class DbUtils {
 
 	/** The resdb. */

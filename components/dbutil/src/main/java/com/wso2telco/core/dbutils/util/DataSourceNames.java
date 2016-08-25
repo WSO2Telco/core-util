@@ -1,6 +1,5 @@
-package com.wso2telco.dbutils.util;
+package com.wso2telco.core.dbutils.util;
 
-@Deprecated
 public enum DataSourceNames {
 	
 	WSO2AM_DB("jdbc/WSO2AM_DB"),

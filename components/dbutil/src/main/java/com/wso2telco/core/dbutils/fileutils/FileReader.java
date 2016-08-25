@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.dbutils.fileutils;
+package com.wso2telco.core.dbutils.fileutils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,7 +24,6 @@ import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-@Deprecated
 public class FileReader {
 
 	private Log log = LogFactory.getLog(FileReader.class);

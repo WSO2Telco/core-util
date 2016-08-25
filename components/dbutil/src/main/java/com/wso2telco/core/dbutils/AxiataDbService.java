@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.dbutils;
+package com.wso2telco.core.dbutils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import javax.cache.Cache;
@@ -29,7 +29,6 @@ import java.util.Map;
 /**
  * The Class AxiataDbService.
  */
-@Deprecated
 public class AxiataDbService {
 
 	/** The log. */

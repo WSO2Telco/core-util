@@ -13,42 +13,66 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.dbutils;
+package com.wso2telco.core.dbutils;
 
  
-
 // TODO: Auto-generated Javadoc
 /**
- * The Class AxataDBUtilException.
+ * The Class Operatorsubs.
  */
 @Deprecated
-public class AxataDBUtilException extends Exception {
+public class Operatorsubs {
+    
+    /** The operator. */
+    String operator;
+    
+    /** The domain. */
+    String domain;
 
     /**
-     * Instantiates a new axata db util exception.
+     * Instantiates a new operatorsubs.
      *
-     * @param message the message
+     * @param operator the operator
+     * @param domain the domain
      */
-    public AxataDBUtilException(String message) {
-        super(message);
+    public Operatorsubs(String operator, String domain) {
+        this.operator = operator;
+        this.domain = domain;
+    }
+        
+    /**
+     * Gets the operator.
+     *
+     * @return the operator
+     */
+    public String getOperator() {
+        return operator;
     }
 
     /**
-     * Instantiates a new axata db util exception.
+     * Sets the operator.
      *
-     * @param message the message
-     * @param cause the cause
+     * @param operator the new operator
      */
-    public AxataDBUtilException(String message, Throwable cause) {
-        super(message, cause);
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     /**
-     * Instantiates a new axata db util exception.
+     * Gets the domain.
      *
-     * @param cause the cause
+     * @return the domain
      */
-    public AxataDBUtilException(Throwable cause) {
-        super(cause);
+    public String getDomain() {
+        return domain;
+    }
+
+    /**
+     * Sets the domain.
+     *
+     * @param domain the new domain
+     */
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 }
