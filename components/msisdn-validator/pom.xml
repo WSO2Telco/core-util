@@ -15,7 +15,7 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>com.googlecode.libphonenumber</groupId>
+			<groupId>com.googlecode.libphonenumber.wso2telco</groupId>
 			<artifactId>libphonenumber</artifactId>
 		</dependency>
 			<dependency>
