@@ -41,7 +41,7 @@ public abstract class SectorHandler {
 	 */
     public int createNewSector(SectorDTO sectorDTO){
         int newSectorDid=0;
-        newSectorDid = persistableSector().insertSector(sectorDTO.getSectorid());
+        newSectorDid = persistableSector().insertSector(sectorDTO.getSectorId());
         return newSectorDid;
     }
     
@@ -54,7 +54,7 @@ public abstract class SectorHandler {
 	 */
     public boolean checkSectorExists(SectorDTO sectorDTO){
         boolean exists = false;
-        exists = persistableSector().checkSectorExists(sectorDTO.getSectorid());
+        exists = persistableSector().checkSectorExists(sectorDTO.getSectorId());
         return exists;
     }
 }

@@ -19,7 +19,7 @@ import java.io.Serializable;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class AppDTO.
+ * The Class ApplicationDTO.
  */
 public class ApplicationDTO implements Serializable {
 
@@ -29,6 +29,22 @@ public class ApplicationDTO implements Serializable {
 	/** The app id. */
 	private String appId;
 
+	/**
+	 * Instantiates a new application DTO.
+	 */
+	public ApplicationDTO(){
+		
+	}
+	
+	/**
+	 * Instantiates a new application DTO.
+	 *
+	 * @param appId the app id
+	 */
+	public ApplicationDTO(String appId){
+		this.appId = appId;
+	}
+	
 	/**
 	 * Gets the app id.
 	 *

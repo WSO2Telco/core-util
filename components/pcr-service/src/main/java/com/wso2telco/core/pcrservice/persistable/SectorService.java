@@ -27,8 +27,16 @@ import com.wso2telco.core.pcrservice.model.SectorDTO;
  */
 public class SectorService {
 
+	/** The log. */
 	private static Logger log = LoggerFactory.getLogger(SectorService.class);
 
+	/**
+	 * Gets the sector.
+	 *
+	 * @param sectorID the sector ID
+	 * @return the sector
+	 * @throws PCRException the PCR exception
+	 */
 	public SectorDTO getSector(final String sectorID) throws PCRException{
 		
 		SectorDTO sectorDTO = new SectorDTO();
@@ -37,7 +45,7 @@ public class SectorService {
 			 log.debug("sector ID cannot be null or empty");
 			 throw new PCRException("sector ID null or empty");
 		}
-		sectorDTO.setSectorid((Integer.valueOf(sectorID)));
+		sectorDTO.setSectorId(sectorID);
 		try {
 			SectorDAO sectorDAO = new SectorDAO();
 			if(sectorDAO.checkSectorExist(sectorDTO)){
@@ -52,14 +60,22 @@ public class SectorService {
 
 	}
 
+	/**
+	 * Creates the sector.
+	 *
+	 * @param sectorDTO the sector DTO
+	 * @return the sector DTO
+	 * @throws PCRException the PCR exception
+	 */
 	public SectorDTO createSector(final SectorDTO sectorDTO) throws PCRException{		
 		return null;
 	}
 
 	/**
-	 * Checks whether the string is null or empty.
-	 * @param str  the string to check.
-	 * @return true if the string is null or empty, false otherwise.
+	 * Checks if is invalid string.
+	 *
+	 * @param str the str
+	 * @return true, if is invalid string
 	 */
 	public static boolean isInvalidString(final String str) {
 		if (str == null) {
