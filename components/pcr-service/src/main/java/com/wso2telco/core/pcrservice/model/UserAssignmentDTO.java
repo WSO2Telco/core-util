@@ -15,9 +15,95 @@
  ******************************************************************************/
 package com.wso2telco.core.pcrservice.model;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class UserAssignmentDTO.
  */
 public class UserAssignmentDTO {
+	
+	/** The pcr. */
+	private String pcr;
+	
+	/** The userdid. */
+	private int userdid;
+	
+	/** The appdid. */
+	private int appdid;
+	
+	/** The sectordid. */
+	private int sectordid;
+
+	/**
+	 * Gets the pcr.
+	 *
+	 * @return the pcr
+	 */
+	public String getPcr() {
+		return pcr;
+	}
+	
+	/**
+	 * Sets the pcr.
+	 *
+	 * @param pcr the new pcr
+	 */
+	public void setPcr(String pcr) {
+		this.pcr = pcr;
+	}
+	
+	/**
+	 * Gets the userdid.
+	 *
+	 * @return the userdid
+	 */
+	public int getUserdid() {
+		return userdid;
+	}
+	
+	/**
+	 * Sets the userdid.
+	 *
+	 * @param userdid the new userdid
+	 */
+	public void setUserdid(int userdid) {
+		this.userdid = userdid;
+	}
+	
+	/**
+	 * Gets the appdid.
+	 *
+	 * @return the appdid
+	 */
+	public int getAppdid() {
+		return appdid;
+	}
+	
+	/**
+	 * Sets the appdid.
+	 *
+	 * @param appdid the new appdid
+	 */
+	public void setAppdid(int appdid) {
+		this.appdid = appdid;
+	}
+	
+	/**
+	 * Gets the sectordid.
+	 *
+	 * @return the sectordid
+	 */
+	public int getSectordid() {
+		return sectordid;
+	}
+	
+	/**
+	 * Sets the sectordid.
+	 *
+	 * @param sectordid the new sectordid
+	 */
+	public void setSectordid(int sectordid) {
+		this.sectordid = sectordid;
+	}
+	
 
 }

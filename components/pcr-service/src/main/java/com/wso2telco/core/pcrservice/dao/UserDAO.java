@@ -34,11 +34,11 @@ public class UserDAO {
 	 * @return the int
 	 * @throws SQLException the SQL exception
 	 */
-	public int saveNewUser(UserDTO UserDTO) throws SQLException{
+	public int saveNewUser(UserDTO userDTO) throws SQLException{
 		DBI dbi = JDBIUtil.getInstance();
-		UserHandler UserHandler = dbi.onDemand(UserHandler.class);
+		UserHandler userHandler = dbi.onDemand(UserHandler.class);
 		
-		return UserHandler.createNewUser(UserDTO);
+		return userHandler.createNewUser(userDTO);
 	}
 	
 	/**
@@ -48,11 +48,11 @@ public class UserDAO {
 	 * @return true, if successful
 	 * @throws SQLException the SQL exception
 	 */
-	public boolean checkUserExists(UserDTO UserDTO) throws SQLException{
+	public boolean checkUserExists(UserDTO userDTO) throws SQLException{
 		DBI dbi = JDBIUtil.getInstance();
-		UserHandler UserHandler = dbi.onDemand(UserHandler.class);
+		UserHandler userHandler = dbi.onDemand(UserHandler.class);
 		
-		return UserHandler.checkUserExists(UserDTO);
+		return userHandler.checkUserExists(userDTO);
 	}
 	
 	
@@ -63,11 +63,11 @@ public class UserDAO {
 	 * @return true, if successful
 	 * @throws SQLException the SQL exception
 	 */
-	public boolean checkUserActive(UserDTO UserDTO) throws SQLException{
+	public boolean checkUserActive(UserDTO userDTO) throws SQLException{
 		DBI dbi = JDBIUtil.getInstance();
-		UserHandler UserHandler = dbi.onDemand(UserHandler.class);
+		UserHandler userHandler = dbi.onDemand(UserHandler.class);
 		
-		return UserHandler.checkUserActive(UserDTO);
+		return userHandler.checkUserActive(userDTO);
 	}
 	
 	/**
@@ -76,11 +76,11 @@ public class UserDAO {
 	 * @param UserDTO the new User active
 	 * @throws SQLException the SQL exception
 	 */
-	public void setUserActive(UserDTO UserDTO) throws SQLException{
+	public void setUserActive(UserDTO userDTO) throws SQLException{
 		DBI dbi = JDBIUtil.getInstance();
-		UserHandler UserHandler = dbi.onDemand(UserHandler.class);
+		UserHandler userHandler = dbi.onDemand(UserHandler.class);
 		
-		UserHandler.setUserActive(UserDTO);
+		userHandler.setUserActive(userDTO);
 	}
 	
 	/**
@@ -89,11 +89,11 @@ public class UserDAO {
 	 * @param UserDTO the new User inactive
 	 * @throws SQLException the SQL exception
 	 */
-	public void setUserInactive(UserDTO UserDTO) throws SQLException{
+	public void setUserInactive(UserDTO userDTO) throws SQLException{
 		DBI dbi = JDBIUtil.getInstance();
-		UserHandler UserHandler = dbi.onDemand(UserHandler.class);
+		UserHandler userHandler = dbi.onDemand(UserHandler.class);
 		
-		UserHandler.setUserInactive(UserDTO);
+		userHandler.setUserInactive(userDTO);
 	}
 	
 	

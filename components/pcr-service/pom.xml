@@ -19,6 +19,7 @@
 		<dropwizard.version>0.9.2</dropwizard.version>
 		<dropwizard.swagger.version>0.6</dropwizard.swagger.version>
 		<mysql.version>6.0.2</mysql.version>
+		<jedis.version>2.7.3</jedis.version>
 		<org.jdbi.version>2.62</org.jdbi.version>
 	</properties>
 	<dependencies>
@@ -65,6 +66,11 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis.version}</version>			
 		</dependency>
 	</dependencies>
 </project>
