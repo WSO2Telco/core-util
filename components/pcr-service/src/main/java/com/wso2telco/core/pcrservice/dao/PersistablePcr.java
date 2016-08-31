@@ -26,7 +26,6 @@ import com.wso2telco.core.pcrservice.model.RequestDTO;
  */
 public interface PersistablePcr {
 
-
 	public void createNewPcrEntry(RequestDTO requestDTO, String pcr) throws PCRException;
 	
 	/**
@@ -38,6 +37,15 @@ public interface PersistablePcr {
 	 */
 	public String getExistingPCR(RequestDTO requestDTO) throws PCRException;
 	
+	/**
+	 * Check user sector combination.
+	 *
+	 * @param userId the user id
+	 * @param sectorId the sector id
+	 * @return true, if successful
+	 * @throws PCRException the PCR exception
+	 */
+	public List<String> getAppIdListForUserSectorCombination(String userId, String sectorId) throws PCRException;
 		
 	/**
 	 * Gets the application ids.
@@ -46,7 +54,7 @@ public interface PersistablePcr {
 	 * @return the application ids
 	 * @throws PCRException the PCR exception
 	 */
-	public List<String> getRelatedApplicationIdList(String sectorId) throws PCRException;
+	public List<String> getApplicationIdList(String sectorId) throws PCRException;
 	
 	/**
 	 * Check is related.
@@ -67,4 +75,14 @@ public interface PersistablePcr {
 	 * @throws PCRException the PCR exception
 	 */
 	public void createNewSPEntry(String sectorId, String appId, boolean isRelated) throws PCRException;
+	
+	/**
+	 * Check application exists.
+	 *
+	 * @param sectorId the sector id
+	 * @param appId the app id
+	 * @return true, if successful
+	 * @throws PCRException the PCR exception
+	 */
+	public boolean checkApplicationExists(String sectorId, String appId) throws PCRException;
 }
