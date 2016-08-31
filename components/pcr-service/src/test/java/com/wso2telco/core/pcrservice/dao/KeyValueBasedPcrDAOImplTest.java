@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.fasterxml.classmate.util.ResolvedTypeCache.Key;
 import com.wso2telco.core.pcrservice.exception.PCRException;
 import com.wso2telco.core.pcrservice.model.RequestDTO;
 
@@ -66,7 +67,7 @@ public class KeyValueBasedPcrDAOImplTest extends TestCase {
 	public void testgetExistingPCR() throws PCRException{
 		
 		KeyValueBasedPcrDAOImpl keyValueBasedPcrDAOImpl = new KeyValueBasedPcrDAOImpl();
-		RequestDTO requestDTO =  new RequestDTO("u1", "a1", "s1"); 
+		RequestDTO requestDTO =  new RequestDTO("u1", "a1", "s1");
 		assertEquals(keyValueBasedPcrDAOImpl.getExistingPCR(requestDTO),"p1");
 	}
 	
@@ -90,10 +91,30 @@ public class KeyValueBasedPcrDAOImplTest extends TestCase {
 	public void testgetRelatedApplicationIdList() throws PCRException{
 		KeyValueBasedPcrDAOImpl keyValueBasedPcrDAOImpl = new KeyValueBasedPcrDAOImpl();
 		
-		List<String> list = keyValueBasedPcrDAOImpl.getRelatedApplicationIdList("s1");
+		List<String> list = keyValueBasedPcrDAOImpl.getApplicationIdList("s1");
 		assertEquals(list.get(0),"a2");
 		assertEquals(list.get(1), "a1");
 		
+	}
+	
+	@Test
+	public void testgetAppIdListForUserSectorCombination() throws PCRException{
+		KeyValueBasedPcrDAOImpl keyValueBasedPcrDAOImpl = new KeyValueBasedPcrDAOImpl();
+		
+		List<String> list = keyValueBasedPcrDAOImpl.getAppIdListForUserSectorCombination("u2", "s2");
+		//assertNull(list);
+		assertTrue(list.isEmpty());
+		//assertEquals(list.get(0),"a1");
+		//assertEquals(list.get(1), "a2");
+		
+	}
+	
+	@Test
+	public void testcheckApplicationExists() throws PCRException{
+		
+		KeyValueBasedPcrDAOImpl keyValueBasedPcrDAOImpl = new KeyValueBasedPcrDAOImpl();
+		
+		assertTrue(keyValueBasedPcrDAOImpl.checkApplicationExists("s1", "a1"));
 	}
 	
 	/**
