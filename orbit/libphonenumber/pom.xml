@@ -32,7 +32,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Name>${pom.artifactId}</Bundle-Name>
 						<Export-Package>
 							com.googlecode.libphonenumber.*
