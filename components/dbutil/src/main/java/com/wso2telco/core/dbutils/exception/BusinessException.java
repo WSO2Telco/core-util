@@ -1,4 +1,4 @@
-package com.wso2telco.core.utils.exception;
+package com.wso2telco.core.dbutils.exception;
 
 public  class BusinessException extends Exception {
 

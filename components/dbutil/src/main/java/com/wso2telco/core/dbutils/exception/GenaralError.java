@@ -1,6 +1,6 @@
-package com.wso2telco.core.utils.exception;
+package com.wso2telco.core.dbutils.exception;
 
-import com.wso2telco.core.utils.exception.ThrowableError;
+import com.wso2telco.core.dbutils.exception.ThrowableError;
 
 public enum GenaralError implements ThrowableError {
 

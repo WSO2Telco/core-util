@@ -31,6 +31,11 @@
     <description>This feature contains the server bundles required for msisdn validator</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.googlecode.libphonenumber.wso2telco</groupId>
+            <artifactId>libphonenumber</artifactId>
+            <version>7.4.0.wso2telcov1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -58,6 +63,7 @@
                             <bundles>
                                 <bundleDef>com.wso2telco.core:msisdn-validator:${com.wso2telco.core.version}</bundleDef>
                                 <bundleDef>dnsjava.wso2:dnsjava:${dnsjava.version}</bundleDef>
+                                <bundleDef>com.googlecode.libphonenumber.wso2telco:libphonenumber</bundleDef>
                             </bundles>
                         </configuration>
                     </execution>
