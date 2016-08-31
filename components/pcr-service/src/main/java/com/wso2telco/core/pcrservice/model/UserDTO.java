@@ -25,6 +25,22 @@ public class UserDTO {
 	private String userId;
 
 	/**
+	 * Instantiates a new user DTO.
+	 */
+	public UserDTO(){
+		
+	}
+	
+	/**
+	 * Instantiates a new user DTO.
+	 *
+	 * @param userId the user id
+	 */
+	public UserDTO(String userId){
+		this.userId = userId;
+	}
+	
+	/**
 	 * Gets the user id.
 	 *
 	 * @return the user id

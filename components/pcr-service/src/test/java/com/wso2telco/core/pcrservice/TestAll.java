@@ -15,26 +15,45 @@
  ******************************************************************************/
 package com.wso2telco.core.pcrservice;
 
-import org.junit.runner.JUnitCore;
+import java.sql.SQLException;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import com.wso2telco.core.pcrservice.dao.RelationBasedPcrDAOImpl;
+import com.wso2telco.core.pcrservice.exception.PCRException;
+import com.wso2telco.core.pcrservice.model.UserAssignmentDTO;
 
 /**
  * The Class TestAll.
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({
-	com.wso2telco.core.pcrservice.dao.TestAll.class,
-})
+@Suite.SuiteClasses({ com.wso2telco.core.pcrservice.dao.TestAll.class, })
 public class TestAll {
 
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
+	 * @throws SQLException
+	 * @throws PCRException 
 	 */
-	public static void main(String[] args) {
-		JUnitCore.runClasses(new Class[] { TestAll.class });
+	public static void main(String[] args) throws PCRException {
+		// JUnitCore.runClasses(new Class[] { TestAll.class });
+
+		RelationBasedPcrDAOImpl userAssignmentDAO = new RelationBasedPcrDAOImpl();
+		UserAssignmentDTO dto = new UserAssignmentDTO();
+
+		dto.setAppdid(6);
+		// dto.setSectordid("1");
+		dto.setUserdid(10);
+
+		String pcr = userAssignmentDAO.getExistingPCR(dto);
+		if (pcr == null) {
+			System.out.println("null value found");
+		} else {
+			System.out.println(pcr);
+		}
 	}
 }

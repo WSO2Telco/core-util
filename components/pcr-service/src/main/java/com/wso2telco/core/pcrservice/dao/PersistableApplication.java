@@ -57,7 +57,7 @@ public interface PersistableApplication {
 	 *
 	 * @param useruuid the new application active
 	 */
-	@SqlQuery("UPDATE pctapplication SET isactive = 1 WHERE appid = :appid")
+	@SqlUpdate("UPDATE pctapplication SET isactive = 1 WHERE appid = :appid")
 	public void setApplicationActive(@Bind("userid") String useruuid);
 	
 	/**
@@ -65,6 +65,6 @@ public interface PersistableApplication {
 	 *
 	 * @param useruuid the new application inactive
 	 */
-	@SqlQuery("UPDATE pctapplication SET isactive = 0 WHERE appid = :appid")
+	@SqlUpdate("UPDATE pctapplication SET isactive = 0 WHERE appid = :appid")
 	public void setApplicationInactive(@Bind("userid") String useruuid);
 }

@@ -19,12 +19,16 @@ import com.wso2telco.core.pcrservice.PCRGeneratable;
 import com.wso2telco.core.pcrservice.Returnable;
 import com.wso2telco.core.pcrservice.exception.PCRException;
 import com.wso2telco.core.pcrservice.model.RequestDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class UUIDPCRGenarator.
  */
 class UUIDPCRGenarator implements PCRGeneratable{
+
+	private static Logger log = LoggerFactory.getLogger(UUIDPCRGenarator.class);
 
 	/** The uuid. */
 	String uuid;
@@ -34,7 +38,10 @@ class UUIDPCRGenarator implements PCRGeneratable{
 	 */
 	@Override
 	public Returnable getPCR(RequestDTO dto) throws PCRException {
-		// TODO Auto-generated method stub
+		
+		validateParameters(dto);
+		
+		
 		return new Returnable(){
 
 			@Override
@@ -44,6 +51,20 @@ class UUIDPCRGenarator implements PCRGeneratable{
 			}
 			
 		};
+	}
+
+	private void validateParameters(RequestDTO dto) throws PCRException {
+
+		if(dto.getAppId() == null){
+			log.error("App id is null");
+			throw new PCRException("App id is null");
+		}else if(dto.getSectorId() == null){
+			log.error("Sector id is null");
+			throw new PCRException("sector id is null");
+		}else if(dto.getUserId() == null){
+			log.error("User id is null");
+			throw new PCRException("User id is null");
+		}
 	}
 
 }
