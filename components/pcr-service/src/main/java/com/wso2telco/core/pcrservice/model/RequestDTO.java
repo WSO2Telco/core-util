@@ -30,9 +30,7 @@ public class RequestDTO {
 	/** The sector id. */
 	private String sectorId;
 	
-	/** The is related. */
-	private boolean isRelated;
-
+	
 	/**
 	 * Instantiates a new request DTO.
 	 *
@@ -41,28 +39,13 @@ public class RequestDTO {
 	 * @param sectorId the sector id
 	 * @param isRelated the is related
 	 */
-	public RequestDTO(String userId, String appId, String sectorId, boolean isRelated) {
-		this.userId = userId;
-		this.appId = appId;
-		this.sectorId = sectorId;
-		this.isRelated = isRelated;
-	}
-	
-	/**
-	 * Instantiates a new request DTO.
-	 *
-	 * @param userId the user id
-	 * @param appId the app id
-	 * @param sectorId the sector id
-	 */
 	public RequestDTO(String userId, String appId, String sectorId) {
 		this.userId = userId;
 		this.appId = appId;
-		this.sectorId = sectorId;
-		this.isRelated=true;
+		this.sectorId = sectorId;		
 	}
 	
-		
+			
 	/**
 	 * Gets the user id.
 	 *
@@ -88,14 +71,5 @@ public class RequestDTO {
 	 */
 	public String getSectorId() {
 		return sectorId;
-	}	
-	
-	/**
-	 * Checks if is related.
-	 *
-	 * @return true, if is related
-	 */
-	public boolean isRelated() {
-		return isRelated;
-	}	
+	}		
 }

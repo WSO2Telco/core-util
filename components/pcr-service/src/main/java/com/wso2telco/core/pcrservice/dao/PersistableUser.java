@@ -57,7 +57,7 @@ public interface PersistableUser {
 	 *
 	 * @param useruuid the new user active
 	 */
-	@SqlQuery("UPDATE pctuser SET isactive = 1 WHERE useruuid = :useruuid")
+	@SqlUpdate("UPDATE pctuser SET isactive = 1 WHERE useruuid = :useruuid")
 	public void setUserActive(@Bind("userid") String useruuid);
 	
 	/**
@@ -65,6 +65,6 @@ public interface PersistableUser {
 	 *
 	 * @param useruuid the new user inactive
 	 */
-	@SqlQuery("UPDATE pctuser SET isactive = 0 WHERE useruuid = :useruuid")
+	@SqlUpdate("UPDATE pctuser SET isactive = 0 WHERE useruuid = :useruuid")
 	public void setUserInactive(@Bind("userid") String useruuid);
 }
