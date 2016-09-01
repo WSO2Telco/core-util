@@ -6,7 +6,7 @@ public enum DataSourceNames {
 	WSO2AM_STATS_DB("jdbc/WSO2AM_STATS_DB"),
 	WSO2UM_DB("jdbc/WSO2UM_DB"),
 	WSO2REG_DB("jdbc/WSO2REG_DB"),
-	WSO2TELCO_DEP_DB("jdbc/AXIATA_MIFE_DB");
+	WSO2TELCO_DEP_DB("jdbc/WSO2TELCO_DEP_DB");
 	
 	private String jndiName;
 	
