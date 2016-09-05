@@ -27,6 +27,8 @@ import com.wso2telco.mnc.resolver.NumberRange;
 /**
  * The Class MNCRangeCheck.
  */
+
+@Deprecated
 public class MNCRangeCheck implements IProviderNetwork {
 
     /* (non-Javadoc)

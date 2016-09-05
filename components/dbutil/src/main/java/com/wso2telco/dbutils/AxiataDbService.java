@@ -29,6 +29,7 @@ import java.util.Map;
 /**
  * The Class AxiataDbService.
  */
+@Deprecated
 public class AxiataDbService {
 
 	/** The log. */

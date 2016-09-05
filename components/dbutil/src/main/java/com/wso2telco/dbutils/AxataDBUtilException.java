@@ -21,6 +21,7 @@ package com.wso2telco.dbutils;
 /**
  * The Class AxataDBUtilException.
  */
+@Deprecated
 public class AxataDBUtilException extends Exception {
 
     /**

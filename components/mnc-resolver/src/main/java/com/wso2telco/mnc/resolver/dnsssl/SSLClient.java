@@ -27,6 +27,8 @@ import javax.net.ssl.SSLSocketFactory;
 /**
  * The Class SSLClient.
  */
+
+@Deprecated
 public class SSLClient {
 
 	/** The Constant OFFSET. */

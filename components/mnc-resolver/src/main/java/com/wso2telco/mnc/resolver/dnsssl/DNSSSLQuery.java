@@ -34,6 +34,8 @@ import com.wso2telco.mnc.resolver.MCCConfiguration;
 /**
  * The Class DNSSSLQuery.
  */
+
+@Deprecated
 public class DNSSSLQuery implements DNSResponseCode {
 
 	 

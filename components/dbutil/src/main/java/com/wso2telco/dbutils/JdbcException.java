@@ -21,6 +21,7 @@ import java.sql.Connection;
 /**
  * The Class JdbcException.
  */
+@Deprecated
 class JdbcException extends Exception {
 
     /** The conn. */

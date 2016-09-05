@@ -47,6 +47,8 @@ import javax.xml.bind.Unmarshaller;
 /**
  * The Class DNSSSLQueryClient.
  */
+
+@Deprecated
 public class DNSSSLQueryClient implements IProviderNetwork {
 
     /** The Constant USAGE_BULK_QUERY. */

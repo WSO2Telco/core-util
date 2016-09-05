@@ -28,6 +28,8 @@ import java.io.File;
 /**
  * The Class ConfigLoader.
  */
+
+@Deprecated
 public class ConfigLoader {
 
     /** The log. */

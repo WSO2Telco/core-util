@@ -30,6 +30,8 @@ import org.apache.commons.logging.LogFactory;
 /**
  * The Class MNCQueryClient.
  */
+
+@Deprecated
 public class MNCQueryClient {
 
     private static final Log log = LogFactory.getLog(MNCQueryClient.class);

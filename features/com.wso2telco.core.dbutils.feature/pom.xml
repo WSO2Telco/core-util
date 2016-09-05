@@ -26,7 +26,7 @@
 
     <artifactId>com.wso2telco.core.dbutils.feature</artifactId>
     <packaging>pom</packaging>
-    <name>Db Utility Feature</name>
+    <name>WSO2.Telco Database Utility</name>
     <url>http://wso2.org</url>
     <description>This feature contains the server bundles required for database utility</description>
 
