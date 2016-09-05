@@ -43,6 +43,14 @@ public class ConfigPojo implements Serializable{
 	@JsonProperty
 	private Object logging;
 	
+	/** The redis host. */
+	@JsonProperty
+	private String redisHost;
+	
+	/** The redis port. */
+	@JsonProperty
+	private int redisPort;
+	
 	/**
 	 * Gets the data source factory.
 	 *
@@ -51,5 +59,25 @@ public class ConfigPojo implements Serializable{
 	public DataSourceFactory getDataSourceFactory() {
 		return database;
 	}
+	
+	/**
+	 * Gets the redis port.
+	 *
+	 * @return the redis port
+	 */
+	public int getRedisPort() {
+		return redisPort;
+	}
+	
+	/**
+	 * Gets the redis host.
+	 *
+	 * @return the redis host
+	 */
+	public String getRedisHost() {
+		return redisHost;
+	}
+
+
 
 }

@@ -42,7 +42,7 @@ public class SectorDAOTest {
 		SectorDAO fixture = new SectorDAO();
 		SectorDTO sectorDTO = new SectorDTO();
 		String sectorId = UUID.randomUUID().toString();
-		sectorDTO.setSectorid(Integer.valueOf(sectorId));	
+		sectorDTO.setSectorId(sectorId);	
 		
 		assertEquals(1,fixture.saveNewSector(sectorDTO));
 		assertTrue(fixture.checkSectorExist(sectorDTO));

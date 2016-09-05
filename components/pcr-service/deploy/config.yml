@@ -31,3 +31,6 @@ logging:
       archivedLogFilenamePattern: log/pcr_service-%d.log #<path to log file >/< archive filename.log>
       archivedFileCount: 5
       timeZone: UTC
+
+redisPort: 6379
+redisHost: localhost

@@ -15,18 +15,46 @@
  ******************************************************************************/
 package com.wso2telco.core.pcrservice.model;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class SectorDTO.
  */
 public class SectorDTO {
 
-    private int sectorid;
+    /** The sector. */
+    private String sector;
 
-    public int getSectorid() {
-        return sectorid;
+    /**
+     * Instantiates a new sector DTO.
+     */
+    public SectorDTO() {
+        
+    }
+    
+    /**
+     * Instantiates a new sector DTO.
+     *
+     * @param sector the sector
+     */
+    public SectorDTO(String sector) {
+        this.sector = sector;
+    }
+    
+    /**
+     * Gets the sector.
+     *
+     * @return the sector
+     */
+    public String getSectorId() {
+        return sector;
     }
 
-    public void setSectorid(int sectorid) {
-        this.sectorid = sectorid;
+    /**
+     * Sets the sector.
+     *
+     * @param sector the new sector
+     */
+    public void setSectorId(String sector) {
+        this.sector = sector;
     }
 }
