@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import io.dropwizard.Application;
+import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.jetty.ConnectorFactory;
 import io.dropwizard.jetty.HttpConnectorFactory;
 import io.dropwizard.jetty.HttpsConnectorFactory;
