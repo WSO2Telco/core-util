@@ -14,8 +14,10 @@ public class ConfigDTO extends Configuration implements Serializable{
 	 */
 	private static final long serialVersionUID = -8356032431902326005L;
 	
-
-	@JsonProperty
+	private DataSourceFactory dataSourceFactory
+    = new DataSourceFactory();
+	
+	@JsonProperty("database")
 	private DataSourceFactory database = new DataSourceFactory();
 	
 	/*@JsonProperty

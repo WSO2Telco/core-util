@@ -15,6 +15,9 @@ public class SessionFactoryUtil {
 	 * disable contructor to guaranty a single instance
 	 */
 	private SessionFactoryUtil() {
+		if(sessionFactory==null){
+			sessionFactory= initSessionFactory();
+		} 
 	}
 
 	private SessionFactory initSessionFactory(){
@@ -32,13 +35,6 @@ public class SessionFactoryUtil {
 		 
 		return new SessionFactoryUtil();
 		 
-	}
-	public SessionFactory getSessionFactory(){
-		if(sessionFactory==null){
-			return initSessionFactory();
-		}else{
-			return sessionFactory;
-		}
 	}
   /**
    * Opens a session and will not bind it to a session context
