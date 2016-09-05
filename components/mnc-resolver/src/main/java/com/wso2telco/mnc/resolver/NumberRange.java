@@ -20,6 +20,8 @@ package com.wso2telco.mnc.resolver;
 /**
  * The Class NumberRange.
  */
+
+@Deprecated
 public class NumberRange {
 
     /** The rangefrom. */

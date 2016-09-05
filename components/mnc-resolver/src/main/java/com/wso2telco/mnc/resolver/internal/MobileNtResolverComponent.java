@@ -22,12 +22,11 @@ import org.osgi.service.component.ComponentContext;
 import com.wso2telco.mnc.resolver.ConfigLoader;
 import com.wso2telco.mnc.resolver.DataHolder;
 
-
- 
-
 /**
  * @scr.component name="mnc.component" immediate="true"
  */
+
+@Deprecated
 public class MobileNtResolverComponent {
 
     /** The Constant log. */

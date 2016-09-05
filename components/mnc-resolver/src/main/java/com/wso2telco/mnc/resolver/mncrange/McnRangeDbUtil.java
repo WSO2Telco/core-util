@@ -35,12 +35,11 @@ import java.util.List;
 // TODO: Auto-generated Javadoc
 //import org.wso2.carbon.apimgt.impl.utils.APIMgtDBUtil;
 
-
-
- 
 /**
  * The Class McnRangeDbUtil.
  */
+
+@Deprecated
 public class McnRangeDbUtil {
 
     /** The axiata datasource. */

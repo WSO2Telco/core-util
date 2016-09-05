@@ -15,15 +15,12 @@
  ******************************************************************************/
 package com.wso2telco.mnc.resolver.dnsssl;
 
- 
-
-
-
- 
 // TODO: Auto-generated Javadoc
 /**
  * The Class TNUtils.
  */
+
+@Deprecated
 public class TNUtils {
 
 	 

@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlType;
     "mobileCountryCodes"
 })
 @XmlRootElement(name = "MCCConfiguration")
+@Deprecated
 public class MCCConfiguration {
 
     /** The path finder host. */

@@ -29,6 +29,7 @@ import java.util.Properties;
 /**
  * The Class Configuration.
  */
+@Deprecated
 public class Configuration {
 
 	/** The Constant PROPERTY_FILE_PATH. */

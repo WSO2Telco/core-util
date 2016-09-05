@@ -27,6 +27,8 @@ import com.wso2telco.mnc.resolver.MCCConfiguration;
 /**
  * The Class DNSSSLBulkQuery.
  */
+
+@Deprecated
 public class DNSSSLBulkQuery {
 
 	 

@@ -25,6 +25,8 @@ package com.wso2telco.mnc.resolver.dnsssl;
 /**
  * The Class RequestBean.
  */
+
+@Deprecated
 public class RequestBean {
 
 	/** The country code. */

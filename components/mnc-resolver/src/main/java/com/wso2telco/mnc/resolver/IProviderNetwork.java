@@ -20,6 +20,8 @@ package com.wso2telco.mnc.resolver;
 /**
  * The Interface IProviderNetwork.
  */
+
+@Deprecated
 public interface IProviderNetwork {
 
     /**

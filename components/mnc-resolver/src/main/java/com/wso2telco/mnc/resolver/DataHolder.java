@@ -20,6 +20,7 @@ package com.wso2telco.mnc.resolver;
 /**
  * The Class DataHolder.
  */
+@Deprecated
 public class DataHolder {
 
     /** The mobile mcc config. */

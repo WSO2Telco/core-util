@@ -15,10 +15,6 @@
  ******************************************************************************/
 package com.wso2telco.mnc.resolver.dnsssl;
 
- 
-
-
-
 import java.io.IOException;
 
 import org.xbill.DNS.Header;
@@ -26,12 +22,12 @@ import org.xbill.DNS.Message;
 import org.xbill.DNS.Options;
 import org.xbill.DNS.WireParseException;
 
- 
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class SSLResolver.
  */
+
+@Deprecated
 public class SSLResolver {
 
 	/** The ssl client. */

@@ -31,6 +31,7 @@ import com.wso2telco.dbutils.util.DataSourceNames;
 /**
  * The Class DbUtils.
  */
+@Deprecated
 public class DbUtils {
 
 	/** The resdb. */

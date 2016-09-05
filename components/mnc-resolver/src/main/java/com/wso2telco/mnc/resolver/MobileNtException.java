@@ -20,6 +20,8 @@ package com.wso2telco.mnc.resolver;
 /**
  * The Class MobileNtException.
  */
+
+@Deprecated
 public class MobileNtException extends Exception {
 
 

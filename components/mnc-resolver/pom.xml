@@ -54,11 +54,11 @@
 						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Name>${project.artifactId}</Bundle-Name>
 						<Private-Package>
-							com.wso2telco.mnc.resolver.internal
+							com.wso2telco.mnc.resolver.internal,com.wso2telco.core.mnc.resolver.internal
 						</Private-Package>
 						<Export-Package>
-							!com.wso2telco.mnc.resolver.internal,
-							com.wso2telco.mnc.resolver.*
+							!com.wso2telco.mnc.resolver.internal,!com.wso2telco.core.mnc.resolver.internal,
+							com.wso2telco.mnc.resolver.*,com.wso2telco.core.mnc.resolver.*
 						</Export-Package>
 						<Import-Package>
 							org.osgi.framework,

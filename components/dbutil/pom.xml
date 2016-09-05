@@ -48,7 +48,7 @@
 					<instructions>
 						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Name>${project.artifactId}</Bundle-Name>
-						<Export-Package>com.wso2telco.dbutils.*</Export-Package>
+						<Export-Package>com.wso2telco.core.dbutils.*,com.wso2telco.dbutils.*</Export-Package>
 						<Import-Package>
 							org.osgi.framework,
 							*;resolution:=optional
@@ -57,7 +57,7 @@
 					</instructions>
 				</configuration>
 			</plugin>
-		<plugin>
+			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-scr-plugin</artifactId>
 				<version>1.9.0</version>
