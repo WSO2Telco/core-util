@@ -1,5 +1,7 @@
 package com.wso2telco.core.pcrservice.dao;
 
+import java.util.Map;
+
 import com.wso2telco.core.pcrservice.util.YamlReader;
 
 import redis.clients.jedis.Jedis;
@@ -11,8 +13,9 @@ public class RedisUtil {
 	private static Jedis jedis = null;
 
 	static {
-		String redisHost = YamlReader.getConfiguration().getRedisHost();
-		int redisPort = YamlReader.getConfiguration().getRedisPort();
+		Map<Object,Object> redis = (Map<Object, Object>) YamlReader.getConfiguration().getRedis();
+		String redisHost = (String) redis.get("host");
+		int redisPort = (int) redis.get("port");
 		pool = new JedisPool(redisHost, redisPort);
 		jedis = pool.getResource();
 	}

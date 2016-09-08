@@ -25,7 +25,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.wso2telco.core.pcrservice.model.ConfigPojo;
+import com.wso2telco.core.pcrservice.model.ConfigDTO;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -41,15 +41,15 @@ public class YamlReader {
 	 *
 	 * @return the configuration
 	 */
-	public static ConfigPojo getConfiguration(){
+	public static ConfigDTO getConfiguration(){
 		
 		File file = new File("deploy/config.yml");
-		ConfigPojo configPojo = new ConfigPojo();
+		ConfigDTO configPojo = new ConfigDTO();
 		
 		final ObjectMapper mapper = new ObjectMapper(new YAMLFactory()); // jackson databind
 	    
 	    try {
-			configPojo = mapper.readValue(file, ConfigPojo.class);
+			configPojo = mapper.readValue(file, ConfigDTO.class);
 		} catch (JsonParseException e) {
 			log.error("Yaml Parsing Error",e);			
 		} catch (JsonMappingException e) {			

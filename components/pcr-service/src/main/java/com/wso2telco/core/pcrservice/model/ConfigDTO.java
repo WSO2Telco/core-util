@@ -19,14 +19,13 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class ConfigDTO.
  */
-public class ConfigDTO extends Configuration implements Serializable{
+public class ConfigDTO implements Serializable{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -8356032431902326005L;
@@ -44,6 +43,14 @@ public class ConfigDTO extends Configuration implements Serializable{
 	@JsonProperty
 	private Object logging;
 	
+	/** The redis. */
+	@JsonProperty
+	private Object redis;
+	
+	/** The admin. */
+	@JsonProperty
+	private Object admin;
+	
 	/**
 	 * Gets the data source factory.
 	 *
@@ -52,5 +59,22 @@ public class ConfigDTO extends Configuration implements Serializable{
 	public DataSourceFactory getDataSourceFactory() {
 		return database;
 	}
+	
+	/**
+	 * Gets the redis.
+	 *
+	 * @return the redis
+	 */
+	public Object getRedis() {
+		return redis;
+	}
 
+	/**
+	 * Gets the admin.
+	 *
+	 * @return the admin
+	 */
+	public Object getAdmin() {
+		return admin;
+	}
 }
