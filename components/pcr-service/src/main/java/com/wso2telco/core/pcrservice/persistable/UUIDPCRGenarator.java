@@ -15,12 +15,13 @@
  ******************************************************************************/
 package com.wso2telco.core.pcrservice.persistable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.wso2telco.core.pcrservice.PCRGeneratable;
 import com.wso2telco.core.pcrservice.Returnable;
 import com.wso2telco.core.pcrservice.exception.PCRException;
 import com.wso2telco.core.pcrservice.model.RequestDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
  */
 class UUIDPCRGenarator implements PCRGeneratable{
 
+	UUIDPCRGenarator(){}
 	private static Logger log = LoggerFactory.getLogger(UUIDPCRGenarator.class);
 
 	/** The uuid. */
@@ -37,34 +39,23 @@ class UUIDPCRGenarator implements PCRGeneratable{
 	 * @see com.wso2telco.core.pcrservice.PCRGeneratable#getPCR(com.wso2telco.core.pcrservice.model.RequestDTO)
 	 */
 	@Override
-	public Returnable getPCR(RequestDTO dto) throws PCRException {
-		
-		validateParameters(dto);
-		
-		
-		return new Returnable(){
+	public Returnable getPCR(RequestDTO requestDTO) throws PCRException {
 
+
+		try {
+			UUIDPCRService uuidpcrService = new UUIDPCRService();
+			uuid = uuidpcrService.getPcr(requestDTO);
+		} catch (Exception e) {
+			log.error("error in receiving a PCR",e);
+			throw new PCRException("error in receiving a PCR");
+		}
+
+		return new Returnable(){
 			@Override
 			public String getID() {
 				// TODO Auto-generated method stub
 				return uuid;
 			}
-			
 		};
 	}
-
-	private void validateParameters(RequestDTO dto) throws PCRException {
-
-		if(dto.getAppId() == null){
-			log.error("App id is null");
-			throw new PCRException("App id is null");
-		}else if(dto.getSectorId() == null){
-			log.error("Sector id is null");
-			throw new PCRException("sector id is null");
-		}else if(dto.getUserId() == null){
-			log.error("User id is null");
-			throw new PCRException("User id is null");
-		}
-	}
-
 }

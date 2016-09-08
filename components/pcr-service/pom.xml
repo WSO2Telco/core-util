@@ -15,6 +15,18 @@
 	<name>pcr-service</name>
 	<url>http://maven.apache.org</url>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12.4</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<properties>
 		<dropwizard.version>0.9.2</dropwizard.version>
 		<dropwizard.swagger.version>0.6</dropwizard.swagger.version>
@@ -70,7 +82,24 @@
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-			<version>${jedis.version}</version>			
+			<version>${jedis.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.wso2.carbon.identity</groupId>
+			<artifactId>org.wso2.carbon.identity.oauth.stub</artifactId>
+			<version>5.0.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis2.wso2</groupId>
+			<artifactId>axis2</artifactId>
+			<version>1.6.1.wso2v16</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+			<version>1.4</version>
+		</dependency>
+
 	</dependencies>
 </project>

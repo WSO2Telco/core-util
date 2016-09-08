@@ -38,6 +38,12 @@ public class RelationBasedPcrDAOImpl implements PersistablePcr {
 	/** The log. */
 	private static Logger log = LoggerFactory.getLogger(RelationBasedPcrDAOImpl.class);
 
+	/**
+	 * Creates the new pcr entry.
+	 *
+	 * @param userAssignmentDTO the user assignment DTO
+	 * @throws PCRException the PCR exception
+	 */
 	/* (non-Javadoc)
 	 * @see com.wso2telco.core.pcrservice.dao.PersistablePcr#createNewPcrEntry(com.wso2telco.core.pcrservice.model.UserAssignmentDTO)
 	 */
@@ -53,6 +59,13 @@ public class RelationBasedPcrDAOImpl implements PersistablePcr {
 		}
 	}
 
+	/**
+	 * Gets the existing PCR.
+	 *
+	 * @param userAssignmentDTO the user assignment DTO
+	 * @return the existing PCR
+	 * @throws PCRException the PCR exception
+	 */
 	/* (non-Javadoc)
 	 * @see com.wso2telco.core.pcrservice.dao.PersistablePcr#getExistingPCR(com.wso2telco.core.pcrservice.model.UserAssignmentDTO)
 	 */
@@ -94,7 +107,7 @@ public class RelationBasedPcrDAOImpl implements PersistablePcr {
 	 * @see com.wso2telco.core.pcrservice.dao.PersistablePcr#getApplicationIds(java.lang.String)
 	 */
 	@Override
-	public List<String> getRelatedApplicationIdList(String sectorId) throws PCRException {
+	public List<String> getApplicationIdList(String sectorId) throws PCRException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -117,15 +130,36 @@ public class RelationBasedPcrDAOImpl implements PersistablePcr {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see com.wso2telco.core.pcrservice.dao.PersistablePcr#createNewPcrEntry(com.wso2telco.core.pcrservice.model.RequestDTO, java.lang.String)
+	 */
 	@Override
 	public void createNewPcrEntry(RequestDTO requestDTO, String pcr) throws PCRException {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see com.wso2telco.core.pcrservice.dao.PersistablePcr#getExistingPCR(com.wso2telco.core.pcrservice.model.RequestDTO)
+	 */
 	@Override
 	public String getExistingPCR(RequestDTO requestDTO) throws PCRException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.wso2telco.core.pcrservice.dao.PersistablePcr#getAppIdListForUserSectorCombination(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<String> getAppIdListForUserSectorCombination(String userId, String sectorId) throws PCRException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean checkApplicationExists(String sectorId, String appId) throws PCRException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
