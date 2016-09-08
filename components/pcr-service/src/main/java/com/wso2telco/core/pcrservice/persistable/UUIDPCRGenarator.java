@@ -41,6 +41,7 @@ class UUIDPCRGenarator implements PCRGeneratable{
 	@Override
 	public Returnable getPCR(RequestDTO requestDTO) throws PCRException {
 
+
 		try {
 			UUIDPCRService uuidpcrService = new UUIDPCRService();
 			uuid = uuidpcrService.getPcr(requestDTO);
@@ -48,7 +49,7 @@ class UUIDPCRGenarator implements PCRGeneratable{
 			log.error("error in receiving a PCR",e);
 			throw new PCRException("error in receiving a PCR");
 		}
-		
+
 		return new Returnable(){
 			@Override
 			public String getID() {
