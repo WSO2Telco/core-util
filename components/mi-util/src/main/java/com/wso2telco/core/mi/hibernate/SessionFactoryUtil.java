@@ -2,66 +2,87 @@ package com.wso2telco.core.mi.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 import com.wso2telco.core.mi.ConfigReader;
 
 public class SessionFactoryUtil {
 
-  /** The single instance of hibernate SessionFactory */
-  private static org.hibernate.SessionFactory sessionFactory;
+	/** The single instance of hibernate SessionFactory */
+	private static SessionFactory sessionFactory;
+	private static final ThreadLocal<Session> threadLocal;
+	private static ServiceRegistry serviceRegistry;
+
+	static {
+		try {
+			Configuration configuration = new Configuration();
+			configuration.configure();
+
+			/*
+			 * serviceRegistry = new
+			 * StandardServiceRegistryBuilder().applySettings(configuration.
+			 * getProperties()).build(); sessionFactory =
+			 * configuration.buildSessionFactory(serviceRegistry);
+			 */
+			sessionFactory = initSessionFactory();
+			threadLocal = new ThreadLocal<Session>();
+
+		} catch (Throwable t) {
+			t.printStackTrace();
+			throw new ExceptionInInitializerError(t);
+		}
+	}
 
 	/**
 	 * disable contructor to guaranty a single instance
 	 */
 	private SessionFactoryUtil() {
-		if(sessionFactory==null){
-			sessionFactory= initSessionFactory();
-		} 
+		if (sessionFactory == null) {
+			sessionFactory = initSessionFactory();
+		}
 	}
 
-	private SessionFactory initSessionFactory(){
-		Configuration config = new Configuration().configure( );
+	private static SessionFactory initSessionFactory() {
+		Configuration config = new Configuration().configure();
 		ConfigReader configReader = ConfigReader.getInstance();
-		config.setProperty("hibernate.connection.url",configReader.getConfigDTO() .getDataSourceFactory().getUrl());
-		config.setProperty("hibernate.connection.username",configReader.getConfigDTO().getDataSourceFactory().getUser());
-		config.setProperty("hibernate.connection.password", configReader.getConfigDTO().getDataSourceFactory().getPassword());
-		
-		
+		config.setProperty("hibernate.connection.url", configReader.getConfigDTO().getDataSourceFactory().getUrl());
+		config.setProperty("hibernate.connection.username",
+				configReader.getConfigDTO().getDataSourceFactory().getUser());
+		config.setProperty("hibernate.connection.password",
+				configReader.getConfigDTO().getDataSourceFactory().getPassword());
+
 		return config.buildSessionFactory();
 	}
 
-	public static  SessionFactoryUtil getInstance() {
-		 
-		return new SessionFactoryUtil();
-		 
-	}
-  /**
-   * Opens a session and will not bind it to a session context
-   * @return the session
-   */
-	public Session openSession() {
-		return sessionFactory.openSession();
+	public static Session getSession() {
+		Session session = threadLocal.get();
+		if (session == null) {
+			session = sessionFactory.openSession();
+			threadLocal.set(session);
+		}
+		return session;
 	}
 
 	/**
-   * Returns a session from the session context. If there is no session in the context it opens a session,
-   * stores it in the context and returns it.
-	 * This factory is intended to be used with a hibernate.cfg.xml
-	 * 
-	 * @return the session
+	 * close the session if open
 	 */
-	public Session getCurrentSession() {
-		return sessionFactory.getCurrentSession();
+	public static void closeSession() {
+		Session session = threadLocal.get();
+		if (session != null) {
+			session.close();
+			threadLocal.set(null);
+		}
 	}
 
-  /**
-   * closes the session factory
-   */
-	public static void close(){
+	/**
+	 * closes the session factory
+	 */
+	public static void close() {
 		if (sessionFactory != null)
 			sessionFactory.close();
 		sessionFactory = null;
-	
+
 	}
 }

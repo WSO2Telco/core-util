@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.wso2telco.core.mi.hibernate.HibernateSessionCleanner;
+
 import io.dropwizard.Application;
-import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.jetty.ConnectorFactory;
 import io.dropwizard.jetty.HttpConnectorFactory;
 import io.dropwizard.jetty.HttpsConnectorFactory;
@@ -43,6 +44,8 @@ public abstract class AbstractApplication< E extends ConfigDTO>  extends Applica
 		for (Object iterable_element : getRestFulComponents()) {
 			env.jersey().register(iterable_element);
 		}
+		
+		env.jersey().register( new HibernateSessionCleanner());
 		
 
 		HttpConnectorFactory connector = getHttpConnectionFactory(arg0);

@@ -1,32 +1,38 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  	<parent>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
 		<groupId>com.wso2telco.core</groupId>
 		<artifactId>core-parent</artifactId>
 		<version>2.0.03-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
-  
-  <artifactId>mi-util</artifactId>
-  <packaging>jar</packaging>
-  <name>mi-util</name>
-  <url>http://maven.apache.org</url>
+
+	<artifactId>mi-util</artifactId>
+	<packaging>jar</packaging>
+	<name>mi-util</name>
+	<url>http://maven.apache.org</url>
 	<properties>
 		<dropwizard.version>0.9.2</dropwizard.version>
 		<dropwizard.swagger.version>0.6</dropwizard.swagger.version>
 		<metrics.version>3.1.0</metrics.version>
 		<mysql.version>6.0.2</mysql.version>
 	</properties>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-<dependency>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.2.1.Final</version>
+		</dependency>
+		<dependency>
 			<groupId>io.dropwizard</groupId>
 			<artifactId>dropwizard-core</artifactId>
 			<version>${dropwizard.version}</version>
@@ -56,10 +62,5 @@
 			<artifactId>dropwizard-jdbi</artifactId>
 			<version>${dropwizard.version}</version>
 		</dependency>
-		 <dependency>
-            		<groupId>io.dropwizard</groupId>
-           		 <artifactId>dropwizard-hibernate</artifactId>
-        		 <version>${dropwizard.version}</version>
-	        </dependency>
-  </dependencies>
+	</dependencies>
 </project>

@@ -7,6 +7,6 @@ public abstract class HibernateAbstractDAO {
 	
 
 	protected Session getSession(){
-		return SessionFactoryUtil.getInstance().getCurrentSession();
+		return SessionFactoryUtil.getSession();
 	}
 }
