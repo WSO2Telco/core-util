@@ -14,7 +14,7 @@
 	<groupId>com.wso2telco.core</groupId>
 	<artifactId>core-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>2.0.03-SNAPSHOT</version>
+	<version>2.0.3-SNAPSHOT</version>
 	<name>WSO2Telco Core Utility - Aggregate Pom</name>
 	<description>WSO2Telco Core Utility Aggregate Pom</description>
 	<url>http://wso2telco.com</url>
@@ -35,7 +35,6 @@
 	</prerequisites>
 
 	<modules>
-		<module>orbit/libphonenumber</module>
 		<module>components/dbutil</module>
 		<module>components/mnc-resolver</module>
 		<module>components/msisdn-validator</module>
