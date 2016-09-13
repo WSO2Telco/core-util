@@ -247,7 +247,7 @@
 		<javax.cache.wso2>4.4.3</javax.cache.wso2>
 		<com.googlecode.libphonenumber.version>7.4.0.wso2telcov1</com.googlecode.libphonenumber.version>
 		<commons-io.wso2.version>2.4.0.wso2v1</commons-io.wso2.version>
-		<com.wso2telco.core.version>2.0.03-SNAPSHOT</com.wso2telco.core.version>
+		<com.wso2telco.core.version>2.0.3-SNAPSHOT</com.wso2telco.core.version>
 	</properties>
 
 	<profiles>
