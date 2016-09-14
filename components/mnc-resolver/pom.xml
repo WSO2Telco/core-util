@@ -41,6 +41,12 @@
 			<groupId>dnsjava.wso2</groupId>
 			<artifactId>dnsjava</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.wso2telco.core</groupId>
+			<artifactId>dbutils</artifactId>
+		</dependency>
+		
+		
 	</dependencies>
 
 	<build>
