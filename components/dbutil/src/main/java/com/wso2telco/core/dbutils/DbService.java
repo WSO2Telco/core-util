@@ -531,7 +531,7 @@ public class DbService {
             con = DbUtils.getDBConnection();
 
             String sql = "UPDATE endpointapps SET isactive=" + status
-                    + "blacklistedmerchant WHERE endpointid=" + opEndpointID
+                    + " WHERE endpointid=" + opEndpointID
                     + " AND applicationid=" + appID;
 
             st = con.createStatement();
