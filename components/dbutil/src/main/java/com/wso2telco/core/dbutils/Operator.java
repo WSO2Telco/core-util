@@ -20,7 +20,7 @@ package com.wso2telco.core.dbutils;
 /**
  * The Class Operator.
  */
-@Deprecated
+
 public class Operator {
 
     /** The isactive. */
