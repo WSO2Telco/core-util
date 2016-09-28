@@ -33,9 +33,6 @@ import com.wso2telco.core.dbutils.util.DataSourceNames;
  */
 public class DbUtils {
 
-	/** The resdb. */
-	private static DbUtils resdb;
-
 	/** The driver class. */
 	String driverClass;
 
@@ -48,11 +45,11 @@ public class DbUtils {
 	/** The connection password. */
 	String connectionPassword;
 
-	/** The axiata datasource. */
-	private static volatile DataSource axiataDatasource = null;
-
-	/** The Constant AXIATA_DATA_SOURCE. */
-	private static final String AXIATA_DATA_SOURCE = "jdbc/AXIATA_MIFE_DB";
+	/** The datasource. */
+	private static volatile DataSource Datasource = null;
+	
+	/** The Constant DEP_DATA_SOURCE. */
+	private static String DEP_DATA_SOURCE = null;
 
 	/** The Constant log. */
 	private static final Log log = LogFactory.getLog(DbUtils.class);
@@ -68,42 +65,40 @@ public class DbUtils {
 	 *
 	 * @throws SQLException
 	 *             the SQL exception
-	 * @throws AxataDBUtilException
-	 *             the axata db util exception
+	 *             the db util exception
 	 */
-	public static void initializeDatasources() throws SQLException, AxataDBUtilException {
-		if (axiataDatasource != null) {
+	public static void initializeDatasources() throws SQLException, DBUtilException {
+		if (Datasource != null) {
 			return;
 		}
 
 		try {
 			log.info("Before DB Initialize");
 			Context ctx = new InitialContext();
-			axiataDatasource = (DataSource) ctx.lookup(AXIATA_DATA_SOURCE);
+			DEP_DATA_SOURCE=(DataSourceNames.WSO2TELCO_DEP_DB.jndiName());
+			Datasource = (DataSource) ctx.lookup(DEP_DATA_SOURCE);
 		} catch (NamingException e) {
-			handleException("Error while looking up the data source: " + AXIATA_DATA_SOURCE, e);
+			handleException("Error while looking up the data source: " + DEP_DATA_SOURCE, e);
 		}
 	}
 
 	/**
 	 * IMPORTANT : This method must be deprecated. going forward use
-	 * "getDbConnection(DataSourceNames dataSourceName)" method Gets the axiata
-	 * db connection.
+	 * "getDbConnection(DataSourceNames dataSourceName)" method Gets the * db connection.
 	 *
-	 * @return the axiata db connection
+	 * @return the db connection
 	 * @throws SQLException
 	 *             the SQL exception
-	 * @throws AxataDBUtilException
-	 *             the axata db util exception
+	 * @throws DBUtilException
+	 *             the db util exception
 	 */
-	@Deprecated
-	public static Connection getAxiataDBConnection() throws SQLException, AxataDBUtilException {
+	public static Connection getDBConnection() throws SQLException, DBUtilException {
 		initializeDatasources();
 
-		if (axiataDatasource != null) {
-			return axiataDatasource.getConnection();
+		if (Datasource != null) {
+			return Datasource.getConnection();
 		}
-		throw new SQLException("Axiata Datasource not initialized properly");
+		throw new SQLException("Datasource not initialized properly");
 	}
 
 	/**
@@ -162,7 +157,7 @@ public class DbUtils {
 			}
 		}
 		return (finalStr);
-	} // format(String, int)
+	} 
 
 	/**
 	 * Format.
@@ -191,7 +186,7 @@ public class DbUtils {
 	} // format(int, int)
 
 	/**
-	 * Format.
+	 *Format.
 	 *
 	 * @param integerData
 	 *            the integer data
@@ -209,7 +204,7 @@ public class DbUtils {
 		finalStr = format(intData, finalLen);
 
 		return (finalStr);
-	} // format(Integer, int)
+	} 
 
 	/**
 	 * Format.
@@ -243,7 +238,7 @@ public class DbUtils {
 		}
 
 		return (finalStr);
-	} // format(double, int, int)
+	} 
 
 	/**
 	 * Format.
@@ -276,7 +271,7 @@ public class DbUtils {
 		}
 
 		return (finalStr);
-	} // format(BigDecimal, int, int)
+	}
 
 	/**
 	 * Format.
@@ -293,12 +288,10 @@ public class DbUtils {
 	 */
 	public static String format(Double doubleData, int precision, int scale) throws Exception {
 		double doubData;
-		String finalStr;
 
 		doubData = doubleData.doubleValue();
 		return (format(doubData, precision, scale));
-	} // format(Double, int, int)
-
+	} 
 	/**
 	 * Connect.
 	 *
@@ -326,7 +319,7 @@ public class DbUtils {
 		connection.setAutoCommit(false);
 
 		return connection;
-	} // connect
+	} 
 
 	/**
 	 * Disconnect.
@@ -338,7 +331,6 @@ public class DbUtils {
 	 */
 	public void disconnect(Connection con) throws Exception {
 		System.out.println();
-		// System.out.println(" Disconnect from database.");
 
 		// makes all changes made since the previous commit/rollback permanent
 		// and releases any database locks currrently held by the Connection.
@@ -346,7 +338,7 @@ public class DbUtils {
 
 		// immediately disconnects from database and releases JDBC resources
 		con.close();
-	} // disconnect
+	} 
 
 	/**
 	 * Handle exception.
@@ -355,12 +347,12 @@ public class DbUtils {
 	 *            the msg
 	 * @param t
 	 *            the t
-	 * @throws AxataDBUtilException
-	 *             the axata db util exception
+	 * @throws DBUtilException
+	 *             the db util exception
 	 */
-	public static void handleException(String msg, Throwable t) throws AxataDBUtilException {
+	public static void handleException(String msg, Throwable t) throws DBUtilException {
 		log.error(msg, t);
-		throw new AxataDBUtilException(msg, t);
+		throw new DBUtilException(msg, t);
 	}
 
 	/**
@@ -427,12 +419,6 @@ public class DbUtils {
 					e);
 		}
 
-		/*
-		 * if (dbConnection != null) { try { dbConnection.close(); } catch
-		 * (SQLException e) { log.warn(
-		 * "Database error. Could not close database connection. Continuing with "
-		 * + "others. - " + e.getMessage(), e); } }
-		 */
 	}
 
 	/**
