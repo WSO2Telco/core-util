@@ -32,9 +32,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.googlecode.libphonenumber.wso2telco</groupId>
+            <groupId>org.wso2.orbit.com.googlecode.libphonenumber</groupId>
             <artifactId>libphonenumber</artifactId>
-            <version>7.4.0.wso2telcov1</version>
+            <version>${com.googlecode.libphonenumber.version}</version>
         </dependency>
     </dependencies>
 
@@ -63,7 +63,7 @@
                             <bundles>
                                 <bundleDef>com.wso2telco.core:msisdn-validator:${com.wso2telco.core.version}</bundleDef>
                                 <bundleDef>dnsjava.wso2:dnsjava:${dnsjava.version}</bundleDef>
-                                <bundleDef>com.googlecode.libphonenumber.wso2telco:libphonenumber</bundleDef>
+                                <bundleDef>org.wso2.orbit.com.googlecode.libphonenumber:libphonenumber:${com.googlecode.libphonenumber.version}</bundleDef>
                             </bundles>
                         </configuration>
                     </execution>
