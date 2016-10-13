@@ -24,6 +24,7 @@ import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+@Deprecated
 public class FileReader {
 
 	private Log log = LogFactory.getLog(FileReader.class);

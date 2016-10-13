@@ -13,7 +13,7 @@
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
-			<groupId>com.googlecode.libphonenumber.wso2telco</groupId>
+			<groupId>org.wso2.orbit.com.googlecode.libphonenumber</groupId>
 			<artifactId>libphonenumber</artifactId>
 		</dependency>
 			<dependency>
