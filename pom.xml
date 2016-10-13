@@ -77,7 +77,7 @@
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
-				<groupId>com.googlecode.libphonenumber.wso2telco</groupId>
+				<groupId>org.wso2.orbit.com.googlecode.libphonenumber</groupId>
 				<artifactId>libphonenumber</artifactId>
 				<version>${com.googlecode.libphonenumber.version}</version>
 			</dependency>
@@ -244,7 +244,7 @@
 		<dnsjava.version>2.1.1.wso2v1</dnsjava.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<javax.cache.wso2>4.4.3</javax.cache.wso2>
-		<com.googlecode.libphonenumber.version>7.4.0.wso2telcov1</com.googlecode.libphonenumber.version>
+		<com.googlecode.libphonenumber.version>7.4.2.wso2v1</com.googlecode.libphonenumber.version>
 		<commons-io.wso2.version>2.4.0.wso2v1</commons-io.wso2.version>
 		<com.wso2telco.core.version>2.0.3-SNAPSHOT</com.wso2telco.core.version>
 	</properties>

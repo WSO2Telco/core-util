@@ -32,14 +32,37 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.googlecode.libphonenumber.wso2telco</groupId>
+            <groupId>org.wso2.orbit.com.googlecode.libphonenumber</groupId>
             <artifactId>libphonenumber</artifactId>
-            <version>7.4.0.wso2telcov1</version>
+            <version>${com.googlecode.libphonenumber.version}</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/maven-shared-archive-resources</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                    <includes>
+                                        <include>p2.inf</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.wso2.maven</groupId>
                 <artifactId>carbon-p2-plugin</artifactId>
@@ -63,7 +86,7 @@
                             <bundles>
                                 <bundleDef>com.wso2telco.core:msisdn-validator:${com.wso2telco.core.version}</bundleDef>
                                 <bundleDef>dnsjava.wso2:dnsjava:${dnsjava.version}</bundleDef>
-                                <bundleDef>com.googlecode.libphonenumber.wso2telco:libphonenumber</bundleDef>
+                                <bundleDef>org.wso2.orbit.com.googlecode.libphonenumber:libphonenumber:${com.googlecode.libphonenumber.version}</bundleDef>
                             </bundles>
                         </configuration>
                     </execution>
