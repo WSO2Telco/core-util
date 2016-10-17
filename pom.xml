@@ -35,11 +35,11 @@
 	</prerequisites>
 
 	<modules>
+		<module>components/mi-util</module>
 		<module>components/dbutil</module>
 		<module>components/mnc-resolver</module>
 		<module>components/msisdn-validator</module>
 		<module>components/pcr-service</module>
-		<module>components/mi-util</module>
 		<module>features</module>
 	</modules>
 
