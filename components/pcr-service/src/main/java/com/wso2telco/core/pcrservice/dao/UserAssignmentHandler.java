@@ -14,7 +14,7 @@ public abstract class UserAssignmentHandler {
 	/**
 	 * Creates the new user.
 	 *
-	 * @param UserDTO the user DTO
+	 * @param userAssignmentDTO the user DTO
 	 * @return the int
 	 * @throws SQLException the SQL exception
 	 */

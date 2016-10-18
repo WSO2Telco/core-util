@@ -37,7 +37,6 @@ public abstract class SectorHandler {
 	 *
 	 * @param sectorDTO the sector DTO
 	 * @return the int
-	 * @throws SQLException the SQL exception
 	 */
     public int createNewSector(SectorDTO sectorDTO){
         int newSectorDid=0;
@@ -50,7 +49,6 @@ public abstract class SectorHandler {
 	 *
 	 * @param sectorDTO the sectorDTO
 	 * @return true, if successful
-	 * @throws SQLException the SQL exception
 	 */
     public boolean checkSectorExists(SectorDTO sectorDTO){
         boolean exists = false;

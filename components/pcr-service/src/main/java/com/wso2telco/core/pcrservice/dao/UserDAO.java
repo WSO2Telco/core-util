@@ -30,7 +30,7 @@ public class UserDAO {
 	/**
 	 * Save new User.
 	 *
-	 * @param UserDTO the User DTO
+	 * @param userDTO the User DTO
 	 * @return the int
 	 * @throws SQLException the SQL exception
 	 */
@@ -44,7 +44,7 @@ public class UserDAO {
 	/**
 	 * Check User exists.
 	 *
-	 * @param UserDTO the User DTO
+	 * @param userDTO the User DTO
 	 * @return true, if successful
 	 * @throws SQLException the SQL exception
 	 */
@@ -58,8 +58,7 @@ public class UserDAO {
 	
 	/**
 	 * Check User active.
-	 *
-	 * @param UserDTO the User DTO
+	 * @param userDTO the User DTO
 	 * @return true, if successful
 	 * @throws SQLException the SQL exception
 	 */
@@ -72,8 +71,7 @@ public class UserDAO {
 	
 	/**
 	 * Sets the User active.
-	 *
-	 * @param UserDTO the new User active
+	 * @param userDTO the new User active
 	 * @throws SQLException the SQL exception
 	 */
 	public void setUserActive(UserDTO userDTO) throws SQLException{
@@ -86,7 +84,7 @@ public class UserDAO {
 	/**
 	 * Sets the User inctive.
 	 *
-	 * @param UserDTO the new User inactive
+	* @param userDTO the user DTO
 	 * @throws SQLException the SQL exception
 	 */
 	public void setUserInactive(UserDTO userDTO) throws SQLException{
