@@ -37,7 +37,6 @@ public class RequestDTO {
 	 * @param userId the user id
 	 * @param appId the app id
 	 * @param sectorId the sector id
-	 * @param isRelated the is related
 	 */
 	public RequestDTO(String userId, String appId, String sectorId) {
 		this.userId = userId;

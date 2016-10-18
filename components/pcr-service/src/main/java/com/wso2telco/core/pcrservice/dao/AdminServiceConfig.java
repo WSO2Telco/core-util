@@ -55,7 +55,6 @@ public class AdminServiceConfig {
 	
 	/**
 	 * Instantiates a new admin service config.
-	 * @throws MalformedURLException 
 	 */
 	public AdminServiceConfig(){
 	
@@ -74,7 +73,6 @@ public class AdminServiceConfig {
 	 * Gets the single instance of AdminServiceConfig.
 	 *
 	 * @return single instance of AdminServiceConfig
-	 * @throws MalformedURLException 
 	 */
 	public static AdminServiceConfig getInstance(){
 		if(config == null){

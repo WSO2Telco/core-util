@@ -41,8 +41,7 @@ public class OAuthApplicationDataStubFactory extends BasePoolableObjectFactory{
 	/**
 	 * This creates a OAuth2TokenValidationServiceStub object to the pool.
 	 * @return an OAuthValidationStub object
-	 * @throws PCRException 
-	 * @throws Exception thrown when creating the object.
+	 * @throws PCRException thrown if unable to genarate stub
 	 */
 	@Override
 	public Object makeObject() throws PCRException{
