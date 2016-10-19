@@ -14,11 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 package com.wso2telco.core.dbutils;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import javax.cache.Cache;
-import javax.cache.Caching;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
- 
 // TODO: Auto-generated Javadoc
 /**
  * The Class DbService.
@@ -35,889 +32,1332 @@ public class DbService {
 
 	/** The log. */
 	private static Log log = LogFactory.getLog(DbService.class);
-    
-    /** The Constant MEDIATOR_CACHE_MANAGER. */
-    private static final String MEDIATOR_CACHE_MANAGER = "MediatorCacheManager";
-    
-	
-    /**
-     * Outbound subscription entry.
-     *
-     * @param notifyurl the notifyurl
-     * @return the integer
-     * @throws Exception the exception
-     */
-    public Integer outboundSubscriptionEntry(String notifyurl) throws Exception {
-
-        Connection con = null;
-        Statement st = null;
-        ResultSet rs = null;
-        Integer newid = 0;
-
-        try {
-            con = DbUtils.getDBConnection();
-            if (con == null) {
-                throw new Exception("Connection not found");
-            }
-
-            st = con.createStatement();
-            String sql = "SELECT MAX(dn_subscription_did) maxid "
-                    + "FROM outbound_subscriptions";
-
-            rs = st.executeQuery(sql);
-            if (rs.next()) {
-                newid = rs.getInt("maxid") + 1;
-            }
-
-            sql = "INSERT INTO outbound_subscriptions (dn_subscription_did,notifyurl) "
-                    + "VALUES (" + newid + ",'" + notifyurl + "')";
-            st.executeUpdate(sql);
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to subscriptions. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
-        }
-
-        return newid;
-    }
-    
-    /**
-     * Token update.
-     *
-     * @param id the id
-     * @param refreshtoken the refreshtoken
-     * @param tokenvalidity the tokenvalidity
-     * @param tokentime the tokentime
-     * @param token the token
-     * @return the integer
-     * @throws Exception the exception
-     */
-
-    public Integer tokenUpdate(int id, String refreshtoken, long tokenvalidity, long tokentime, String token) throws Exception {
-
-        Connection con = null;
-        Statement st = null;
-        Integer newid = 0;
-
-        try {
-            con = DbUtils.getDBConnection();
-            if (con == null) {
-                throw new Exception("Connection not found");
-            }
-
-            st = con.createStatement();
-            String sql = "UPDATE operators "
-                    + "SET refreshtoken='" + refreshtoken + "',tokenvalidity=" + tokenvalidity + ",tokentime=" + tokentime + ",token='" + token + "' "
-                    + "WHERE id =" + id;
-
-            st.executeUpdate(sql);
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while updating operators. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, null);
-        }
-
-        return newid;
-    }
-    
-    /**
-     * Application operators.
-     *
-     * @param appID the appID
-     * @return the list
-     * @throws Exception the exception
-     */
-    
-    public List<Operator> applicationOperators(Integer appID) throws Exception {
-
-        Connection con = DbUtils.getDBConnection();   
-        Statement st = null;
-        ResultSet rs = null;
-        List<Operator> operators = new ArrayList<Operator>();
-
-        try {
-
-            if (con == null) {
-                throw new Exception("Connection not found");
-            }
-
-            st = con.createStatement();
-            String sql = "SELECT oa.id id,oa.applicationid,oa.operatorid,o.operatorname,o.refreshtoken,o.tokenvalidity,o.tokentime,o.token, o.tokenurl, o.tokenauth "
-                    + "FROM operatorapps oa, operators o "
-                    + "WHERE oa.operatorid = o.id AND oa.isactive = 1  AND oa.applicationid = '" + appID + "'";
-            
-            System.out.println(sql);
-            rs = st.executeQuery(sql);
-
-            while (rs.next()) {
-                Operator oper = new Operator();
-                oper.setId(rs.getInt("id"));
-                oper.setApplicationid(rs.getInt("applicationid"));
-                oper.setOperatorid(rs.getInt("operatorid"));
-                oper.setOperatorname(rs.getString("operatorname"));
-                oper.setRefreshtoken(rs.getString("refreshtoken"));
-                oper.setTokenvalidity(rs.getLong("tokenvalidity"));
-                oper.setTokentime(rs.getLong("tokentime"));
-                oper.setToken(rs.getString("token"));
-                oper.setTokenurl(rs.getString("tokenurl"));
-                oper.setTokenauth(rs.getString("tokenauth"));
-                operators.add(oper);
-            }
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from operatorapps, operators. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
-        }
-
-        return operators;
-
-    }
-
-    /**
-     * Subscription dn notifi.
-     *
-     * @param subscriptionID the subscriptionID
-     * @return the string
-     * @throws Exception the exception
-     */
-   
-    public String subscriptionDNNotifi(Integer subscriptionID) throws Exception {
-
-        Connection con = DbUtils.getDBConnection();
-        Statement st = null;
-        ResultSet rs = null;
-        String notifyurls = "";
-        try {
-
-            if (con == null) {
-                throw new Exception("Connection not found");
-            }
-
-            st = con.createStatement();
-            String sql = "SELECT notifyurl "
-                    + "FROM outbound_subscriptions "
-                    + "WHERE dn_subscription_did = " + subscriptionID + "";
-
-            rs = st.executeQuery(sql);
-
-            if (rs.next()) {
-                notifyurls = rs.getString("notifyurl");
-            }
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from subscriptions. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
-        }
-
-        return notifyurls;
-
-    }
-    
-    /**
-     * Subscription notifi.
-     *
-     * @param subscriptionID the subscriptionID
-     * @return the string
-     * @throws Exception the exception
-     */
-    public String subscriptionNotifi(Integer subscriptionID) throws Exception {
-
-        Connection con = DbUtils.getDBConnection();
-        Statement st = null;
-        ResultSet rs = null;
-        String notifyurls = "";
-        try {
-
-            if (con == null) {
-                throw new Exception("Connection not found");
-            }
-
-            st = con.createStatement();
-            String sql = "SELECT notifyurl "
-                    + "FROM subscriptions "
-                    + "WHERE mo_subscription_did = " + subscriptionID + "";
-
-            rs = st.executeQuery(sql);
-
-            if (rs.next()) {
-                notifyurls = rs.getString("notifyurl");
-            }
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from subscriptions. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
-        }
-
-        return notifyurls;
-
-    }
-    
-    /**
-     * Operator endpoints.
-     *
-     * @param appID the appID
-     * @return the list
-     * @throws Exception the exception
-     */
-
-    public List<Operatorendpoint> operatorEndpoints(Integer appID) throws Exception {
-
-        Connection con = DbUtils.getDBConnection();
-        Statement st = null;
-        ResultSet rs = null;
-        List<Operatorendpoint> endpoints = new ArrayList();
-        try {
-
-            if (con == null) {
-                throw new Exception("Connection not found");
-            }
-
-            st = con.createStatement();
-            String sql = "SELECT operatorendpoints.ID as ID, operatorid,operatorname,api,endpoint "
-                    + "FROM operatorendpoints, operators "
-                    + "WHERE operatorendpoints.operatorid = operators.id "
-                    + "AND operatorendpoints.id in ("
-                    + "SELECT endpointid FROM endpointapps "
-                    + "WHERE applicationid = " + appID + " "
-                    + "AND isactive = 1"
-                    + ")";
-
-            rs = st.executeQuery(sql);
-
-            while (rs.next()) {
-                Operatorendpoint endpoint = new Operatorendpoint(rs.getInt("operatorid"), rs.getString("operatorname"), rs.getString("api"), rs.getString("endpoint"));
-                endpoint.setId(rs.getInt("ID"));
-                endpoints.add(endpoint);
-            }
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while retrieving operator endpoints. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
-        }
-
-        return endpoints;
-    }
-
-    /**
-     * Operator endpoints.
-     *
-     * @return the list
-     * @throws Exception the exception
-     */
-    
-    public List<Operatorendpoint> operatorEndpoints() throws Exception {
-        final int opEndpointsID = 0;
-
-        Cache<Integer, List<Operatorendpoint>> cache = Caching.getCacheManager(MEDIATOR_CACHE_MANAGER).getCache("DbOperatorEndpoints");
-        List<Operatorendpoint> endpoints = cache.get(opEndpointsID);
-        
-        if (endpoints == null) {
-            Connection con = DbUtils.getDBConnection();
-            Statement st = null;
-            ResultSet rs = null;
-            endpoints = new ArrayList<Operatorendpoint>();
-            try {
-
-                if (con == null) {
-                    throw new Exception("Connection not found");
-                }
-
-                st = con.createStatement();
-                String sql = "SELECT operatorid,operatorname,api,endpoint "
-                        	+ "FROM operatorendpoints, operators "
-                        	+ "WHERE operatorendpoints.operatorid = operators.id";
-
-                rs = st.executeQuery(sql);
-
-                while (rs.next()) {
-                    endpoints.add(new Operatorendpoint(rs.getInt("operatorid"), rs.getString("operatorname"), rs.getString("api"), rs.getString("endpoint")));
-                }
-
-            } catch (Exception e) {
-                DbUtils.handleException("Error while retrieving operator endpoint. ", e);
-            } finally {
-                DbUtils.closeAllConnections(st, con, rs);
-            }
-            if (!endpoints.isEmpty()) {
-                cache.put(opEndpointsID, endpoints);
-            }
-        }
-
-        return endpoints;
-    }
-
-    /**
-     * Update application op.
-     *
-     * @param appID the appID
-     * @param operatorid the operatorid
-     * @param opstat the opstat
-     * @return true, if successful
-     * @throws Exception the exception
-     */
-    public boolean UpdateApplicationOp(int appID, int operatorid, boolean opstat) throws Exception {
-
-        Connection con = null;
-        Statement st = null;
-
-        int opactive = (opstat ? 1 : 0);
-
-        try {
-            con = DbUtils.getDBConnection();
-            if (con == null) {
-                throw new Exception("Connection not found");
-            }
-
-            st = con.createStatement();
-            String sql = "UPDATE operatorapps "
-                    + "SET isactive=" + opactive + " "
-                    + "WHERE applicationid =" + appID + " "
-                    + "AND operatorid = " + operatorid + "";
-
-            st.executeUpdate(sql);
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while updating operatorapps. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, null);
-        }
-
-        return true;
-    }
-
-    /**
-     * Application entry.
-     *
-     * @param appID the appID
-     * @param operators the operators
-     * @return the integer
-     * @throws Exception the exception
-     */
-    public Integer applicationEntry(int appID, Integer[] operators) throws Exception {
-
-        Connection con = null;
-        Statement st = null;
-        Integer newid = 0;
-
-        try {
-            con = DbUtils.getDBConnection();
-            if (con == null) {
-                throw new Exception("Connection not found");
-            }
-
-            st = con.createStatement();
-            String sql = null;
-            for (Integer d : operators) {
-                sql = "INSERT INTO operatorapps (applicationid,operatorid) "
-                        + "VALUES (" + appID + "," + d + ")";
-                st.executeUpdate(sql);
-            }
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to operatorapps. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, null);
-        }
-
-        return newid;
-    }
-
-     
-    /**
-     * Gets the operators.
-     *
-     * @return the operators
-     * @throws Exception the exception
-     */
-
-    public List<Operator> getOperators() throws Exception {
-
-        Connection con = DbUtils.getDBConnection();
-        Statement st = null;
-        ResultSet rs = null;
-        List<Operator> operators = new ArrayList<Operator>();
-
-        try {
-            if (con == null) {
-                throw new Exception("Connection not found");
-            }
-
-            st = con.createStatement();
-            String sql = "SELECT ID, operatorname "
-                    + "FROM operators";
-
-            rs = st.executeQuery(sql);
-
-            while (rs.next()) {
-                Operator operator = new Operator();
-                operator.setOperatorid(rs.getInt("ID"));
-                operator.setOperatorname(rs.getString("operatorname"));
-                operators.add(operator);
-            }
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while retrieving operators. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
-        }
-        return operators;
-    }
-
-     
-    /**
-     * Insert operator app endpoints.
-     *
-     * @param appID the app id
-     * @param opEndpointIDList the op endpoint id list
-     * @throws Exception the exception
-     */
-    public void insertOperatorAppEndpoints(int appID, int[] opEndpointIDList) throws Exception {
-
-        Connection con = null;
-        Statement st = null;
-        
-        try {
-            con = DbUtils.getDBConnection();
-            String inputStr = "";
-
-            log.debug("opEndpointIDList.length : " + opEndpointIDList.length);
-            for (int i = 0; i < opEndpointIDList.length; i++) {
-            	if(opEndpointIDList[i] > 0) {
-            		
-            		if (inputStr.length() > 0) {
-            			inputStr = inputStr + ",";
-            		}
-            		inputStr = inputStr + "(" + opEndpointIDList[i] + "," + appID + ",0)";
-                    log.debug("inputStr : " + inputStr);
-            	}
-            }
-
-            log.debug("Final inputStr : " + inputStr);
-            
-            String sql = "INSERT INTO endpointapps (endpointid, applicationid, isactive) VALUES " + inputStr;
-            log.debug("sql : " + sql);
-            
-            st = con.createStatement();
-            st.executeUpdate(sql);
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to endpointapps. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, null);
-        }
-    }
-
-     
-    /**
-     * Update operator app endpoint status.
-     *
-     * @param appID the app id
-     * @param opEndpointID the op endpoint id
-     * @param status the status
-     * @throws Exception the exception
-     */
-    public void updateOperatorAppEndpointStatus(int appID, int opEndpointID, int status) throws Exception {
-
-        Connection con = null;
-        Statement st = null;
-                
-        try {
-            con = DbUtils.getDBConnection();
-
-            String sql = "UPDATE endpointapps SET isactive=" + status
-                    + " WHERE endpointid=" + opEndpointID
-                    + " AND applicationid=" + appID;
-
-            st = con.createStatement();
-            st.executeUpdate(sql);
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while updating endpointapps. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, null);
-        }
-    }
-
-    /**
-     * Gets the operator endpoints.
-     *
-     * @return the operator endpoints
-     * @throws Exception the exception
-     */
-
-    public List<Operatorendpoint> getOperatorEndpoints() throws Exception {
-
-        List<Operatorendpoint> operatorEndpoints = new ArrayList();
-        Connection con = null;
-        Statement st = null;
-        ResultSet rs = null;
-
-        try {
-            con = DbUtils.getDBConnection();
-            if (con == null) {
-                throw new Exception("Connection not found.");
-            }
-
-            st = con.createStatement();
-            String sql = "SELECT ID,operatorid,api FROM operatorendpoints";
-
-            rs = st.executeQuery(sql);
-
-            while (rs.next()) {
-                Operatorendpoint endpoint = new Operatorendpoint(rs.getInt("operatorid"), null, rs.getString("api"), null);
-                endpoint.setId(rs.getInt("ID"));
-                operatorEndpoints.add(endpoint);
-            }
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from operatorendpoints. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
-        }
-
-        return operatorEndpoints;
-    }
-
-    /**
-     * Update app approval status op.
-     *
-     * @param appID the appID
-     * @param operatorId the operator id
-     * @param status the status
-     * @return true, if successful
-     * @throws Exception the exception
-     */
-    public boolean updateAppApprovalStatusOp(int appID, int operatorId, int status) throws Exception {
-
-        Connection con = null;
-        Statement st = null;
-
-        try {
-            con = DbUtils.getDBConnection();
-            if (con == null) {
-                throw new Exception("Connection not found.");
-            }
-
-            st = con.createStatement();
-            String sql = "UPDATE operatorapps "
-                    + "SET isactive=" + status + " "
-                    + "WHERE applicationid =" + appID + " "
-                    + "AND operatorid = " + operatorId + "";
-
-            st.executeUpdate(sql);
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while updating operatorapps. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, null);
-        }
-
-        return true;
-    }
-
-     
-    /**
-     * Insert validator for subscription.
-     *
-     * @param appID the app id
-     * @param apiID the api id
-     * @param validatorID the validator id
-     * @return true, if successful
-     * @throws Exception the exception
-     */
-    public boolean insertValidatorForSubscription(int appID, int apiID, int validatorID) throws Exception {
-        Connection con = null;
-        Statement st = null;
-        try {
-            con = DbUtils.getDBConnection();
-
-            String sql = "INSERT INTO subscription_validator (application_id, api_id, validator_id) VALUES "
-                    + "(" + appID + "," + apiID + "," + validatorID + ")";
-            st = con.createStatement();
-            st.executeUpdate(sql);
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to subscription_validator. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, null);
-        }
-        return true;
-    }
-     
-    /**
-     * Removes the merchant provision.
-     *
-     * @param appID the app id
-     * @param subscriber the subscriber
-     * @param operator the operator
-     * @param merchants the merchants
-     * @return true, if successful
-     * @throws Exception the exception
-     */
-    public boolean removeMerchantProvision(Integer appID, String subscriber, String operator,
-            String[] merchants) throws Exception {
-
-        Connection con = null;
-        Statement st = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-
-        try {
-            con = DbUtils.getDBConnection();
-
-            st = con.createStatement();
-            String sql = "SELECT id "
-                    + "FROM operators "
-                    + "WHERE operatorname = '" + operator + "'";
-
-            rs = st.executeQuery(sql);
-
-            int operatorid = 0;
-            if (rs.next()) {
-                operatorid = rs.getInt("id");
-            } else {
-                throw new Exception("Operator Not Found");
-            }
-
-            pst = null;
-
-            for (int i = 0; i < merchants.length; i++) {
-
-                if (appID == null) {
-                    sql = "DELETE FROM merchantopco_blacklist "
-                            + "WHERE application_id is null AND operator_id = ? AND subscriber = ? AND merchant = ?";
-
-                    pst = con.prepareStatement(sql);
-
-                    pst.setInt(1, operatorid);
-                    pst.setString(2, subscriber);
-                    pst.setString(3, merchants[i]);
-                    pst.executeUpdate();
-
-                } else {
-                    sql = "DELETE FROM merchantopco_blacklist "
-                            + "WHERE application_id = ? AND operator_id = ? AND subscriber = ? AND merchant = ?";
-
-                    pst = con.prepareStatement(sql);
-
-                    pst.setInt(1, appID);
-                    pst.setInt(2, operatorid);
-                    pst.setString(3, subscriber);
-                    pst.setString(4, merchants[i]);
-                    pst.executeUpdate();
-
-                }
-            }
-
-        } catch (Exception e) {
-            DbUtils.handleException("Error while Provisioning Merchant. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
-            DbUtils.closeAllConnections(pst, null, null);
-        }
-        return true;
-    }
+
+	/**
+	 * Outbound subscription entry.
+	 *
+	 * @param notifyurl
+	 *            the notifyurl
+	 * @return the integer
+	 * @throws Exception
+	 *             the exception
+	 */
+	public Integer outboundSubscriptionEntry(String notifyurl)
+			throws SQLException, Exception {
+
+		Connection con = null;
+		PreparedStatement selectStatement = null;
+		PreparedStatement insertStatement = null;
+		ResultSet rs = null;
+		Integer newid = 0;
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found");
+			}
+
+			StringBuilder queryString = new StringBuilder("SELECT ");
+			queryString.append("MAX(dn_subscription_did) maxid ");
+			queryString.append("FROM ");
+			queryString.append("outbound_subscriptions ");
+
+			selectStatement = con.prepareStatement(queryString.toString());
+
+			log.debug("sql query in getValidPayCategories : " + selectStatement);
+
+			rs = selectStatement.executeQuery();
+
+			if (rs.next()) {
+				newid = rs.getInt("maxid") + 1;
+			}
+
+			StringBuilder insertQueryString = new StringBuilder("INSERT INTO ");
+			insertQueryString.append("outbound_subscriptions ");
+			insertQueryString.append(" (dn_subscription_did,notifyurl) ");
+			insertQueryString.append("VALUES (?, ?) ");
+
+			insertStatement = con
+					.prepareStatement(insertQueryString.toString());
+
+			insertStatement.setInt(1, newid);
+			insertStatement.setString(2, notifyurl);
+
+			insertStatement.executeUpdate();
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error(
+					"database operation error in outbound subscriptions entry: ",
+					e);
+			throw e;
+
+		} catch (Exception e) {
+			DbUtils.handleException(
+					"Error while inserting in to subscriptions. ", e);
+		} finally {
+			DbUtils.closeAllConnections(selectStatement, con, rs);
+			DbUtils.closeAllConnections(insertStatement, null, null);
+		}
+
+		return newid;
+	}
+
+	/**
+	 * Token update.
+	 *
+	 * @param id
+	 *            the id
+	 * @param refreshtoken
+	 *            the refreshtoken
+	 * @param tokenvalidity
+	 *            the tokenvalidity
+	 * @param tokentime
+	 *            the tokentime
+	 * @param token
+	 *            the token
+	 * @return the integer
+	 * @throws Exception
+	 *             the exception
+	 */
+
+	public Integer tokenUpdate(int id, String refreshtoken, long tokenvalidity,
+			long tokentime, String token) throws SQLException, Exception {
+
+		Connection con = null;
+		PreparedStatement updatetStatement = null;
+		Integer newid = 0;
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found");
+			}
+
+			StringBuilder queryString = new StringBuilder(" UPDATE ");
+			queryString.append(" operators ");
+			queryString.append("SET ");
+			queryString.append("refreshtoken = ? ");
+			queryString.append("AND tokenvalidity = ? ");
+			queryString.append("AND tokentime = ? ");
+			queryString.append("AND token = ? ");
+			queryString.append("WHERE ");
+			queryString.append("id = ? ");
+
+			updatetStatement = con.prepareStatement(queryString.toString());
+
+			updatetStatement.setString(1, refreshtoken);
+			updatetStatement.setLong(2, tokenvalidity);
+			updatetStatement.setLong(3, tokentime);
+			updatetStatement.setString(4, token);
+			updatetStatement.setInt(5, id);
+
+			updatetStatement.executeUpdate();
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error("database operation error in token update entry : ", e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException("Error while updating operators. ", e);
+		} finally {
+			DbUtils.closeAllConnections(updatetStatement, con, null);
+		}
+
+		return newid;
+	}
+
+	/**
+	 * Application operators.
+	 *
+	 * @param appID
+	 *            the appID
+	 * @return the list
+	 * @throws Exception
+	 *             the exception
+	 */
+
+	public List<Operator> applicationOperators(Integer appID)
+			throws SQLException, Exception {
+
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		List<Operator> operators = new ArrayList<Operator>();
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found");
+			}
+
+			StringBuilder queryString = new StringBuilder("SELECT ");
+			queryString
+					.append("oa.id id,oa.applicationid,oa.operatorid,o.operatorname,o.refreshtoken,o.tokenvalidity,o.tokentime,o.token, o.tokenurl, o.tokenauth ");
+			queryString.append("FROM ");
+			queryString.append("operatorapps oa, operators o ");
+			queryString.append("WHERE ");
+			queryString.append("oa.operatorid = o.id ");
+			queryString.append("AND oa.isactive = 1 ");
+			queryString.append("AND oa.applicationid = ? ");
+
+			statement = con.prepareStatement(queryString.toString());
+
+			statement.setInt(1, appID);
+			rs = statement.executeQuery();
+			while (rs.next()) {
+				Operator oper = new Operator();
+				oper.setId(rs.getInt("id"));
+				oper.setApplicationid(rs.getInt("applicationid"));
+				oper.setOperatorid(rs.getInt("operatorid"));
+				oper.setOperatorname(rs.getString("operatorname"));
+				oper.setRefreshtoken(rs.getString("refreshtoken"));
+				oper.setTokenvalidity(rs.getLong("tokenvalidity"));
+				oper.setTokentime(rs.getLong("tokentime"));
+				oper.setToken(rs.getString("token"));
+				oper.setTokenurl(rs.getString("tokenurl"));
+				oper.setTokenauth(rs.getString("tokenauth"));
+				operators.add(oper);
+			}
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error("database operation error in operator entry : ", e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException("Error while selecting from operators ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, rs);
+		}
+
+		return operators;
+
+	}
+
+	/**
+	 * Subscription dn notifi.
+	 *
+	 * @param subscriptionID
+	 *            the subscriptionID
+	 * @return the string
+	 * @throws Exception
+	 *             the exception
+	 */
+
+	public String subscriptionDNNotifi(Integer subscriptionID)
+			throws SQLException, Exception {
+
+		Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement statement = null;
+		String notifyurls = "";
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found");
+			}
+
+			StringBuilder queryString = new StringBuilder("SELECT ");
+			queryString.append("notifyurl ");
+			queryString.append("FROM ");
+			queryString.append("outbound_subscriptions ");
+			queryString.append("WHERE ");
+			queryString.append("dn_subscription_did = ? ");
+
+			statement = con.prepareStatement(queryString.toString());
+
+			statement.setInt(1, subscriptionID);
+			rs = statement.executeQuery();
+
+			if (rs.next()) {
+				notifyurls = rs.getString("notifyurl");
+			}
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error("database operation error in subscription entry : ", e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException(
+					"Error while selecting from subscriptions. ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, rs);
+		}
+
+		return notifyurls;
+	}
+
+	/**
+	 * Subscription notifi.
+	 *
+	 * @param subscriptionID
+	 *            the subscriptionID
+	 * @return the string
+	 * @throws Exception
+	 *             the exception
+	 */
+	public String subscriptionNotifi(Integer subscriptionID)
+			throws SQLException, Exception {
+
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String notifyurls = "";
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found");
+			}
+
+			StringBuilder queryString = new StringBuilder("SELECT ");
+			queryString.append("notifyurl ");
+			queryString.append("FROM ");
+			queryString.append("subscriptions ");
+			queryString.append("WHERE ");
+			queryString.append("mo_subscription_did = ? ");
+
+			statement = con.prepareStatement(queryString.toString());
+
+			statement.setInt(1, subscriptionID);
+			rs = statement.executeQuery();
+
+			if (rs.next()) {
+				notifyurls = rs.getString("notifyurl");
+			}
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error("database operation error in subscription entry : ", e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException(
+					"Error while selecting from subscriptions. ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, rs);
+		}
+
+		return notifyurls;
+
+	}
+
+	/**
+	 * Operator endpoints.
+	 *
+	 * @param appID
+	 *            the appID
+	 * @return the list
+	 * @throws Exception
+	 *             the exception
+	 */
+
+	public List<Operatorendpoint> operatorEndpoints(Integer appID)
+			throws SQLException, Exception {
+
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		List<Operatorendpoint> endpoints = new ArrayList();
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found");
+			}
+
+			StringBuilder queryString = new StringBuilder("SELECT ");
+			queryString
+					.append("operatorendpoints.ID as ID, operatorid,operatorname,api,endpoint ");
+			queryString.append("FROM ");
+			queryString.append("operatorendpoints, operators ");
+			queryString.append("WHERE ");
+			queryString.append("operatorendpoints.operatorid = operators.id ");
+			queryString.append("AND ");
+			queryString.append("operatorendpoints.id IN ( ");
+			queryString.append("SELECT ");
+			queryString.append("endpointid ");
+			queryString.append("FROM ");
+			queryString.append("endpointapps ");
+			queryString.append("WHERE ");
+			queryString.append("applicationid = ? ");
+			queryString.append("AND ");
+			queryString.append("isactive = 1) ");
+
+			statement = con.prepareStatement(queryString.toString());
+
+			statement.setInt(1, appID);
+			rs = statement.executeQuery();
+
+			while (rs.next()) {
+				Operatorendpoint endpoint = new Operatorendpoint(
+						rs.getInt("operatorid"), rs.getString("operatorname"),
+						rs.getString("api"), rs.getString("endpoint"));
+				endpoint.setId(rs.getInt("ID"));
+				endpoints.add(endpoint);
+			}
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error(
+					"database operation error in operator endpoints entry : ",
+					e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException(
+					"Error while retrieving operator endpoints. ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, rs);
+		}
+
+		return endpoints;
+	}
+
+	/**
+	 * Update application op.
+	 *
+	 * @param appID
+	 *            the appID
+	 * @param operatorid
+	 *            the operatorid
+	 * @param opstat
+	 *            the opstat
+	 * @return true, if successful
+	 * @throws Exception
+	 *             the exception
+	 */
+	public boolean UpdateApplicationOp(int appID, int operatorid, boolean opstat)
+			throws SQLException, Exception {
+
+		Connection con = null;
+		PreparedStatement statement = null;
+
+		int opactive = (opstat ? 1 : 0);
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found");
+			}
+
+			StringBuilder queryString = new StringBuilder("UPDATE ");
+			queryString.append("operatorapps ");
+			queryString.append("SET ");
+			queryString.append("isactive = ? ");
+			queryString.append("WHERE ");
+			queryString.append("applicationid = ? ");
+			queryString.append("AND ");
+			queryString.append("operatorid = ? ");
+
+			statement = con.prepareStatement(queryString.toString());
+
+			statement.setInt(1, opactive);
+			statement.setInt(2, appID);
+			statement.setInt(3, operatorid);
+
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error("database operation error in updating operatorapps ", e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException("Error while updating operatorapps. ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, null);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Application entry.
+	 *
+	 * @param appID
+	 *            the appID
+	 * @param operators
+	 *            the operators
+	 * @return the integer
+	 * @throws Exception
+	 *             the exception
+	 */
+	public Integer applicationEntry(int appID, Integer[] operators)
+			throws Exception {
+
+		Connection con = null;
+		PreparedStatement statement = null;
+		Integer newid = 0;
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found");
+			}
+
+			for (Integer d : operators) {
+				StringBuilder queryString = new StringBuilder("INSERT INTO ");
+				queryString.append("operatorapps ");
+				queryString.append("(applicationid,operatorid) ");
+				queryString.append("VALUES (?, ? ) ");
+
+				statement = con.prepareStatement(queryString.toString());
+
+				statement.setInt(1, appID);
+				statement.setInt(2, d);
+
+				statement.executeUpdate();
+			}
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error("database operation error in inserting operatorapps ", e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException(
+					"Error while inserting in to operatorapps. ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, null);
+		}
+
+		return newid;
+	}
+
+	/**
+	 * Gets the operators.
+	 *
+	 * @return the operators
+	 * @throws Exception
+	 *             the exception
+	 */
+
+	public List<Operator> getOperators() throws Exception {
+
+		Connection con = DbUtils.getDBConnection();
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		List<Operator> operators = new ArrayList<Operator>();
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found");
+			}
+
+			StringBuilder queryString = new StringBuilder("SELECT ");
+			queryString.append("ID, operatorname ");
+			queryString.append("SET ");
+			queryString.append("FROM ");
+			queryString.append("operators ");
+
+			statement = con.prepareStatement(queryString.toString());
+
+			rs = statement.executeQuery();
+
+			while (rs.next()) {
+				Operator operator = new Operator();
+				operator.setOperatorid(rs.getInt("ID"));
+				operator.setOperatorname(rs.getString("operatorname"));
+				operators.add(operator);
+			}
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error("database operation error in retrieving operators ", e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException("Error while retrieving operators. ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, rs);
+		}
+		return operators;
+	}
+
+	/**
+	 * Insert operator app endpoints.
+	 *
+	 * @param appID
+	 *            the app id
+	 * @param opEndpointIDList
+	 *            the op endpoint id list
+	 * @throws Exception
+	 *             the exception
+	 */
+	public void insertOperatorAppEndpoints(int appID, int[] opEndpointIDList)
+			throws SQLException, Exception {
+
+		Connection con = null;
+		PreparedStatement statement = null;
+
+		try {
+			con = DbUtils.getDBConnection();
+			String inputStr = "";
+
+			log.debug("opEndpointIDList.length : " + opEndpointIDList.length);
+			for (int i = 0; i < opEndpointIDList.length; i++) {
+				if (opEndpointIDList[i] > 0) {
+
+					if (inputStr.length() > 0) {
+						inputStr = inputStr + ",";
+					}
+					inputStr = inputStr + "(" + opEndpointIDList[i] + ","
+							+ appID + ",0)";
+					log.debug("inputStr : " + inputStr);
+				}
+			}
+
+			log.debug("Final inputStr : " + inputStr);
+
+			StringBuilder queryString = new StringBuilder("INSERT INTO ");
+			queryString.append("endpointapps ");
+			queryString.append("(endpointid, applicationid, isactive) ");
+			queryString.append("VALUES ");
+			queryString.append("inputStr ");
+
+			log.debug("sql : " + queryString);
+
+			statement = con.prepareStatement(queryString.toString());
+
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error("database operation error in inserting endpointapps ", e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException(
+					"Error while inserting in to endpointapps. ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, null);
+		}
+	}
+
+	/**
+	 * Update operator app endpoint status.
+	 *
+	 * @param appID
+	 *            the app id
+	 * @param opEndpointID
+	 *            the op endpoint id
+	 * @param status
+	 *            the status
+	 * @throws Exception
+	 *             the exception
+	 */
+	public void updateOperatorAppEndpointStatus(int appID, int opEndpointID,
+			int status) throws SQLException, Exception {
+
+		Connection con = null;
+		PreparedStatement statement = null;
+
+		try {
+			con = DbUtils.getDBConnection();
+
+			StringBuilder queryString = new StringBuilder("UPDATE");
+			queryString.append("endpointapps ");
+			queryString.append("SET ");
+			queryString.append("isactive = ? ");
+			queryString.append("WHERE ");
+			queryString.append("endpointid = ? ");
+			queryString.append("AND ");
+			queryString.append("applicationid = ? ");
+
+			statement = con.prepareStatement(queryString.toString());
+
+			statement.setInt(1, status);
+			statement.setInt(2, opEndpointID);
+			statement.setInt(3, appID);
+
+			statement.executeQuery();
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error("database operation error in updating endpointapps ", e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException("Error while updating endpointapps. ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, null);
+		}
+	}
+
+	/**
+	 * Gets the operator endpoints.
+	 *
+	 * @return the operator endpoints
+	 * @throws Exception
+	 *             the exception
+	 */
+
+	public List<Operatorendpoint> getOperatorEndpoints() throws SQLException,
+			Exception {
+
+		List<Operatorendpoint> operatorEndpoints = new ArrayList();
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found.");
+			}
+
+			StringBuilder queryString = new StringBuilder("SELECT ");
+			queryString.append("ID,operatorid,api ");
+			queryString.append("FROM ");
+			queryString.append("operatorendpoints ");
+
+			statement = con.prepareStatement(queryString.toString());
+
+			rs = statement.executeQuery();
+
+			while (rs.next()) {
+				Operatorendpoint endpoint = new Operatorendpoint(
+						rs.getInt("operatorid"), null, rs.getString("api"),
+						null);
+				endpoint.setId(rs.getInt("ID"));
+				operatorEndpoints.add(endpoint);
+			}
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error(
+					"database operation error in selecting from operatorendpoints ",
+					e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException(
+					"Error while selecting from operatorendpoints. ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, rs);
+		}
+
+		return operatorEndpoints;
+	}
+
+	/**
+	 * Update app approval status op.
+	 *
+	 * @param appID
+	 *            the appID
+	 * @param operatorId
+	 *            the operator id
+	 * @param status
+	 *            the status
+	 * @return true, if successful
+	 * @throws Exception
+	 *             the exception
+	 */
+	public boolean updateAppApprovalStatusOp(int appID, int operatorId,
+			int status) throws SQLException, Exception {
+
+		Connection con = null;
+		PreparedStatement statement = null;
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found.");
+			}
+
+			StringBuilder queryString = new StringBuilder("UPDATE ");
+			queryString.append("operatorapps ");
+			queryString.append("SET ");
+			queryString.append("isactive = ? ");
+			queryString.append("WHERE ");
+			queryString.append("applicationid = ? ");
+			queryString.append("AND ");
+			queryString.append("operatorid = ? ");
+
+			statement = con.prepareStatement(queryString.toString());
+
+			statement.setInt(1, status);
+			statement.setInt(2, appID);
+			statement.setInt(3, operatorId);
+
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error("database operation error in updating operatorapps ", e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException("Error while updating operatorapps. ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, null);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Insert validator for subscription.
+	 *
+	 * @param appID
+	 *            the app id
+	 * @param apiID
+	 *            the api id
+	 * @param validatorID
+	 *            the validator id
+	 * @return true, if successful
+	 * @throws Exception
+	 *             the exception
+	 */
+	public boolean insertValidatorForSubscription(int appID, int apiID,
+			int validatorID) throws SQLException, Exception {
+		Connection con = null;
+		PreparedStatement statement = null;
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found.");
+			}
+
+			StringBuilder queryString = new StringBuilder("INSERT INTO ");
+			queryString.append("subscription_validator ");
+			queryString.append("(application_id, api_id, validator_id) ");
+			queryString.append("VALUES ");
+			queryString.append("(?, ?, ?) ");
+
+			statement = con.prepareStatement(queryString.toString());
+
+			statement.setInt(1, appID);
+			statement.setInt(2, apiID);
+			statement.setInt(3, validatorID);
+
+			statement.executeUpdate();
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error(
+					"database operation error in inserting in to subscription_validator ",
+					e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException(
+					"Error while inserting in to subscription_validator. ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, null);
+		}
+		return true;
+	}
+
+	/**
+	 * Removes the merchant provision.
+	 *
+	 * @param appID
+	 *            the app id
+	 * @param subscriber
+	 *            the subscriber
+	 * @param operator
+	 *            the operator
+	 * @param merchants
+	 *            the merchants
+	 * @return true, if successful
+	 * @throws Exception
+	 *             the exception
+	 */
+	public boolean removeMerchantProvision(Integer appID, String subscriber,
+			String operator, String[] merchants) throws SQLException, Exception {
+
+		Connection con = null;
+		PreparedStatement selectStatement = null;
+		PreparedStatement deleteStatement = null;
+		ResultSet rs = null;
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found.");
+			}
+
+			StringBuilder selectQueryString = new StringBuilder("SELECT ");
+			selectQueryString.append("id ");
+			selectQueryString.append("FROM ");
+			selectQueryString.append("operators ");
+			selectQueryString.append("WHERE ");
+			selectQueryString.append("operatorname = ? ");
+
+			selectStatement = con
+					.prepareStatement(selectQueryString.toString());
+
+			selectStatement.setString(1, operator);
+			rs = selectStatement.executeQuery();
+
+			int operatorid = 0;
+			if (rs.next()) {
+				operatorid = rs.getInt("id");
+			} else {
+				throw new Exception("Operator Not Found");
+			}
+
+			for (int i = 0; i < merchants.length; i++) {
+
+				if (appID == null) {
+					StringBuilder deleteQueryString = new StringBuilder(
+							"DELETE ");
+					deleteQueryString.append("FROM ");
+					deleteQueryString.append("merchantopco_blacklist ");
+					deleteQueryString.append("WHERE ");
+					deleteQueryString.append("application_id = null ");
+					deleteQueryString.append("AND ");
+					deleteQueryString.append("operator_id = ? ");
+					deleteQueryString.append("AND ");
+					deleteQueryString.append("subscriber = ? ");
+					deleteQueryString.append("AND ");
+					deleteQueryString.append("merchant = ? ");
+
+					deleteStatement = con.prepareStatement(deleteQueryString
+							.toString());
+
+					deleteStatement.setInt(1, operatorid);
+					deleteStatement.setString(2, subscriber);
+					deleteStatement.setString(3, merchants[i]);
+					deleteStatement.executeUpdate();
+
+				} else {
+
+					StringBuilder queryString = new StringBuilder("DELETE ");
+					queryString.append("FROM ");
+					queryString.append("merchantopco_blacklist ");
+					queryString.append("WHERE ");
+					queryString.append("application_id = ? ");
+					queryString.append("AND ");
+					queryString.append("operator_id = ? ");
+					queryString.append("AND ");
+					queryString.append("subscriber = ? ");
+					queryString.append("AND ");
+					queryString.append("merchant = ? ");
+
+					deleteStatement = con.prepareStatement(queryString
+							.toString());
+
+					deleteStatement.setInt(1, appID);
+					deleteStatement.setInt(2, operatorid);
+					deleteStatement.setString(3, subscriber);
+					deleteStatement.setString(4, merchants[i]);
+					deleteStatement.executeUpdate();
+
+				}
+			}
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error("database operation error while Provisioning Merchant ",
+					e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException("Error while Provisioning Merchant. ", e);
+		} finally {
+			DbUtils.closeAllConnections(selectStatement, con, rs);
+			DbUtils.closeAllConnections(deleteStatement, null, null);
+		}
+		return true;
+	}
 
 	/**
 	 * Gets the prefix from country code.
 	 *
-	 * @param countryCode the country code
+	 * @param countryCode
+	 *            the country code
 	 * @return the prefix from country code
-	 * @throws DBUtilException the db util exception
-	 * @throws SQLException the SQL exception
+	 * @throws DBUtilException
+	 *             the db util exception
+	 * @throws SQLException
+	 *             the SQL exception
 	 */
-	public String getPrefixFromCountryCode(String countryCode) throws DBUtilException, SQLException {
+	public String getPrefixFromCountryCode(String countryCode)
+			throws DBUtilException, SQLException {
 
-        Connection con = DbUtils.getDBConnection();
-        Statement st = null;
-        ResultSet rs = null;
-        String prefix = "";
-        try {
-            if (con == null) {
-                throw new Exception("Connection not found");
-            }
-            st = con.createStatement();
-            String sql = "SELECT prefix FROM operatorcodes where countrycode='"+countryCode+"';";
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		String prefix = "";
 
-            rs = st.executeQuery(sql);
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found.");
+			}
 
-            if (rs.next()) {
-                prefix = rs.getString("prefix");
-            }
+			StringBuilder selectQueryString = new StringBuilder("SELECT");
+			selectQueryString.append("prefix ");
+			selectQueryString.append("FROM ");
+			selectQueryString.append("operatorcodes ");
+			selectQueryString.append("WHERE ");
+			selectQueryString.append("countrycode = ? ");
 
-        } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from subscriptions. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
-        }
+			statement = con.prepareStatement(selectQueryString.toString());
 
-        return prefix;
+			statement.setString(1, countryCode);
 
-    }
+			rs = statement.executeQuery();
 
-    /**
-     * Insert sms request ids.
-     *
-     * @param requestID the request id
-     * @param senderAddress the sender address
-     * @param pluginRequestIDs the plugin request i ds
-     * @return true, if successful
-     * @throws DBUtilException the db util exception
-     */
+			if (rs.next()) {
+				prefix = rs.getString("prefix");
+			}
 
-    public boolean insertSmsRequestIds(String requestID, String senderAddress, Map<String, String> pluginRequestIDs)
-            throws DBUtilException {
-        Connection con = null;
-        PreparedStatement ps = null;
+		} catch (SQLException e) {
 
-        try {
-            con = DbUtils.getDBConnection();
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
 
-            String sql = "INSERT INTO sendsms_reqid (hub_requestid,sender_address,delivery_address,plugin_requestid) " +
-                    "VALUES (?,?,?,?)";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, requestID);
-            ps.setString(2, senderAddress);
-            for (Map.Entry<String, String> entry : pluginRequestIDs.entrySet()) {
-                ps.setString(3, entry.getKey());
-                ps.setString(4, entry.getValue());
-                ps.executeUpdate();
-            }
+			log.error(
+					"database operation error while selecting from subscriptions ",
+					e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException(
+					"Error while selecting from subscriptions. ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, rs);
+		}
 
-        } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to sendsms_reqid. ", e);
-        } finally {
-            DbUtils.closeAllConnections(ps, con, null);
-        }
-        return true;
-    }
+		return prefix;
 
-    /**
-     * Gets the sms request ids.
-     *
-     * @param requestID the request id
-     * @param senderAddress the sender address
-     * @return the sms request ids
-     * @throws DBUtilException the db util exception
-     */
+	}
 
-    public Map<String, String> getSmsRequestIds(String requestID, String senderAddress)
-            throws DBUtilException {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        Map<String, String> pluginRequestIDs = new HashMap<String, String>();
+	/**
+	 * Insert sms request ids.
+	 *
+	 * @param requestID
+	 *            the request id
+	 * @param senderAddress
+	 *            the sender address
+	 * @param pluginRequestIDs
+	 *            the plugin request i ds
+	 * @return true, if successful
+	 * @throws DBUtilException
+	 *             the db util exception
+	 */
 
-        try {
-            con = DbUtils.getDBConnection();
+	public boolean insertSmsRequestIds(String requestID, String senderAddress,
+			Map<String, String> pluginRequestIDs) throws DBUtilException,
+			SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
 
-            String sql = "SELECT delivery_address, plugin_requestid from sendsms_reqid where hub_requestid=? AND " +
-                    "sender_address=?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, requestID);
-            ps.setString(2, senderAddress);
-            rs = ps.executeQuery();
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found.");
+			}
 
-            while (rs.next()) {
-                pluginRequestIDs.put(rs.getString("delivery_address"), rs.getString("plugin_requestid"));
-            }
-        } catch (Exception e) {
-            DbUtils.handleException("Error while inserting in to sendsms_reqid. ", e);
-        } finally {
-            DbUtils.closeAllConnections(ps, con, rs);
-        }
-        return pluginRequestIDs;
-    }
-    
+			/*
+			 * String sql =
+			 * "INSERT INTO sendsms_reqid (hub_requestid,sender_address,delivery_address,plugin_requestid) "
+			 * + "VALUES (?,?,?,?)";
+			 */
+
+			StringBuilder queryString = new StringBuilder("INSERT INTO ");
+			queryString.append("sendsms_reqid ");
+			queryString
+					.append("(hub_requestid,sender_address,delivery_address,plugin_requestid) ");
+			queryString.append("VALUES ");
+			queryString.append("(?, ?, ?, ?) ");
+
+			ps = con.prepareStatement(queryString.toString());
+
+			ps.setString(1, requestID);
+			ps.setString(2, senderAddress);
+			for (Map.Entry<String, String> entry : pluginRequestIDs.entrySet()) {
+				ps.setString(3, entry.getKey());
+				ps.setString(4, entry.getValue());
+				ps.executeUpdate();
+			}
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error(
+					"database operation error while inserting in to sendsms_reqid ",
+					e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException(
+					"Error while inserting in to sendsms_reqid. ", e);
+		} finally {
+			DbUtils.closeAllConnections(ps, con, null);
+		}
+		return true;
+	}
+
+	/**
+	 * Gets the sms request ids.
+	 *
+	 * @param requestID
+	 *            the request id
+	 * @param senderAddress
+	 *            the sender address
+	 * @return the sms request ids
+	 * @throws DBUtilException
+	 *             the db util exception
+	 */
+
+	public Map<String, String> getSmsRequestIds(String requestID,
+			String senderAddress) throws DBUtilException, SQLException {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Map<String, String> pluginRequestIDs = new HashMap<String, String>();
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found.");
+			}
+
+			StringBuilder queryString = new StringBuilder("SELECT ");
+			queryString.append("delivery_address, plugin_requestid ");
+			queryString.append("FROM ");
+			queryString.append("sendsms_reqid ");
+			queryString.append("WHERE ");
+			queryString.append("hub_requestid = ? ");
+			queryString.append("AND ");
+			queryString.append("sender_address = ? ");
+
+			ps = con.prepareStatement(queryString.toString());
+			ps.setString(1, requestID);
+			ps.setString(2, senderAddress);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				pluginRequestIDs.put(rs.getString("delivery_address"),
+						rs.getString("plugin_requestid"));
+			}
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error(
+					"database operation error while inserting in to sendsms_reqid ",
+					e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException(
+					"Error while inserting in to sendsms_reqid. ", e);
+		} finally {
+			DbUtils.closeAllConnections(ps, con, rs);
+		}
+		return pluginRequestIDs;
+	}
+
 	/**
 	 * Active application operators.
 	 *
-	 * @param appId the app id
-	 * @param apitype the apitype
+	 * @param appId
+	 *            the app id
+	 * @param apitype
+	 *            the apitype
 	 * @return the list
-	 * @throws SQLException the SQL exception
-	 * @throws DBUtilException the db util exception
+	 * @throws SQLException
+	 *             the SQL exception
+	 * @throws DBUtilException
+	 *             the db util exception
 	 */
 
-	public List<Integer> activeApplicationOperators(Integer appId,String apitype) throws SQLException, DBUtilException {
+	public List<Integer> activeApplicationOperators(Integer appId,
+			String apitype) throws SQLException, DBUtilException {
 
-        Connection con = null; 
-        Statement st = null;
-        ResultSet rs = null;
-        List<Integer> operators = new ArrayList<Integer>();
-        
-        try {
-        	con = DbUtils.getDBConnection();
-            if (con == null) {
-                throw new Exception("Connection not found.");
-            }
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		List<Integer> operators = new ArrayList<Integer>();
 
-            st = con.createStatement();
-            String sql = "SELECT o.operatorid FROM endpointapps e,operatorendpoints o "
-            		+ " where o.id = e.endpointid AND e.applicationid = " + appId + " AND e.isactive = 1 AND o.api='" + apitype + "'";
-            
-            log.debug("[Dbutils] sql : " + sql);
-            rs = st.executeQuery(sql);
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found.");
+			}
 
-            while (rs.next()) {
-                Integer operatorid = (rs.getInt("operatorid"));
-                log.debug("[Dbutils] operatorid : " + operatorid);
-                operators.add(operatorid);
-            }
+			StringBuilder queryString = new StringBuilder("SELECT ");
+			queryString.append("o.operatorid ");
+			queryString.append("FROM ");
+			queryString.append("endpointapps e,operatorendpoints o ");
+			queryString.append("WHERE ");
+			queryString.append("o.id = e.endpointid ");
+			queryString.append("AND ");
+			queryString.append("e.applicationid = ? ");
+			queryString.append("AND ");
+			queryString.append("e.isactive = 1 ");
+			queryString.append("AND ");
+			queryString.append("o.api = ? ");
 
-        } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from endpointapps, operatorendpoints ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
-        }
+			statement = con.prepareStatement(queryString.toString());
 
-        return operators;
-    }
+			statement.setInt(1, appId);
+			statement.setString(2, apitype);
 
-    /**
-     * Gets the SP token map.
-     *
-     * @return the SP token map
-     * @throws SQLException the SQL exception
-     * @throws DBUtilException the db util exception
-     */
-    public Map<String,String> getSPTokenMap() throws SQLException, DBUtilException {
+			rs = statement.executeQuery();
 
-        Connection con = null;
-        Statement st = null;
-        ResultSet rs = null;
-        Map<String, String> spToken = new HashMap<String,String>();
+			while (rs.next()) {
+				Integer operatorid = (rs.getInt("operatorid"));
+				log.debug("[Dbutils] operatorid : " + operatorid);
+				operators.add(operatorid);
+			}
 
-        try {
-            con = DbUtils.getDBConnection();
-            if (con == null) {
-                throw new Exception("Connection not found.");
-            }
+		} catch (SQLException e) {
 
-            st = con.createStatement();
-            String sql = "SELECT consumer_key, token FROM sp_token ";
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
 
-            log.debug("[Dbutils] sql : " + sql);
-            rs = st.executeQuery(sql);
+			log.error(
+					"database operation error while selecting from endpointapps, operatorendpoints ",
+					e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException(
+					"Error while selecting from endpointapps, operatorendpoints ",
+					e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, rs);
+		}
 
-            while (rs.next()) {
-                String  consumerKey = (rs.getString("consumer_key"));
-                String  token = (rs.getString("token"));
-                spToken.put(consumerKey, token);
-            }
+		return operators;
+	}
 
-        } catch (Exception e) {
-            DbUtils.handleException("Error while selecting from sp_token ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
-        }
+	/**
+	 * Gets the SP token map.
+	 *
+	 * @return the SP token map
+	 * @throws SQLException
+	 *             the SQL exception
+	 * @throws DBUtilException
+	 *             the db util exception
+	 */
+	public Map<String, String> getSPTokenMap() throws SQLException,
+			DBUtilException {
 
-        return spToken;
-    }
+		Connection con = null;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		Map<String, String> spToken = new HashMap<String, String>();
+
+		try {
+			con = DbUtils.getDBConnection();
+			if (con == null) {
+				throw new Exception("Connection not found.");
+			}
+
+			StringBuilder queryString = new StringBuilder("SELECT ");
+			queryString.append("consumer_key, token ");
+			queryString.append("FROM ");
+			queryString.append("sp_token ");
+
+			statement = con.prepareStatement(queryString.toString());
+
+			rs = statement.executeQuery();
+
+			while (rs.next()) {
+				String consumerKey = (rs.getString("consumer_key"));
+				String token = (rs.getString("token"));
+				spToken.put(consumerKey, token);
+			}
+
+		} catch (SQLException e) {
+
+			/**
+			 * rollback if Exception occurs
+			 */
+			con.rollback();
+
+			log.error(
+					"database operation error while selecting from sp_token ",
+					e);
+			throw e;
+		} catch (Exception e) {
+			DbUtils.handleException("Error while selecting from sp_token ", e);
+		} finally {
+			DbUtils.closeAllConnections(statement, con, rs);
+		}
+
+		return spToken;
+	}
 }
