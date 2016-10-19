@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.PersistenceException;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class DbService.
@@ -32,6 +34,7 @@ public class DbService {
 
 	/** The log. */
 	private static Log log = LogFactory.getLog(DbService.class);
+
 
 	/**
 	 * Outbound subscription entry.
@@ -1037,13 +1040,13 @@ public class DbService {
 	 * @param countryCode
 	 *            the country code
 	 * @return the prefix from country code
-	 * @throws DBUtilException
-	 *             the db util exception
+	 * @throws Persistence Exception
+	 *             the persistenceException exception
 	 * @throws SQLException
 	 *             the SQL exception
 	 */
 	public String getPrefixFromCountryCode(String countryCode)
-			throws DBUtilException, SQLException {
+			throws PersistenceException, Exception {
 
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -1084,9 +1087,9 @@ public class DbService {
 					"database operation error while selecting from subscriptions ",
 					e);
 			throw e;
-		} catch (Exception e) {
-			DbUtils.handleException(
-					"Error while selecting from subscriptions. ", e);
+		} catch (PersistenceException e) {
+			throw new Exception("Error while selecting from subscriptions. ", e);
+
 		} finally {
 			DbUtils.closeAllConnections(statement, con, rs);
 		}
@@ -1105,13 +1108,13 @@ public class DbService {
 	 * @param pluginRequestIDs
 	 *            the plugin request i ds
 	 * @return true, if successful
-	 * @throws DBUtilException
-	 *             the db util exception
+	 * @throws PersistenceException
+	 *             the persistence exception
 	 */
 
 	public boolean insertSmsRequestIds(String requestID, String senderAddress,
-			Map<String, String> pluginRequestIDs) throws DBUtilException,
-			SQLException {
+			Map<String, String> pluginRequestIDs) throws PersistenceException,
+			Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 
@@ -1156,7 +1159,7 @@ public class DbService {
 					e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException(
+			throw new Exception(
 					"Error while inserting in to sendsms_reqid. ", e);
 		} finally {
 			DbUtils.closeAllConnections(ps, con, null);
@@ -1172,12 +1175,12 @@ public class DbService {
 	 * @param senderAddress
 	 *            the sender address
 	 * @return the sms request ids
-	 * @throws DBUtilException
-	 *             the db util exception
+	 * @throws PersistenceException
+	 *             the Persistence exception
 	 */
 
 	public Map<String, String> getSmsRequestIds(String requestID,
-			String senderAddress) throws DBUtilException, SQLException {
+			String senderAddress) throws PersistenceException, Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -1219,7 +1222,7 @@ public class DbService {
 					e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException(
+			throw new Exception(
 					"Error while inserting in to sendsms_reqid. ", e);
 		} finally {
 			DbUtils.closeAllConnections(ps, con, rs);
@@ -1237,12 +1240,12 @@ public class DbService {
 	 * @return the list
 	 * @throws SQLException
 	 *             the SQL exception
-	 * @throws DBUtilException
-	 *             the db util exception
+	 * @throws PersistenceException
+	 *             the persistenceException exception
 	 */
 
 	public List<Integer> activeApplicationOperators(Integer appId,
-			String apitype) throws SQLException, DBUtilException {
+			String apitype) throws Exception, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -1293,7 +1296,7 @@ public class DbService {
 					e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException(
+			throw new Exception(
 					"Error while selecting from endpointapps, operatorendpoints ",
 					e);
 		} finally {
@@ -1309,11 +1312,11 @@ public class DbService {
 	 * @return the SP token map
 	 * @throws SQLException
 	 *             the SQL exception
-	 * @throws DBUtilException
-	 *             the db util exception
+	 * @throws PersistenceException
+	 *             the persistenceException exception
 	 */
-	public Map<String, String> getSPTokenMap() throws SQLException,
-			DBUtilException {
+	public Map<String, String> getSPTokenMap() throws Exception,
+			PersistenceException {
 
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -1353,7 +1356,7 @@ public class DbService {
 					e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException("Error while selecting from sp_token ", e);
+			throw new Exception("Error while selecting from sp_token ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, rs);
 		}
