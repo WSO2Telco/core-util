@@ -19,12 +19,16 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.math.BigDecimal;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.persistence.PersistenceException;
 import javax.sql.DataSource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import com.wso2telco.core.dbutils.util.DataSourceNames;
 
 // TODO: Auto-generated Javadoc
@@ -67,7 +71,7 @@ public class DbUtils {
 	 *             the SQL exception
 	 *             the db util exception
 	 */
-	public static void initializeDatasources() throws SQLException, DBUtilException {
+	public static void initializeDatasources() throws Exception, PersistenceException {
 		if (Datasource != null) {
 			return;
 		}
@@ -77,8 +81,9 @@ public class DbUtils {
 			Context ctx = new InitialContext();
 			DEP_DATA_SOURCE=(DataSourceNames.WSO2TELCO_DEP_DB.jndiName());
 			Datasource = (DataSource) ctx.lookup(DEP_DATA_SOURCE);
+			
 		} catch (NamingException e) {
-			handleException("Error while looking up the data source: " + DEP_DATA_SOURCE, e);
+			throw new Exception("Error while looking up the data source: " + DEP_DATA_SOURCE, e);
 		}
 	}
 
@@ -89,10 +94,10 @@ public class DbUtils {
 	 * @return the db connection
 	 * @throws SQLException
 	 *             the SQL exception
-	 * @throws DBUtilException
-	 *             the db util exception
+	 * @throws PersistenceException
+	 *             the persistenceException exception
 	 */
-	public static Connection getDBConnection() throws SQLException, DBUtilException {
+	public static Connection getDBConnection() throws Exception, PersistenceException {
 		initializeDatasources();
 
 		if (Datasource != null) {
@@ -347,12 +352,12 @@ public class DbUtils {
 	 *            the msg
 	 * @param t
 	 *            the t
-	 * @throws DBUtilException
-	 *             the db util exception
+	 * @throws PersistenceException
+	 *             the persistenceException exception
 	 */
-	public static void handleException(String msg, Throwable t) throws DBUtilException {
+	public static void handleException(String msg, Throwable t) throws PersistenceException {
 		log.error(msg, t);
-		throw new DBUtilException(msg, t);
+		throw new PersistenceException(msg, t);
 	}
 
 	/**
