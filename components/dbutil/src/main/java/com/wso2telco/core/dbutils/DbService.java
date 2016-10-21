@@ -18,6 +18,9 @@ package com.wso2telco.core.dbutils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.wso2telco.core.dbutils.DbUtils;
+import com.wso2telco.core.dbutils.Operatorendpoint;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +37,7 @@ public class DbService {
 
 	/** The log. */
 	private static Log log = LogFactory.getLog(DbService.class);
-
+	
 
 	/**
 	 * Outbound subscription entry.
@@ -42,11 +45,12 @@ public class DbService {
 	 * @param notifyurl
 	 *            the notifyurl
 	 * @return the integer
+	 * @throws PersistenceException
 	 * @throws Exception
 	 *             the exception
 	 */
-	public Integer outboundSubscriptionEntry(String notifyurl)
-			throws SQLException, Exception {
+
+	public Integer outboundSubscriptionEntry(String notifyurl) throws SQLException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement selectStatement = null;
@@ -80,8 +84,7 @@ public class DbService {
 			insertQueryString.append(" (dn_subscription_did,notifyurl) ");
 			insertQueryString.append("VALUES (?, ?) ");
 
-			insertStatement = con
-					.prepareStatement(insertQueryString.toString());
+			insertStatement = con.prepareStatement(insertQueryString.toString());
 
 			insertStatement.setInt(1, newid);
 			insertStatement.setString(2, notifyurl);
@@ -90,91 +93,14 @@ public class DbService {
 
 		} catch (SQLException e) {
 
-			/**
-			 * rollback if Exception occurs
-			 */
-			con.rollback();
-
-			log.error(
-					"database operation error in outbound subscriptions entry: ",
-					e);
+			log.error("database operation error in outbound subscriptions entry: ", e);
 			throw e;
 
 		} catch (Exception e) {
-			DbUtils.handleException(
-					"Error while inserting in to subscriptions. ", e);
+			throw new PersistenceException("Error while inserting in to subscriptions. ", e);
 		} finally {
 			DbUtils.closeAllConnections(selectStatement, con, rs);
 			DbUtils.closeAllConnections(insertStatement, null, null);
-		}
-
-		return newid;
-	}
-
-	/**
-	 * Token update.
-	 *
-	 * @param id
-	 *            the id
-	 * @param refreshtoken
-	 *            the refreshtoken
-	 * @param tokenvalidity
-	 *            the tokenvalidity
-	 * @param tokentime
-	 *            the tokentime
-	 * @param token
-	 *            the token
-	 * @return the integer
-	 * @throws Exception
-	 *             the exception
-	 */
-
-	public Integer tokenUpdate(int id, String refreshtoken, long tokenvalidity,
-			long tokentime, String token) throws SQLException, Exception {
-
-		Connection con = null;
-		PreparedStatement updatetStatement = null;
-		Integer newid = 0;
-
-		try {
-			con = DbUtils.getDBConnection();
-			if (con == null) {
-				throw new Exception("Connection not found");
-			}
-
-			StringBuilder queryString = new StringBuilder(" UPDATE ");
-			queryString.append(" operators ");
-			queryString.append("SET ");
-			queryString.append("refreshtoken = ? ");
-			queryString.append("AND tokenvalidity = ? ");
-			queryString.append("AND tokentime = ? ");
-			queryString.append("AND token = ? ");
-			queryString.append("WHERE ");
-			queryString.append("id = ? ");
-
-			updatetStatement = con.prepareStatement(queryString.toString());
-
-			updatetStatement.setString(1, refreshtoken);
-			updatetStatement.setLong(2, tokenvalidity);
-			updatetStatement.setLong(3, tokentime);
-			updatetStatement.setString(4, token);
-			updatetStatement.setInt(5, id);
-
-			updatetStatement.executeUpdate();
-
-		} catch (SQLException e) {
-
-			/**
-			 * rollback if Exception occurs
-			 */
-			con.rollback();
-
-			log.error("database operation error in token update entry : ", e);
-			throw e;
-		} catch (Exception e) {
-			DbUtils.handleException("Error while updating operators. ", e);
-		} finally {
-			DbUtils.closeAllConnections(updatetStatement, con, null);
 		}
 
 		return newid;
@@ -190,8 +116,7 @@ public class DbService {
 	 *             the exception
 	 */
 
-	public List<Operator> applicationOperators(Integer appID)
-			throws SQLException, Exception {
+	public List<Operator> applicationOperators(Integer appID) throws SQLException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -205,8 +130,7 @@ public class DbService {
 			}
 
 			StringBuilder queryString = new StringBuilder("SELECT ");
-			queryString
-					.append("oa.id id,oa.applicationid,oa.operatorid,o.operatorname,o.refreshtoken,o.tokenvalidity,o.tokentime,o.token, o.tokenurl, o.tokenauth ");
+			queryString.append("oa.id id,oa.applicationid,oa.operatorid,o.operatorname,o.refreshtoken,o.tokenvalidity,o.tokentime,o.token, o.tokenurl, o.tokenauth ");
 			queryString.append("FROM ");
 			queryString.append("operatorapps oa, operators o ");
 			queryString.append("WHERE ");
@@ -243,7 +167,7 @@ public class DbService {
 			log.error("database operation error in operator entry : ", e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException("Error while selecting from operators ", e);
+			throw new PersistenceException("Error while selecting from operators ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, rs);
 		}
@@ -262,8 +186,7 @@ public class DbService {
 	 *             the exception
 	 */
 
-	public String subscriptionDNNotifi(Integer subscriptionID)
-			throws SQLException, Exception {
+	public String subscriptionDNNotifi(Integer subscriptionID) throws SQLException, PersistenceException {
 
 		Connection con = null;
 		ResultSet rs = null;
@@ -294,16 +217,10 @@ public class DbService {
 
 		} catch (SQLException e) {
 
-			/**
-			 * rollback if Exception occurs
-			 */
-			con.rollback();
-
 			log.error("database operation error in subscription entry : ", e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException(
-					"Error while selecting from subscriptions. ", e);
+			throw new PersistenceException("Error while selecting from subscriptions. ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, rs);
 		}
@@ -320,8 +237,7 @@ public class DbService {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public String subscriptionNotifi(Integer subscriptionID)
-			throws SQLException, Exception {
+	public String subscriptionNotifi(Integer subscriptionID) throws SQLException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -352,16 +268,10 @@ public class DbService {
 
 		} catch (SQLException e) {
 
-			/**
-			 * rollback if Exception occurs
-			 */
-			con.rollback();
-
 			log.error("database operation error in subscription entry : ", e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException(
-					"Error while selecting from subscriptions. ", e);
+			throw new PersistenceException("Error while selecting from subscriptions. ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, rs);
 		}
@@ -380,8 +290,7 @@ public class DbService {
 	 *             the exception
 	 */
 
-	public List<Operatorendpoint> operatorEndpoints(Integer appID)
-			throws SQLException, Exception {
+	public List<Operatorendpoint> operatorEndpoints(Integer appID) throws SQLException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -395,8 +304,7 @@ public class DbService {
 			}
 
 			StringBuilder queryString = new StringBuilder("SELECT ");
-			queryString
-					.append("operatorendpoints.ID as ID, operatorid,operatorname,api,endpoint ");
+			queryString.append("operatorendpoints.ID as ID, operatorid,operatorname,api,endpoint ");
 			queryString.append("FROM ");
 			queryString.append("operatorendpoints, operators ");
 			queryString.append("WHERE ");
@@ -418,33 +326,25 @@ public class DbService {
 			rs = statement.executeQuery();
 
 			while (rs.next()) {
-				Operatorendpoint endpoint = new Operatorendpoint(
-						rs.getInt("operatorid"), rs.getString("operatorname"),
-						rs.getString("api"), rs.getString("endpoint"));
+				Operatorendpoint endpoint = new Operatorendpoint(rs.getInt("operatorid"), rs.getString("operatorname"), rs.getString("api"), rs.getString("endpoint"));
 				endpoint.setId(rs.getInt("ID"));
 				endpoints.add(endpoint);
 			}
 
 		} catch (SQLException e) {
 
-			/**
-			 * rollback if Exception occurs
-			 */
-			con.rollback();
-
-			log.error(
-					"database operation error in operator endpoints entry : ",
-					e);
+			log.error("database operation error in operator endpoints entry : ", e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException(
-					"Error while retrieving operator endpoints. ", e);
+			throw new PersistenceException("Error while retrieving operator endpoints. ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, rs);
 		}
 
 		return endpoints;
 	}
+	
+	
 
 	/**
 	 * Update application op.
@@ -459,8 +359,7 @@ public class DbService {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public boolean UpdateApplicationOp(int appID, int operatorid, boolean opstat)
-			throws SQLException, Exception {
+	public boolean UpdateApplicationOp(int appID, int operatorid, boolean opstat) throws SQLException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -472,6 +371,8 @@ public class DbService {
 			if (con == null) {
 				throw new Exception("Connection not found");
 			}
+
+			con.setAutoCommit(false);
 
 			StringBuilder queryString = new StringBuilder("UPDATE ");
 			queryString.append("operatorapps ");
@@ -490,6 +391,8 @@ public class DbService {
 
 			statement.executeUpdate();
 
+			con.commit();
+
 		} catch (SQLException e) {
 
 			/**
@@ -500,7 +403,7 @@ public class DbService {
 			log.error("database operation error in updating operatorapps ", e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException("Error while updating operatorapps. ", e);
+			throw new PersistenceException("Error while updating operatorapps. ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, null);
 		}
@@ -519,8 +422,7 @@ public class DbService {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public Integer applicationEntry(int appID, Integer[] operators)
-			throws Exception {
+	public Integer applicationEntry(int appID, Integer[] operators) throws SQLException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -531,6 +433,8 @@ public class DbService {
 			if (con == null) {
 				throw new Exception("Connection not found");
 			}
+
+			con.setAutoCommit(false);
 
 			for (Integer d : operators) {
 				StringBuilder queryString = new StringBuilder("INSERT INTO ");
@@ -544,6 +448,8 @@ public class DbService {
 				statement.setInt(2, d);
 
 				statement.executeUpdate();
+
+				con.commit();
 			}
 
 		} catch (SQLException e) {
@@ -556,8 +462,7 @@ public class DbService {
 			log.error("database operation error in inserting operatorapps ", e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException(
-					"Error while inserting in to operatorapps. ", e);
+			throw new PersistenceException("Error while inserting in to operatorapps. ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, null);
 		}
@@ -573,9 +478,9 @@ public class DbService {
 	 *             the exception
 	 */
 
-	public List<Operator> getOperators() throws Exception {
+	public List<Operator> getOperators() throws SQLException, PersistenceException {
 
-		Connection con = DbUtils.getDBConnection();
+		Connection con = null;
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		List<Operator> operators = new ArrayList<Operator>();
@@ -605,15 +510,10 @@ public class DbService {
 
 		} catch (SQLException e) {
 
-			/**
-			 * rollback if Exception occurs
-			 */
-			con.rollback();
-
 			log.error("database operation error in retrieving operators ", e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException("Error while retrieving operators. ", e);
+			throw new PersistenceException("Error while retrieving operators. ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, rs);
 		}
@@ -630,8 +530,7 @@ public class DbService {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public void insertOperatorAppEndpoints(int appID, int[] opEndpointIDList)
-			throws SQLException, Exception {
+	public void insertOperatorAppEndpoints(int appID, int[] opEndpointIDList) throws SQLException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -655,6 +554,8 @@ public class DbService {
 
 			log.debug("Final inputStr : " + inputStr);
 
+			con.setAutoCommit(false);
+
 			StringBuilder queryString = new StringBuilder("INSERT INTO ");
 			queryString.append("endpointapps ");
 			queryString.append("(endpointid, applicationid, isactive) ");
@@ -667,6 +568,8 @@ public class DbService {
 
 			statement.executeUpdate();
 
+			con.commit();
+
 		} catch (SQLException e) {
 
 			/**
@@ -677,8 +580,7 @@ public class DbService {
 			log.error("database operation error in inserting endpointapps ", e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException(
-					"Error while inserting in to endpointapps. ", e);
+			throw new PersistenceException("Error while inserting in to endpointapps. ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, null);
 		}
@@ -696,14 +598,15 @@ public class DbService {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public void updateOperatorAppEndpointStatus(int appID, int opEndpointID,
-			int status) throws SQLException, Exception {
+	public void updateOperatorAppEndpointStatus(int appID, int opEndpointID, int status) throws SQLException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement statement = null;
 
 		try {
 			con = DbUtils.getDBConnection();
+
+			con.setAutoCommit(false);
 
 			StringBuilder queryString = new StringBuilder("UPDATE");
 			queryString.append("endpointapps ");
@@ -722,6 +625,8 @@ public class DbService {
 
 			statement.executeQuery();
 
+			con.commit();
+
 		} catch (SQLException e) {
 
 			/**
@@ -732,7 +637,7 @@ public class DbService {
 			log.error("database operation error in updating endpointapps ", e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException("Error while updating endpointapps. ", e);
+			throw new PersistenceException("Error while updating endpointapps. ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, null);
 		}
@@ -746,8 +651,7 @@ public class DbService {
 	 *             the exception
 	 */
 
-	public List<Operatorendpoint> getOperatorEndpoints() throws SQLException,
-			Exception {
+	public List<Operatorendpoint> getOperatorEndpoints() throws SQLException, PersistenceException {
 
 		List<Operatorendpoint> operatorEndpoints = new ArrayList();
 		Connection con = null;
@@ -770,27 +674,16 @@ public class DbService {
 			rs = statement.executeQuery();
 
 			while (rs.next()) {
-				Operatorendpoint endpoint = new Operatorendpoint(
-						rs.getInt("operatorid"), null, rs.getString("api"),
-						null);
+				Operatorendpoint endpoint = new Operatorendpoint(rs.getInt("operatorid"), null, rs.getString("api"), null);
 				endpoint.setId(rs.getInt("ID"));
 				operatorEndpoints.add(endpoint);
 			}
 
 		} catch (SQLException e) {
-
-			/**
-			 * rollback if Exception occurs
-			 */
-			con.rollback();
-
-			log.error(
-					"database operation error in selecting from operatorendpoints ",
-					e);
+			log.error("database operation error in selecting from operatorendpoints ", e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException(
-					"Error while selecting from operatorendpoints. ", e);
+			throw new PersistenceException("Error while selecting from operatorendpoints. ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, rs);
 		}
@@ -811,8 +704,7 @@ public class DbService {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public boolean updateAppApprovalStatusOp(int appID, int operatorId,
-			int status) throws SQLException, Exception {
+	public boolean updateAppApprovalStatusOp(int appID, int operatorId, int status) throws SQLException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -822,6 +714,8 @@ public class DbService {
 			if (con == null) {
 				throw new Exception("Connection not found.");
 			}
+
+			con.setAutoCommit(false);
 
 			StringBuilder queryString = new StringBuilder("UPDATE ");
 			queryString.append("operatorapps ");
@@ -840,6 +734,8 @@ public class DbService {
 
 			statement.executeUpdate();
 
+			con.commit();
+
 		} catch (SQLException e) {
 
 			/**
@@ -850,7 +746,7 @@ public class DbService {
 			log.error("database operation error in updating operatorapps ", e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException("Error while updating operatorapps. ", e);
+			throw new PersistenceException("Error while updating operatorapps. ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, null);
 		}
@@ -871,8 +767,7 @@ public class DbService {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public boolean insertValidatorForSubscription(int appID, int apiID,
-			int validatorID) throws SQLException, Exception {
+	public boolean insertValidatorForSubscription(int appID, int apiID, int validatorID) throws SQLException, PersistenceException {
 		Connection con = null;
 		PreparedStatement statement = null;
 
@@ -881,6 +776,8 @@ public class DbService {
 			if (con == null) {
 				throw new Exception("Connection not found.");
 			}
+
+			con.setAutoCommit(false);
 
 			StringBuilder queryString = new StringBuilder("INSERT INTO ");
 			queryString.append("subscription_validator ");
@@ -896,6 +793,8 @@ public class DbService {
 
 			statement.executeUpdate();
 
+			con.commit();
+
 		} catch (SQLException e) {
 
 			/**
@@ -903,13 +802,10 @@ public class DbService {
 			 */
 			con.rollback();
 
-			log.error(
-					"database operation error in inserting in to subscription_validator ",
-					e);
+			log.error("database operation error in inserting in to subscription_validator ", e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException(
-					"Error while inserting in to subscription_validator. ", e);
+			throw new PersistenceException("Error while inserting in to subscription_validator. ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, null);
 		}
@@ -931,8 +827,7 @@ public class DbService {
 	 * @throws Exception
 	 *             the exception
 	 */
-	public boolean removeMerchantProvision(Integer appID, String subscriber,
-			String operator, String[] merchants) throws SQLException, Exception {
+	public boolean removeMerchantProvision(Integer appID, String subscriber, String operator, String[] merchants) throws SQLException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement selectStatement = null;
@@ -952,8 +847,7 @@ public class DbService {
 			selectQueryString.append("WHERE ");
 			selectQueryString.append("operatorname = ? ");
 
-			selectStatement = con
-					.prepareStatement(selectQueryString.toString());
+			selectStatement = con.prepareStatement(selectQueryString.toString());
 
 			selectStatement.setString(1, operator);
 			rs = selectStatement.executeQuery();
@@ -968,8 +862,7 @@ public class DbService {
 			for (int i = 0; i < merchants.length; i++) {
 
 				if (appID == null) {
-					StringBuilder deleteQueryString = new StringBuilder(
-							"DELETE ");
+					StringBuilder deleteQueryString = new StringBuilder("DELETE ");
 					deleteQueryString.append("FROM ");
 					deleteQueryString.append("merchantopco_blacklist ");
 					deleteQueryString.append("WHERE ");
@@ -981,8 +874,7 @@ public class DbService {
 					deleteQueryString.append("AND ");
 					deleteQueryString.append("merchant = ? ");
 
-					deleteStatement = con.prepareStatement(deleteQueryString
-							.toString());
+					deleteStatement = con.prepareStatement(deleteQueryString.toString());
 
 					deleteStatement.setInt(1, operatorid);
 					deleteStatement.setString(2, subscriber);
@@ -1003,8 +895,7 @@ public class DbService {
 					queryString.append("AND ");
 					queryString.append("merchant = ? ");
 
-					deleteStatement = con.prepareStatement(queryString
-							.toString());
+					deleteStatement = con.prepareStatement(queryString.toString());
 
 					deleteStatement.setInt(1, appID);
 					deleteStatement.setInt(2, operatorid);
@@ -1022,11 +913,10 @@ public class DbService {
 			 */
 			con.rollback();
 
-			log.error("database operation error while Provisioning Merchant ",
-					e);
+			log.error("database operation error while Provisioning Merchant ", e);
 			throw e;
 		} catch (Exception e) {
-			DbUtils.handleException("Error while Provisioning Merchant. ", e);
+			throw new PersistenceException("Error while Provisioning Merchant. ", e);
 		} finally {
 			DbUtils.closeAllConnections(selectStatement, con, rs);
 			DbUtils.closeAllConnections(deleteStatement, null, null);
@@ -1040,13 +930,12 @@ public class DbService {
 	 * @param countryCode
 	 *            the country code
 	 * @return the prefix from country code
-	 * @throws Persistence Exception
-	 *             the persistenceException exception
+	 * @throws Persistence
+	 *             Exception the persistenceException exception
 	 * @throws SQLException
 	 *             the SQL exception
 	 */
-	public String getPrefixFromCountryCode(String countryCode)
-			throws PersistenceException, Exception {
+	public String getPrefixFromCountryCode(String countryCode) throws SQLException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -1083,12 +972,10 @@ public class DbService {
 			 */
 			con.rollback();
 
-			log.error(
-					"database operation error while selecting from subscriptions ",
-					e);
+			log.error("database operation error while selecting from subscriptions ", e);
 			throw e;
-		} catch (PersistenceException e) {
-			throw new Exception("Error while selecting from subscriptions. ", e);
+		} catch (Exception e) {
+			throw new PersistenceException("Error while selecting from subscriptions. ", e);
 
 		} finally {
 			DbUtils.closeAllConnections(statement, con, rs);
@@ -1112,9 +999,7 @@ public class DbService {
 	 *             the persistence exception
 	 */
 
-	public boolean insertSmsRequestIds(String requestID, String senderAddress,
-			Map<String, String> pluginRequestIDs) throws PersistenceException,
-			Exception {
+	public boolean insertSmsRequestIds(String requestID, String senderAddress, Map<String, String> pluginRequestIDs) throws SQLException, PersistenceException {
 		Connection con = null;
 		PreparedStatement ps = null;
 
@@ -1124,16 +1009,9 @@ public class DbService {
 				throw new Exception("Connection not found.");
 			}
 
-			/*
-			 * String sql =
-			 * "INSERT INTO sendsms_reqid (hub_requestid,sender_address,delivery_address,plugin_requestid) "
-			 * + "VALUES (?,?,?,?)";
-			 */
-
 			StringBuilder queryString = new StringBuilder("INSERT INTO ");
 			queryString.append("sendsms_reqid ");
-			queryString
-					.append("(hub_requestid,sender_address,delivery_address,plugin_requestid) ");
+			queryString.append("(hub_requestid,sender_address,delivery_address,plugin_requestid) ");
 			queryString.append("VALUES ");
 			queryString.append("(?, ?, ?, ?) ");
 
@@ -1149,18 +1027,10 @@ public class DbService {
 
 		} catch (SQLException e) {
 
-			/**
-			 * rollback if Exception occurs
-			 */
-			con.rollback();
-
-			log.error(
-					"database operation error while inserting in to sendsms_reqid ",
-					e);
+			log.error("database operation error while inserting in to sendsms_reqid ", e);
 			throw e;
 		} catch (Exception e) {
-			throw new Exception(
-					"Error while inserting in to sendsms_reqid. ", e);
+			throw new PersistenceException("Error while inserting in to sendsms_reqid. ", e);
 		} finally {
 			DbUtils.closeAllConnections(ps, con, null);
 		}
@@ -1179,8 +1049,7 @@ public class DbService {
 	 *             the Persistence exception
 	 */
 
-	public Map<String, String> getSmsRequestIds(String requestID,
-			String senderAddress) throws PersistenceException, Exception {
+	public Map<String, String> getSmsRequestIds(String requestID, String senderAddress) throws SQLException, PersistenceException {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -1207,103 +1076,18 @@ public class DbService {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				pluginRequestIDs.put(rs.getString("delivery_address"),
-						rs.getString("plugin_requestid"));
+				pluginRequestIDs.put(rs.getString("delivery_address"), rs.getString("plugin_requestid"));
 			}
 		} catch (SQLException e) {
 
-			/**
-			 * rollback if Exception occurs
-			 */
-			con.rollback();
-
-			log.error(
-					"database operation error while inserting in to sendsms_reqid ",
-					e);
+			log.error("database operation error while inserting in to sendsms_reqid ", e);
 			throw e;
 		} catch (Exception e) {
-			throw new Exception(
-					"Error while inserting in to sendsms_reqid. ", e);
+			throw new PersistenceException("Error while inserting in to sendsms_reqid. ", e);
 		} finally {
 			DbUtils.closeAllConnections(ps, con, rs);
 		}
 		return pluginRequestIDs;
-	}
-
-	/**
-	 * Active application operators.
-	 *
-	 * @param appId
-	 *            the app id
-	 * @param apitype
-	 *            the apitype
-	 * @return the list
-	 * @throws SQLException
-	 *             the SQL exception
-	 * @throws PersistenceException
-	 *             the persistenceException exception
-	 */
-
-	public List<Integer> activeApplicationOperators(Integer appId,
-			String apitype) throws Exception, PersistenceException {
-
-		Connection con = null;
-		PreparedStatement statement = null;
-		ResultSet rs = null;
-		List<Integer> operators = new ArrayList<Integer>();
-
-		try {
-			con = DbUtils.getDBConnection();
-			if (con == null) {
-				throw new Exception("Connection not found.");
-			}
-
-			StringBuilder queryString = new StringBuilder("SELECT ");
-			queryString.append("o.operatorid ");
-			queryString.append("FROM ");
-			queryString.append("endpointapps e,operatorendpoints o ");
-			queryString.append("WHERE ");
-			queryString.append("o.id = e.endpointid ");
-			queryString.append("AND ");
-			queryString.append("e.applicationid = ? ");
-			queryString.append("AND ");
-			queryString.append("e.isactive = 1 ");
-			queryString.append("AND ");
-			queryString.append("o.api = ? ");
-
-			statement = con.prepareStatement(queryString.toString());
-
-			statement.setInt(1, appId);
-			statement.setString(2, apitype);
-
-			rs = statement.executeQuery();
-
-			while (rs.next()) {
-				Integer operatorid = (rs.getInt("operatorid"));
-				log.debug("[Dbutils] operatorid : " + operatorid);
-				operators.add(operatorid);
-			}
-
-		} catch (SQLException e) {
-
-			/**
-			 * rollback if Exception occurs
-			 */
-			con.rollback();
-
-			log.error(
-					"database operation error while selecting from endpointapps, operatorendpoints ",
-					e);
-			throw e;
-		} catch (Exception e) {
-			throw new Exception(
-					"Error while selecting from endpointapps, operatorendpoints ",
-					e);
-		} finally {
-			DbUtils.closeAllConnections(statement, con, rs);
-		}
-
-		return operators;
 	}
 
 	/**
@@ -1315,8 +1099,7 @@ public class DbService {
 	 * @throws PersistenceException
 	 *             the persistenceException exception
 	 */
-	public Map<String, String> getSPTokenMap() throws Exception,
-			PersistenceException {
+	public Map<String, String> getSPTokenMap() throws SQLException, PersistenceException {
 
 		Connection con = null;
 		PreparedStatement statement = null;
@@ -1346,17 +1129,10 @@ public class DbService {
 
 		} catch (SQLException e) {
 
-			/**
-			 * rollback if Exception occurs
-			 */
-			con.rollback();
-
-			log.error(
-					"database operation error while selecting from sp_token ",
-					e);
+			log.error("database operation error while selecting from sp_token ", e);
 			throw e;
 		} catch (Exception e) {
-			throw new Exception("Error while selecting from sp_token ", e);
+			throw new PersistenceException("Error while selecting from sp_token ", e);
 		} finally {
 			DbUtils.closeAllConnections(statement, con, rs);
 		}
