@@ -23,7 +23,6 @@ import java.math.BigDecimal;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.persistence.PersistenceException;
 import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
@@ -71,7 +70,7 @@ public class DbUtils {
 	 *             the SQL exception
 	 *             the db util exception
 	 */
-	public static void initializeDatasources() throws Exception, PersistenceException {
+	public static void initializeDatasources() throws SQLException,DBUtilException {
 		if (Datasource != null) {
 			return;
 		}
@@ -83,7 +82,7 @@ public class DbUtils {
 			Datasource = (DataSource) ctx.lookup(DEP_DATA_SOURCE);
 			
 		} catch (NamingException e) {
-			throw new Exception("Error while looking up the data source: " + DEP_DATA_SOURCE, e);
+			handleException("Error while looking up the data source: " + DEP_DATA_SOURCE, e);
 		}
 	}
 
@@ -94,10 +93,10 @@ public class DbUtils {
 	 * @return the db connection
 	 * @throws SQLException
 	 *             the SQL exception
-	 * @throws PersistenceException
-	 *             the persistenceException exception
+	 * @throws DBUtilException
+	 *             the dbutilException exception
 	 */
-	public static Connection getDBConnection() throws Exception, PersistenceException {
+	public static Connection getDBConnection() throws SQLException, DBUtilException {
 		initializeDatasources();
 
 		if (Datasource != null) {
@@ -352,12 +351,12 @@ public class DbUtils {
 	 *            the msg
 	 * @param t
 	 *            the t
-	 * @throws PersistenceException
-	 *             the persistenceException exception
+	 * @throws DBUtilException
+	 *             the DBUtilException exception
 	 */
-	public static void handleException(String msg, Throwable t) throws PersistenceException {
+	public static void handleException(String msg, Throwable t) throws DBUtilException {
 		log.error(msg, t);
-		throw new PersistenceException(msg, t);
+		throw new DBUtilException(msg, t);
 	}
 
 	/**
