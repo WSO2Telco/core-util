@@ -17,17 +17,18 @@ package com.wso2telco.core.dbutils;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
+import com.wso2telco.core.dbutils.dao.SpendLimitDAO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.wso2telco.core.dbutils.DbUtils;
-import com.wso2telco.core.dbutils.Operatorendpoint;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -46,7 +47,6 @@ public class DbService {
 	 * @return the integer
 	 * @throws Exception
 	 *             the exception
-	 * @throws Throwable 
 	 */
 
 	public Integer outboundSubscriptionEntry(String notifyurl)throws Exception {
@@ -1026,5 +1026,118 @@ public class DbService {
 		}
 
 		return spToken;
+	}
+
+	public SpendLimitDAO getGroupTotalDayAmount(String groupName, String operator, String msisdn)
+			throws DBUtilException {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		SpendLimitDAO spendLimitDAO = null;
+
+		try {
+			con = DbUtils.getDBConnection();
+
+			Calendar calendarFrom = Calendar.getInstance();
+			calendarFrom.set(Calendar.AM_PM, Calendar.AM);
+			calendarFrom.set(Calendar.HOUR, 00);
+			calendarFrom.set(Calendar.MINUTE, 00);
+			calendarFrom.set(Calendar.SECOND, 00);
+			calendarFrom.set(Calendar.MILLISECOND, 00);
+
+			Calendar calendarTo = Calendar.getInstance();
+			calendarTo.set(Calendar.AM_PM, Calendar.PM);
+			calendarTo.set(Calendar.HOUR, 11);
+			calendarTo.set(Calendar.MINUTE, 59);
+			calendarTo.set(Calendar.SECOND, 59);
+			calendarTo.set(Calendar.MILLISECOND, 999);
+
+			String sql = "SELECT SUM(amount) AS amount "
+						 + "FROM spendlimitdata  "
+						 + "where effectiveTime between ? and ? "
+						 + "and groupName=? "
+						 + "and operatorId=? "
+						 + "and msisdn=? "
+						 + "group by groupName, operatorId, msisdn";
+
+			ps = con.prepareStatement(sql);
+
+			ps.setLong(1, calendarFrom.getTimeInMillis());
+			ps.setLong(2, calendarTo.getTimeInMillis());
+			ps.setString(3, groupName);
+			ps.setString(4, operator);
+			ps.setString(5, msisdn);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				spendLimitDAO = new SpendLimitDAO();
+				spendLimitDAO.setAmount(rs.getDouble("amount"));
+			}
+		} catch (Exception e) {
+			DbUtils.handleException("Error while checking Operator Spend Limit. ", e);
+		} finally {
+			DbUtils.closeAllConnections(ps, con, rs);
+		}
+		return spendLimitDAO;
+	}
+
+	public SpendLimitDAO getGroupTotalMonthAmount(String groupName, String operator, String msisdn)
+			throws DBUtilException {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		SpendLimitDAO spendLimitDAO = null;
+
+		try {
+			con = DbUtils.getDBConnection();
+
+			Calendar calendarFrom = GregorianCalendar.getInstance();
+			calendarFrom.set(Calendar.DAY_OF_MONTH, calendarFrom.getActualMinimum(Calendar.DAY_OF_MONTH));
+
+			calendarFrom.set(Calendar.HOUR_OF_DAY, 0);
+			calendarFrom.set(Calendar.MINUTE, 0);
+			calendarFrom.set(Calendar.SECOND, 0);
+			calendarFrom.set(Calendar.MILLISECOND, 0);
+
+			Calendar calendarTo = GregorianCalendar.getInstance();
+			calendarTo.setTime(new Date());
+			calendarTo.set(Calendar.DAY_OF_MONTH,
+					calendarTo.getActualMaximum(Calendar.DAY_OF_MONTH));
+			calendarTo.set(Calendar.HOUR_OF_DAY, 23);
+			calendarTo.set(Calendar.MINUTE, 59);
+			calendarTo.set(Calendar.SECOND, 59);
+			calendarTo.set(Calendar.MILLISECOND, 999);
+
+			String sql = "SELECT SUM(amount) AS amount "
+						 + "FROM spendlimitdata  "
+						 + "where effectiveTime between ? and ? "
+						 + "and groupName=? "
+						 + "and operatorId=? "
+						 + "and msisdn=? "
+						 + "group by groupName,  operatorId, msisdn";
+
+			ps = con.prepareStatement(sql);
+			ps.setLong(1, calendarFrom.getTimeInMillis());
+			ps.setLong(2, calendarTo.getTimeInMillis());
+			ps.setString(3, groupName);
+			ps.setString(4, operator);
+			ps.setString(5, msisdn);
+			rs = ps.executeQuery();
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				spendLimitDAO = new SpendLimitDAO();
+				spendLimitDAO.setAmount(rs.getDouble("amount"));
+			}
+		} catch (Exception e) {
+			DbUtils.handleException("Error while checking Operator Spend Limit. ", e);
+		} finally {
+			DbUtils.closeAllConnections(ps, con, rs);
+		}
+		return spendLimitDAO;
 	}
 }
