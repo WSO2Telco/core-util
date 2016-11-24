@@ -40,6 +40,7 @@
 		<module>components/mnc-resolver</module>
 		<module>components/msisdn-validator</module>
 		<module>components/pcr-service</module>
+        <module>components/config-util</module>
 		<module>features</module>
 	</modules>
 
@@ -88,6 +89,21 @@
 				<version>${com.wso2telco.core.version}</version>
 				<scope>provided</scope>
 			</dependency>
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.logging</artifactId>
+                <version>${carbon.kernel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.utils</artifactId>
+                <version>${carbon.kernel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.identity</groupId>
+                <artifactId>org.wso2.carbon.identity.application.authentication.framework</artifactId>
+                <version>${identity.framework.version}</version>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -249,6 +265,8 @@
 		<com.googlecode.libphonenumber.version>7.4.2.wso2v1</com.googlecode.libphonenumber.version>
 		<commons-io.wso2.version>2.4.0.wso2v1</commons-io.wso2.version>
 		<com.wso2telco.core.version>2.0.4-SNAPSHOT</com.wso2telco.core.version>
+        <carbon.kernel.version>4.4.9</carbon.kernel.version>
+        <identity.framework.version>5.2.2</identity.framework.version>
 	</properties>
 
 	<profiles>
