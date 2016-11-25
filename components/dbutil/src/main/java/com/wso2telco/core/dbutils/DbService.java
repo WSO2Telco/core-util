@@ -1140,4 +1140,46 @@ public class DbService {
 		}
 		return spendLimitDAO;
 	}
+
+	/**
+	 * Get payment time
+	 *
+	 * @param messageDid  Id of the message
+	 * @param orginalServerReferanceCode server reference code
+	 * @return time in long
+	 * @throws Exception If an error occurs during this operation
+	 */
+	public long getPaymentTime(int messageDid, String orginalServerReferanceCode)
+			throws Exception {
+
+		Connection connection = null;
+		PreparedStatement ps = null;
+		ResultSet results = null;
+		long paidTime = 0L;
+
+		try {
+			connection = DbUtils.getDBConnection();
+			if (connection == null) {
+				throw new Exception("Connection not found");
+			}
+
+			String sql = "select MIN(reportedtime) AS reportedtime from mdtrequestmessage where  clientrefval=? and msgtypeId=? ";
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, orginalServerReferanceCode);
+			ps.setInt(2, messageDid);
+
+			results = ps.executeQuery();
+
+			while (results.next()) {
+				paidTime = results.getLong("reportedtime");
+			}
+
+		} catch (SQLException e) {
+			DbUtils.handleException("Error occurred while getting payment Details", e);
+
+		} finally {
+			DbUtils.closeAllConnections(ps, connection, results);
+		}
+		return paidTime;
+	}
 }
