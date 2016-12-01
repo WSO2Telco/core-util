@@ -19,30 +19,14 @@ import javax.xml.bind.annotation.XmlElement;
 
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Authenticators.
- */
 public class Authenticators {
-
-	/** The authenticators. */
 	private List<Authenticator> authenticators;
 
-	/**
-	 * Gets the authenticators.
-	 *
-	 * @return the authenticators
-	 */
 	@XmlElement(name = "Authenicator")
 	public List<Authenticator> getAuthenticators() {
 		return authenticators;
 	}
 
-	/**
-	 * Sets the authenticators.
-	 *
-	 * @param authenticators the new authenticators
-	 */
 	public void setAuthenticators(List<Authenticator> authenticators) {
 		this.authenticators = authenticators;
 	}

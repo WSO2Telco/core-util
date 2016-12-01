@@ -15,26 +15,13 @@
  ******************************************************************************/
 package com.wso2telco.core.config;
 
-// TODO: Auto-generated Javadoc
+import java.util.Map;
 
-/**
- * The Class DataHolder.
- */
 public class DataHolder {
-
-    /** The loa config. */
-    private LOAConfig loaConfig;
-    
-    /** The mobile connect config. */
+    private AuthenticationLevels authenticationLevels;
     private MobileConnectConfig mobileConnectConfig;
-
-    /** The this instance. */
+    private Map<String, MIFEAuthentication> authenticationLevelMap = null;
     private static DataHolder thisInstance = new DataHolder();
-
-    /**
-     * Instantiates a new data holder.
-     */
-    private DataHolder() {}
 
     /**
      * Gets the single instance of DataHolder.
@@ -50,8 +37,8 @@ public class DataHolder {
      *
      * @param config the new LOA config
      */
-    public void setLOAConfig(LOAConfig config) {
-        this.loaConfig = config;
+    public void setAuthenticationLevels(AuthenticationLevels config) {
+        this.authenticationLevels = config;
     }
 
     /**
@@ -59,8 +46,8 @@ public class DataHolder {
      *
      * @return the LOA config
      */
-    public LOAConfig getLOAConfig() {
-        return loaConfig;
+    public AuthenticationLevels getAuthenticationLevels() {
+        return authenticationLevels;
     }
 
     /**
@@ -80,4 +67,15 @@ public class DataHolder {
     public void setMobileConnectConfig(MobileConnectConfig mobileConnectConfig) {
         this.mobileConnectConfig = mobileConnectConfig;
     }
+
+
+    public Map<String, MIFEAuthentication> getAuthenticationLevelMap() {
+        return authenticationLevelMap;
+    }
+
+    public void setAuthenticationLevelMap(
+            Map<String, MIFEAuthentication> authenticationLevelMap) {
+        this.authenticationLevelMap = authenticationLevelMap;
+    }
+
 }
