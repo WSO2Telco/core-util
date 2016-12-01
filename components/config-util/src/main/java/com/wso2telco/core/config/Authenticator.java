@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
-@XmlRootElement(name = "Authenticator")
+@XmlRootElement(name = "Authenicator")
 public class Authenticator {
 	private String onfail;
 	private String supportiveFlow;
