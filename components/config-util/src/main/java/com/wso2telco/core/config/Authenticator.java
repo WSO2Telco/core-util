@@ -14,56 +14,39 @@
  * limitations under the License.
  ******************************************************************************/
 package com.wso2telco.core.config;
-
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Authenticator.
- */
+@XmlRootElement(name = "Authenticator")
 public class Authenticator {
-
-	/** The onfail. */
 	private String onfail;
-	
-	/** The authenticator name. */
+	private String supportiveFlow;
 	private String authenticatorName;
 
-	/**
-	 * Gets the onfail.
-	 *
-	 * @return the onfail
-	 */
 	@XmlAttribute
 	public String getOnfail() {
 		return onfail;
 	}
 
-	/**
-	 * Sets the onfail.
-	 *
-	 * @param onfail the new onfail
-	 */
 	public void setOnfail(String onfail) {
 		this.onfail = onfail;
 	}
 
-	/**
-	 * Gets the authenticator name.
-	 *
-	 * @return the authenticator name
-	 */
+	@XmlAttribute
+	public String getSupportiveFlow() {
+		return supportiveFlow;
+	}
+
+	public void setSupportiveFlow(String supportiveFlow) {
+		this.supportiveFlow = supportiveFlow;
+	}
+
 	@XmlValue
 	public String getAuthenticatorName() {
 		return authenticatorName;
 	}
 
-	/**
-	 * Sets the authenticator name.
-	 *
-	 * @param authName the new authenticator name
-	 */
 	public void setAuthenticatorName(String authName) {
 		this.authenticatorName = authName;
 	}
