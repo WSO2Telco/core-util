@@ -50,8 +50,41 @@ public class MobileConnectConfig {
     private String listenerWebappHost;
 
     protected MSISDN msisdn;
+
     protected AuthProxy authProxy;
 
+    private String authEndpointUrl;
+
+    private String defaultClaimUrl;
+
+    private String openIdRegClaimUrl;
+
+    @XmlElement(name = "AuthenticationEndpoint", defaultValue = "authenticationendpoint")
+    public String getAuthEndpointUrl() {
+        return authEndpointUrl;
+    }
+
+    public void setAuthEndpointUrl(String authEndpointUrl) {
+        this.authEndpointUrl = authEndpointUrl;
+    }
+
+    @XmlElement(name = "DefaultClaimUrl", defaultValue = "http://wso2.org/claims")
+    public String getDefaultClaimUrl() {
+        return defaultClaimUrl;
+    }
+
+    public void setDefaultClaimUrl(String defaultClaimUrl) {
+        this.defaultClaimUrl = defaultClaimUrl;
+    }
+
+    @XmlElement(name = "OpenIdRegClaimUrl", defaultValue = "http://schema.openid.net/2007/05/claims")
+    public String getOpenIdRegClaimUrl() {
+        return openIdRegClaimUrl;
+    }
+
+    public void setOpenIdRegClaimUrl(String openIdRegClaimUrl) {
+        this.openIdRegClaimUrl = openIdRegClaimUrl;
+    }
 
     /** The mss. */
     @XmlElement(name = "MSS")
@@ -450,6 +483,34 @@ public class MobileConnectConfig {
         /** The ussd pin context endpoint. */
         private String ussdPinContextEndpoint;
 
+        /** The ussd notify url for login */
+        private String loginNotifyUrl;
+
+        /** The ussd notify url for registration */
+        private String registrationNotifyUrl;
+
+        private String ussdLoginMessage;
+
+        private String ussdRegistrationMessage;
+
+        @XmlElement(name = "LoginMessage", defaultValue = "http://schema.openid.net/2007/05/claims")
+        public String getUssdLoginMessage() {
+            return ussdLoginMessage;
+        }
+
+        @XmlElement(name = "RegistrationMessage", defaultValue = "http://schema.openid.net/2007/05/claims")
+        public String getUssdRegistrationMessage() {
+            return ussdRegistrationMessage;
+        }
+
+        public void setUssdLoginMessage(String ussdLoginMessage) {
+            this.ussdLoginMessage = ussdLoginMessage;
+        }
+
+        public void setUssdRegistrationMessage(String ussdRegistrationMessage) {
+            this.ussdRegistrationMessage = ussdRegistrationMessage;
+        }
+
         /**
          * Gets the endpoint.
          *
@@ -539,8 +600,27 @@ public class MobileConnectConfig {
         public String getUssdPinContextEndpoint() {
 			return ussdPinContextEndpoint;
 		}
-        
-        
+
+        @XmlElement(name = "LoginNotifyUrl")
+        public String getLoginNotifyUrl() {
+            return loginNotifyUrl;
+        }
+
+        @XmlElement(name = "RegistrationNotifyUrl")
+        public String getRegistrationNotifyUrl() {
+            return registrationNotifyUrl;
+        }
+
+
+
+        public void setLoginNotifyUrl(String loginNotifyUrl) {
+            this.loginNotifyUrl = loginNotifyUrl;
+        }
+
+        public void setRegistrationNotifyUrl(String registrationNotifyUrl) {
+            this.registrationNotifyUrl = registrationNotifyUrl;
+        }
+
         /**
          * Sets the endpoint.
          *
