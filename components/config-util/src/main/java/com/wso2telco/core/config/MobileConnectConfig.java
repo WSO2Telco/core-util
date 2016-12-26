@@ -59,6 +59,39 @@ public class MobileConnectConfig {
 
     private String openIdRegClaimUrl;
 
+    private String adminUrl;
+
+    private String adminUsername;
+
+    private String adminPassword;
+
+    @XmlElement(name = "AdminUrl")
+    public String getAdminUrl() {
+        return adminUrl;
+    }
+
+    public void setAdminUrl(String adminUrl) {
+        this.adminUrl = adminUrl;
+    }
+
+    @XmlElement(name = "AdminUsername")
+    public String getAdminUsername() {
+        return adminUsername;
+    }
+
+    public void setAdminUsername(String adminUsername) {
+        this.adminUsername = adminUsername;
+    }
+
+    @XmlElement(name = "AdminPassword")
+    public String getAdminPassword() {
+        return adminPassword;
+    }
+
+    public void setAdminPassword(String adminPassword) {
+        this.adminPassword = adminPassword;
+    }
+
     @XmlElement(name = "AuthenticationEndpoint", defaultValue = "authenticationendpoint")
     public String getAuthEndpointUrl() {
         return authEndpointUrl;
