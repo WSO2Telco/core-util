@@ -1,4 +1,4 @@
-package com.wso2telco.core.config;
+package com.wso2telco.core.config.model;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

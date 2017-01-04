@@ -15,6 +15,8 @@
  ******************************************************************************/
 package com.wso2telco.core.config;
 
+import com.wso2telco.core.config.model.AuthenticationLevels;
+import com.wso2telco.core.config.model.MobileConnectConfig;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.utils.CarbonUtils;
@@ -46,8 +48,10 @@ public class ConfigLoader {
      */
     private ConfigLoader() {
         try {
-            this.authenticationLevels = initLoaConfig();
-            this.mobileConnectConfig = initMConnectConfig();
+            if(this.authenticationLevels == null)
+                this.authenticationLevels = initLoaConfig();
+            if(this.mobileConnectConfig == null)
+                this.mobileConnectConfig = initMConnectConfig();
         } catch (JAXBException e) {
             log.error("Error while initiating custom config files", e);
         }
@@ -60,6 +64,13 @@ public class ConfigLoader {
      */
     public static ConfigLoader getInstance() {
         return loader;
+    }
+
+    /**
+     * Resets the singleton and re-initiate
+     */
+    public static void reset(){
+        loader = null;
     }
 
     /**
@@ -82,7 +93,7 @@ public class ConfigLoader {
      * @return the loa config
      */
     public AuthenticationLevels getAuthenticationLevels() {
-        return authenticationLevels;
+        return this.authenticationLevels;
     }
 
     /**
@@ -105,7 +116,7 @@ public class ConfigLoader {
      * @return the mobile connect config
      */
     public MobileConnectConfig getMobileConnectConfig(){
-        return mobileConnectConfig;
+        return this.mobileConnectConfig;
     }
 
 }

@@ -15,6 +15,9 @@
  ******************************************************************************/
 package com.wso2telco.core.config;
 
+import com.wso2telco.core.config.model.AuthenticationLevels;
+import com.wso2telco.core.config.model.MobileConnectConfig;
+
 import java.util.Map;
 
 public class DataHolder {

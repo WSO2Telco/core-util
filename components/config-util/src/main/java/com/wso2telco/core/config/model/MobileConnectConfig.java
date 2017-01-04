@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.config;
+package com.wso2telco.core.config.model;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -145,6 +145,19 @@ public class MobileConnectConfig {
      */
     @XmlElement(name = "HEADERENRICH")
     protected HEADERENRICH headerenrich;
+
+    @XmlElement(name = "MIFEOpenIDTokenBuilderConfig")
+    public MIFEOpenIDTokenBuilderConfig getMifeOpenIDTokenBuilderConfig() {
+        return mifeOpenIDTokenBuilderConfig;
+    }
+
+    public void setMifeOpenIDTokenBuilderConfig(MIFEOpenIDTokenBuilderConfig mifeOpenIDTokenBuilderConfig) {
+        this.mifeOpenIDTokenBuilderConfig = mifeOpenIDTokenBuilderConfig;
+    }
+
+    /** The MIFEOpenIDTokenBuilderConfig. */
+    protected MIFEOpenIDTokenBuilderConfig mifeOpenIDTokenBuilderConfig;
+
 
     /**
      * Gets the data source name.
@@ -1176,6 +1189,97 @@ public class MobileConnectConfig {
          */
         public void setSuccessStatus(int successStatus) {
             this.successStatus = successStatus;
+        }
+
+    }
+
+    /**
+     * The Class MIFEOpenIDTokenBuilderConfig.
+     */
+    public static class MIFEOpenIDTokenBuilderConfig {
+
+        /** The acr Access Token. */
+        private String acrAccessToken;
+
+        /** The acr Host Uri. */
+        private String acrHostUri;
+
+        /** The retrieve Service. */
+        private String retrieveService;
+
+        /** The create Service. */
+        private String createService;
+
+        /** The app Prov Service. */
+        private String appProvService;
+
+        /** The service Provider. */
+        private String serviceProvider;
+
+        /** The service Key. */
+        private String serviceKey;
+
+        public void setAcrAccessToken(String acrAccessToken) {
+            this.acrAccessToken = acrAccessToken;
+        }
+
+        public void setAcrHostUri(String acrHostUri) {
+            this.acrHostUri = acrHostUri;
+        }
+
+        public void setRetrieveService(String retrieveService) {
+            this.retrieveService = retrieveService;
+        }
+
+        public void setCreateService(String createService) {
+            this.createService = createService;
+        }
+
+        public void setAppProvService(String appProvService) {
+            this.appProvService = appProvService;
+        }
+
+        public void setServiceProvider(String serviceProvider) {
+            this.serviceProvider = serviceProvider;
+        }
+
+        public void setServiceKey(String serviceKey) {
+            this.serviceKey = serviceKey;
+        }
+
+        @XmlElement(name = "acrAccessToken")
+        public String getAcrAccessToken() {
+            return acrAccessToken;
+        }
+
+        @XmlElement(name = "acrHostUri")
+        public String getAcrHostUri() {
+            return acrHostUri;
+        }
+
+        @XmlElement(name = "retrieveService")
+        public String getRetrieveService() {
+            return retrieveService;
+        }
+
+        @XmlElement(name = "createService")
+        public String getCreateService() {
+            return createService;
+        }
+
+        @XmlElement(name = "appProvService")
+        public String getAppProvService() {
+            return appProvService;
+        }
+
+        @XmlElement(name = "serviceProvider")
+        public String getServiceProvider() {
+            return serviceProvider;
+        }
+
+        @XmlElement(name = "serviceKey")
+        public String getServiceKey() {
+            return serviceKey;
         }
 
     }
