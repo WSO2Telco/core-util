@@ -1,12 +1,7 @@
-package com.wso2telco.core.config;
-
-import org.wso2.carbon.identity.application.authentication.framework.ApplicationAuthenticator;
-import org.wso2.carbon.identity.application.authentication.framework.util.FrameworkUtils;
+package com.wso2telco.core.config.model;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlRootElement(name = "AuthenticationLevel")
 public class AuthenticationLevel {
