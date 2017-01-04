@@ -12,7 +12,7 @@
     <artifactId>config-util</artifactId>
     <name>Core Config Utility service</name>
     <url>http://maven.apache.org</url>
-    <packaging>jar</packaging>
+    <packaging>bundle</packaging>
 
     <dependencies>
         <dependency>
@@ -22,6 +22,11 @@
         <dependency>
             <groupId>org.wso2.carbon.identity</groupId>
             <artifactId>org.wso2.carbon.identity.application.authentication.framework</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.scr.annotations</artifactId>
+            <version>1.9.6</version>
         </dependency>
     </dependencies>
     <build>
@@ -37,6 +42,15 @@
                         <Export-Package>com.wso2telco.core.*</Export-Package>
                         <Import-Package>
                             org.osgi.framework,
+                        <Private-Package>
+                            com.wso2telco.core.config.internal
+                        </Private-Package>
+                        <Export-Package>
+                            !com.wso2telco.core.config.internal,
+                            com.wso2telco.core.config.*
+                        </Export-Package>
+                        <Import-Package>
+                            org.osgi.*,
                             *;resolution:=optional
                         </Import-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>
