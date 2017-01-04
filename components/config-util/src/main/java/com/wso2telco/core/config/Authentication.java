@@ -20,54 +20,26 @@ import javax.xml.bind.annotation.XmlElement;
 
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Authentication.
- */
 public class Authentication {
+	private String LevelToFallback;
+	private Authenticators authenticators;
 
-	/** The fallbacklevel. */
-	@XmlAttribute
-	private String fallbacklevel;
-	
-	/** The authenticator list. */
-	private List<Authenticators> authenticatorList;
-
-	/**
-	 * Gets the fallback level.
-	 *
-	 * @return the fallback level
-	 */
-	public String getFallbackLevel() {
-		return fallbacklevel;
+	@XmlElement(name = "Authenticators")
+	public Authenticators getAuthenticators() {
+		return authenticators;
 	}
 
-	/**
-	 * Sets the fallback level.
-	 *
-	 * @param fallbacklevel the new fallback level
-	 */
-	public void setFallbackLevel(String fallbacklevel) {
-		this.fallbacklevel = fallbacklevel;
+	public void setAuthenticators(Authenticators authenticators) {
+		this.authenticators = authenticators;
 	}
 
-	/**
-	 * Gets the authenticator list.
-	 *
-	 * @return the authenticator list
-	 */
-	@XmlElement(name = "Authenticators", nillable = false)
-	public List<Authenticators> getAuthenticatorList() {
-		return authenticatorList;
+	@XmlElement(name = "LevelToFallback")
+	public String getLevelToFallback() {
+		return LevelToFallback;
 	}
 
-	/**
-	 * Sets the authenticator list.
-	 *
-	 * @param authenticatorList the new authenticator list
-	 */
-	public void setAuthenticatorList(List<Authenticators> authenticatorList) {
-		this.authenticatorList = authenticatorList;
+	public void setLevelToFallback(String levelToFallback) {
+		LevelToFallback = levelToFallback;
 	}
 
 }
