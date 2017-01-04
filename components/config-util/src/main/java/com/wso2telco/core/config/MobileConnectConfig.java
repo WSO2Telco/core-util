@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) 
- * 
+ *
  * All Rights Reserved. WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,31 +22,46 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 // TODO: Auto-generated Javadoc
+
 /**
  * The Class MobileConnectConfig.
  */
 @XmlRootElement(name = "MobileConnectConfig")
 public class MobileConnectConfig {
 
-    /** The data source name. */
+    /**
+     * The data source name.
+     */
     private String dataSourceName;
-    
-    /** The encrypt append. */
+
+    /**
+     * The encrypt append.
+     */
     private String encryptAppend;
-    
-    /** The keyfile. */
+
+    /**
+     * The keyfile.
+     */
     private String keyfile;
-    
-    /** The gsma exchange config. */
+
+    /**
+     * The gsma exchange config.
+     */
     private GSMAExchangeConfig gsmaExchangeConfig;
-    
-    /** The sms config. */
+
+    /**
+     * The sms config.
+     */
     private SMSConfig smsConfig;
-    
-    /** The ussd config. */
+
+    /**
+     * The ussd config.
+     */
     private USSDConfig ussdConfig;
-    
-    /** The listener webapp host. */
+
+    /**
+     * The listener webapp host.
+     */
     private String listenerWebappHost;
 
     protected MSISDN msisdn;
@@ -119,11 +134,15 @@ public class MobileConnectConfig {
         this.openIdRegClaimUrl = openIdRegClaimUrl;
     }
 
-    /** The mss. */
+    /**
+     * The mss.
+     */
     @XmlElement(name = "MSS")
     protected MSS mss;
-    
-    /** The headerenrich. */
+
+    /**
+     * The headerenrich.
+     */
     @XmlElement(name = "HEADERENRICH")
     protected HEADERENRICH headerenrich;
 
@@ -136,7 +155,7 @@ public class MobileConnectConfig {
     public String getDataSourceName() {
         return dataSourceName;
     }
-    
+
     /**
      * Gets the encrypt append.
      *
@@ -146,7 +165,7 @@ public class MobileConnectConfig {
     public String getEncryptAppend() {
         return encryptAppend;
     }
-    
+
     /**
      * Gets the keyfile.
      *
@@ -217,7 +236,7 @@ public class MobileConnectConfig {
         }
         return listenerWebappHost;
     }
-    
+
     /**
      * Sets the data source name.
      *
@@ -226,7 +245,7 @@ public class MobileConnectConfig {
     public void setDataSourceName(String dataSourceName) {
         this.dataSourceName = dataSourceName;
     }
-    
+
     /**
      * Sets the encrypt append.
      *
@@ -235,7 +254,7 @@ public class MobileConnectConfig {
     public void setEncryptAppend(String EncryptAppend) {
         this.encryptAppend = EncryptAppend;
     }
-    
+
     /**
      * Sets the keyfile.
      *
@@ -253,7 +272,7 @@ public class MobileConnectConfig {
     public void setGsmaExchangeConfig(GSMAExchangeConfig gsmaExchangeConfig) {
         this.gsmaExchangeConfig = gsmaExchangeConfig;
     }
-    
+
     /**
      * Sets the sms config.
      *
@@ -322,17 +341,25 @@ public class MobileConnectConfig {
      * The Class GSMAExchangeConfig.
      */
     public static class GSMAExchangeConfig {
-        
-        /** The serving operator host. */
+
+        /**
+         * The serving operator host.
+         */
         private String servingOperatorHost;
-        
-        /** The organization. */
+
+        /**
+         * The organization.
+         */
         private String organization;
-        
-        /** The auth token. */
+
+        /**
+         * The auth token.
+         */
         private String authToken;
-        
-        /** The serving operator. */
+
+        /**
+         * The serving operator.
+         */
         private ServingOperator servingOperator;
 
         /**
@@ -364,16 +391,16 @@ public class MobileConnectConfig {
         public String getAuthToken() {
             return authToken;
         }
-        
+
         /**
          * Gets the serving operator.
          *
          * @return the serving operator
          */
         @XmlElement(name = "ServingOperator")
-		public ServingOperator getServingOperator() {
-			return servingOperator;
-		}
+        public ServingOperator getServingOperator() {
+            return servingOperator;
+        }
 
         /**
          * Sets the serving operator host.
@@ -402,14 +429,14 @@ public class MobileConnectConfig {
             this.authToken = authToken;
         }
 
-		/**
-		 * Sets the serving operator.
-		 *
-		 * @param servingOperator the new serving operator
-		 */
-		public void setServingOperator(ServingOperator servingOperator) {
-			this.servingOperator = servingOperator;
-		}
+        /**
+         * Sets the serving operator.
+         *
+         * @param servingOperator the new serving operator
+         */
+        public void setServingOperator(ServingOperator servingOperator) {
+            this.servingOperator = servingOperator;
+        }
     }
 
     /**
@@ -417,13 +444,19 @@ public class MobileConnectConfig {
      */
     public static class SMSConfig {
 
-        /** The endpoint. */
+        /**
+         * The endpoint.
+         */
         private String endpoint;
-        
-        /** The auth token. */
+
+        /**
+         * The auth token.
+         */
         private String authToken;
-        
-        /** The message. */
+
+        /**
+         * The message.
+         */
         private String message;
 
         /**
@@ -489,42 +522,145 @@ public class MobileConnectConfig {
      */
     public static class USSDConfig {
 
-        /** The endpoint. */
+        /**
+         * The endpoint.
+         */
         private String endpoint;
-        
-        /** The auth token. */
+
+        /**
+         * The auth token.
+         */
         private String authToken;
-        
-        /** The message. */
+
+        /**
+         * The message.
+         */
         private String message;
-        
-        /** The short code. */
+
+        /**
+         * The short code.
+         */
         private String shortCode;
-        
-        /** The keyword. */
+
+        /**
+         * The keyword.
+         */
         private String keyword;
-        
-        /** The pinauth. */
+
+        /**
+         * The pinauth.
+         */
         private String pinauth;
-        
-        /** The dash board. */
+
+        /**
+         * The dash board.
+         */
         private String dashBoard;
-        
-        /** The ussd context endpoint. */
+
+        /**
+         * The ussd context endpoint.
+         */
         private String ussdContextEndpoint;
-        
-        /** The ussd pin context endpoint. */
+
+        /**
+         * The ussd pin context endpoint.
+         */
         private String ussdPinContextEndpoint;
 
-        /** The ussd notify url for login */
+        /**
+         * The ussd notify url for login
+         */
         private String loginNotifyUrl;
 
-        /** The ussd notify url for registration */
+        /**
+         * The ussd notify url for registration
+         */
         private String registrationNotifyUrl;
 
+        /**
+         * The ussd message for registration
+         */
+        private String ussdRegistrationMessage;
+
+        /**
+         * The ussd message for login
+         */
+        private String pinLoginMessage;
+
+        /**
+         * The ussd message for login with pin
+         */
+        private String pinRegistrationMessage;
+
+        /**
+         * The ussd message for registration with pin
+         */
         private String ussdLoginMessage;
 
-        private String ussdRegistrationMessage;
+
+        private String pinRegistrationNotifyUrl;
+
+
+        private String pinLoginNotifyUrl;
+
+
+        private String pinRegistrationConfirmMessage;
+
+        private int pinMaxLength;
+
+        @XmlElement(name = "PinMaxLength")
+        public int getPinMaxLength() {
+            return pinMaxLength;
+        }
+
+        public void setPinMaxLength(int pinMaxLength) {
+            this.pinMaxLength = pinMaxLength;
+        }
+
+        @XmlElement(name = "PinRegistrationConfirmMessage")
+        public String getPinRegistrationConfirmMessage() {
+            return pinRegistrationConfirmMessage;
+        }
+
+        public void setPinRegistrationConfirmMessage(String pinRegistrationConfirmMessage) {
+            this.pinRegistrationConfirmMessage = pinRegistrationConfirmMessage;
+        }
+
+        @XmlElement(name = "PinRegistrationNotifyUrl")
+        public String getPinRegistrationNotifyUrl() {
+            return pinRegistrationNotifyUrl;
+        }
+
+        public void setPinRegistrationNotifyUrl(String pinRegistrationNotifyUrl) {
+            this.pinRegistrationNotifyUrl = pinRegistrationNotifyUrl;
+        }
+
+        @XmlElement(name = "PinLoginNotifyUrl")
+        public String getPinLoginNotifyUrl() {
+            return pinLoginNotifyUrl;
+        }
+
+        public void setPinLoginNotifyUrl(String pinLoginNotifyUrl) {
+            this.pinLoginNotifyUrl = pinLoginNotifyUrl;
+        }
+
+        @XmlElement(name = "PinLoginMessage")
+        public String getPinLoginMessage() {
+            return pinLoginMessage;
+        }
+
+        public void setPinLoginMessage(String pinLoginMessage) {
+            this.pinLoginMessage = pinLoginMessage;
+        }
+
+        @XmlElement(name = "PinRegistrationMessage")
+        public String getPinRegistrationMessage() {
+            return pinRegistrationMessage;
+        }
+
+        public void setPinRegistrationMessage(String pinRegistrationMessage) {
+            this.pinRegistrationMessage = pinRegistrationMessage;
+        }
 
         @XmlElement(name = "LoginMessage", defaultValue = "http://schema.openid.net/2007/05/claims")
         public String getUssdLoginMessage() {
@@ -603,7 +739,7 @@ public class MobileConnectConfig {
         public String getPinauth() {
             return pinauth;
         }
-        
+
         /**
          * Gets the dash board.
          *
@@ -613,7 +749,7 @@ public class MobileConnectConfig {
         public String getDashBoard() {
             return dashBoard;
         }
-        
+
         /**
          * Gets the ussd context endpoint.
          *
@@ -621,9 +757,9 @@ public class MobileConnectConfig {
          */
         @XmlElement(name = "USSDContextEndpoint")
         public String getUssdContextEndpoint() {
-			return ussdContextEndpoint;
-		}
-        
+            return ussdContextEndpoint;
+        }
+
         /**
          * Gets the ussd pin context endpoint.
          *
@@ -631,8 +767,8 @@ public class MobileConnectConfig {
          */
         @XmlElement(name = "USSDPinContextEndpoint")
         public String getUssdPinContextEndpoint() {
-			return ussdPinContextEndpoint;
-		}
+            return ussdPinContextEndpoint;
+        }
 
         @XmlElement(name = "LoginNotifyUrl")
         public String getLoginNotifyUrl() {
@@ -643,7 +779,6 @@ public class MobileConnectConfig {
         public String getRegistrationNotifyUrl() {
             return registrationNotifyUrl;
         }
-
 
 
         public void setLoginNotifyUrl(String loginNotifyUrl) {
@@ -698,7 +833,7 @@ public class MobileConnectConfig {
         public void setKeyword(String keyword) {
             this.keyword = keyword;
         }
-        
+
         /**
          * Sets the pinauth.
          *
@@ -707,7 +842,7 @@ public class MobileConnectConfig {
         public void setPinauth(String pinauth) {
             this.pinauth = pinauth;
         }
-        
+
         /**
          * Sets the dash board.
          *
@@ -717,40 +852,45 @@ public class MobileConnectConfig {
             this.dashBoard = dashBoard;
         }
 
-		/**
-		 * Sets the ussd context endpoint.
-		 *
-		 * @param ussdContextEndpoint the new ussd context endpoint
-		 */
-		public void setUssdContextEndpoint(String ussdContextEndpoint) {
-			this.ussdContextEndpoint = ussdContextEndpoint;
-		}
+        /**
+         * Sets the ussd context endpoint.
+         *
+         * @param ussdContextEndpoint the new ussd context endpoint
+         */
+        public void setUssdContextEndpoint(String ussdContextEndpoint) {
+            this.ussdContextEndpoint = ussdContextEndpoint;
+        }
 
-		/**
-		 * Sets the ussd pin context endpoint.
-		 *
-		 * @param ussdPinContextEndpoint the new ussd pin context endpoint
-		 */
-		public void setUssdPinContextEndpoint(String ussdPinContextEndpoint) {
-			this.ussdPinContextEndpoint = ussdPinContextEndpoint;
-		}
-        
+        /**
+         * Sets the ussd pin context endpoint.
+         *
+         * @param ussdPinContextEndpoint the new ussd pin context endpoint
+         */
+        public void setUssdPinContextEndpoint(String ussdPinContextEndpoint) {
+            this.ussdPinContextEndpoint = ussdPinContextEndpoint;
+        }
+
     }
 
-     
 
     /**
      * The Class HEADERENRICH.
      */
     public static class HEADERENRICH {
 
-        /** The Operators. */
+        /**
+         * The Operators.
+         */
         private List<OPERATOR> Operators;
-        
-        /** The endpoint. */
+
+        /**
+         * The endpoint.
+         */
         private String endpoint;
-        
-        /** The enrichflg. */
+
+        /**
+         * The enrichflg.
+         */
         private String enrichflg;
 
         /**
@@ -817,16 +957,24 @@ public class MobileConnectConfig {
      */
     public static class OPERATOR {
 
-        /** The operator name. */
+        /**
+         * The operator name.
+         */
         private String operatorName;
-        
-        /** The ip validation. */
+
+        /**
+         * The ip validation.
+         */
         private String ipValidation;
 
-        /** The message. */
+        /**
+         * The message.
+         */
         private String message;
-        
-        /** The mobile ip ranges. */
+
+        /**
+         * The mobile ip ranges.
+         */
         private List<String> mobileIPRanges;
 
         /**
@@ -865,7 +1013,9 @@ public class MobileConnectConfig {
          *
          * @param operatorName the new operator name
          */
-        public void setOperatorName(String operatorName){ this.operatorName = operatorName; }
+        public void setOperatorName(String operatorName) {
+            this.operatorName = operatorName;
+        }
 
         /**
          * Gets the ip validation.
@@ -882,7 +1032,9 @@ public class MobileConnectConfig {
          *
          * @param ipValidation the new ip validation
          */
-        public void setIpValidation(String ipValidation){ this.ipValidation = ipValidation; }
+        public void setIpValidation(String ipValidation) {
+            this.ipValidation = ipValidation;
+        }
 
 
     }
@@ -928,17 +1080,25 @@ public class MobileConnectConfig {
      * The Class MSS.
      */
     public static class MSS {
-        
-        /** The endpoint. */
+
+        /**
+         * The endpoint.
+         */
         private String endpoint;
-        
-        /** The success status. */
+
+        /**
+         * The success status.
+         */
         private int successStatus;
-        
-        /** The mss text. */
+
+        /**
+         * The mss text.
+         */
         private String mssText;
-        
-        /** The mss pin test. */
+
+        /**
+         * The mss pin test.
+         */
         private String mssPinTest;
 
         /**
@@ -978,7 +1138,6 @@ public class MobileConnectConfig {
         public void setMssPinTest(String mssPinTest) {
             this.mssPinTest = mssPinTest;
         }
-
 
 
         /**
