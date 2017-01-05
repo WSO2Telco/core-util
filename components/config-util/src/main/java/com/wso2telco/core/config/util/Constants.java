@@ -1,4 +1,4 @@
-package com.wso2telco.core.util;
+package com.wso2telco.core.config.util;
 
 /**
  * Created by isuru on 1/2/17.
