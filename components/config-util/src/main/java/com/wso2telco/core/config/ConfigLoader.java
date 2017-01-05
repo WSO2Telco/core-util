@@ -70,7 +70,7 @@ public class ConfigLoader {
      * Resets the singleton and re-initiate
      */
     public static void reset(){
-        loader = null;
+        loader = new ConfigLoader();
     }
 
     /**
