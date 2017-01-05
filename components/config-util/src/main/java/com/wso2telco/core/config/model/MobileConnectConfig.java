@@ -80,6 +80,12 @@ public class MobileConnectConfig {
 
     private String adminPassword;
 
+    /** The MIFEOpenIDTokenBuilderConfig. */
+    protected MIFEOpenIDTokenBuilderConfig mifeOpenIDTokenBuilderConfig;
+
+    /** The SessionUpdaterConfig. */
+    protected SessionUpdaterConfig sessionUpdaterConfig;
+
     @XmlElement(name = "AdminUrl")
     public String getAdminUrl() {
         return adminUrl;
@@ -146,6 +152,15 @@ public class MobileConnectConfig {
     @XmlElement(name = "HEADERENRICH")
     protected HEADERENRICH headerenrich;
 
+    @XmlElement(name = "SessionUpdaterConfig")
+    public SessionUpdaterConfig getSessionUpdaterConfig() {
+        return sessionUpdaterConfig;
+    }
+
+    public void setSessionUpdaterConfig(SessionUpdaterConfig sessionUpdaterConfig) {
+        this.sessionUpdaterConfig = sessionUpdaterConfig;
+    }
+
     @XmlElement(name = "MIFEOpenIDTokenBuilderConfig")
     public MIFEOpenIDTokenBuilderConfig getMifeOpenIDTokenBuilderConfig() {
         return mifeOpenIDTokenBuilderConfig;
@@ -154,9 +169,6 @@ public class MobileConnectConfig {
     public void setMifeOpenIDTokenBuilderConfig(MIFEOpenIDTokenBuilderConfig mifeOpenIDTokenBuilderConfig) {
         this.mifeOpenIDTokenBuilderConfig = mifeOpenIDTokenBuilderConfig;
     }
-
-    /** The MIFEOpenIDTokenBuilderConfig. */
-    protected MIFEOpenIDTokenBuilderConfig mifeOpenIDTokenBuilderConfig;
 
 
     /**
@@ -1282,5 +1294,155 @@ public class MobileConnectConfig {
             return serviceKey;
         }
 
+    }
+
+    /**
+     * The Class SessionUpdaterConfig.
+     */
+    public static class SessionUpdaterConfig{
+
+        /** The ussd send*/
+        private String ussdsend;
+
+        /** The notify url*/
+        private String notifyurl;
+
+        /** The access token*/
+        private String accesstoken;
+
+        /** The short code*/
+        private String shortcode;
+
+        /** The message*/
+        private String message;
+
+        /** The retry message*/
+        private String retry_message;
+
+        /** The error message*/
+        private String error_message;
+
+        /** The keyword*/
+        private String keyword;
+
+        /** The admin url*/
+        private String admin_url;
+
+        /** The aes key*/
+        private String aeskey;
+
+        /** The admin username*/
+        private String adminusername;
+
+        /** The admin password*/
+        private String adminpassword;
+
+        @XmlElement(name = "ussdsend")
+        public String getUssdsend() {
+            return ussdsend;
+        }
+
+        @XmlElement(name = "notifyurl")
+        public String getNotifyurl() {
+            return notifyurl;
+        }
+
+        @XmlElement(name = "accesstoken")
+        public String getAccesstoken() {
+            return accesstoken;
+        }
+
+        @XmlElement(name = "shortcode")
+        public String getShortcode() {
+            return shortcode;
+        }
+
+        @XmlElement(name = "message")
+        public String getMessage() {
+            return message;
+        }
+
+        @XmlElement(name = "retry_message")
+        public String getRetry_message() {
+            return retry_message;
+        }
+
+        @XmlElement(name = "error_message")
+        public String getError_message() {
+            return error_message;
+        }
+
+        @XmlElement(name = "keyword")
+        public String getKeyword() {
+            return keyword;
+        }
+
+        @XmlElement(name = "admin_url")
+        public String getAdmin_url() {
+            return admin_url;
+        }
+
+        @XmlElement(name = "aeskey")
+        public String getAeskey() {
+            return aeskey;
+        }
+
+        @XmlElement(name = "adminusername")
+        public String getAdminusername() {
+            return adminusername;
+        }
+
+        @XmlElement(name = "adminpassword")
+        public String getAdminpassword() {
+            return adminpassword;
+        }
+
+        public void setUssdsend(String ussdsend) {
+            this.ussdsend = ussdsend;
+        }
+
+        public void setNotifyurl(String notifyurl) {
+            this.notifyurl = notifyurl;
+        }
+
+        public void setAccesstoken(String accesstoken) {
+            this.accesstoken = accesstoken;
+        }
+
+        public void setShortcode(String shortcode) {
+            this.shortcode = shortcode;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public void setRetry_message(String retry_message) {
+            this.retry_message = retry_message;
+        }
+
+        public void setError_message(String error_message) {
+            this.error_message = error_message;
+        }
+
+        public void setKeyword(String keyword) {
+            this.keyword = keyword;
+        }
+
+        public void setAdmin_url(String admin_url) {
+            this.admin_url = admin_url;
+        }
+
+        public void setAeskey(String aeskey) {
+            this.aeskey = aeskey;
+        }
+
+        public void setAdminusername(String adminusername) {
+            this.adminusername = adminusername;
+        }
+
+        public void setAdminpassword(String adminpassword) {
+            this.adminpassword = adminpassword;
+        }
     }
 }

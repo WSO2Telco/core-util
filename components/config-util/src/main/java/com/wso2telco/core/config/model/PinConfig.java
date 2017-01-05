@@ -1,4 +1,4 @@
-package com.wso2telco.core.entity;
+package com.wso2telco.core.config.model;
 
 /**
  * Created by isuru on 1/2/17.
