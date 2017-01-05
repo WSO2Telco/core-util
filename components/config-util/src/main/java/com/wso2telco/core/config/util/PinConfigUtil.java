@@ -1,6 +1,6 @@
-package com.wso2telco.core.util;
+package com.wso2telco.core.config.util;
 
-import com.wso2telco.core.entity.PinConfig;
+import com.wso2telco.core.config.model.PinConfig;
 import org.wso2.carbon.identity.application.authentication.framework.context.AuthenticationContext;
 
 /**
