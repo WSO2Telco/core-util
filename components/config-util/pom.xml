@@ -12,7 +12,7 @@
     <artifactId>config-util</artifactId>
     <name>Core Config Utility service</name>
     <url>http://maven.apache.org</url>
-    <packaging>jar</packaging>
+    <packaging>bundle</packaging>
 
     <dependencies>
         <dependency>
@@ -40,6 +40,10 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
+                        <Export-Package>com.wso2telco.core.*</Export-Package>
+                        <Import-Package>
+                            org.osgi.framework
+                        </Import-Package>
                         <Private-Package>
                             com.wso2telco.core.config.internal
                         </Private-Package>
