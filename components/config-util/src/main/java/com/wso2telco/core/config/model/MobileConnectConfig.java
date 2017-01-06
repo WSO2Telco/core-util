@@ -622,24 +622,83 @@ public class MobileConnectConfig {
          */
         private String ussdLoginMessage;
 
-
+        /**
+         * The pin registration notification url
+         */
         private String pinRegistrationNotifyUrl;
 
-
+        /**
+         * The pin login notify url
+         */
         private String pinLoginNotifyUrl;
 
-
+        /**
+         * The pin registration confirm message
+         */
         private String pinRegistrationConfirmMessage;
 
-        private int pinMaxLength;
+        /**
+         * The pin maximum length
+         */
+        private String pinMaxLength;
 
-        @XmlElement(name = "PinMaxLength")
-        public int getPinMaxLength() {
-            return pinMaxLength;
+        /** The pin confirmation message */
+        private String pinConfirmMessage;
+
+        /** The pin invalid format message */
+        private String pinInvalidFormatMessage;
+
+        /** The pin mismatch message */
+        private String pinMismatchMessage;
+
+        /** The pin registration success message */
+        private String pinRegistrationSuccessMessage;
+
+        /** The pin invalid format attempts message */
+        private String pinInvalidFormatAttemptsExceedMessage;
+
+        /** The pin mismatch attempts exceed message */
+        private String pinMismatchAttemptsExceedMessage;
+
+        /** The pin mismatch attempts */
+        private String pinMismatchAttempts;
+
+        /** The invalid format pin attempts */
+        private String invalidFormatPinAttempts;
+
+        @XmlElement(name = "PinConfirmMessage")
+        public String getPinConfirmMessage() {
+            return pinConfirmMessage;
         }
 
-        public void setPinMaxLength(int pinMaxLength) {
-            this.pinMaxLength = pinMaxLength;
+        @XmlElement(name = "PinInvalidFormatMessage")
+        public String getPinInvalidFormatMessage() {
+            return pinInvalidFormatMessage;
+        }
+
+        @XmlElement(name = "PinMismatchMessage")
+        public String getPinMismatchMessage() {
+            return pinMismatchMessage;
+        }
+
+        @XmlElement(name = "PinRegistrationSuccessMessage")
+        public String getPinRegistrationSuccessMessage() {
+            return pinRegistrationSuccessMessage;
+        }
+
+        @XmlElement(name = "PinInvalidFormatAttemptsExceedMessage")
+        public String getPinInvalidFormatAttemptsExceedMessage() {
+            return pinInvalidFormatAttemptsExceedMessage;
+        }
+
+        @XmlElement(name = "PinMismatchAttemptsExceedMessage")
+        public String getPinMismatchAttemptsExceedMessage() {
+            return pinMismatchAttemptsExceedMessage;
+        }
+
+        @XmlElement(name = "PinMaxLength")
+        public String getPinMaxLength() {
+            return pinMaxLength;
         }
 
         @XmlElement(name = "PinRegistrationConfirmMessage")
@@ -647,17 +706,9 @@ public class MobileConnectConfig {
             return pinRegistrationConfirmMessage;
         }
 
-        public void setPinRegistrationConfirmMessage(String pinRegistrationConfirmMessage) {
-            this.pinRegistrationConfirmMessage = pinRegistrationConfirmMessage;
-        }
-
         @XmlElement(name = "PinRegistrationNotifyUrl")
         public String getPinRegistrationNotifyUrl() {
             return pinRegistrationNotifyUrl;
-        }
-
-        public void setPinRegistrationNotifyUrl(String pinRegistrationNotifyUrl) {
-            this.pinRegistrationNotifyUrl = pinRegistrationNotifyUrl;
         }
 
         @XmlElement(name = "PinLoginNotifyUrl")
@@ -665,17 +716,9 @@ public class MobileConnectConfig {
             return pinLoginNotifyUrl;
         }
 
-        public void setPinLoginNotifyUrl(String pinLoginNotifyUrl) {
-            this.pinLoginNotifyUrl = pinLoginNotifyUrl;
-        }
-
         @XmlElement(name = "PinLoginMessage")
         public String getPinLoginMessage() {
             return pinLoginMessage;
-        }
-
-        public void setPinLoginMessage(String pinLoginMessage) {
-            this.pinLoginMessage = pinLoginMessage;
         }
 
         @XmlElement(name = "PinRegistrationMessage")
@@ -683,26 +726,24 @@ public class MobileConnectConfig {
             return pinRegistrationMessage;
         }
 
-        public void setPinRegistrationMessage(String pinRegistrationMessage) {
-            this.pinRegistrationMessage = pinRegistrationMessage;
-        }
-
-        @XmlElement(name = "LoginMessage", defaultValue = "http://schema.openid.net/2007/05/claims")
+        @XmlElement(name = "LoginMessage")
         public String getUssdLoginMessage() {
             return ussdLoginMessage;
         }
 
-        @XmlElement(name = "RegistrationMessage", defaultValue = "http://schema.openid.net/2007/05/claims")
+        @XmlElement(name = "RegistrationMessage")
         public String getUssdRegistrationMessage() {
             return ussdRegistrationMessage;
         }
 
-        public void setUssdLoginMessage(String ussdLoginMessage) {
-            this.ussdLoginMessage = ussdLoginMessage;
+        @XmlElement(name = "PinMismatchAttempts")
+        public String getPinMismatchAttempts() {
+            return pinMismatchAttempts;
         }
 
-        public void setUssdRegistrationMessage(String ussdRegistrationMessage) {
-            this.ussdRegistrationMessage = ussdRegistrationMessage;
+        @XmlElement(name = "InvalidFormatPinAttempts")
+        public String getInvalidFormatPinAttempts() {
+            return invalidFormatPinAttempts;
         }
 
         /**
@@ -895,6 +936,69 @@ public class MobileConnectConfig {
             this.ussdPinContextEndpoint = ussdPinContextEndpoint;
         }
 
+        public void setUssdLoginMessage(String ussdLoginMessage) {
+            this.ussdLoginMessage = ussdLoginMessage;
+        }
+
+        public void setUssdRegistrationMessage(String ussdRegistrationMessage) {
+            this.ussdRegistrationMessage = ussdRegistrationMessage;
+        }
+
+        public void setPinRegistrationMessage(String pinRegistrationMessage) {
+            this.pinRegistrationMessage = pinRegistrationMessage;
+        }
+
+        public void setPinLoginNotifyUrl(String pinLoginNotifyUrl) {
+            this.pinLoginNotifyUrl = pinLoginNotifyUrl;
+        }
+
+        public void setPinMaxLength(String pinMaxLength) {
+            this.pinMaxLength = pinMaxLength;
+        }
+
+        public void setPinRegistrationConfirmMessage(String pinRegistrationConfirmMessage) {
+            this.pinRegistrationConfirmMessage = pinRegistrationConfirmMessage;
+        }
+
+        public void setPinRegistrationNotifyUrl(String pinRegistrationNotifyUrl) {
+            this.pinRegistrationNotifyUrl = pinRegistrationNotifyUrl;
+        }
+
+        public void setPinLoginMessage(String pinLoginMessage) {
+            this.pinLoginMessage = pinLoginMessage;
+        }
+
+        public void setPinConfirmMessage(String pinConfirmMessage) {
+            this.pinConfirmMessage = pinConfirmMessage;
+        }
+
+        public void setPinInvalidFormatMessage(String pinInvalidFormatMessage) {
+            this.pinInvalidFormatMessage = pinInvalidFormatMessage;
+        }
+
+        public void setPinMismatchMessage(String pinMismatchMessage) {
+            this.pinMismatchMessage = pinMismatchMessage;
+        }
+
+        public void setPinRegistrationSuccessMessage(String pinRegistrationSuccessMessage) {
+            this.pinRegistrationSuccessMessage = pinRegistrationSuccessMessage;
+        }
+
+        public void setPinInvalidFormatAttemptsExceedMessage(String pinInvalidFormatAttemptsExceedMessage) {
+            this.pinInvalidFormatAttemptsExceedMessage = pinInvalidFormatAttemptsExceedMessage;
+        }
+
+        public void setPinMismatchAttemptsExceedMessage(String pinMismatchAttemptsExceedMessage) {
+            this.pinMismatchAttemptsExceedMessage = pinMismatchAttemptsExceedMessage;
+        }
+
+        public void setPinMismatchAttempts(String pinMismatchAttempts) {
+            this.pinMismatchAttempts = pinMismatchAttempts;
+        }
+
+        public void setInvalidFormatPinAttempts(String invalidFormatPinAttempts) {
+            this.invalidFormatPinAttempts = invalidFormatPinAttempts;
+        }
     }
 
 
