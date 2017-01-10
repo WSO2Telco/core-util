@@ -1403,43 +1403,82 @@ public class MobileConnectConfig {
     /**
      * The Class SessionUpdaterConfig.
      */
-    public static class SessionUpdaterConfig{
+    public static class SessionUpdaterConfig {
 
-        /** The ussd send*/
+        /**
+         * The ussd send
+         */
         private String ussdsend;
 
-        /** The notify url*/
+        /**
+         * The notify url
+         */
         private String notifyurl;
 
-        /** The access token*/
+        /**
+         * The access token
+         */
         private String accesstoken;
 
-        /** The short code*/
+        /**
+         * The short code
+         */
         private String shortcode;
 
-        /** The message*/
+        /**
+         * The message
+         */
         private String message;
 
-        /** The retry message*/
+        /**
+         * The retry message
+         */
         private String retry_message;
 
-        /** The error message*/
+        /**
+         * The error message
+         */
         private String error_message;
 
-        /** The keyword*/
+        /**
+         * The keyword
+         */
         private String keyword;
 
-        /** The admin url*/
+        /**
+         * The admin url
+         */
         private String admin_url;
 
-        /** The aes key*/
+        /**
+         * The aes key
+         */
         private String aeskey;
 
-        /** The admin username*/
+        /**
+         * The admin username
+         */
         private String adminusername;
 
-        /** The admin password*/
+        /**
+         * The admin password
+         */
         private String adminpassword;
+
+        /**
+         * The mepin access token
+         */
+        private String mpinaccesstoken;
+
+        /**
+         * The mepin url
+         */
+        private String mpinurl;
+
+        /**
+         * The mepin client id
+         */
+        private String mpinclientid;
 
         @XmlElement(name = "ussdsend")
         public String getUssdsend() {
@@ -1501,6 +1540,21 @@ public class MobileConnectConfig {
             return adminpassword;
         }
 
+        @XmlElement(name = "mpin-accesstoken")
+        public String getMePinAccessToken() {
+            return mpinaccesstoken;
+        }
+
+        @XmlElement(name = "mpin-url")
+        public String getMePinUrl() {
+            return mpinurl;
+        }
+
+        @XmlElement(name = "mpin-clientid")
+        public String getMePinClientId() {
+            return mpinclientid;
+        }
+
         public void setUssdsend(String ussdsend) {
             this.ussdsend = ussdsend;
         }
@@ -1547,6 +1601,18 @@ public class MobileConnectConfig {
 
         public void setAdminpassword(String adminpassword) {
             this.adminpassword = adminpassword;
+        }
+
+        public void setMePinAccessToken(String mpinaccesstoken) {
+            this.mpinaccesstoken = mpinaccesstoken;
+        }
+
+        public void setMePinUrl(String mpinurl) {
+            this.mpinurl = mpinurl;
+        }
+
+        public void setMePinClientid(String mpinclientid) {
+            this.mpinclientid = mpinclientid;
         }
     }
 }
