@@ -21,6 +21,14 @@ public class PinConfig {
 
     private CurrentStep currentStep;
 
+    private String challengeQuestion1;
+
+    private String challengeQuestion2;
+
+    private String challengeAnswer1;
+
+    private String challengeAnswer2;
+
     public void incrementTotatAttempts() {
         totalAttempts++;
     }
@@ -93,6 +101,38 @@ public class PinConfig {
         return registeredPin.equalsIgnoreCase(confirmedPin);
     }
 
+    public String getChallengeQuestion1() {
+        return challengeQuestion1;
+    }
+
+    public void setChallengeQuestion1(String challengeQuestion1) {
+        this.challengeQuestion1 = challengeQuestion1;
+    }
+
+    public String getChallengeQuestion2() {
+        return challengeQuestion2;
+    }
+
+    public String getChallengeAnswer1() {
+        return challengeAnswer1;
+    }
+
+    public void setChallengeAnswer1(String challengeAnswer1) {
+        this.challengeAnswer1 = challengeAnswer1;
+    }
+
+    public String getChallengeAnswer2() {
+        return challengeAnswer2;
+    }
+
+    public void setChallengeAnswer2(String challengeAnswer2) {
+        this.challengeAnswer2 = challengeAnswer2;
+    }
+
+    public void setChallengeQuestion2(String challengeQuestion2) {
+        this.challengeQuestion2 = challengeQuestion2;
+    }
+
     public CurrentStep getCurrentStep() {
         return currentStep;
     }
@@ -101,9 +141,11 @@ public class PinConfig {
         this.currentStep = currentStep;
     }
 
-    public enum CurrentStep{
+    public enum CurrentStep {
         REGISTRATION,
         CONFIRMATION,
-        LOGIN
+        LOGIN,
+        PIN_RESET,
+        PIN_RESET_CONFIRMATION
     }
 }
