@@ -8,9 +8,16 @@ import org.wso2.carbon.identity.application.authentication.framework.context.Aut
  */
 public class PinConfigUtil {
 
-    public static void savePinConfigToContext(AuthenticationContext authenticationContext, String msisdn) {
+    public static void savePinConfigToContext(AuthenticationContext authenticationContext, String msisdn,
+                                              boolean isRegistering) {
+
         PinConfig pinConfig = new PinConfig();
-        pinConfig.setCurrentStep(PinConfig.CurrentStep.REGISTRATION);
+
+        if (isRegistering) {
+            pinConfig.setCurrentStep(PinConfig.CurrentStep.REGISTRATION);
+        } else {
+            pinConfig.setCurrentStep(PinConfig.CurrentStep.LOGIN);
+        }
         pinConfig.setInvalidFormatAttempts(0);
         pinConfig.setMsisdn(msisdn);
         pinConfig.setPinMismatchAttempts(0);
@@ -25,7 +32,7 @@ public class PinConfigUtil {
         authenticationContext.setProperty(Constants.PIN_CONFIG_OBJECT, pinConfig);
     }
 
-    public static PinConfig getPinConfig(AuthenticationContext authenticationContext){
+    public static PinConfig getPinConfig(AuthenticationContext authenticationContext) {
         return (PinConfig) authenticationContext.getProperty(Constants.PIN_CONFIG_OBJECT);
     }
 
