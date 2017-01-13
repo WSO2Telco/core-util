@@ -41,6 +41,7 @@
 		<module>components/msisdn-validator</module>
 		<module>components/pcr-service</module>
         <module>components/config-util</module>
+        <module>components/sp-config-util</module>
 		<module>features</module>
 	</modules>
 
