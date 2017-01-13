@@ -1181,6 +1181,7 @@ public class MobileConnectConfig {
 
     public static class MSISDN {
         private String encryptionKey;
+        private String validationRegex;
 
         @XmlElement(name = "EncryptionKey")
         public String getEncryptionKey() {
@@ -1191,6 +1192,14 @@ public class MobileConnectConfig {
             this.encryptionKey = encryptionKey;
         }
 
+        public void setValidationRegex(String validationRegex) {
+            this.validationRegex = validationRegex;
+        }
+
+        @XmlElement(name = "ValidationRegex")
+        public String getValidationRegex() {
+            return validationRegex;
+        }
     }
 
     public static class AuthProxy {
