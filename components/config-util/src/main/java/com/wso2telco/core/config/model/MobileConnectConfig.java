@@ -15,10 +15,10 @@
  ******************************************************************************/
 package com.wso2telco.core.config.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import java.util.List;
 
 // TODO: Auto-generated Javadoc
@@ -543,6 +543,61 @@ public class MobileConnectConfig {
     }
 
     /**
+     * The Class for Operator Specific USSD Message
+     */
+    public static class OperatorSpecificMessage{
+       /**
+         * The Operator name
+         * */
+        private String operator;
+
+        /**
+         * The USSD Registration Message
+         * */
+        private String registrationMessage;
+
+        /**
+         * The USSD Login Message
+         * */
+        private String loginMessage;
+
+        @XmlAttribute(name = "operator")
+        public String getOperator() {
+            return operator;
+        }
+
+        @XmlElement(name = "RegistrationMessage")
+        public String getRegistrationMessage() {
+            return registrationMessage;
+        }
+
+        @XmlElement(name = "LoginMessage")
+        public String getLoginMessage() {
+            return loginMessage;
+        }
+
+        public void setOperator(String operator) { this.operator = operator; }
+
+        public void setRegistrationMessage(String registrationMessage) { this.registrationMessage = registrationMessage; }
+
+        public void setLoginMessage(String loginMessage) { this.loginMessage = loginMessage; }
+    }
+
+    /**
+     * The Class for Operator Specific USSD Messages
+     */
+    public static class OperatorSpecificMessages
+    {
+        private OperatorSpecificMessage[] OperatorSpecificMessage;
+
+        @XmlElement(name = "OperatorSpecificMessage")
+        public OperatorSpecificMessage[] getOperatorSpecificMessage () { return OperatorSpecificMessage; }
+
+        public void setOperatorSpecificMessage (OperatorSpecificMessage[] OperatorSpecificMessage){ this.OperatorSpecificMessage = OperatorSpecificMessage; }
+    }
+
+
+    /**
      * The Class USSDConfig.
      */
     public static class USSDConfig {
@@ -665,6 +720,15 @@ public class MobileConnectConfig {
 
         /** The invalid format pin attempts */
         private String invalidFormatPinAttempts;
+
+        /** The USSD accept user responses */
+        private String acceptUserInputs;
+
+        /** The USSD reject user responses */
+        private String rejectUserInputs;
+
+        /** The Operator Specific Messages */
+        private OperatorSpecificMessages operatorSpecificMessages;
 
         @XmlElement(name = "PinConfirmMessage")
         public String getPinConfirmMessage() {
@@ -846,6 +910,20 @@ public class MobileConnectConfig {
             return registrationNotifyUrl;
         }
 
+        @XmlElement(name = "AcceptUserInputs")
+        public String getAcceptUserInputs() {
+            return acceptUserInputs;
+        }
+
+        @XmlElement(name = "RejectUserInputs")
+        public String getRejectUserInputs() {
+            return rejectUserInputs;
+        }
+
+        @XmlElement(name = "OperatorSpecificMessages")
+        public OperatorSpecificMessages getOperatorSpecificMessages() {
+            return operatorSpecificMessages;
+        }
 
         public void setLoginNotifyUrl(String loginNotifyUrl) {
             this.loginNotifyUrl = loginNotifyUrl;
@@ -972,33 +1050,29 @@ public class MobileConnectConfig {
             this.pinConfirmMessage = pinConfirmMessage;
         }
 
-        public void setPinInvalidFormatMessage(String pinInvalidFormatMessage) {
-            this.pinInvalidFormatMessage = pinInvalidFormatMessage;
-        }
+        public void setPinInvalidFormatMessage(String pinInvalidFormatMessage) { this.pinInvalidFormatMessage = pinInvalidFormatMessage; }
 
         public void setPinMismatchMessage(String pinMismatchMessage) {
             this.pinMismatchMessage = pinMismatchMessage;
         }
 
-        public void setPinRegistrationSuccessMessage(String pinRegistrationSuccessMessage) {
-            this.pinRegistrationSuccessMessage = pinRegistrationSuccessMessage;
+        public void setPinRegistrationSuccessMessage(String pinRegistrationSuccessMessage) { this.pinRegistrationSuccessMessage = pinRegistrationSuccessMessage; }
+
+        public void setPinInvalidFormatAttemptsExceedMessage(String pinInvalidFormatAttemptsExceedMessage) { this.pinInvalidFormatAttemptsExceedMessage = pinInvalidFormatAttemptsExceedMessage; }
+
+        public void setPinMismatchAttemptsExceedMessage(String pinMismatchAttemptsExceedMessage) { this.pinMismatchAttemptsExceedMessage = pinMismatchAttemptsExceedMessage; }
+
+        public void setPinMismatchAttempts(String pinMismatchAttempts) { this.pinMismatchAttempts = pinMismatchAttempts; }
+
+        public void setInvalidFormatPinAttempts(String invalidFormatPinAttempts) { this.invalidFormatPinAttempts = invalidFormatPinAttempts; }
+
+        public void setAcceptUserInputs(String acceptUserInputs) { this.acceptUserInputs = acceptUserInputs; }
+
+        public void setRejectUserInputs(String rejectUserInputs) {
+            this.rejectUserInputs = rejectUserInputs;
         }
 
-        public void setPinInvalidFormatAttemptsExceedMessage(String pinInvalidFormatAttemptsExceedMessage) {
-            this.pinInvalidFormatAttemptsExceedMessage = pinInvalidFormatAttemptsExceedMessage;
-        }
-
-        public void setPinMismatchAttemptsExceedMessage(String pinMismatchAttemptsExceedMessage) {
-            this.pinMismatchAttemptsExceedMessage = pinMismatchAttemptsExceedMessage;
-        }
-
-        public void setPinMismatchAttempts(String pinMismatchAttempts) {
-            this.pinMismatchAttempts = pinMismatchAttempts;
-        }
-
-        public void setInvalidFormatPinAttempts(String invalidFormatPinAttempts) {
-            this.invalidFormatPinAttempts = invalidFormatPinAttempts;
-        }
+        public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) { this.operatorSpecificMessages = operatorSpecificMessages; }
     }
 
 
