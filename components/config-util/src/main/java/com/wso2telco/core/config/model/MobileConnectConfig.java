@@ -86,6 +86,8 @@ public class MobileConnectConfig {
     /** The SessionUpdaterConfig. */
     protected SessionUpdaterConfig sessionUpdaterConfig;
 
+    protected AuthenticatorSelectionConfig authenticatorSelectionConfig;
+
     @XmlElement(name = "AdminUrl")
     public String getAdminUrl() {
         return adminUrl;
@@ -168,6 +170,15 @@ public class MobileConnectConfig {
 
     public void setMifeOpenIDTokenBuilderConfig(MIFEOpenIDTokenBuilderConfig mifeOpenIDTokenBuilderConfig) {
         this.mifeOpenIDTokenBuilderConfig = mifeOpenIDTokenBuilderConfig;
+    }
+
+    @XmlElement(name = "AuthenticatorSelectionConfig")
+    public AuthenticatorSelectionConfig getAuthenticatorSelectionConfig() {
+        return authenticatorSelectionConfig;
+    }
+
+    public void setAuthenticatorSelectionConfig(AuthenticatorSelectionConfig authenticatorSelectionConfig) {
+        this.authenticatorSelectionConfig = authenticatorSelectionConfig;
     }
 
 
@@ -1244,6 +1255,7 @@ public class MobileConnectConfig {
 
     public static class MSISDN {
         private String encryptionKey;
+        private String validationRegex;
 
         @XmlElement(name = "EncryptionKey")
         public String getEncryptionKey() {
@@ -1254,6 +1266,14 @@ public class MobileConnectConfig {
             this.encryptionKey = encryptionKey;
         }
 
+        public void setValidationRegex(String validationRegex) {
+            this.validationRegex = validationRegex;
+        }
+
+        @XmlElement(name = "ValidationRegex")
+        public String getValidationRegex() {
+            return validationRegex;
+        }
     }
 
     public static class AuthProxy {
@@ -1687,6 +1707,30 @@ public class MobileConnectConfig {
 
         public void setMePinClientid(String mpinclientid) {
             this.mpinclientid = mpinclientid;
+        }
+    }
+
+    public static class AuthenticatorSelectionConfig {
+        private String serviceProviderBasedSelectionEnabled;
+
+        private String mobileNetworkOperatorBasedSelectionEnabled;
+
+        @XmlElement(name = "ServiceProviderBasedSelectionEnabled")
+        public String getServiceProviderBasedSelectionEnabled() {
+            return serviceProviderBasedSelectionEnabled;
+        }
+
+        @XmlElement(name = "MobileNetworkOperatorBasedSelectionEnabled")
+        public String getMobileNetworkOperatorBasedSelectionEnabled() {
+            return mobileNetworkOperatorBasedSelectionEnabled;
+        }
+
+        public void setServiceProviderBasedSelectionEnabled(String serviceProviderBasedSelectionEnabled) {
+            this.serviceProviderBasedSelectionEnabled = serviceProviderBasedSelectionEnabled;
+        }
+
+        public void setMobileNetworkOperatorBasedSelectionEnabled(String mobileNetworkOperatorBasedSelectionEnabled) {
+            this.mobileNetworkOperatorBasedSelectionEnabled = mobileNetworkOperatorBasedSelectionEnabled;
         }
     }
 }
