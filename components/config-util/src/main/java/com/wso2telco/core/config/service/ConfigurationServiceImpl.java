@@ -67,6 +67,11 @@ public class ConfigurationServiceImpl implements ConfigurationService{
         DataHolder.getInstance().setAuthenticationLevelMap(null);
     }
 
+    /**
+     * Loads MIFE Authenticators into a Map
+     * @param authenticationLevels
+     * @return MIFE Authenticator Map
+     */
     private Map<String, MIFEAuthentication> loadMIFEAuthenticatorMap(AuthenticationLevels authenticationLevels) {
         Map<String, MIFEAuthentication> authenticatorMap = new HashMap<>();
         List<AuthenticationLevel> authenticationLevelList = authenticationLevels.getAuthenticationLevelList();
