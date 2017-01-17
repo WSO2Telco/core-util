@@ -33,4 +33,8 @@ public interface SpConfigDAO {
     String getSaaMessage(String clientId) throws Exception;
 
     String getSaaImageUrl(String clientId) throws Exception;
+
+    String getUSSDLoginMessage(String clientId);
+
+    String getUSSDRegistrationMessage(String clientId);
 }

@@ -22,4 +22,6 @@ public class ConfigKey {
     public static final String MSG = "msg";
     public static final String SAA_MSG = "saaMsg";
     public static final String SAA_IMG_URL = "saaImageUrl";
+    public static final String SP_USSD_LOGIN_MESSAGE = "spUssdLoginMessage";
+    public static final String SP_USSD_REGISTRATION_MESSAGE = "spUssdRegistrationMessage";
 }
