@@ -35,5 +35,6 @@
 	    <module>com.wso2telco.core.coreparent.feature</module>
         <module>com.wso2telco.core.msisdnvalidator.feature</module>
         <module>com.wso2telco.core.config.feature</module>
+        <module>com.wso2telco.core.spconfig.feature</module>
     </modules>
 </project>
