@@ -1,5 +1,7 @@
 package com.wso2telco.core.config.model;
 
+import org.wso2.carbon.identity.application.authentication.framework.exception.AuthenticationFailedException;
+
 /**
  * Created by isuru on 1/2/17.
  */
@@ -97,8 +99,12 @@ public class PinConfig {
         this.pinMismatchAttempts = pinMismatchAttempts;
     }
 
-    public boolean isPinsMatched() {
-        return registeredPin.equalsIgnoreCase(confirmedPin);
+    public boolean isPinsMatched() throws AuthenticationFailedException {
+        if(confirmedPin != null && registeredPin != null){
+            return registeredPin.equalsIgnoreCase(confirmedPin);
+        }else {
+            throw new AuthenticationFailedException("Did not receive pin response");
+        }
     }
 
     public String getChallengeQuestion1() {
