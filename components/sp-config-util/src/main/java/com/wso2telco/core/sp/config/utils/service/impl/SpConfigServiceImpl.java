@@ -62,4 +62,18 @@ public class SpConfigServiceImpl implements SpConfigService {
 
         return spConfigDAO.getSaaImageUrl(clientId);
     }
+
+    @Override
+    public String getUSSDLoginMessage(String clientId) {
+        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
+
+        return spConfigDAO.getUSSDLoginMessage(clientId);
+    }
+
+    @Override
+    public String getUSSDRegistrationMessage(String clientId) {
+        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
+
+        return spConfigDAO.getUSSDRegistrationMessage(clientId);
+    }
 }

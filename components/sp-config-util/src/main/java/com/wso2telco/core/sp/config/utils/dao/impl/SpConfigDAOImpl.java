@@ -134,6 +134,28 @@ public class SpConfigDAOImpl implements SpConfigDAO {
         return saaImageUrls.get(0);
     }
 
+    @Override
+    public String getUSSDLoginMessage(String clientId) {
+        try {
+            List<String> spUssdLoginMessages = getConfig(clientId, ConfigKey.SP_USSD_LOGIN_MESSAGE);
+            return spUssdLoginMessages.get(0);
+        }catch (Exception e){
+            // return null if no configuration value found for sp
+            return null;
+        }
+    }
+
+    @Override
+    public String getUSSDRegistrationMessage(String clientId) {
+        try {
+            List<String> spUssdRegistrationMessages = getConfig(clientId, ConfigKey.SP_USSD_REGISTRATION_MESSAGE);
+            return spUssdRegistrationMessages.get(0);
+        }catch (Exception e){
+            // return null if no configuration value found for sp
+            return null;
+        }
+    }
+
     private List<String> getConfig(String clientId, String configKey) throws Exception {
         Connection connectDBConnection;
         PreparedStatement preparedStatement = null;
