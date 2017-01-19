@@ -35,4 +35,8 @@ public interface SpConfigService {
     String getUSSDLoginMessage(String clientId);
 
     String getUSSDRegistrationMessage(String clientId);
+
+    String getUSSDPinLoginMessage(String clientId);
+
+    String getUSSDPinRegistrationMessage(String clientId);
 }

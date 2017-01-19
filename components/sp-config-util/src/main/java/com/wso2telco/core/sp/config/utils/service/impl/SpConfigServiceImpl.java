@@ -76,4 +76,18 @@ public class SpConfigServiceImpl implements SpConfigService {
 
         return spConfigDAO.getUSSDRegistrationMessage(clientId);
     }
+
+    @Override
+    public String getUSSDPinLoginMessage(String clientId) {
+        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
+
+        return spConfigDAO.getUSSDPinLoginMessage(clientId);
+    }
+
+    @Override
+    public String getUSSDPinRegistrationMessage(String clientId) {
+        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
+
+        return spConfigDAO.getUSSDPinRegistrationMessage(clientId);
+    }
 }
