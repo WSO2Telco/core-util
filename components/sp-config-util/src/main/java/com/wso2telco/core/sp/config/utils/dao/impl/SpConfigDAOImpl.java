@@ -21,6 +21,7 @@ import com.wso2telco.core.sp.config.utils.dao.SpConfigDAO;
 import com.wso2telco.core.sp.config.utils.domain.Config;
 import com.wso2telco.core.sp.config.utils.util.ConfigKey;
 import org.apache.log4j.Logger;
+import org.wso2.carbon.utils.DBUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,7 +38,7 @@ public class SpConfigDAOImpl implements SpConfigDAO {
         PreparedStatement preparedStatement = null;
 
         try {
-            Connection connectDBConnection = DbUtils.getDBConnection();
+            Connection connectDBConnection = DbUtils.getConnectDbConnection();
             String query = "INSERT INTO sp_configuration VALUES(?,?,?)";
 
             preparedStatement = connectDBConnection.prepareStatement(query);
@@ -64,7 +65,7 @@ public class SpConfigDAOImpl implements SpConfigDAO {
         logger.debug("Deleting config [" + config + " ] ");
 
         try {
-            Connection connectDBConnection = DbUtils.getDBConnection();
+            Connection connectDBConnection = DbUtils.getConnectDbConnection();
             String query = "DELETE FROM sp_configuration WHERE client_id = ? AND config_key = ? AND config_value = ?";
 
             preparedStatement = connectDBConnection.prepareStatement(query);
@@ -164,7 +165,7 @@ public class SpConfigDAOImpl implements SpConfigDAO {
         List<String> configList = new ArrayList<String>();
 
         try {
-            connectDBConnection = DbUtils.getDBConnection();
+            connectDBConnection = DbUtils.getConnectDbConnection();
             String query = "SELECT config_value FROM sp_configuration WHERE client_id = ? AND config_key = ?";
 
             preparedStatement = connectDBConnection.prepareStatement(query);

@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
- * 
+ *
  * WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -50,12 +50,16 @@ public class DbUtils {
 
 	/** The datasource. */
 	private static volatile DataSource Datasource = null;
-	
+
+	private static volatile DataSource connectDatasource = null;
+
 	/** The Constant DEP_DATA_SOURCE. */
 	private static String DEP_DATA_SOURCE = null;
 
 	/** The Constant log. */
 	private static final Log log = LogFactory.getLog(DbUtils.class);
+
+	private static final String CONNECT_DB = "jdbc/CONNECT_DB";
 
 	private static Map<DataSourceNames, DataSource> dbDataSourceMap;
 
@@ -80,12 +84,32 @@ public class DbUtils {
 			Context ctx = new InitialContext();
 			DEP_DATA_SOURCE=(DataSourceNames.WSO2TELCO_DEP_DB.jndiName());
 			Datasource = (DataSource) ctx.lookup(DEP_DATA_SOURCE);
-			
+
 		} catch (NamingException e) {
 			handleException("Error while looking up the data source: " + DEP_DATA_SOURCE, e);
 		}
 	}
 
+	/**
+	 * Initialize datasources.
+	 *
+	 * @throws SQLException
+	 *             the SQL exception
+	 *             the db util exception
+	 */
+	public static void initializeConnectDatasource() throws SQLException,DBUtilException {
+		if (connectDatasource != null) {
+			return;
+		}
+
+		try {
+			Context ctx = new InitialContext();
+			connectDatasource = (DataSource) ctx.lookup(CONNECT_DB);
+
+		} catch (NamingException e) {
+			handleException("Error while looking up the data source: " + CONNECT_DB, e);
+		}
+	}
 	/**
 	 * IMPORTANT : This method must be deprecated. going forward use
 	 * "getDbConnection(DataSourceNames dataSourceName)" method Gets the * db connection.
@@ -105,6 +129,15 @@ public class DbUtils {
 		throw new SQLException("Datasource not initialized properly");
 	}
 
+	public static Connection getConnectDbConnection() throws SQLException, DBUtilException {
+	    initializeConnectDatasource();
+
+        if (connectDatasource != null){
+            return connectDatasource.getConnection();
+        }else {
+            throw new SQLException("Datasource not initialized properly");
+        }
+    }
 	/**
 	 * Gets the db connection.
 	 *
@@ -161,7 +194,7 @@ public class DbUtils {
 			}
 		}
 		return (finalStr);
-	} 
+	}
 
 	/**
 	 * Format.
@@ -242,7 +275,7 @@ public class DbUtils {
 		}
 
 		return (finalStr);
-	} 
+	}
 
 	/**
 	 * Format.
@@ -295,7 +328,7 @@ public class DbUtils {
 
 		doubData = doubleData.doubleValue();
 		return (format(doubData, precision, scale));
-	} 
+	}
 	/**
 	 * Connect.
 	 *
@@ -323,7 +356,7 @@ public class DbUtils {
 		connection.setAutoCommit(false);
 
 		return connection;
-	} 
+	}
 
 	/**
 	 * Disconnect.
@@ -342,7 +375,7 @@ public class DbUtils {
 
 		// immediately disconnects from database and releases JDBC resources
 		con.close();
-	} 
+	}
 
 	/**
 	 * Handle exception.
