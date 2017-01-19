@@ -37,4 +37,8 @@ public interface SpConfigDAO {
     String getUSSDLoginMessage(String clientId);
 
     String getUSSDRegistrationMessage(String clientId);
+
+    String getUSSDPinLoginMessage(String clientId);
+
+    String getUSSDPinRegistrationMessage(String clientId);
 }

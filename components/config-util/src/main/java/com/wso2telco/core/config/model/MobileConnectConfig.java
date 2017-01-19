@@ -607,6 +607,18 @@ public class MobileConnectConfig {
         public void setOperatorSpecificMessage (OperatorSpecificMessage[] OperatorSpecificMessage){ this.OperatorSpecificMessage = OperatorSpecificMessage; }
     }
 
+    /**
+     * The Class for Operator Specific Pin USSD Messages
+     */
+    public static class OperatorSpecificPinMessages
+    {
+        private OperatorSpecificMessage[] OperatorSpecificPinMessage;
+
+        @XmlElement(name = "OperatorSpecificMessage")
+        public OperatorSpecificMessage[] getOperatorSpecificPinMessage () { return OperatorSpecificPinMessage; }
+
+        public void setOperatorSpecificPinMessage (OperatorSpecificMessage[] OperatorSpecificPinMessage){ this.OperatorSpecificPinMessage = OperatorSpecificPinMessage; }
+    }
 
     /**
      * The Class USSDConfig.
@@ -741,6 +753,9 @@ public class MobileConnectConfig {
         /** The Operator Specific Messages */
         private OperatorSpecificMessages operatorSpecificMessages;
 
+        /** The Operator Specific Messages */
+        private OperatorSpecificPinMessages operatorSpecificPinMessages;
+
         @XmlElement(name = "PinConfirmMessage")
         public String getPinConfirmMessage() {
             return pinConfirmMessage;
@@ -799,6 +814,11 @@ public class MobileConnectConfig {
         @XmlElement(name = "PinRegistrationMessage")
         public String getPinRegistrationMessage() {
             return pinRegistrationMessage;
+        }
+
+        @XmlElement(name = "OperatorSpecificPinMessages")
+        public OperatorSpecificPinMessages getOperatorSpecificPinMessages() {
+            return operatorSpecificPinMessages;
         }
 
         @XmlElement(name = "LoginMessage")
@@ -1084,6 +1104,9 @@ public class MobileConnectConfig {
         }
 
         public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) { this.operatorSpecificMessages = operatorSpecificMessages; }
+
+        public void setOperatorSpecificPinMessages(OperatorSpecificPinMessages operatorSpecificPinMessages) { this.operatorSpecificPinMessages = operatorSpecificPinMessages; }
+
     }
 
 
