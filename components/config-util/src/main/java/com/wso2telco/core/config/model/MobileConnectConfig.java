@@ -496,6 +496,36 @@ public class MobileConnectConfig {
         private String message;
 
         /**
+         * This is to identify if an external short URL service is enabled.
+         */
+        private String isShortUrl;
+
+        /**
+         * The first part of the message sent in SMS.
+         */
+        private String messageContentFirst;
+
+        /**
+         * The end of the message sent in SMS.
+         */
+        private String messageContentLast;
+
+        /**
+         * The fully qualified name of the short URL service class.
+         */
+        private String shortUrlClass;
+
+        /**
+         * The URL of the short URl service.
+         */
+        private String shortUrlService;
+
+        /**
+         * The access token of the short URL service
+         */
+        private String accessToken;
+
+        /**
          * Gets the endpoint.
          *
          * @return the endpoint
@@ -525,6 +555,11 @@ public class MobileConnectConfig {
             return message;
         }
 
+        @XmlElement(name = "IsShortUrl")
+        public String getIsShortUrl() {
+            return isShortUrl;
+        }
+
         /**
          * Sets the endpoint.
          *
@@ -550,6 +585,99 @@ public class MobileConnectConfig {
          */
         public void setMessage(String message) {
             this.message = message;
+        }
+
+        /**
+         * Sets the a URL shortening service is enabled.
+         * @param isShortUrl URL shortening service enabling status
+         */
+        public void setIsShortUrl(String isShortUrl) {
+            this.isShortUrl = isShortUrl;
+        }
+
+        /**
+         * Returns the first part of the message sent in SMS.
+         * @return first part of the message sent in SMS
+         */
+        @XmlElement(name = "MessageContentFirst")
+        public String getMessageContentFirst() {
+            return messageContentFirst;
+        }
+
+        /**
+         * Sets the first part of the message sent in SMS.
+         * @param messageContentFirst first part of the message sent in SMS
+         */
+        public void setMessageContentFirst(String messageContentFirst) {
+            this.messageContentFirst = messageContentFirst;
+        }
+
+        /**
+         * Returns the end of the message sent in SMS.
+         * @return end of the message sent in SMS
+         */
+        @XmlElement(name = "MessageContentLast")
+        public String getMessageContentLast() {
+            return messageContentLast;
+        }
+
+        /**
+         * Sets the end of the message sent in SMS.
+         * @param messageContentLast end of the message sent in SMS
+         */
+        public void setMessageContentLast(String messageContentLast) {
+            this.messageContentLast = messageContentLast;
+        }
+
+        /**
+         * Returns the fully qualified name of the Short URL service class.
+         * @return the fully qualified name of the Short URL service class
+         */
+        @XmlElement(name = "ShortUrlClass")
+        public String getShortUrlClass() {
+            return shortUrlClass;
+        }
+
+        /**
+         * Sets the fully qualified name of the Short URL service class.
+         * @param shortUrlClass the fully qualified name of the Short URL service class
+         */
+        public void setShortUrlClass(String shortUrlClass) {
+            this.shortUrlClass = shortUrlClass;
+        }
+
+        /**
+         * Returns the URL of the Short URL Service.
+         * @return the URL of the Short URL Service
+         */
+        @XmlElement(name = "ShortUrlService")
+        public String getShortUrlService() {
+            return shortUrlService;
+        }
+
+        /**
+         * Sets the URL of the Short URL Service.
+         * @param shortUrlService URL of the Short URL Service
+         */
+        public void setShortUrlService(String shortUrlService) {
+            this.shortUrlService = shortUrlService;
+        }
+
+        /**
+         * Returns the access token for the short URL service.
+         * @return the access token for the short URL service
+         */
+        @XmlAttribute(name = "AccessToken")
+        public String getAccessToken() {
+            return accessToken;
+        }
+
+        /**
+         * Sets the access token for the short URL service.
+         * @param accessToken the access token for the short URL service
+         */
+        public void setAccessToken(String accessToken) {
+            this.accessToken = accessToken;
         }
     }
 
