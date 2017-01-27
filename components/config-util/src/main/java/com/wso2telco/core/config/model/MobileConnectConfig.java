@@ -1317,6 +1317,71 @@ public class MobileConnectConfig {
 
     }
 
+
+    private DataPublisher dataPublisher;
+
+    public void setDataPublisher(DataPublisher dataPublisher) {
+        this.dataPublisher = dataPublisher;
+    }
+
+    @XmlElement(name = "DataPublisher")
+    public DataPublisher getDataPublisher() {
+        return dataPublisher;
+    }
+
+    public static class DataPublisher {
+        private boolean enabled;
+        private String username;
+        private String password;
+        private String dasUrl;
+        private String dasSecureUrl;
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
+
+        @XmlElement(name = "Enabled")
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        @XmlElement(name = "UserName")
+        public String getUsername() {
+            return username;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        @XmlElement(name = "Password")
+        public String getPassword() {
+            return password;
+        }
+
+        public void setDasUrl(String dasUrl) {
+            this.dasUrl = dasUrl;
+        }
+
+        @XmlElement(name = "DASUrl")
+        public String getDasUrl() {
+            return dasUrl;
+        }
+
+        public void setDasSecureUrl(String dasSecureUrl) {
+            this.dasSecureUrl = dasSecureUrl;
+        }
+
+        @XmlElement(name = "DASSecureUrl")
+        public String getDasSecureUrl() {
+            return dasSecureUrl;
+        }
+    }
+
     /**
      * The Class OPERATOR.
      */
