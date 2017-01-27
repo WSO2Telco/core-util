@@ -59,6 +59,8 @@ public class MobileConnectConfig {
      */
     private USSDConfig ussdConfig;
 
+    private SaaConfig saaConfig;
+
     /**
      * The listener webapp host.
      */
@@ -80,13 +82,36 @@ public class MobileConnectConfig {
 
     private String adminPassword;
 
-    /** The MIFEOpenIDTokenBuilderConfig. */
+    /**
+     * The MIFEOpenIDTokenBuilderConfig.
+     */
     protected MIFEOpenIDTokenBuilderConfig mifeOpenIDTokenBuilderConfig;
 
-    /** The SessionUpdaterConfig. */
+    /**
+     * The SessionUpdaterConfig.
+     */
     protected SessionUpdaterConfig sessionUpdaterConfig;
 
     protected AuthenticatorSelectionConfig authenticatorSelectionConfig;
+
+    /**
+     * get the saa config
+     *
+     * @return
+     */
+    @XmlElement(name = "SAA")
+    public SaaConfig getSaaConfig() {
+        return saaConfig;
+    }
+
+    /**
+     * sets the saa config
+     *
+     * @param saaConfig saa config
+     */
+    public void setSaaConfig(SaaConfig saaConfig) {
+        this.saaConfig = saaConfig;
+    }
 
     @XmlElement(name = "AdminUrl")
     public String getAdminUrl() {
@@ -496,12 +521,17 @@ public class MobileConnectConfig {
         private String message;
 
         /**
-         * This is to identify if an external short URL service is enabled.
+         * aes key
          */
-        private String isShortUrl;
+        private String aesKey;
 
         /**
-         * The first part of the message sent in SMS.
+         * sender address
+         */
+        private String senderAddress;
+
+        /**
+         * first content of the message
          */
         private String messageContentFirst;
 
@@ -511,12 +541,17 @@ public class MobileConnectConfig {
         private String messageContentLast;
 
         /**
-         * The fully qualified name of the short URL service class.
+         * boolean flog to check whether the short url enabled
+         */
+        private boolean isShortUrl;
+
+        /**
+         * class to laod when shortening url
          */
         private String shortUrlClass;
 
         /**
-         * The URL of the short URl service.
+         * short url service
          */
         private String shortUrlService;
 
@@ -556,8 +591,55 @@ public class MobileConnectConfig {
         }
 
         @XmlElement(name = "IsShortUrl")
-        public String getIsShortUrl() {
+        public boolean getIsShortUrl() {
             return isShortUrl;
+        }
+
+        /**
+         * gets the aes key
+         *
+         * @return returns the aes key
+         */
+        @XmlElement(name = "AesKey")
+        public String getAesKey() {
+            return aesKey;
+        }
+
+        /**
+         * get sthe sender address
+         *
+         * @return
+         */
+        @XmlElement(name = "SenderAddress")
+        public String getSenderAddress() {
+            return senderAddress;
+        }
+
+        /**
+         * sets the access token
+         *
+         * @param accessToken access token
+         */
+        public void setAccessToken(String accessToken) {
+            this.accessToken = accessToken;
+        }
+
+        /**
+         * get the boolean flag to check the short url
+         *
+         * @return returns the boolean flag
+         */
+        public boolean isShortUrl() {
+            return isShortUrl;
+        }
+
+        /**
+         * sets the boolean flag
+         *
+         * @param shortUrl short url
+         */
+        public void setShortUrl(boolean shortUrl) {
+            isShortUrl = shortUrl;
         }
 
         /**
@@ -589,14 +671,16 @@ public class MobileConnectConfig {
 
         /**
          * Sets the a URL shortening service is enabled.
+         *
          * @param isShortUrl URL shortening service enabling status
          */
-        public void setIsShortUrl(String isShortUrl) {
+        public void setIsShortUrl(boolean isShortUrl) {
             this.isShortUrl = isShortUrl;
         }
 
         /**
          * Returns the first part of the message sent in SMS.
+         *
          * @return first part of the message sent in SMS
          */
         @XmlElement(name = "MessageContentFirst")
@@ -606,6 +690,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the first part of the message sent in SMS.
+         *
          * @param messageContentFirst first part of the message sent in SMS
          */
         public void setMessageContentFirst(String messageContentFirst) {
@@ -614,6 +699,7 @@ public class MobileConnectConfig {
 
         /**
          * Returns the end of the message sent in SMS.
+         *
          * @return end of the message sent in SMS
          */
         @XmlElement(name = "MessageContentLast")
@@ -623,6 +709,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the end of the message sent in SMS.
+         *
          * @param messageContentLast end of the message sent in SMS
          */
         public void setMessageContentLast(String messageContentLast) {
@@ -631,6 +718,7 @@ public class MobileConnectConfig {
 
         /**
          * Returns the fully qualified name of the Short URL service class.
+         *
          * @return the fully qualified name of the Short URL service class
          */
         @XmlElement(name = "ShortUrlClass")
@@ -640,6 +728,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the fully qualified name of the Short URL service class.
+         *
          * @param shortUrlClass the fully qualified name of the Short URL service class
          */
         public void setShortUrlClass(String shortUrlClass) {
@@ -648,6 +737,7 @@ public class MobileConnectConfig {
 
         /**
          * Returns the URL of the Short URL Service.
+         *
          * @return the URL of the Short URL Service
          */
         @XmlElement(name = "ShortUrlService")
@@ -657,6 +747,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the URL of the Short URL Service.
+         *
          * @param shortUrlService URL of the Short URL Service
          */
         public void setShortUrlService(String shortUrlService) {
@@ -665,6 +756,7 @@ public class MobileConnectConfig {
 
         /**
          * Returns the access token for the short URL service.
+         *
          * @return the access token for the short URL service
          */
         @XmlAttribute(name = "AccessToken")
@@ -672,32 +764,86 @@ public class MobileConnectConfig {
             return accessToken;
         }
 
+
         /**
-         * Sets the access token for the short URL service.
-         * @param accessToken the access token for the short URL service
+         * sets the sender address
+         *
+         * @param senderAddress sender address
          */
-        public void setAccessToken(String accessToken) {
-            this.accessToken = accessToken;
+
+        public void setSenderAddress(String senderAddress) {
+            this.senderAddress = senderAddress;
+        }
+    }
+
+    public static class SaaConfig {
+
+        /**
+         * authentication endpoint of the saa server
+         */
+        private String authenticationEndpoint;
+
+        /**
+         * registration endpoint for saa server
+         */
+        private String registrationEndpoint;
+
+        /**
+         * get the auth endpoint
+         *
+         * @return
+         */
+        @XmlElement(name = "AuthenticationEndpoint")
+        public String getAuthenticationEndpoint() {
+            return authenticationEndpoint;
+        }
+
+        /**
+         * gets the registration endpoint
+         *
+         * @return registration endpoint
+         */
+        @XmlElement(name = "RegistrationEndpoint")
+        public String getRegistrationEndpoint() {
+            return registrationEndpoint;
+        }
+
+        /**
+         * sets the registration endpoint
+         *
+         * @param registrationEndpoint
+         */
+        public void setRegistrationEndpoint(String registrationEndpoint) {
+            this.registrationEndpoint = registrationEndpoint;
+        }
+
+        /**
+         * sets authentication endpoint
+         *
+         * @param authenticationEndpoint auth endpoint
+         */
+        public void setAuthenticationEndpoint(String authenticationEndpoint) {
+            this.authenticationEndpoint = authenticationEndpoint;
         }
     }
 
     /**
      * The Class for Operator Specific USSD Message
      */
-    public static class OperatorSpecificMessage{
-       /**
+    public static class OperatorSpecificMessage {
+        /**
          * The Operator name
-         * */
+         */
         private String operator;
 
         /**
          * The USSD Registration Message
-         * */
+         */
         private String registrationMessage;
 
         /**
          * The USSD Login Message
-         * */
+         */
         private String loginMessage;
 
         @XmlAttribute(name = "operator")
@@ -715,37 +861,49 @@ public class MobileConnectConfig {
             return loginMessage;
         }
 
-        public void setOperator(String operator) { this.operator = operator; }
+        public void setOperator(String operator) {
+            this.operator = operator;
+        }
 
-        public void setRegistrationMessage(String registrationMessage) { this.registrationMessage = registrationMessage; }
+        public void setRegistrationMessage(String registrationMessage) {
+            this.registrationMessage = registrationMessage;
+        }
 
-        public void setLoginMessage(String loginMessage) { this.loginMessage = loginMessage; }
+        public void setLoginMessage(String loginMessage) {
+            this.loginMessage = loginMessage;
+        }
     }
 
     /**
      * The Class for Operator Specific USSD Messages
      */
-    public static class OperatorSpecificMessages
-    {
+    public static class OperatorSpecificMessages {
         private OperatorSpecificMessage[] OperatorSpecificMessage;
 
         @XmlElement(name = "OperatorSpecificMessage")
-        public OperatorSpecificMessage[] getOperatorSpecificMessage () { return OperatorSpecificMessage; }
+        public OperatorSpecificMessage[] getOperatorSpecificMessage() {
+            return OperatorSpecificMessage;
+        }
 
-        public void setOperatorSpecificMessage (OperatorSpecificMessage[] OperatorSpecificMessage){ this.OperatorSpecificMessage = OperatorSpecificMessage; }
+        public void setOperatorSpecificMessage(OperatorSpecificMessage[] OperatorSpecificMessage) {
+            this.OperatorSpecificMessage = OperatorSpecificMessage;
+        }
     }
 
     /**
      * The Class for Operator Specific Pin USSD Messages
      */
-    public static class OperatorSpecificPinMessages
-    {
+    public static class OperatorSpecificPinMessages {
         private OperatorSpecificMessage[] OperatorSpecificPinMessage;
 
         @XmlElement(name = "OperatorSpecificMessage")
-        public OperatorSpecificMessage[] getOperatorSpecificPinMessage () { return OperatorSpecificPinMessage; }
+        public OperatorSpecificMessage[] getOperatorSpecificPinMessage() {
+            return OperatorSpecificPinMessage;
+        }
 
-        public void setOperatorSpecificPinMessage (OperatorSpecificMessage[] OperatorSpecificPinMessage){ this.OperatorSpecificPinMessage = OperatorSpecificPinMessage; }
+        public void setOperatorSpecificPinMessage(OperatorSpecificMessage[] OperatorSpecificPinMessage) {
+            this.OperatorSpecificPinMessage = OperatorSpecificPinMessage;
+        }
     }
 
     /**
@@ -848,41 +1006,78 @@ public class MobileConnectConfig {
          */
         private String pinMaxLength;
 
-        /** The pin confirmation message */
+        /**
+         * The pin confirmation message
+         */
         private String pinConfirmMessage;
 
-        /** The pin invalid format message */
+        /**
+         * The pin invalid format message
+         */
         private String pinInvalidFormatMessage;
 
-        /** The pin mismatch message */
+        /**
+         * The pin mismatch message
+         */
         private String pinMismatchMessage;
 
-        /** The pin registration success message */
+        /**
+         * The pin registration success message
+         */
         private String pinRegistrationSuccessMessage;
 
-        /** The pin invalid format attempts message */
+        /**
+         * The pin invalid format attempts message
+         */
         private String pinInvalidFormatAttemptsExceedMessage;
 
-        /** The pin mismatch attempts exceed message */
+        /**
+         * The pin mismatch attempts exceed message
+         */
         private String pinMismatchAttemptsExceedMessage;
 
-        /** The pin mismatch attempts */
+        /**
+         * The pin mismatch attempts
+         */
         private String pinMismatchAttempts;
 
-        /** The invalid format pin attempts */
+        /**
+         * The invalid format pin attempts
+         */
         private String invalidFormatPinAttempts;
 
-        /** The USSD accept user responses */
+        /**
+         * The USSD accept user responses
+         */
         private String acceptUserInputs;
 
-        /** The USSD reject user responses */
+        /**
+         * The USSD reject user responses
+         */
         private String rejectUserInputs;
 
-        /** The Operator Specific Messages */
+        /**
+         * The Operator Specific Messages
+         */
         private OperatorSpecificMessages operatorSpecificMessages;
 
-        /** The Operator Specific Messages */
+        /**
+         * The timeout configs for async requests
+         */
+        private TimeoutConfig timeoutConfig;
+        /**
+         * The Operator Specific Messages
+         */
         private OperatorSpecificPinMessages operatorSpecificPinMessages;
+
+        @XmlElement(name = "TimeoutConfig")
+        public TimeoutConfig getTimeoutConfig() {
+            return timeoutConfig;
+        }
+
+        public void setTimeoutConfig(TimeoutConfig timeoutConfig) {
+            this.timeoutConfig = timeoutConfig;
+        }
 
         @XmlElement(name = "PinConfirmMessage")
         public String getPinConfirmMessage() {
@@ -1209,34 +1404,126 @@ public class MobileConnectConfig {
             this.pinConfirmMessage = pinConfirmMessage;
         }
 
-        public void setPinInvalidFormatMessage(String pinInvalidFormatMessage) { this.pinInvalidFormatMessage = pinInvalidFormatMessage; }
+        public void setPinInvalidFormatMessage(String pinInvalidFormatMessage) {
+            this.pinInvalidFormatMessage = pinInvalidFormatMessage;
+        }
 
         public void setPinMismatchMessage(String pinMismatchMessage) {
             this.pinMismatchMessage = pinMismatchMessage;
         }
 
-        public void setPinRegistrationSuccessMessage(String pinRegistrationSuccessMessage) { this.pinRegistrationSuccessMessage = pinRegistrationSuccessMessage; }
+        public void setPinRegistrationSuccessMessage(String pinRegistrationSuccessMessage) {
+            this.pinRegistrationSuccessMessage = pinRegistrationSuccessMessage;
+        }
 
-        public void setPinInvalidFormatAttemptsExceedMessage(String pinInvalidFormatAttemptsExceedMessage) { this.pinInvalidFormatAttemptsExceedMessage = pinInvalidFormatAttemptsExceedMessage; }
+        public void setPinInvalidFormatAttemptsExceedMessage(String pinInvalidFormatAttemptsExceedMessage) {
+            this.pinInvalidFormatAttemptsExceedMessage = pinInvalidFormatAttemptsExceedMessage;
+        }
 
-        public void setPinMismatchAttemptsExceedMessage(String pinMismatchAttemptsExceedMessage) { this.pinMismatchAttemptsExceedMessage = pinMismatchAttemptsExceedMessage; }
+        public void setPinMismatchAttemptsExceedMessage(String pinMismatchAttemptsExceedMessage) {
+            this.pinMismatchAttemptsExceedMessage = pinMismatchAttemptsExceedMessage;
+        }
 
-        public void setPinMismatchAttempts(String pinMismatchAttempts) { this.pinMismatchAttempts = pinMismatchAttempts; }
+        public void setPinMismatchAttempts(String pinMismatchAttempts) {
+            this.pinMismatchAttempts = pinMismatchAttempts;
+        }
 
-        public void setInvalidFormatPinAttempts(String invalidFormatPinAttempts) { this.invalidFormatPinAttempts = invalidFormatPinAttempts; }
+        public void setInvalidFormatPinAttempts(String invalidFormatPinAttempts) {
+            this.invalidFormatPinAttempts = invalidFormatPinAttempts;
+        }
 
-        public void setAcceptUserInputs(String acceptUserInputs) { this.acceptUserInputs = acceptUserInputs; }
+        public void setAcceptUserInputs(String acceptUserInputs) {
+            this.acceptUserInputs = acceptUserInputs;
+        }
 
         public void setRejectUserInputs(String rejectUserInputs) {
             this.rejectUserInputs = rejectUserInputs;
         }
 
-        public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) { this.operatorSpecificMessages = operatorSpecificMessages; }
+        public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) {
+            this.operatorSpecificMessages = operatorSpecificMessages;
+        }
 
-        public void setOperatorSpecificPinMessages(OperatorSpecificPinMessages operatorSpecificPinMessages) { this.operatorSpecificPinMessages = operatorSpecificPinMessages; }
+        public void setOperatorSpecificPinMessages(OperatorSpecificPinMessages operatorSpecificPinMessages) {
+            this.operatorSpecificPinMessages = operatorSpecificPinMessages;
+        }
 
     }
 
+    public static class TimeoutConfig {
+
+        /**
+         * socket timeout
+         */
+        private int socketTimeout;
+
+        /**
+         * connection timeout
+         */
+        private int connectionTimeout;
+
+        /**
+         * connection request timeout
+         */
+        private int connectionRequestTimeout;
+
+        /**
+         * gets the socket timeout
+         *
+         * @return socket timeout
+         */
+        @XmlElement(name = "SocketTimeout")
+        public int getSocketTimeout() {
+            return socketTimeout;
+        }
+
+        /**
+         * sets the socket timeout
+         *
+         * @param socketTimeout socket timeout
+         */
+        public void setSocketTimeout(int socketTimeout) {
+            this.socketTimeout = socketTimeout;
+        }
+
+        /**
+         * gets the connection timeout
+         *
+         * @return connection timeout
+         */
+        @XmlElement(name = "ConnectionTimeout")
+        public int getConnectionTimeout() {
+            return connectionTimeout;
+        }
+
+        /**
+         * sets the connection timeout
+         *
+         * @param connectionTimeout connection timeout
+         */
+        public void setConnectionTimeout(int connectionTimeout) {
+            this.connectionTimeout = connectionTimeout;
+        }
+
+        /**
+         * gets the connection request timeout
+         *
+         * @return connection request timeout
+         */
+        @XmlElement(name = "ConnectionRequestTimeout")
+        public int getConnectionRequestTimeout() {
+            return connectionRequestTimeout;
+        }
+
+        /**
+         * sets the connection request timeout
+         *
+         * @param connectionRequestTimeout connection request timeout
+         */
+        public void setConnectionRequestTimeout(int connectionRequestTimeout) {
+            this.connectionRequestTimeout = connectionRequestTimeout;
+        }
+    }
 
     /**
      * The Class HEADERENRICH.
@@ -1624,25 +1911,39 @@ public class MobileConnectConfig {
      */
     public static class MIFEOpenIDTokenBuilderConfig {
 
-        /** The acr Access Token. */
+        /**
+         * The acr Access Token.
+         */
         private String acrAccessToken;
 
-        /** The acr Host Uri. */
+        /**
+         * The acr Host Uri.
+         */
         private String acrHostUri;
 
-        /** The retrieve Service. */
+        /**
+         * The retrieve Service.
+         */
         private String retrieveService;
 
-        /** The create Service. */
+        /**
+         * The create Service.
+         */
         private String createService;
 
-        /** The app Prov Service. */
+        /**
+         * The app Prov Service.
+         */
         private String appProvService;
 
-        /** The service Provider. */
+        /**
+         * The service Provider.
+         */
         private String serviceProvider;
 
-        /** The service Key. */
+        /**
+         * The service Key.
+         */
         private String serviceKey;
 
         public void setAcrAccessToken(String acrAccessToken) {
