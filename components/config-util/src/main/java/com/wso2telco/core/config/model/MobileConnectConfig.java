@@ -62,6 +62,11 @@ public class MobileConnectConfig {
     private SaaConfig saaConfig;
 
     /**
+     * toggles sp validation
+     */
+    private boolean isSpValidationDisabled;
+
+    /**
      * The listener webapp host.
      */
     private String listenerWebappHost;
@@ -81,6 +86,25 @@ public class MobileConnectConfig {
     private String adminUsername;
 
     private String adminPassword;
+
+    /**
+     * gets sp validation value
+     *
+     * @return returns the boolean flag
+     */
+    public boolean isSpValidationDisabled() {
+        return isSpValidationDisabled;
+    }
+
+    /**
+     * sets sp validation boolean flag
+     *
+     * @param isSpValidationDisabled boolean flag to disable sp validation
+     */
+    @XmlElement(name = "IsSpValidationDisabled")
+    public void setIsSpValidationDisabled(boolean isSpValidationDisabled) {
+        this.isSpValidationDisabled = isSpValidationDisabled;
+    }
 
     /**
      * The MIFEOpenIDTokenBuilderConfig.
