@@ -11,10 +11,18 @@ public class ScopeParam {
         OFFNET_FALLBACK
     }
 
+    public enum heFailureResults{
+        BREAK,
+        UNTRUST_MSISDN,
+        TRUST_MSISDN,
+        TRUST_LOGIN_HINT
+    }
+
     private boolean isLoginHintMandatory;
     private List<LoginHintFormatDetails> loginHintFormat;
     private boolean isTncVisible;
     private msisdnMismatchResultTypes msisdnMismatchResult;
+    private heFailureResults heFailureResult;
 
     public void setLoginHintFormat(List<LoginHintFormatDetails> loginHintFormat) {
         this.loginHintFormat = loginHintFormat;
@@ -38,6 +46,14 @@ public class ScopeParam {
 
     public msisdnMismatchResultTypes getMsisdnMismatchResult() {
         return msisdnMismatchResult;
+    }
+
+    public heFailureResults getHeFailureResult() {
+        return heFailureResult;
+    }
+
+    public void setHeFailureResult(heFailureResults heFailureResult) {
+        this.heFailureResult = heFailureResult;
     }
 
     public void setTncVisible(boolean isTncVisible) {
