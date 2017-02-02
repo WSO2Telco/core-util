@@ -630,6 +630,14 @@ public class MobileConnectConfig {
         }
 
         /**
+         * Sets the AES key.
+         * @param aesKey the AES key
+         */
+        public void setAesKey(String aesKey) {
+            this.aesKey = aesKey;
+        }
+
+        /**
          * get sthe sender address
          *
          * @return
