@@ -14,11 +14,12 @@ public class ScopeParam {
     public enum heFailureResults{
         BREAK,
         UNTRUST_MSISDN,
-        TRUST_MSISDN,
-        TRUST_LOGIN_HINT
+        TRUST_HEADER_MSISDN,
+        TRUST_LOGINHINT_MSISDN
     }
 
     private boolean isLoginHintMandatory;
+    private boolean isHeaderMsisdnMandatory;
     private List<LoginHintFormatDetails> loginHintFormat;
     private boolean isTncVisible;
     private msisdnMismatchResultTypes msisdnMismatchResult;
@@ -39,6 +40,12 @@ public class ScopeParam {
     public boolean isLoginHintMandatory() {
         return isLoginHintMandatory;
     }
+
+    public void setHeaderMsisdnMandatory(boolean headerMsisdnMandatory) {
+        isHeaderMsisdnMandatory = headerMsisdnMandatory;
+    }
+
+    public boolean isHeaderMsisdnMandatory() { return isHeaderMsisdnMandatory; }
 
     public void setMsisdnMismatchResult(msisdnMismatchResultTypes msisdnMismatchResult) {
         this.msisdnMismatchResult = msisdnMismatchResult;
