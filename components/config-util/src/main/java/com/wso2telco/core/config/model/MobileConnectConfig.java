@@ -821,6 +821,11 @@ public class MobileConnectConfig {
         private String registrationEndpoint;
 
         /**
+         * push service endpoint for saa server
+         */
+        private String pushServiceEndpoint;
+
+        /**
          * get the auth endpoint
          *
          * @return
@@ -856,6 +861,23 @@ public class MobileConnectConfig {
          */
         public void setAuthenticationEndpoint(String authenticationEndpoint) {
             this.authenticationEndpoint = authenticationEndpoint;
+        }
+
+        /**
+         * gets the push service endpoint
+         * @return return push service endpoint
+         */
+        @XmlElement(name = "PushServiceEndpoint")
+        public String getPushServiceEndpoint() {
+            return pushServiceEndpoint;
+        }
+
+        /**
+         * sets push service endpoint
+         * @param pushServiceEndpoint push service endpoint
+         */
+        public void setPushServiceEndpoint(String pushServiceEndpoint) {
+            this.pushServiceEndpoint = pushServiceEndpoint;
         }
     }
 
