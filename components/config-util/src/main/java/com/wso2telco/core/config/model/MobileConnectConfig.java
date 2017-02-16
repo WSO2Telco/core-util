@@ -585,6 +585,11 @@ public class MobileConnectConfig {
         private String accessToken;
 
         /**
+         * The timeout configs for async requests
+         */
+        private TimeoutConfig timeoutConfig;
+
+        /**
          * Gets the endpoint.
          *
          * @return the endpoint
@@ -805,6 +810,15 @@ public class MobileConnectConfig {
 
         public void setSenderAddress(String senderAddress) {
             this.senderAddress = senderAddress;
+        }
+
+        @XmlElement(name = "TimeoutConfig")
+        public TimeoutConfig getTimeoutConfig() {
+            return timeoutConfig;
+        }
+
+        public void setTimeoutConfig(TimeoutConfig timeoutConfig) {
+            this.timeoutConfig = timeoutConfig;
         }
     }
 
