@@ -35,10 +35,11 @@ public class SpConfigDAOImpl implements SpConfigDAO {
 
     public void save(Config config) throws Exception {
 
-        PreparedStatement preparedStatement = null;
+    	Connection connectDBConnection = null;
+    	PreparedStatement preparedStatement = null;
 
         try {
-            Connection connectDBConnection = DbUtils.getConnectDbConnection();
+            connectDBConnection = DbUtils.getConnectDbConnection();
             String query = "INSERT INTO sp_configuration VALUES(?,?,?)";
 
             preparedStatement = connectDBConnection.prepareStatement(query);
@@ -54,18 +55,22 @@ public class SpConfigDAOImpl implements SpConfigDAO {
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
+            if (connectDBConnection != null) {
+            	connectDBConnection.close();
+            }
         }
     }
 
     @Override
     public void delete(Config config) throws Exception {
 
-        PreparedStatement preparedStatement = null;
+    	Connection connectDBConnection = null;
+    	PreparedStatement preparedStatement = null;
 
         logger.debug("Deleting config [" + config + " ] ");
 
         try {
-            Connection connectDBConnection = DbUtils.getConnectDbConnection();
+        	connectDBConnection = DbUtils.getConnectDbConnection();
             String query = "DELETE FROM sp_configuration WHERE client_id = ? AND config_key = ? AND config_value = ?";
 
             preparedStatement = connectDBConnection.prepareStatement(query);
@@ -80,6 +85,9 @@ public class SpConfigDAOImpl implements SpConfigDAO {
         } finally {
             if (preparedStatement != null) {
                 preparedStatement.close();
+            }
+            if (connectDBConnection != null) {
+            	connectDBConnection.close();
             }
         }
     }
@@ -180,7 +188,7 @@ public class SpConfigDAOImpl implements SpConfigDAO {
     }
 
     private List<String> getConfig(String clientId, String configKey) throws Exception {
-        Connection connectDBConnection;
+        Connection connectDBConnection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
@@ -207,6 +215,10 @@ public class SpConfigDAOImpl implements SpConfigDAO {
             }
             if (resultSet != null) {
                 resultSet.close();
+            }
+            
+            if (connectDBConnection != null) {
+            	connectDBConnection.close();
             }
         }
 
