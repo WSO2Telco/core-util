@@ -1614,6 +1614,11 @@ public class MobileConnectConfig {
         private String enrichflg;
 
         /**
+         * The IP Header name
+         */
+        private String IPHeaderName;
+
+        /**
          * Gets the endpoint.
          *
          * @return the endpoint
@@ -1649,6 +1654,23 @@ public class MobileConnectConfig {
          */
         public void setEnrichflg(String enrichflg) {
             this.enrichflg = enrichflg;
+        }
+
+        /**
+         * Sets the IPHeaderName
+         * @param IPHeaderName IP Header name
+         */
+        public void setIPHeaderName(String IPHeaderName) {
+            this.IPHeaderName = IPHeaderName;
+        }
+
+        /**
+         * Gets the IPHeaderName
+         * @return IP Header name
+         */
+        @XmlElement(name = "ipHeaderName")
+        public String getIPHeaderName() {
+            return IPHeaderName;
         }
 
         /**
