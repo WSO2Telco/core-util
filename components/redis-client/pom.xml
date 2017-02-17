@@ -10,10 +10,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.wso2telco.redis</groupId>
-    <artifactId>RedisClient</artifactId>
+    <artifactId>redis-client</artifactId>
     <packaging>jar</packaging>
     <version>1.0.0</version>
-    <name>RedisClient</name>
+    <name>redis-client</name>
     <url>http://maven.apache.org</url>
 
     <dependencies>

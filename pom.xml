@@ -41,7 +41,7 @@
 		<module>components/msisdn-validator</module>
 		<module>components/pcr-service</module>
         <module>components/config-util</module>
-	<module>components/RedisClient</module>
+	<module>components/redis-client</module>
 		<module>features</module>
 	</modules>
 

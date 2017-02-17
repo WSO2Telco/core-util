@@ -8,8 +8,8 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.wso2telco.redis</groupId>
-  <artifactId>RedisClient</artifactId>
-  <name>RedisClient</name>
+  <artifactId>redis-client</artifactId>
+  <name>redis-client</name>
   <version>1.0.0</version>
   <url>http://maven.apache.org</url>
   <build>
