@@ -32,6 +32,7 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
             <version>${org.apache.commons.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
