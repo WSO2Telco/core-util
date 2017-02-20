@@ -7,10 +7,8 @@
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.wso2telco.redis</groupId>
-  <artifactId>redis-client</artifactId>
+  <artifactId>redis-client-wso2telco</artifactId>
   <name>redis-client</name>
-  <version>1.0.0</version>
   <url>http://maven.apache.org</url>
   <build>
     <plugins>
