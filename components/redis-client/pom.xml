@@ -9,10 +9,9 @@
 	</parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.wso2telco.redis</groupId>
-    <artifactId>redis-client</artifactId>
+
+    <artifactId>redis-client-wso2telco</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
     <name>redis-client</name>
     <url>http://maven.apache.org</url>
 
