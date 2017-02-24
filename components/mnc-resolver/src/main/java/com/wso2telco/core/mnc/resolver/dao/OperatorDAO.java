@@ -27,8 +27,8 @@ import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.wso2.carbon.apimgt.impl.utils.APIMgtDBUtil;
 
+import com.wso2telco.core.dbutils.DbUtils;
 import com.wso2telco.core.dbutils.util.DataSourceNames;
 import com.wso2telco.core.mnc.resolver.MobileNtException;
 
@@ -99,7 +99,7 @@ public class OperatorDAO {
 					"Error occured while getting operator for mcc : " + mcc + " and mnc : " + mnc + "from the database",
 					e);
 		} finally {
-			APIMgtDBUtil.closeAllConnections(ps, conn, rs);
+			DbUtils.closeAllConnections(ps, conn, rs);
 		}
 
 		return operator;
