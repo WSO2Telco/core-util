@@ -56,6 +56,12 @@
 			    <artifactId>org.apache.felix.scr.annotations</artifactId>
 			    <version>1.9.6</version>
 		</dependency>
+		<dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.apimgt.impl</artifactId>
+            <version>1.2.2</version>
+            <type>jar</type>
+        </dependency>
 
 	</dependencies>
 
