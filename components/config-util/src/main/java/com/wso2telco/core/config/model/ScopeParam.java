@@ -11,7 +11,7 @@ public class ScopeParam {
         OFFNET_FALLBACK,
         OFFNET_FALLBACK_TRUST_LOGINHINT,
         OFFNET_FALLBACK_TRUST_HEADER,
-        CONTINUE
+        CONTINUE_WITH_HEADER
     }
 
     public enum heFailureResults{
