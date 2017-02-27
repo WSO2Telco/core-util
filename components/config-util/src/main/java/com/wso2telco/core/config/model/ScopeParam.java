@@ -10,7 +10,8 @@ public class ScopeParam {
         ERROR_RETURN,
         OFFNET_FALLBACK,
         OFFNET_FALLBACK_TRUST_LOGINHINT,
-        OFFNET_FALLBACK_TRUST_HEADER
+        OFFNET_FALLBACK_TRUST_HEADER,
+        CONTINUE
     }
 
     public enum heFailureResults{
