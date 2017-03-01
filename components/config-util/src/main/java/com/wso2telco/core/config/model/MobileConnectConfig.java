@@ -796,7 +796,7 @@ public class MobileConnectConfig {
          *
          * @return the access token for the short URL service
          */
-        @XmlAttribute(name = "AccessToken")
+        @XmlElement(name = "AccessToken")
         public String getAccessToken() {
             return accessToken;
         }
