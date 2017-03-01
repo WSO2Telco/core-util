@@ -590,6 +590,11 @@ public class MobileConnectConfig {
         private TimeoutConfig timeoutConfig;
 
         /**
+         * The url of the sms authentication
+         */
+        private String authUrl;
+
+        /**
          * Gets the endpoint.
          *
          * @return the endpoint
@@ -803,10 +808,28 @@ public class MobileConnectConfig {
 
 
         /**
+         * Returns the auth url for sms
+         * @return auth url
+         */
+        @XmlElement(name = "AuthUrl")
+        public String getAuthUrl() {
+            return authUrl;
+        }
+
+        /**
+         * sets the auth url for sms
+         * @param authUrl auth url
+         */
+        public void setAuthUrl(String authUrl) {
+            this.authUrl = authUrl;
+        }
+
+        /**
          * sets the sender address
          *
          * @param senderAddress sender address
          */
+
 
         public void setSenderAddress(String senderAddress) {
             this.senderAddress = senderAddress;
