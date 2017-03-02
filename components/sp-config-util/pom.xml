@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
         <groupId>com.wso2telco.core</groupId>
         <artifactId>core-parent</artifactId>
-        <version>2.0.4-SNAPSHOT</version>
+        <version>2.1.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -36,7 +34,7 @@
         <dependency>
             <groupId>com.wso2telco.core</groupId>
             <artifactId>dbutils</artifactId>
-            <version>2.0.4-SNAPSHOT</version>
+            <version>2.1.0</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
@@ -81,7 +79,7 @@
                         <Import-Package>
                             org.osgi.framework
                         </Import-Package>
-                        <Private-Package></Private-Package>
+                        <Private-Package />
                         <Export-Package>
                             com.wso2telco.core.sp.config.utils.*
                         </Export-Package>
