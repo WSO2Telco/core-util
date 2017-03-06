@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wso2.carbon.utils.CarbonUtils;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -36,14 +37,16 @@ public class YamlReader {
 	/** The log. */
 	private static Logger log = LoggerFactory.getLogger(YamlReader.class);
 	
+	private static final String DEVICE_MGT_CONFIG_PATH = 
+			CarbonUtils.getCarbonConfigDirPath() + File.separator + "config.yml";
 	/**
 	 * Gets the configuration.
 	 *
 	 * @return the configuration
 	 */
 	public static ConfigDTO getConfiguration(){
-		
-		File file = new File("deploy/config.yml");
+				
+		File file = new File(DEVICE_MGT_CONFIG_PATH);
 		ConfigDTO configPojo = new ConfigDTO();
 		
 		final ObjectMapper mapper = new ObjectMapper(new YAMLFactory()); // jackson databind

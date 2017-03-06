@@ -1,47 +1,13 @@
-database:
-  driverClass: com.mysql.cj.jdbc.Driver
-  user: root
-  password: root
-  url: jdbc:mysql://127.0.0.1/pcr_service?useSSL=false
-server:
-        applicationConnectors:
-          - type: http
-                # The port the application will listen on
-            port: 8181
-            bindHost: localhost
-        adminConnectors:
-          - type: http
-                # The admin port
-            port: 8282
-logging:
-  level: INFO
-  loggers:
-    io.dropwizard: INFO
-    com.wso2telco: DEBUG
-  appenders:
-    - type: console
-      threshold: ALL
-      timeZone: UTC
-      target: stdout
-# Enable following for file appender
-    - type: file
-      currentLogFilename: log/pcr_service.log #<path to log file>/<filename.log>
-      threshold: ALL
-      archive: true
-      archivedLogFilenamePattern: log/pcr_service-%d.log #<path to log file >/< archive filename.log>
-      archivedFileCount: 5
-      timeZone: UTC
-
 redis:
   port: 6379
   host: localhost
+  password: admin
+  timeout: 2000
+  poolsize: 200
 
 admin:
   hostUrl: https://localhost:9443/services/OAuthAdminService
   username: admin
   password: admin
-  jksKeyStorePath: /home/yasith/Telco/Core/OS/setup2.0.2/wso2telcoids-2.0.2-SNAPSHOT/repository/resources/security/wso2carbon.jks
-  jksKeyStorePassword: wso2carbon
-  jksTrustStore: JKS
   maximumTotalHttpConnection: 100
   maximumHttpConnectionPerHost: 2

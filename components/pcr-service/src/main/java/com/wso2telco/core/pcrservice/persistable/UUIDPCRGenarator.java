@@ -27,9 +27,9 @@ import com.wso2telco.core.pcrservice.model.RequestDTO;
 /**
  * The Class UUIDPCRGenarator.
  */
-class UUIDPCRGenarator implements PCRGeneratable{
+public class UUIDPCRGenarator implements PCRGeneratable{
 
-	UUIDPCRGenarator(){}
+	public UUIDPCRGenarator(){}
 	private static Logger log = LoggerFactory.getLogger(UUIDPCRGenarator.class);
 
 	/** The uuid. */
