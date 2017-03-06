@@ -22,18 +22,9 @@ public class OAuthApplicationDataTest extends TestCase {
 	@Test
 	public void test() throws Exception{
 		OAuthApplicationData applicationData = new OAuthApplicationData();
-		
-		OAuthConsumerAppDTO[] apps = applicationData.getApplicationData();
-						
-		for (OAuthConsumerAppDTO oAuthConsumerAppDTO : apps) {
-			 
-			String clientId = oAuthConsumerAppDTO.getOauthConsumerKey();
-			String applicationName = oAuthConsumerAppDTO.getApplicationName();
-			String callbackUrl = oAuthConsumerAppDTO.getCallbackUrl();
-			
-			System.out.println(applicationName + " : " + clientId + " : " + callbackUrl );
-		}	
-		
+		String clientid = "qwwert";
+		OAuthConsumerAppDTO apps = applicationData.getApplicationData(clientid);
+
 	}
 	
 	/**

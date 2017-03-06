@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.pcrservice.dao;
+package com.wso2telco.core.pcrservice.conf;
 
 import java.net.MalformedURLException;
 import java.util.Map;
@@ -55,6 +55,7 @@ public class AdminServiceConfig {
 	
 	/**
 	 * Instantiates a new admin service config.
+	 * @throws MalformedURLException 
 	 */
 	public AdminServiceConfig(){
 	
@@ -73,6 +74,7 @@ public class AdminServiceConfig {
 	 * Gets the single instance of AdminServiceConfig.
 	 *
 	 * @return single instance of AdminServiceConfig
+	 * @throws MalformedURLException 
 	 */
 	public static AdminServiceConfig getInstance(){
 		if(config == null){

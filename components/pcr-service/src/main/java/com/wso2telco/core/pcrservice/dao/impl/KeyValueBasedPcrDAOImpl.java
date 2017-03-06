@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.pcrservice.dao;
+package com.wso2telco.core.pcrservice.dao.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wso2telco.core.pcrservice.dao.PersistablePcr;
 import com.wso2telco.core.pcrservice.exception.PCRException;
 import com.wso2telco.core.pcrservice.model.RequestDTO;
+import com.wso2telco.core.pcrservice.util.RedisUtil;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ScanParams;
@@ -40,8 +42,9 @@ public class KeyValueBasedPcrDAOImpl implements PersistablePcr {
 	 */
 	@Override
 	public void createNewPcrEntry(RequestDTO requestDTO, String pcr) throws PCRException {
-		Jedis jedis = RedisUtil.getInstance();
-		jedis.set(requestDTO.getUserId() + ":" + requestDTO.getSectorId() + ":" + requestDTO.getAppId(), pcr);
+		Jedis jedis = RedisUtil.getInstance().getResource();
+		jedis.rpush(requestDTO.getUserId() + ":" + requestDTO.getSectorId() , requestDTO.getAppId() + ":" + pcr);
+		jedis.close();
 	}
 
 	/*
@@ -52,9 +55,16 @@ public class KeyValueBasedPcrDAOImpl implements PersistablePcr {
 	 */
 	@Override
 	public String getExistingPCR(RequestDTO requestDTO) throws PCRException {
-		Jedis jedis = RedisUtil.getInstance();
+		Jedis jedis = RedisUtil.getInstance().getResource();
 		String pcr = null;
-		pcr = jedis.get(requestDTO.getUserId() + ":" + requestDTO.getSectorId() + ":" + requestDTO.getAppId());
+		List<String> pcrList = jedis.lrange(requestDTO.getUserId() + ":" + requestDTO.getSectorId() , 0, -1);
+		for (String appPcr: pcrList) {
+			if(appPcr.startsWith(requestDTO.getAppId())){
+				pcr = appPcr.split(":")[1];
+				break;
+			}
+		}
+		jedis.close();
 		return pcr;
 	}
 
@@ -69,27 +79,12 @@ public class KeyValueBasedPcrDAOImpl implements PersistablePcr {
 	public List<String> getApplicationIdList(String sectorId) throws PCRException {
 
 		List<String> applicationIds = new ArrayList<String>();
-		Jedis jedis = RedisUtil.getInstance();
-		ScanParams params = new ScanParams();
-		params.match(sectorId + "*");
-		ScanResult<String> scanResult = jedis.scan("0", params);
-		List<String> keys = scanResult.getResult();
-		String nextCursor = scanResult.getStringCursor();
-
-		while (true) {
-			for (String key : keys) {
-				String[] keyAry = key.split(":");
-				applicationIds.add(keyAry[1]);
-			}
-
-			if (nextCursor.equals("0")) {
-				break;
-			}
-
-			scanResult = jedis.scan(nextCursor, params);
-			nextCursor = scanResult.getStringCursor();
-			keys = scanResult.getResult();
+		Jedis jedis = RedisUtil.getInstance().getResource();
+		List<String> appidlist = jedis.lrange(sectorId,0,-1);
+		for (String appinfo :appidlist) {
+			applicationIds.add(appinfo.split(":")[0]);
 		}
+		jedis.close();
 		return applicationIds;
 	}
 
@@ -102,8 +97,16 @@ public class KeyValueBasedPcrDAOImpl implements PersistablePcr {
 	 */
 	@Override
 	public boolean checkIsRelated(String sectorId, String appId) throws PCRException {
-		Jedis jedis = RedisUtil.getInstance();
-		boolean related = jedis.get(sectorId + ":" + appId).equals("true");
+		Jedis jedis = RedisUtil.getInstance().getResource();
+		List<String> appidlist = jedis.lrange(sectorId,0,-1);
+		boolean related = true;
+		for (String appinfo :appidlist) {
+			if(appinfo.startsWith(appId)){
+				related = appinfo.split(":")[1].equals("true");
+				break;
+			}
+		}
+		jedis.close();
 		return related;
 	}
 
@@ -111,9 +114,15 @@ public class KeyValueBasedPcrDAOImpl implements PersistablePcr {
 	 * @see com.wso2telco.core.pcrservice.dao.PersistablePcr#checkApplicationExists(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public boolean checkApplicationExists(String sectorId, String appId) throws PCRException{
-		Jedis jedis = RedisUtil.getInstance();
-		boolean exists = jedis.get(sectorId+":"+appId) != null;
+	public boolean checkApplicationExists(String sectorId, String appId) throws PCRException {
+		List<String> applicationIds = new ArrayList<String>();
+		Jedis jedis = RedisUtil.getInstance().getResource();
+		List<String> appidlist = jedis.lrange(sectorId,0,-1);
+		for (String appinfo :appidlist) {
+			applicationIds.add(appinfo.split(":")[0]);
+		}
+		boolean exists = applicationIds.contains(appId);
+		jedis.close();
 		return exists;
 	}
 	
@@ -126,35 +135,20 @@ public class KeyValueBasedPcrDAOImpl implements PersistablePcr {
 	 */
 	@Override
 	public void createNewSPEntry(String sectorId, String appId, boolean isRelated) throws PCRException {
-		Jedis jedis = RedisUtil.getInstance();
-		jedis.set(sectorId + ":" + appId, String.valueOf(isRelated));
+		Jedis jedis = RedisUtil.getInstance().getResource();
+		jedis.rpush(sectorId, appId+":"+isRelated);
+		jedis.close();
 	}
 
 	@Override
 	public List<String> getAppIdListForUserSectorCombination(String userId, String sectorId) throws PCRException {
-		
 		List<String> applicationIds = new ArrayList<String>();
-		Jedis jedis = RedisUtil.getInstance();
-		ScanParams params = new ScanParams();
-		params.match(userId + ":" + sectorId + "*");
-		ScanResult<String> scanResult = jedis.scan("0", params);
-		List<String> keys = scanResult.getResult();
-		String nextCursor = scanResult.getStringCursor();
-
-		while (true) {
-			for (String key : keys) {
-				String[] keyAry = key.split(":");
-				applicationIds.add(keyAry[2]);
-			}
-
-			if (nextCursor.equals("0")) {
-				break;
-			}
-
-			scanResult = jedis.scan(nextCursor, params);
-			nextCursor = scanResult.getStringCursor();
-			keys = scanResult.getResult();
-		}		
+		Jedis jedis = RedisUtil.getInstance().getResource();
+		List<String> appInfoList = jedis.lrange(userId+":"+sectorId,0,-1);
+		for (String appInfo: appInfoList) {
+			applicationIds.add(appInfo.split(":")[0]);
+		}
+		jedis.close();
 		return applicationIds;
 	}
 

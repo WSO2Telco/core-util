@@ -87,6 +87,18 @@ public class MobileConnectConfig {
 
     private String adminPassword;
 
+    private boolean isPcrServiceEnabled;
+
+
+    public boolean isPcrServiceEnabled() {
+        return isPcrServiceEnabled;
+    }
+
+    @XmlElement(name = "IsPcrServiceEnabled")
+    public void setPcrServiceEnabled(boolean pcrServiceEnabled) {
+        isPcrServiceEnabled = pcrServiceEnabled;
+    }
+
     /**
      * gets sp validation value
      *
