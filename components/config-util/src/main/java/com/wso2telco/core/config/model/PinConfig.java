@@ -100,9 +100,9 @@ public class PinConfig {
     }
 
     public boolean isPinsMatched() throws AuthenticationFailedException {
-        if(confirmedPin != null && registeredPin != null){
+        if (confirmedPin != null && registeredPin != null) {
             return registeredPin.equalsIgnoreCase(confirmedPin);
-        }else {
+        } else {
             throw new AuthenticationFailedException("Did not receive pin response");
         }
     }

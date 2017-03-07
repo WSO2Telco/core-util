@@ -9,33 +9,30 @@ import junit.framework.TestCase;
  * The class <code>OAuthTokenValidaterStubFactoryTest</code> contains tests for
  * the class {@link <code>OAuthTokenValidaterStubFactory</code>}
  *
- * @pattern JUnit Test Case
- *
- * @generatedBy CodePro at 9/6/16 4:00 PM
- *
  * @author yasith
- *
  * @version $Revision$
+ * @pattern JUnit Test Case
+ * @generatedBy CodePro at 9/6/16 4:00 PM
  */
 public class OAuthApplicationDataTest extends TestCase {
-	
-	@Test
-	public void test() throws Exception{
-		OAuthApplicationData applicationData = new OAuthApplicationData();
-		String clientid = "qwwert";
-		OAuthConsumerAppDTO apps = applicationData.getApplicationData(clientid);
 
-	}
-	
-	/**
-	 * Construct new test instance
-	 *
-	 * @param name the test name
-	 */
-	public OAuthApplicationDataTest(String name) {
-		super(name);
-	}
-	
+    @Test
+    public void test() throws Exception {
+        OAuthApplicationData applicationData = new OAuthApplicationData();
+        String clientid = "qwwert";
+        OAuthConsumerAppDTO apps = applicationData.getApplicationData(clientid);
+
+    }
+
+    /**
+     * Construct new test instance
+     *
+     * @param name the test name
+     */
+    public OAuthApplicationDataTest(String name) {
+        super(name);
+    }
+
     public static void main(String[] args) {
         new org.junit.runner.JUnitCore().run(OAuthApplicationData.class);
     }

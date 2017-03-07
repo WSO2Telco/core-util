@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
 
 public class SpConfigDAOImplTest {
 
-//    @BeforeClass
+    //    @BeforeClass
     public static void setUpClass() throws Exception {
         try {
             System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
@@ -57,7 +57,7 @@ public class SpConfigDAOImplTest {
         }
     }
 
-//    @Test
+    //    @Test
     public void getScopes() throws Exception {
         SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
 

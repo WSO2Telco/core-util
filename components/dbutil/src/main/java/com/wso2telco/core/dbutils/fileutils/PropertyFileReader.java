@@ -16,7 +16,7 @@ public class PropertyFileReader {
     private static Log log = LogFactory.getLog(PropertyFileReader.class);
     private static PropertyFileReader propertyFileReader = null;
 
-    private PropertyFileReader(){
+    private PropertyFileReader() {
     }
 
     public static PropertyFileReader getFileReader() {

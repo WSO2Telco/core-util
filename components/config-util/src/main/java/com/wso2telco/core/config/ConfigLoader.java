@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) 
- * 
+ *
  * All Rights Reserved. WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,16 +31,24 @@ import java.io.File;
  */
 public class ConfigLoader {
 
-    /** The log. */
+    /**
+     * The log.
+     */
     private Log log = LogFactory.getLog(ConfigLoader.class);
 
-    /** The loa config. */
+    /**
+     * The loa config.
+     */
     private AuthenticationLevels authenticationLevels;
-    
-    /** The mobile connect config. */
+
+    /**
+     * The mobile connect config.
+     */
     private MobileConnectConfig mobileConnectConfig;
-    
-    /** The loader. */
+
+    /**
+     * The loader.
+     */
     private static ConfigLoader loader = new ConfigLoader();
 
     /**
@@ -48,9 +56,9 @@ public class ConfigLoader {
      */
     private ConfigLoader() {
         try {
-            if(this.authenticationLevels == null)
+            if (this.authenticationLevels == null)
                 this.authenticationLevels = initLoaConfig();
-            if(this.mobileConnectConfig == null)
+            if (this.mobileConnectConfig == null)
                 this.mobileConnectConfig = initMConnectConfig();
         } catch (JAXBException e) {
             log.error("Error while initiating custom config files", e);
@@ -69,7 +77,7 @@ public class ConfigLoader {
     /**
      * Resets the singleton and re-initiate
      */
-    public static void reset(){
+    public static void reset() {
         loader = new ConfigLoader();
     }
 
@@ -84,7 +92,7 @@ public class ConfigLoader {
         File file = new File(configPath);
         JAXBContext ctx = JAXBContext.newInstance(AuthenticationLevels.class);
         Unmarshaller um = ctx.createUnmarshaller();
-        return  (AuthenticationLevels) um.unmarshal(file);
+        return (AuthenticationLevels) um.unmarshal(file);
     }
 
     /**
@@ -115,7 +123,7 @@ public class ConfigLoader {
      *
      * @return the mobile connect config
      */
-    public MobileConnectConfig getMobileConnectConfig(){
+    public MobileConnectConfig getMobileConnectConfig() {
         return this.mobileConnectConfig;
     }
 

@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
- * 
+ *
  * WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 package com.wso2telco.core.mnc.resolver.mncrange;
- 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,14 +33,14 @@ import com.wso2telco.core.mnc.resolver.MobileNtException;
 import com.wso2telco.core.mnc.resolver.NumberRange;
 
 
-
- 
 /**
  * The Class McnRangeDbUtil.
  */
 public class McnRangeDbUtil {
 
-    /** The Constant log. */
+    /**
+     * The Constant log.
+     */
     private static final Log log = LogFactory.getLog(McnRangeDbUtil.class);
 
 
@@ -48,17 +48,17 @@ public class McnRangeDbUtil {
      * Gets the axiata db connection.
      *
      * @return the axiata db connection
-     * @throws Exception 
+     * @throws Exception
      */
     public static Connection getAxiataDBConnection() throws Exception {
-       return  DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
+        return DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
     }
 
     /**
      * Handle exception.
      *
      * @param msg the msg
-     * @param t the t
+     * @param t   the t
      * @throws MobileNtException the mobile nt exception
      */
     private static void handleException(String msg, Throwable t) throws MobileNtException {
@@ -89,12 +89,13 @@ public class McnRangeDbUtil {
             ps.setString(1, mcc);
             rs = ps.executeQuery();
             while (rs.next()) {
-                lstranges.add(new NumberRange(rs.getLong("rangefrom"), rs.getLong("rangeto"), rs.getString("mnccode"), rs.getString("brand")));
+                lstranges.add(new NumberRange(rs.getLong("rangefrom"), rs.getLong("rangeto"), rs.getString("mnccode")
+                        , rs.getString("brand")));
             }
-        }catch (Exception e) {
-        	 handleException("Error occured while getting Number ranges for mcc: " + mcc + " from the database", e);
-		} finally {
-			DbUtils.closeAllConnections(ps, conn, rs);
+        } catch (Exception e) {
+            handleException("Error occured while getting Number ranges for mcc: " + mcc + " from the database", e);
+        } finally {
+            DbUtils.closeAllConnections(ps, conn, rs);
         }
         return lstranges;
     }
@@ -107,7 +108,7 @@ public class McnRangeDbUtil {
                 + "FROM operators "
                 + "WHERE mcc = ? AND mnc = ?";
 
-        
+
         String mncBrand = null;
 
         try {
@@ -120,19 +121,18 @@ public class McnRangeDbUtil {
                 mncBrand = rs.getString("operatorname");
             }
         } catch (SQLException e) {
-            handleException("Error occured while getting Brand for for mcc: and mnc: " + mcc + ":" + mnc + " from the database", e);
+            handleException("Error occured while getting Brand for for mcc: and mnc: " + mcc + ":" + mnc + " from the" +
+                    " database", e);
         } catch (Exception e) {
-        	 handleException("Error occured while getting Brand for for mcc: and mnc: " + mcc + ":" + mnc + " from the database", e);
-		} finally {
-			DbUtils.closeAllConnections(ps, conn, rs);
+            handleException("Error occured while getting Brand for for mcc: and mnc: " + mcc + ":" + mnc + " from the" +
+                    " database", e);
+        } finally {
+            DbUtils.closeAllConnections(ps, conn, rs);
         }
         return mncBrand;
-  }
-    
+    }
 
-     
 
-     
     /**
      * Close statement.
      *

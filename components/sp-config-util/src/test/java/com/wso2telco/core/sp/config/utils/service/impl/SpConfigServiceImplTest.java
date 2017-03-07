@@ -28,11 +28,12 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.List;
+
 import static junit.framework.Assert.*;
 
 public class SpConfigServiceImplTest {
 
-//    @BeforeClass
+    //    @BeforeClass
     public static void setUpClass() throws Exception {
         try {
             System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
@@ -57,7 +58,7 @@ public class SpConfigServiceImplTest {
         }
     }
 
-//    @Test
+    //    @Test
     public void getScopes() throws Exception {
 
         SpConfigService spConfigService = new SpConfigServiceImpl();

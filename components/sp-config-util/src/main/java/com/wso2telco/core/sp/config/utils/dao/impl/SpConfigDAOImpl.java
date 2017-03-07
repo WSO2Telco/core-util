@@ -35,8 +35,8 @@ public class SpConfigDAOImpl implements SpConfigDAO {
 
     public void save(Config config) throws Exception {
 
-    	Connection connectDBConnection = null;
-    	PreparedStatement preparedStatement = null;
+        Connection connectDBConnection = null;
+        PreparedStatement preparedStatement = null;
 
         try {
             connectDBConnection = DbUtils.getConnectDbConnection();
@@ -56,7 +56,7 @@ public class SpConfigDAOImpl implements SpConfigDAO {
                 preparedStatement.close();
             }
             if (connectDBConnection != null) {
-            	connectDBConnection.close();
+                connectDBConnection.close();
             }
         }
     }
@@ -64,13 +64,13 @@ public class SpConfigDAOImpl implements SpConfigDAO {
     @Override
     public void delete(Config config) throws Exception {
 
-    	Connection connectDBConnection = null;
-    	PreparedStatement preparedStatement = null;
+        Connection connectDBConnection = null;
+        PreparedStatement preparedStatement = null;
 
         logger.debug("Deleting config [" + config + " ] ");
 
         try {
-        	connectDBConnection = DbUtils.getConnectDbConnection();
+            connectDBConnection = DbUtils.getConnectDbConnection();
             String query = "DELETE FROM sp_configuration WHERE client_id = ? AND config_key = ? AND config_value = ?";
 
             preparedStatement = connectDBConnection.prepareStatement(query);
@@ -87,7 +87,7 @@ public class SpConfigDAOImpl implements SpConfigDAO {
                 preparedStatement.close();
             }
             if (connectDBConnection != null) {
-            	connectDBConnection.close();
+                connectDBConnection.close();
             }
         }
     }
@@ -148,7 +148,7 @@ public class SpConfigDAOImpl implements SpConfigDAO {
         try {
             List<String> spUssdLoginMessages = getConfig(clientId, ConfigKey.SP_USSD_LOGIN_MESSAGE);
             return spUssdLoginMessages.get(0);
-        }catch (Exception e){
+        } catch (Exception e) {
             // return null if no configuration value found for sp
             return null;
         }
@@ -159,7 +159,7 @@ public class SpConfigDAOImpl implements SpConfigDAO {
         try {
             List<String> spUssdRegistrationMessages = getConfig(clientId, ConfigKey.SP_USSD_REGISTRATION_MESSAGE);
             return spUssdRegistrationMessages.get(0);
-        }catch (Exception e){
+        } catch (Exception e) {
             // return null if no configuration value found for sp
             return null;
         }
@@ -170,7 +170,7 @@ public class SpConfigDAOImpl implements SpConfigDAO {
         try {
             List<String> spUssdPinLoginMessages = getConfig(clientId, ConfigKey.SP_USSD_PIN_LOGIN_MESSAGE);
             return spUssdPinLoginMessages.get(0);
-        }catch (Exception e){
+        } catch (Exception e) {
             // return null if no configuration value found for sp
             return null;
         }
@@ -179,9 +179,10 @@ public class SpConfigDAOImpl implements SpConfigDAO {
     @Override
     public String getUSSDPinRegistrationMessage(String clientId) {
         try {
-            List<String> spUssdPinRegistrationMessages = getConfig(clientId, ConfigKey.SP_USSD_PIN_REGISTRATION_MESSAGE);
+            List<String> spUssdPinRegistrationMessages = getConfig(clientId, ConfigKey
+                    .SP_USSD_PIN_REGISTRATION_MESSAGE);
             return spUssdPinRegistrationMessages.get(0);
-        }catch (Exception e){
+        } catch (Exception e) {
             // return null if no configuration value found for sp
             return null;
         }
@@ -216,9 +217,9 @@ public class SpConfigDAOImpl implements SpConfigDAO {
             if (resultSet != null) {
                 resultSet.close();
             }
-            
+
             if (connectDBConnection != null) {
-            	connectDBConnection.close();
+                connectDBConnection.close();
             }
         }
 

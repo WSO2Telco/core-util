@@ -26,95 +26,101 @@ import org.wso2.carbon.identity.oauth.stub.OAuthAdminServiceStub;
 import com.wso2telco.core.pcrservice.conf.AdminServiceConfig;
 import com.wso2telco.core.pcrservice.exception.PCRException;
 
-public class OAuthApplicationDataStubFactory extends BasePoolableObjectFactory{
-	
-	private static final Logger log = LoggerFactory.getLogger(OAuthApplicationDataStubFactory.class);
-	AdminServiceConfig config;
-	private HttpClient httpClient;
+public class OAuthApplicationDataStubFactory extends BasePoolableObjectFactory {
 
-	public OAuthApplicationDataStubFactory(){		
-		this.config = AdminServiceConfig.getInstance();			
-		this.httpClient = createHttpClient();
-	}
+    private static final Logger log = LoggerFactory.getLogger(OAuthApplicationDataStubFactory.class);
+    AdminServiceConfig config;
+    private HttpClient httpClient;
 
-	/**
-	 * This creates a OAuth2TokenValidationServiceStub object to the pool.
-	 * @return an OAuthValidationStub object
-	 * @throws PCRException 
-	 * @throws Exception thrown when creating the object.
-	 */
-	@Override
-	public Object makeObject() throws PCRException{
-		return this.generateStub();
-	}
+    public OAuthApplicationDataStubFactory() {
+        this.config = AdminServiceConfig.getInstance();
+        this.httpClient = createHttpClient();
+    }
 
-	/**
-	 * This is used to clean up the OAuth validation stub and releases to the object pool.
-	 * @param o object that needs to be released.
-	 * @throws Exception throws when failed to release to the pool
-	 */
-	@Override
-	public void passivateObject(Object o) throws Exception {
-		if (o instanceof OAuthAdminServiceStub) {
-			OAuthAdminServiceStub stub = (OAuthAdminServiceStub) o;
-			stub._getServiceClient().cleanupTransport();
-		}
-	}
+    /**
+     * This creates a OAuth2TokenValidationServiceStub object to the pool.
+     *
+     * @return an OAuthValidationStub object
+     * @throws PCRException
+     * @throws Exception    thrown when creating the object.
+     */
+    @Override
+    public Object makeObject() throws PCRException {
+        return this.generateStub();
+    }
 
-	/**
-	 * This is used to create a stub which will be triggered through object pool factory, which will create an instance of it.
-	 * @return OAuth2TokenValidationServiceStub stub that is used to call an external service.
-	 * @throws PCRException will be thrown when initialization failed.
-	 */
-	private OAuthAdminServiceStub generateStub() throws PCRException{
-		OAuthAdminServiceStub stub;
-		try {
-			URL hostURL = new URL(config.getHostUrl());
+    /**
+     * This is used to clean up the OAuth validation stub and releases to the object pool.
+     *
+     * @param o object that needs to be released.
+     * @throws Exception throws when failed to release to the pool
+     */
+    @Override
+    public void passivateObject(Object o) throws Exception {
+        if (o instanceof OAuthAdminServiceStub) {
+            OAuthAdminServiceStub stub = (OAuthAdminServiceStub) o;
+            stub._getServiceClient().cleanupTransport();
+        }
+    }
+
+    /**
+     * This is used to create a stub which will be triggered through object pool factory, which will create an
+     * instance of it.
+     *
+     * @return OAuth2TokenValidationServiceStub stub that is used to call an external service.
+     * @throws PCRException will be thrown when initialization failed.
+     */
+    private OAuthAdminServiceStub generateStub() throws PCRException {
+        OAuthAdminServiceStub stub;
+        try {
+            URL hostURL = new URL(config.getHostUrl());
 //			ConfigurationContext myConfigContext =
 //					ConfigurationContextFactory.createConfigurationContextFromFileSystem(
-//					"repo", CarbonUtils.getCarbonConfigDirPath() + File.separator + "axis2" + File.separator + "axis2.xml");
-			stub = new OAuthAdminServiceStub(null, hostURL.toString());
-			ServiceClient client = stub._getServiceClient();
-			client.getServiceContext().getConfigurationContext().setProperty(
-					HTTPConstants.CACHED_HTTP_CLIENT, httpClient);
+//					"repo", CarbonUtils.getCarbonConfigDirPath() + File.separator + "axis2" + File.separator +
+// "axis2.xml");
+            stub = new OAuthAdminServiceStub(null, hostURL.toString());
+            ServiceClient client = stub._getServiceClient();
+            client.getServiceContext().getConfigurationContext().setProperty(
+                    HTTPConstants.CACHED_HTTP_CLIENT, httpClient);
 
-			HttpTransportProperties.Authenticator auth =
-					new HttpTransportProperties.Authenticator();
-			auth.setPreemptiveAuthentication(true);
-			String username = config.getUsername();
-			String password = config.getPassword();
-			auth.setUsername(username);
-			auth.setPassword(password);
+            HttpTransportProperties.Authenticator auth =
+                    new HttpTransportProperties.Authenticator();
+            auth.setPreemptiveAuthentication(true);
+            String username = config.getUsername();
+            String password = config.getPassword();
+            auth.setUsername(username);
+            auth.setPassword(password);
 
-			Options options = client.getOptions();
-			options.setProperty(HTTPConstants.AUTHENTICATE, auth);
-			options.setProperty(HTTPConstants.REUSE_HTTP_CLIENT, Constants.VALUE_TRUE);
-			client.setOptions(options);
+            Options options = client.getOptions();
+            options.setProperty(HTTPConstants.AUTHENTICATE, auth);
+            options.setProperty(HTTPConstants.REUSE_HTTP_CLIENT, Constants.VALUE_TRUE);
+            client.setOptions(options);
 
-		} catch (AxisFault axisFault) {
-			log.error("Error occurred while creating the OAuth2TokenValidationServiceStub.");
-			throw new PCRException(
-					"Error occurred while creating the OAuth2TokenValidationServiceStub.", axisFault);
-		} catch (MalformedURLException e) {
-			log.error("Malformed URL error");
-			throw new PCRException(
-					"Malformed URL error", e);
-		}
+        } catch (AxisFault axisFault) {
+            log.error("Error occurred while creating the OAuth2TokenValidationServiceStub.");
+            throw new PCRException(
+                    "Error occurred while creating the OAuth2TokenValidationServiceStub.", axisFault);
+        } catch (MalformedURLException e) {
+            log.error("Malformed URL error");
+            throw new PCRException(
+                    "Malformed URL error", e);
+        }
 
-		return stub;
-	}
+        return stub;
+    }
 
-	/**
-	 * This created httpclient pool that can be used to connect to external entity. This connection can be configured
-	 * via broker.xml by setting up the required http connection parameters.
-	 * @return an instance of HttpClient that is configured with MultiThreadedHttpConnectionManager
-	 */
-	private HttpClient createHttpClient() {
-		HttpConnectionManagerParams params = new HttpConnectionManagerParams();
-		params.setDefaultMaxConnectionsPerHost(config.getMaximumHttpConnectionPerHost());
-		params.setMaxTotalConnections(config.getMaximumTotalHttpConnection());
-		HttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
-		connectionManager.setParams(params);
-		return new HttpClient(connectionManager);
-	}
+    /**
+     * This created httpclient pool that can be used to connect to external entity. This connection can be configured
+     * via broker.xml by setting up the required http connection parameters.
+     *
+     * @return an instance of HttpClient that is configured with MultiThreadedHttpConnectionManager
+     */
+    private HttpClient createHttpClient() {
+        HttpConnectionManagerParams params = new HttpConnectionManagerParams();
+        params.setDefaultMaxConnectionsPerHost(config.getMaximumHttpConnectionPerHost());
+        params.setMaxTotalConnections(config.getMaximumTotalHttpConnection());
+        HttpConnectionManager connectionManager = new MultiThreadedHttpConnectionManager();
+        connectionManager.setParams(params);
+        return new HttpClient(connectionManager);
+    }
 }

@@ -14,7 +14,7 @@ public class ScopeParam {
         CONTINUE_WITH_HEADER
     }
 
-    public enum heFailureResults{
+    public enum heFailureResults {
         BREAK,
         UNTRUST_MSISDN,
         TRUST_HEADER_MSISDN,
@@ -48,7 +48,9 @@ public class ScopeParam {
         isHeaderMsisdnMandatory = headerMsisdnMandatory;
     }
 
-    public boolean isHeaderMsisdnMandatory() { return isHeaderMsisdnMandatory; }
+    public boolean isHeaderMsisdnMandatory() {
+        return isHeaderMsisdnMandatory;
+    }
 
     public void setMsisdnMismatchResult(msisdnMismatchResultTypes msisdnMismatchResult) {
         this.msisdnMismatchResult = msisdnMismatchResult;
