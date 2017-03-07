@@ -40,6 +40,9 @@ public class MSISDNUtil {
 			StringBuilder builder = new StringBuilder(rawmsisdn);
 			builder.insert(4, "+");
 			formattedNumber = builder.toString();
+		} else if (rawmsisdn.contains("etel:")) {
+			String[] msidn = rawmsisdn.split(":");
+			formattedNumber = msidn[0] + "+" + msidn[1];
 		} else {
 			formattedNumber = rawmsisdn;
 		}
