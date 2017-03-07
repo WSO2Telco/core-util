@@ -34,7 +34,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ScopeValidateServiceImplTest {
-//    @Before
+    //    @Before
     public void setUp() throws Exception {
         try {
             System.setProperty(Context.INITIAL_CONTEXT_FACTORY,
@@ -59,7 +59,7 @@ public class ScopeValidateServiceImplTest {
         }
     }
 
-//    @Test
+    //    @Test
     public void validate() throws Exception {
         ScopeValidateService scopeValidateService = new ScopeValidateServiceImpl();
         SpConfigService spConfigService = new SpConfigServiceImpl();

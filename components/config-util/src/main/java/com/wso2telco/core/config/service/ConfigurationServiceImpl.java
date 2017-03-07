@@ -25,23 +25,25 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Configuration service is OSGi service exposing DataHolder object which contains configuration data loaded from XML files.
+ * Configuration service is OSGi service exposing DataHolder object which contains configuration data loaded from XML
+ * files.
  */
-public class ConfigurationServiceImpl implements ConfigurationService{
+public class ConfigurationServiceImpl implements ConfigurationService {
 
 
     /**
      * The ConfigurationServiceImpl constructor. Loads data to data holder if they are not initialized
      */
     public ConfigurationServiceImpl() {
-        if(DataHolder.getInstance().getMobileConnectConfig() ==null)
+        if (DataHolder.getInstance().getMobileConnectConfig() == null)
             DataHolder.getInstance().setMobileConnectConfig(ConfigLoader.getInstance().getMobileConnectConfig());
 
-        if(DataHolder.getInstance().getAuthenticationLevels() ==null)
+        if (DataHolder.getInstance().getAuthenticationLevels() == null)
             DataHolder.getInstance().setAuthenticationLevels(ConfigLoader.getInstance().getAuthenticationLevels());
 
-        if(DataHolder.getInstance().getAuthenticationLevelMap() ==null) {
-            Map<String, MIFEAuthentication> authenticationMap = loadMIFEAuthenticatorMap(ConfigLoader.getInstance().getAuthenticationLevels());
+        if (DataHolder.getInstance().getAuthenticationLevelMap() == null) {
+            Map<String, MIFEAuthentication> authenticationMap = loadMIFEAuthenticatorMap(ConfigLoader.getInstance()
+                    .getAuthenticationLevels());
             DataHolder.getInstance().setAuthenticationLevelMap(authenticationMap);
         }
     }
@@ -52,7 +54,7 @@ public class ConfigurationServiceImpl implements ConfigurationService{
      * @return DataHolder
      */
     @Override
-    public DataHolder getDataHolder(){
+    public DataHolder getDataHolder() {
         return DataHolder.getInstance();
     }
 
@@ -69,6 +71,7 @@ public class ConfigurationServiceImpl implements ConfigurationService{
 
     /**
      * Loads MIFE Authenticators into a Map
+     *
      * @param authenticationLevels
      * @return MIFE Authenticator Map
      */
@@ -95,6 +98,6 @@ public class ConfigurationServiceImpl implements ConfigurationService{
             mifeAuthentication.setAuthenticatorList(mifeAuthenticationList);
             authenticatorMap.put(authenticationLevelValue, mifeAuthentication);
         }
-        return  authenticatorMap;
+        return authenticatorMap;
     }
 }

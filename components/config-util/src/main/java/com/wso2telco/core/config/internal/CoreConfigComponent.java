@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
-@Component(name="configuration.component", immediate = true)
+@Component(name = "configuration.component", immediate = true)
 public class CoreConfigComponent {
     private static final Log log = LogFactory.getLog(CoreConfigComponent.class);
     private ServiceRegistration serviceRegistration;
@@ -36,7 +36,8 @@ public class CoreConfigComponent {
 
         try {
             //configurationService = new ConfigurationServiceImpl();
-            //serviceRegistration = context.getBundleContext().registerService(ConfigurationService.class.getName(), configurationService, null);
+            //serviceRegistration = context.getBundleContext().registerService(ConfigurationService.class.getName(),
+            // configurationService, null);
         } catch (Throwable t) {
             String errorMsg = "Error in registering ConfigurationService";
             log.error(errorMsg, t);

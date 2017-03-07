@@ -10,7 +10,7 @@ import org.osgi.service.component.ComponentContext;
 public class PCRServiceComponent {
 
     protected void activate(ComponentContext componentContext) {
-       //do nothing
+        //do nothing
         PCRGeneratable pcrGeneratable = new UUIDPCRGenarator();
         componentContext.getBundleContext().registerService(PCRGeneratable.class, pcrGeneratable, null);
     }

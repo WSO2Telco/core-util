@@ -653,6 +653,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the AES key.
+         *
          * @param aesKey the AES key
          */
         public void setAesKey(String aesKey) {
@@ -821,6 +822,7 @@ public class MobileConnectConfig {
 
         /**
          * Returns the auth url for sms
+         *
          * @return auth url
          */
         @XmlElement(name = "AuthUrl")
@@ -830,6 +832,7 @@ public class MobileConnectConfig {
 
         /**
          * sets the auth url for sms
+         *
          * @param authUrl auth url
          */
         public void setAuthUrl(String authUrl) {
@@ -914,6 +917,7 @@ public class MobileConnectConfig {
 
         /**
          * gets the push service endpoint
+         *
          * @return return push service endpoint
          */
         @XmlElement(name = "PushServiceEndpoint")
@@ -923,6 +927,7 @@ public class MobileConnectConfig {
 
         /**
          * sets push service endpoint
+         *
          * @param pushServiceEndpoint push service endpoint
          */
         public void setPushServiceEndpoint(String pushServiceEndpoint) {
@@ -1693,6 +1698,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the IPHeaderName
+         *
          * @param IPHeaderName IP Header name
          */
         public void setIPHeaderName(String IPHeaderName) {
@@ -1701,6 +1707,7 @@ public class MobileConnectConfig {
 
         /**
          * Gets the IPHeaderName
+         *
          * @return IP Header name
          */
         @XmlElement(name = "ipHeaderName")

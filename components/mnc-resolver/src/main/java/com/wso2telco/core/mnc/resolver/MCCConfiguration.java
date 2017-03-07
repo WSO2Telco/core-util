@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
- * 
+ *
  * WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,36 +25,45 @@ import javax.xml.bind.annotation.XmlType;
 
 
 // TODO: Auto-generated Javadoc
+
 /**
  * The Class MCCConfiguration.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "pathFinderHost",
-    "port",
-    "termDomain",
-    "mobileCountryCodes"
+        "pathFinderHost",
+        "port",
+        "termDomain",
+        "mobileCountryCodes"
 })
 @XmlRootElement(name = "MCCConfiguration")
 public class MCCConfiguration {
 
-    /** The path finder host. */
+    /**
+     * The path finder host.
+     */
     @XmlElement(name = "PathFinderHost", required = true)
     protected String pathFinderHost;
-    
-    /** The port. */
+
+    /**
+     * The port.
+     */
     @XmlElement(name = "Port")
     protected int port;
-    
-    /** The term domain. */
+
+    /**
+     * The term domain.
+     */
     @XmlElement(name = "TermDomain", required = true)
     protected String termDomain;
-    
-    /** The mobile country codes. */
+
+    /**
+     * The mobile country codes.
+     */
     @XmlElement(name = "MobileCountryCodes", required = true)
     protected MCCConfiguration.MobileCountryCodes mobileCountryCodes;
 
-     
+
     /**
      * Gets the path finder host.
      *
@@ -64,7 +73,7 @@ public class MCCConfiguration {
         return pathFinderHost;
     }
 
-     
+
     /**
      * Sets the path finder host.
      *
@@ -74,7 +83,7 @@ public class MCCConfiguration {
         this.pathFinderHost = value;
     }
 
-     
+
     /**
      * Gets the port.
      *
@@ -84,7 +93,7 @@ public class MCCConfiguration {
         return port;
     }
 
-     
+
     /**
      * Sets the port.
      *
@@ -94,7 +103,7 @@ public class MCCConfiguration {
         this.port = value;
     }
 
-     
+
     /**
      * Gets the term domain.
      *
@@ -104,7 +113,7 @@ public class MCCConfiguration {
         return termDomain;
     }
 
-     
+
     /**
      * Sets the term domain.
      *
@@ -114,7 +123,7 @@ public class MCCConfiguration {
         this.termDomain = value;
     }
 
-     
+
     /**
      * Gets the mobile country codes.
      *
@@ -124,7 +133,7 @@ public class MCCConfiguration {
         return mobileCountryCodes;
     }
 
-     
+
     /**
      * Sets the mobile country codes.
      *
@@ -139,15 +148,17 @@ public class MCCConfiguration {
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-        "mcc"
+            "mcc"
     })
     public static class MobileCountryCodes {
 
-        /** The mcc. */
+        /**
+         * The mcc.
+         */
         @XmlElement(name = "Mcc", required = true)
         protected List<MCCConfiguration.MobileCountryCodes.Mcc> mcc;
 
-         
+
         /**
          * Gets the mcc.
          *
@@ -165,30 +176,38 @@ public class MCCConfiguration {
          */
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "", propOrder = {
-            "code",
-            "callingCode",
-            "stage",
-            "defaultMnc"
+                "code",
+                "callingCode",
+                "stage",
+                "defaultMnc"
         })
         public static class Mcc {
 
-            /** The code. */
+            /**
+             * The code.
+             */
             @XmlElement(name = "Code")
             protected int code;
-            
-            /** The calling code. */
+
+            /**
+             * The calling code.
+             */
             @XmlElement(name = "CallingCode", required = true)
-            protected String callingCode;           
-            
-            /** The stage. */
+            protected String callingCode;
+
+            /**
+             * The stage.
+             */
             @XmlElement(name = "Stage")
             protected int stage;
-            
-            /** The default mnc. */
+
+            /**
+             * The default mnc.
+             */
             @XmlElement(name = "DefaultMnc", required = true)
             protected String defaultMnc;
 
-             
+
             /**
              * Gets the code.
              *
@@ -198,7 +217,7 @@ public class MCCConfiguration {
                 return code;
             }
 
-             
+
             /**
              * Sets the code.
              *
@@ -225,8 +244,8 @@ public class MCCConfiguration {
             public void setCallingCode(String callingCode) {
                 this.callingCode = callingCode;
             }
-            
-             
+
+
             /**
              * Gets the stage.
              *
@@ -236,7 +255,7 @@ public class MCCConfiguration {
                 return stage;
             }
 
-             
+
             /**
              * Sets the stage.
              *
@@ -246,7 +265,7 @@ public class MCCConfiguration {
                 this.stage = value;
             }
 
-             
+
             /**
              * Gets the default mnc.
              *
@@ -256,7 +275,7 @@ public class MCCConfiguration {
                 return defaultMnc;
             }
 
-             
+
             /**
              * Sets the default mnc.
              *
@@ -265,9 +284,8 @@ public class MCCConfiguration {
             public void setDefaultMnc(String value) {
                 this.defaultMnc = value;
             }
-            
-            
-            
+
+
         }
 
     }

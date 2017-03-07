@@ -30,7 +30,8 @@ public class MIFEAuthentication {
         private String onFailAction;
         private String supportFlow;
 
-        public MIFEAbstractAuthenticator() {}
+        public MIFEAbstractAuthenticator() {
+        }
 
         public String getOnFailAction() {
             return onFailAction;
