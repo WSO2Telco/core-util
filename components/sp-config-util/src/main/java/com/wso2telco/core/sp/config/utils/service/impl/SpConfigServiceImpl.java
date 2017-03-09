@@ -16,12 +16,14 @@
 
 package com.wso2telco.core.sp.config.utils.service.impl;
 
+import com.wso2telco.core.sp.config.utils.exception.DataAccessException;
 import com.wso2telco.core.sp.config.utils.service.SpConfigService;
 import com.wso2telco.core.sp.config.utils.dao.SpConfigDAO;
 import com.wso2telco.core.sp.config.utils.dao.impl.SpConfigDAOImpl;
 import com.wso2telco.core.sp.config.utils.domain.Config;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by isuru on 9/20/16.
@@ -89,5 +91,11 @@ public class SpConfigServiceImpl implements SpConfigService {
         SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
 
         return spConfigDAO.getUSSDPinRegistrationMessage(clientId);
+    }
+
+    @Override
+    public Map<String, String> getWelcomeSMSConfig(String clientId) throws DataAccessException {
+        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
+        return  spConfigDAO.getWelcomeSMSConfig(clientId);
     }
 }
