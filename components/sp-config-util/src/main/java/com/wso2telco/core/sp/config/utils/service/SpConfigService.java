@@ -17,8 +17,10 @@
 package com.wso2telco.core.sp.config.utils.service;
 
 import com.wso2telco.core.sp.config.utils.domain.Config;
+import com.wso2telco.core.sp.config.utils.exception.DataAccessException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SpConfigService {
 
@@ -39,4 +41,6 @@ public interface SpConfigService {
     String getUSSDPinLoginMessage(String clientId);
 
     String getUSSDPinRegistrationMessage(String clientId);
+
+    Map<String, String> getWelcomeSMSConfig(String clientId) throws DataAccessException;
 }

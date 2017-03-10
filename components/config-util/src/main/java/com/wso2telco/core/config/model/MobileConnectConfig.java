@@ -606,6 +606,39 @@ public class MobileConnectConfig {
          */
         private String authUrl;
 
+        private Boolean welcomeMessageDisabled;
+
+        private String defaultWelcomeMessage;
+
+        private List<OperatorSmsConfig> operatorSmsConfigs;
+
+        @XmlElement(name = "DefaultWelcomeMessage")
+        public String getDefaultWelcomeMessage() {
+            return defaultWelcomeMessage;
+        }
+
+        public void setDefaultWelcomeMessage(String defaultWelcomeMessage) {
+            this.defaultWelcomeMessage = defaultWelcomeMessage;
+        }
+
+        @XmlElement(name = "WelcomeMessageDisabled")
+        public Boolean getWelcomeMessageDisabled() {
+            return welcomeMessageDisabled;
+        }
+
+        public void setWelcomeMessageDisabled(Boolean welcomeMessageDisabled) {
+            this.welcomeMessageDisabled = welcomeMessageDisabled;
+        }
+
+        @XmlElementWrapper(name="OperatorWelcomeMessage")
+        @XmlElement(name = "Operator")
+        public List<OperatorSmsConfig> getOperatorSmsConfigs() {
+            return operatorSmsConfigs;
+        }
+
+        public void setOperatorSmsConfigs(List<OperatorSmsConfig> operatorSmsConfigs) {
+            this.operatorSmsConfigs = operatorSmsConfigs;
+        }
         /**
          * Gets the endpoint.
          *

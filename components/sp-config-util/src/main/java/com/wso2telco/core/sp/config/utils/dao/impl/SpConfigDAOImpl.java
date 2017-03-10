@@ -19,15 +19,17 @@ package com.wso2telco.core.sp.config.utils.dao.impl;
 import com.wso2telco.core.dbutils.DbUtils;
 import com.wso2telco.core.sp.config.utils.dao.SpConfigDAO;
 import com.wso2telco.core.sp.config.utils.domain.Config;
+import com.wso2telco.core.sp.config.utils.exception.DataAccessException;
 import com.wso2telco.core.sp.config.utils.util.ConfigKey;
 import org.apache.log4j.Logger;
-import org.wso2.carbon.utils.DBUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SpConfigDAOImpl implements SpConfigDAO {
 
@@ -229,5 +231,48 @@ public class SpConfigDAOImpl implements SpConfigDAO {
             throw new Exception(msg);
         }
         return configList;
+    }
+
+    public Map<String, String> getWelcomeSMSConfig(String clientId) throws DataAccessException {
+        logger.debug("Getting operator configs for client id [ " + clientId + " ] ");
+
+        Map<String, String> config = getConfigWithOperator(clientId, ConfigKey.WC_MSG);
+
+        logger.debug("Defined operator  configs " + config + " for client id [ " + clientId + " ]");
+
+        return config;
+    }
+
+    private Map<String, String> getConfigWithOperator(String clientId, String configKey) throws DataAccessException {
+        Connection connectDBConnection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        Map<String, String> configs = new HashMap<>();
+
+        try {
+            connectDBConnection = DbUtils.getConnectDbConnection();
+            String query = "SELECT operator,config_value FROM sp_configuration WHERE client_id = ? AND config_key = ?";
+
+            preparedStatement = connectDBConnection.prepareStatement(query);
+            preparedStatement.setString(1, clientId);
+            preparedStatement.setString(2, configKey);
+
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                configs.put(resultSet.getString("operator"), resultSet.getString("config_value"));
+            }
+        } catch (Exception e) {
+            logger.error("Error occurred while Getting the database connection");
+            throw new DataAccessException(e.getMessage(), e);
+        } finally {
+            DbUtils.closeAllConnections(preparedStatement, connectDBConnection, resultSet);
+        }
+
+        if (configs.isEmpty()) {
+            String msg = "No " + configKey + " operator configuration found for the client id [ " + clientId + " ] ";
+            logger.info(msg);
+        }
+        return configs;
     }
 }
