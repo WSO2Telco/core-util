@@ -640,6 +640,48 @@ public class MobileConnectConfig {
             this.operatorSmsConfigs = operatorSmsConfigs;
         }
         /**
+         * The sms login message
+         */
+        private String loginMessage;
+
+        /**
+         * The sms registration message
+         */
+        private String registrationMessage;
+
+        /**
+         * The Operator Specific Messages
+         */
+        private OperatorSpecificMessages operatorSpecificMessages;
+
+        /**
+         *
+         * @return
+         */
+        @XmlElement(name = "RegistrationMessage")
+        public String getRegistrationMessage() {
+            return registrationMessage;
+        }
+
+        /**
+         * Gets SMS login message
+         * @return the generic login message
+         */
+        @XmlElement(name = "LoginMessage")
+        public String getLoginMessage() {
+            return loginMessage;
+        }
+
+        /**
+         * The Operator Specific SMS Messages
+         * @return the operator specific messages object
+         */
+        @XmlElement(name = "OperatorSpecificMessages")
+        public OperatorSpecificMessages getOperatorSpecificMessages() {
+            return operatorSpecificMessages;
+        }
+
+        /**
          * Gets the endpoint.
          *
          * @return the endpoint
@@ -890,6 +932,30 @@ public class MobileConnectConfig {
 
         public void setTimeoutConfig(TimeoutConfig timeoutConfig) {
             this.timeoutConfig = timeoutConfig;
+        }
+
+        /**
+         * Sets the SMS login message
+         * @param loginMessage the login message
+         */
+        public void setLoginMessage(String loginMessage) {
+            this.loginMessage = loginMessage;
+        }
+
+        /**
+         * Sets the SMS registration message
+         * @param registrationMessage the registration message
+         */
+        public void setRegistrationMessage(String registrationMessage) {
+            this.registrationMessage = registrationMessage;
+        }
+
+        /**
+         * Sets the operator specific messages
+         * @param operatorSpecificMessages The operator specific messages
+         */
+        public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) {
+            this.operatorSpecificMessages = operatorSpecificMessages;
         }
     }
 
