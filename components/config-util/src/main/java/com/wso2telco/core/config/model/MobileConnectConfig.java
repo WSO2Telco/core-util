@@ -567,16 +567,6 @@ public class MobileConnectConfig {
         private String senderAddress;
 
         /**
-         * first content of the message
-         */
-        private String messageContentFirst;
-
-        /**
-         * The end of the message sent in SMS.
-         */
-        private String messageContentLast;
-
-        /**
          * boolean flog to check whether the short url enabled
          */
         private boolean isShortUrl;
@@ -701,16 +691,6 @@ public class MobileConnectConfig {
             return authToken;
         }
 
-        /**
-         * Gets the message.
-         *
-         * @return the message
-         */
-        @XmlElement(name = "MessageContent")
-        public String getMessage() {
-            return message;
-        }
-
         @XmlElement(name = "IsShortUrl")
         public boolean getIsShortUrl() {
             return isShortUrl;
@@ -806,44 +786,6 @@ public class MobileConnectConfig {
          */
         public void setIsShortUrl(boolean isShortUrl) {
             this.isShortUrl = isShortUrl;
-        }
-
-        /**
-         * Returns the first part of the message sent in SMS.
-         *
-         * @return first part of the message sent in SMS
-         */
-        @XmlElement(name = "MessageContentFirst")
-        public String getMessageContentFirst() {
-            return messageContentFirst;
-        }
-
-        /**
-         * Sets the first part of the message sent in SMS.
-         *
-         * @param messageContentFirst first part of the message sent in SMS
-         */
-        public void setMessageContentFirst(String messageContentFirst) {
-            this.messageContentFirst = messageContentFirst;
-        }
-
-        /**
-         * Returns the end of the message sent in SMS.
-         *
-         * @return end of the message sent in SMS
-         */
-        @XmlElement(name = "MessageContentLast")
-        public String getMessageContentLast() {
-            return messageContentLast;
-        }
-
-        /**
-         * Sets the end of the message sent in SMS.
-         *
-         * @param messageContentLast end of the message sent in SMS
-         */
-        public void setMessageContentLast(String messageContentLast) {
-            this.messageContentLast = messageContentLast;
         }
 
         /**
@@ -1389,16 +1331,6 @@ public class MobileConnectConfig {
         @XmlElement(name = "AuthToken")
         public String getAuthToken() {
             return authToken;
-        }
-
-        /**
-         * Gets the message.
-         *
-         * @return the message
-         */
-        @XmlElement(name = "MessageContent")
-        public String getMessage() {
-            return message;
         }
 
         /**
