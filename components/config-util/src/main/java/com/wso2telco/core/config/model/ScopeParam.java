@@ -27,41 +27,45 @@ public class ScopeParam {
     private boolean isTncVisible;
     private msisdnMismatchResultTypes msisdnMismatchResult;
     private heFailureResults heFailureResult;
+    private String scope;
 
-    public void setLoginHintFormat(List<LoginHintFormatDetails> loginHintFormat) {
-        this.loginHintFormat = loginHintFormat;
-    }
 
     public List<LoginHintFormatDetails> getLoginHintFormat() {
         return loginHintFormat;
+    }
+    public boolean isLoginHintMandatory() {
+        return isLoginHintMandatory;
+    }
+    public boolean isHeaderMsisdnMandatory() { return isHeaderMsisdnMandatory; }
+    public String getScope() { return scope; }
+    public msisdnMismatchResultTypes getMsisdnMismatchResult() {
+        return msisdnMismatchResult;
+    }
+    public heFailureResults getHeFailureResult() {
+        return heFailureResult;
+    }
+    public boolean isTncVisible() {
+        return isTncVisible;
+    }
+
+    public void setLoginHintFormat(List<LoginHintFormatDetails> loginHintFormat) {
+        this.loginHintFormat = loginHintFormat;
     }
 
     public void setLoginHintMandatory(boolean isLoginHintMandatory) {
         this.isLoginHintMandatory = isLoginHintMandatory;
     }
 
-    public boolean isLoginHintMandatory() {
-        return isLoginHintMandatory;
-    }
-
     public void setHeaderMsisdnMandatory(boolean headerMsisdnMandatory) {
         isHeaderMsisdnMandatory = headerMsisdnMandatory;
-    }
-
-    public boolean isHeaderMsisdnMandatory() {
-        return isHeaderMsisdnMandatory;
     }
 
     public void setMsisdnMismatchResult(msisdnMismatchResultTypes msisdnMismatchResult) {
         this.msisdnMismatchResult = msisdnMismatchResult;
     }
 
-    public msisdnMismatchResultTypes getMsisdnMismatchResult() {
-        return msisdnMismatchResult;
-    }
-
-    public heFailureResults getHeFailureResult() {
-        return heFailureResult;
+    public void setScope(String scope) {
+        this.scope = scope;
     }
 
     public void setHeFailureResult(heFailureResults heFailureResult) {
@@ -70,9 +74,5 @@ public class ScopeParam {
 
     public void setTncVisible(boolean isTncVisible) {
         this.isTncVisible = isTncVisible;
-    }
-
-    public boolean isTncVisible() {
-        return isTncVisible;
     }
 }
