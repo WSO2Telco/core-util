@@ -190,6 +190,28 @@ public class SpConfigDAOImpl implements SpConfigDAO {
         }
     }
 
+    @Override
+    public String getSMSLoginMessage(String clientId) {
+        try {
+            List<String> spUssdPinRegistrationMessages = getConfig(clientId, ConfigKey.SP_SMS_LOGIN_MESSAGE);
+            return spUssdPinRegistrationMessages.get(0);
+        }catch (Exception e){
+            // return null if no configuration value found for sp
+            return null;
+        }
+    }
+
+    @Override
+    public String getSMSRegistrationMessage(String clientId) {
+        try {
+            List<String> spUssdPinRegistrationMessages = getConfig(clientId, ConfigKey.SP_SMS_REGISTRATION_MESSAGE);
+            return spUssdPinRegistrationMessages.get(0);
+        }catch (Exception e){
+            // return null if no configuration value found for sp
+            return null;
+        }
+    }
+
     private List<String> getConfig(String clientId, String configKey) throws Exception {
         Connection connectDBConnection = null;
         PreparedStatement preparedStatement = null;

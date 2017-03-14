@@ -42,5 +42,9 @@ public interface SpConfigService {
 
     String getUSSDPinRegistrationMessage(String clientId);
 
+    String getSMSRegistrationMessage(String clientId);
+
+    String getSMSLoginMessage(String clientId);
+
     Map<String, String> getWelcomeSMSConfig(String clientId) throws DataAccessException;
 }

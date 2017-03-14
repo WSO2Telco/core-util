@@ -26,71 +26,66 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by isuru on 9/20/16.
+ * SP Config service
  */
 public class SpConfigServiceImpl implements SpConfigService {
 
+    SpConfigDAO spConfigDAO = null;
+
+    public SpConfigServiceImpl() {
+        this.spConfigDAO = new SpConfigDAOImpl();
+    }
+
     public void save(Config config) throws Exception {
-
-        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
-
         spConfigDAO.save(config);
     }
 
     public void delete(Config config) throws Exception {
-
-        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
-
         spConfigDAO.delete(config);
     }
 
     public List<String> getScopes(String clientId) throws Exception {
-
-        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
-
         return spConfigDAO.getScopes(clientId);
     }
 
     @Override
     public String getSaaMessage(String clientId) throws Exception {
-        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
-
         return spConfigDAO.getSaaMessage(clientId);
     }
 
     @Override
     public String getSaaImageUrl(String clientId) throws Exception {
-        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
-
         return spConfigDAO.getSaaImageUrl(clientId);
     }
 
     @Override
     public String getUSSDLoginMessage(String clientId) {
-        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
-
         return spConfigDAO.getUSSDLoginMessage(clientId);
     }
 
     @Override
     public String getUSSDRegistrationMessage(String clientId) {
-        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
-
         return spConfigDAO.getUSSDRegistrationMessage(clientId);
     }
 
     @Override
     public String getUSSDPinLoginMessage(String clientId) {
-        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
-
         return spConfigDAO.getUSSDPinLoginMessage(clientId);
     }
 
     @Override
     public String getUSSDPinRegistrationMessage(String clientId) {
-        SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
-
         return spConfigDAO.getUSSDPinRegistrationMessage(clientId);
+    }
+
+    @Override
+    public String getSMSRegistrationMessage(String clientId) {
+        return spConfigDAO.getSMSRegistrationMessage(clientId);
+    }
+
+    @Override
+    public String getSMSLoginMessage(String clientId) {
+        return spConfigDAO.getSMSLoginMessage(clientId);
     }
 
     @Override

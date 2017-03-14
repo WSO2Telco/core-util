@@ -567,16 +567,6 @@ public class MobileConnectConfig {
         private String senderAddress;
 
         /**
-         * first content of the message
-         */
-        private String messageContentFirst;
-
-        /**
-         * The end of the message sent in SMS.
-         */
-        private String messageContentLast;
-
-        /**
          * boolean flog to check whether the short url enabled
          */
         private boolean isShortUrl;
@@ -640,6 +630,48 @@ public class MobileConnectConfig {
             this.operatorSmsConfigs = operatorSmsConfigs;
         }
         /**
+         * The sms login message
+         */
+        private String loginMessage;
+
+        /**
+         * The sms registration message
+         */
+        private String registrationMessage;
+
+        /**
+         * The Operator Specific Messages
+         */
+        private OperatorSpecificMessages operatorSpecificMessages;
+
+        /**
+         *
+         * @return
+         */
+        @XmlElement(name = "RegistrationMessage")
+        public String getRegistrationMessage() {
+            return registrationMessage;
+        }
+
+        /**
+         * Gets SMS login message
+         * @return the generic login message
+         */
+        @XmlElement(name = "LoginMessage")
+        public String getLoginMessage() {
+            return loginMessage;
+        }
+
+        /**
+         * The Operator Specific SMS Messages
+         * @return the operator specific messages object
+         */
+        @XmlElement(name = "OperatorSpecificMessages")
+        public OperatorSpecificMessages getOperatorSpecificMessages() {
+            return operatorSpecificMessages;
+        }
+
+        /**
          * Gets the endpoint.
          *
          * @return the endpoint
@@ -657,16 +689,6 @@ public class MobileConnectConfig {
         @XmlElement(name = "AuthToken")
         public String getAuthToken() {
             return authToken;
-        }
-
-        /**
-         * Gets the message.
-         *
-         * @return the message
-         */
-        @XmlElement(name = "MessageContent")
-        public String getMessage() {
-            return message;
         }
 
         @XmlElement(name = "IsShortUrl")
@@ -767,44 +789,6 @@ public class MobileConnectConfig {
         }
 
         /**
-         * Returns the first part of the message sent in SMS.
-         *
-         * @return first part of the message sent in SMS
-         */
-        @XmlElement(name = "MessageContentFirst")
-        public String getMessageContentFirst() {
-            return messageContentFirst;
-        }
-
-        /**
-         * Sets the first part of the message sent in SMS.
-         *
-         * @param messageContentFirst first part of the message sent in SMS
-         */
-        public void setMessageContentFirst(String messageContentFirst) {
-            this.messageContentFirst = messageContentFirst;
-        }
-
-        /**
-         * Returns the end of the message sent in SMS.
-         *
-         * @return end of the message sent in SMS
-         */
-        @XmlElement(name = "MessageContentLast")
-        public String getMessageContentLast() {
-            return messageContentLast;
-        }
-
-        /**
-         * Sets the end of the message sent in SMS.
-         *
-         * @param messageContentLast end of the message sent in SMS
-         */
-        public void setMessageContentLast(String messageContentLast) {
-            this.messageContentLast = messageContentLast;
-        }
-
-        /**
          * Returns the fully qualified name of the Short URL service class.
          *
          * @return the fully qualified name of the Short URL service class
@@ -890,6 +874,30 @@ public class MobileConnectConfig {
 
         public void setTimeoutConfig(TimeoutConfig timeoutConfig) {
             this.timeoutConfig = timeoutConfig;
+        }
+
+        /**
+         * Sets the SMS login message
+         * @param loginMessage the login message
+         */
+        public void setLoginMessage(String loginMessage) {
+            this.loginMessage = loginMessage;
+        }
+
+        /**
+         * Sets the SMS registration message
+         * @param registrationMessage the registration message
+         */
+        public void setRegistrationMessage(String registrationMessage) {
+            this.registrationMessage = registrationMessage;
+        }
+
+        /**
+         * Sets the operator specific messages
+         * @param operatorSpecificMessages The operator specific messages
+         */
+        public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) {
+            this.operatorSpecificMessages = operatorSpecificMessages;
         }
     }
 
@@ -1323,16 +1331,6 @@ public class MobileConnectConfig {
         @XmlElement(name = "AuthToken")
         public String getAuthToken() {
             return authToken;
-        }
-
-        /**
-         * Gets the message.
-         *
-         * @return the message
-         */
-        @XmlElement(name = "MessageContent")
-        public String getMessage() {
-            return message;
         }
 
         /**
