@@ -50,7 +50,7 @@ public abstract class AbstractApplication< E extends ConfigDTO>  extends Applica
 
 		HttpConnectorFactory connector = getHttpConnectionFactory(arg0);
 
-		swaggerDropwizard.onRun(arg0, env, connector.getBindHost(), connector.getPort());
+		swaggerDropwizard.onRun(arg0, env);
 
 	}
 
