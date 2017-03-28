@@ -9,15 +9,15 @@ import javax.ws.rs.container.ContainerResponseFilter;
 
 public class HibernateSessionCleanner implements ContainerResponseFilter {
 
-	@Override
-	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
-			throws IOException {
-		SessionFactoryUtil.closeSession();
-		
-	}
+    @Override
+    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
+            throws IOException {
+        SessionFactoryUtil.closeSession();
+
+    }
 
 	/*@Override
-	public void filter(ContainerRequestContext requestContext) throws IOException {
+    public void filter(ContainerRequestContext requestContext) throws IOException {
 		
 
 	}

@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
- * 
+ *
  * WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,32 +15,41 @@
  ******************************************************************************/
 package com.wso2telco.core.mnc.resolver;
 
- 
+
 // TODO: Auto-generated Javadoc
+
 /**
  * The Class NumberRange.
  */
 public class NumberRange {
 
-    /** The rangefrom. */
+    /**
+     * The rangefrom.
+     */
     long rangefrom;
-    
-    /** The rangeto. */
-    long rangeto;    
-    
-    /** The mnccode. */
+
+    /**
+     * The rangeto.
+     */
+    long rangeto;
+
+    /**
+     * The mnccode.
+     */
     String mnccode;
-    
-    /** The brand. */
+
+    /**
+     * The brand.
+     */
     String brand;
 
     /**
      * Instantiates a new number range.
      *
      * @param rangefrom the rangefrom
-     * @param rangeto the rangeto
-     * @param mnccode the mnccode
-     * @param brand the brand
+     * @param rangeto   the rangeto
+     * @param mnccode   the mnccode
+     * @param brand     the brand
      */
     public NumberRange(long rangefrom, long rangeto, String mnccode, String brand) {
         this.rangefrom = rangefrom;
@@ -48,7 +57,7 @@ public class NumberRange {
         this.mnccode = mnccode;
         this.brand = brand;
     }
-    
+
     /**
      * Gets the rangefrom.
      *
@@ -120,5 +129,5 @@ public class NumberRange {
     public void setBrand(String brand) {
         this.brand = brand;
     }
-    
+
 }

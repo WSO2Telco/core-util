@@ -11,14 +11,12 @@ import com.wso2telco.core.mnc.resolver.ConfigLoader;
 import com.wso2telco.core.mnc.resolver.DataHolder;
 
 
-
- 
-@Component(name="mnc.component")
+@Component(name = "mnc.component")
 public class MobileNtResolverComponent {
 
     private static final Log log = LogFactory.getLog(MobileNtResolverComponent.class);
 
-@Activate
+    @Activate
     protected void activate(ComponentContext ctx) {
         try {
             DataHolder.getInstance().setMobileCountryConfig(ConfigLoader.getInstance().getMobileCountryConfig());
@@ -27,11 +25,12 @@ public class MobileNtResolverComponent {
             log.error("Mobile Network Resover configuration ", e);
         }
     }
-@Deactivate
+
+    @Deactivate
     protected void deactivate(ComponentContext ctx) {
         if (log.isDebugEnabled()) {
             log.info("Mobile Network Resover configuration is deactivated");
-        }        
+        }
     }
 
 
