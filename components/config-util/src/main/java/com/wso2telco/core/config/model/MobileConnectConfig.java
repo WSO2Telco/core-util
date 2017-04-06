@@ -1002,6 +1002,8 @@ public class MobileConnectConfig {
 
         private String password;
 
+        private TestMsisdns testMsisdns;
+
         @XmlElement(name = "CreateTransactionEndpoint")
         public String getTransactionEndpoint() {
             return transactionEndpoint;
@@ -1063,6 +1065,54 @@ public class MobileConnectConfig {
 
         public void setPassword(String password) {
             this.password = password;
+        }
+
+        public void setTestMsisdns(TestMsisdns testMsisdns) {
+            this.testMsisdns = testMsisdns;
+        }
+
+        @XmlElement(name = "TestMsisdns")
+        public TestMsisdns getTestMsisdns() {
+            return testMsisdns;
+        }
+    }
+
+    /**
+     * The Class for Operator Specific USSD Messages
+     */
+    public static class TestMsisdns {
+        private TestMsisdn[] msisdn;
+
+        public void setMsisdn(TestMsisdn[] msisdn) {
+            this.msisdn = msisdn;
+        }
+
+        @XmlElement(name = "TestMsisdn")
+        public TestMsisdn[] getMsisdn() {
+            return msisdn;
+        }
+    }
+
+    public static class TestMsisdn{
+        private String operator;
+        private String msisdn;
+
+        public void setOperator(String operator) {
+            this.operator = operator;
+        }
+
+        @XmlAttribute(name = "operator")
+        public String getOperator() {
+            return operator;
+        }
+
+        public void setMsisdn(String msisdn) {
+            this.msisdn = msisdn;
+        }
+
+        @XmlElement(name = "Msisdn")
+        public String getMsisdn() {
+            return msisdn;
         }
     }
     /**
