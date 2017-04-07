@@ -23,7 +23,7 @@ public class SpendLimitDAO {
     private String msisdn;
     private double amount;
     private String currentDateTime;
-    private long  responseTime;
+    private long responseTime;
 
     public String getGroupName() {
         return groupName;
