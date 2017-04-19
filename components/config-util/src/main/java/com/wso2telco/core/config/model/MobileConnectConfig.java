@@ -63,6 +63,11 @@ public class MobileConnectConfig {
     private SaaConfig saaConfig;
 
     /**
+     * Self service portal configuration
+     */
+    private SelfServicePortalConfig selfServicePortalConfig;
+
+    /**
      * toggles sp validation
      */
     private boolean isSpValidationDisabled;
@@ -160,6 +165,26 @@ public class MobileConnectConfig {
     public void setSaaConfig(SaaConfig saaConfig) {
         this.saaConfig = saaConfig;
     }
+
+    /**
+     * get the self service portal config
+     *
+     * @return SelfServicePortalConfig
+     */
+    @XmlElement(name = "SelfServicePortal")
+    public SelfServicePortalConfig getSelfServicePortalConfig() {
+        return selfServicePortalConfig;
+    }
+
+    /**
+     * sets the saa config
+     *
+     * @param selfServicePortalConfig self service config
+     */
+    public void setSelfServicePortalConfig(SelfServicePortalConfig selfServicePortalConfig) {
+        this.selfServicePortalConfig = selfServicePortalConfig;
+    }
+
 
     @XmlElement(name = "AdminUrl")
     public String getAdminUrl() {
@@ -915,6 +940,72 @@ public class MobileConnectConfig {
          */
         public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) {
             this.operatorSpecificMessages = operatorSpecificMessages;
+        }
+    }
+
+    public static class SelfServicePortalConfig {
+
+        private String spOAuthClientKey;
+        private String spOAuthClientSecret;
+        private String uiLoginUrl;
+        private String tokenEndpoint;
+        private String callbackUrl;
+        private String userInfoCall;
+        private String authorizeCall;
+
+        @XmlElement(name = "AuthorizeCall")
+        public String getAuthorizeCall() { return authorizeCall; }
+
+        public void setAuthorizeCall(String authorizeCall) { this.authorizeCall = authorizeCall; }
+
+        @XmlElement(name = "UserInfoCall")
+        public String getUserInfoCall() { return userInfoCall; }
+
+        public void setUserInfoCall(String userInfoCall) { this.userInfoCall = userInfoCall; }
+
+        @XmlElement(name = "SPOAuthClientKey")
+        public String getSPOAuthClientKey() {
+            return spOAuthClientKey;
+        }
+
+        public void setSPOAuthClientKey(String spOAuthClientKey) {
+            this.spOAuthClientKey = spOAuthClientKey;
+        }
+
+        @XmlElement(name = "SPOAuthClientSecret")
+        public String getSPOAuthClientSecret() {
+            return spOAuthClientSecret;
+        }
+
+        public void setSPOAuthClientSecret(String spOAuthClientSecret) {
+            this.spOAuthClientSecret = spOAuthClientSecret;
+        }
+
+        @XmlElement(name = "UILoginUrl")
+        public String getUILoginUrl() {
+            return uiLoginUrl;
+        }
+
+        public void setUILoginUrl(String uiLoginUrl) {
+            this.uiLoginUrl = uiLoginUrl;
+        }
+
+        @XmlElement(name = "TokenEndpoint")
+        public String getTokenEndpoint() {
+            return tokenEndpoint;
+        }
+
+        public void setTokenEndpoint(String tokenEndpoint) {
+            this.tokenEndpoint = tokenEndpoint;
+        }
+
+        @XmlElement(name = "CallbackUrl")
+        public String getCallbackUrl() {
+            return callbackUrl;
+        }
+
+        public void setCallbackUrl(String callbackUrl) {
+            this.callbackUrl = callbackUrl;
         }
     }
 
