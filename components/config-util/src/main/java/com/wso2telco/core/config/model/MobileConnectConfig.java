@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Map;
 
 // TODO: Auto-generated Javadoc
 
@@ -1206,6 +1207,17 @@ public class MobileConnectConfig {
         }
     }
 
+    private Map<String,String> operatorDiscoveryNameMap;
+
+    @XmlElementWrapper(name = "OperatorDiscoveryNamesMapping")
+    public Map<String, String> getOperatorDiscoveryNameMap() {
+        return operatorDiscoveryNameMap;
+    }
+
+    public void setOperatorDiscoveryNameMap(Map<String, String> operatorNameMap) {
+        this.operatorDiscoveryNameMap = operatorNameMap;
+    }
+
     public static class SelfServicePortalConfig {
 
         private String spOAuthClientKey;
@@ -1215,6 +1227,18 @@ public class MobileConnectConfig {
         private String callbackUrl;
         private String userInfoCall;
         private String authorizeCall;
+        private String discoveryAPICall;
+        private String discoveryAPIToken;
+
+        @XmlElement(name = "DiscoveryAPICall")
+        public String getDiscoveryAPICall() { return discoveryAPICall; }
+
+        public void setDiscoveryAPICall(String discoveryAPICall) { this.discoveryAPICall = discoveryAPICall; }
+
+        @XmlElement(name = "DiscoveryAPIToken")
+        public String getDiscoveryAPIToken() { return discoveryAPIToken; }
+
+        public void setDiscoveryAPIToken(String discoveryAPIToken) { this.discoveryAPIToken = discoveryAPIToken; }
 
         @XmlElement(name = "AuthorizeCall")
         public String getAuthorizeCall() { return authorizeCall; }
