@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
- * 
+ *
  * WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,6 +24,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.wso2telco.core.mnc.resolver.DataHolder;
@@ -36,38 +37,46 @@ import com.wso2telco.core.mnc.resolver.dnsssl.RequestBean;
 import com.wso2telco.core.mnc.resolver.dnsssl.SSLClient;
 import com.wso2telco.core.mnc.resolver.dnsssl.SSLResolver;
 import com.wso2telco.core.mnc.resolver.dnsssl.DNSResponseCode.RCODE;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.File;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
- 
+
 // TODO: Auto-generated Javadoc
+
 /**
  * The Class DNSSSLQueryClient.
  */
 public class DNSSSLQueryClient implements IProviderNetwork {
 
-    /** The Constant USAGE_BULK_QUERY. */
-    private static final String USAGE_BULK_QUERY = "Parameters required for Bulk Query :\n\t -i <inputfilepath> -o <outputfilepath>\n";
-    
-    /** The Constant USAGE_SINGLE_QUERY. */
-    private static final String USAGE_SINGLE_QUERY = "Parameters required for Single Query :\n\t -c <countrycode> -t <tn>\n";
+    /**
+     * The Constant USAGE_BULK_QUERY.
+     */
+    private static final String USAGE_BULK_QUERY = "Parameters required for Bulk Query :\n\t -i <inputfilepath> -o " +
+            "<outputfilepath>\n";
+
+    /**
+     * The Constant USAGE_SINGLE_QUERY.
+     */
+    private static final String USAGE_SINGLE_QUERY = "Parameters required for Single Query :\n\t -c <countrycode> -t " +
+            "<tn>\n";
 
     private static final Log log = LogFactory.getLog(DNSSSLQueryClient.class);
-     
+
     /**
      * Perform bulk query.
      *
-     * @param inputFile the input file
-     * @param outPutFile the out put file
-     * @param config the config
+     * @param inputFile   the input file
+     * @param outPutFile  the out put file
+     * @param config      the config
      * @param sslResolver the ssl resolver
      */
     private static void performBulkQuery(final String inputFile,
-            final String outPutFile, final MCCConfiguration config,
-            final SSLResolver sslResolver) {
+                                         final String outPutFile, final MCCConfiguration config,
+                                         final SSLResolver sslResolver) {
 
         List<DNSQueryResult> queriesResults = new ArrayList<DNSQueryResult>();
 
@@ -174,18 +183,18 @@ public class DNSSSLQueryClient implements IProviderNetwork {
         }
     }
 
-     
+
     /**
      * Perform single query.
      *
      * @param countryCode the country code
-     * @param tn the tn
-     * @param config the config
+     * @param tn          the tn
+     * @param config      the config
      * @param sslResolver the ssl resolver
      * @return the string
      */
     private static String performSingleQuery(final String countryCode, final String tn,
-            final MCCConfiguration config, final SSLResolver sslResolver) {
+                                             final MCCConfiguration config, final SSLResolver sslResolver) {
 
         String TN = "";
         try {
@@ -201,22 +210,22 @@ public class DNSSSLQueryClient implements IProviderNetwork {
             if ((queryResult != null) && (queryResult.getRcode() == RCODE.REFUSED)) {
                 System.err
                         .println("Got refused response from server.\n "
-                        + "Please contact NeuStar customer support, "
-                        + "with the IP address and X.509 cert of the client machine");
+                                + "Please contact NeuStar customer support, "
+                                + "with the IP address and X.509 cert of the client machine");
             } else if (queryResult.getRcode() == RCODE.NXDOMAIN) {
                 System.err
                         .println("TN not found.\n"
-                        + " Please verify with NeuStar customer support that "
-                        + "the terminating domain setting above matches the profile configuration");
+                                + " Please verify with NeuStar customer support that "
+                                + "the terminating domain setting above matches the profile configuration");
             } else if (queryResult.getRcode() == RCODE.FORMAT_ERROR) {
                 System.err
                         .println("The query format appears to be incorrect,\n"
-                        + " please verify whether you are using correct ENUM format for queries");
+                                + " please verify whether you are using correct ENUM format for queries");
 
             } else if (queryResult.getRcode() == RCODE.SERVFAIL) {
                 System.err
                         .println("There was an internal server error which caused a failure to respond\n"
-                        + " Please report to NeuStar customer support.");
+                                + " Please report to NeuStar customer support.");
 
             } else if (queryResult.getRcode() == RCODE.SERVER_NOT_FOUND) {
                 System.err
@@ -250,74 +259,76 @@ public class DNSSSLQueryClient implements IProviderNetwork {
         SSLClient sslClient = new SSLClient();
         String TN = null;
         SSLResolver sslResolver = null;
-        
+
         try {
-            
+
             MCCConfiguration MCCconfig = DataHolder.getInstance().getMobileCountryConfig();
             sslClient.initialize(MCCconfig.getPathFinderHost(), MCCconfig.getPort());
 
             // Create SSLResolver and set host and port
             sslResolver = new SSLResolver(sslClient);
-             // perform query for ingle TN
+            // perform query for ingle TN
             log.debug("QueryNetwor, beforeperformSingleQuery: ");
-            String tnResult = performSingleQuery(countryCode.replace("+", "").trim(), endUser.replace("+", "").trim(), MCCconfig, sslResolver);
-            log.debug("QueryNetwor, tnsResult: "+tnResult);
-            if ( (tnResult !=null) && (!tnResult.isEmpty()) ){
+            String tnResult = performSingleQuery(countryCode.replace("+", "").trim(), endUser.replace("+", "").trim()
+                    , MCCconfig, sslResolver);
+            log.debug("QueryNetwor, tnsResult: " + tnResult);
+            if ((tnResult != null) && (!tnResult.isEmpty())) {
                 TN = getEndpointMnc(tnResult);
             }
         } catch (Exception ioe) {
             System.err.println("Error while creating SSL socket");
-            ioe.printStackTrace();            
+            ioe.printStackTrace();
         }
-       
+
         return TN;
     }
-    
+
     public String queryNetworkStandalone(String countryCode, String endUser) {
         SSLClient sslClient = new SSLClient();
         String TN = null;
         SSLResolver sslResolver = null;
-        
+
         try {
-            
+
             //DataHolder.getInstance().setMobileCountryConfig(ConfigLoader.getInstance().getMobileCountryConfig());
             String configPath = "MobileCountryConfig.xml";
             File file = new File(configPath);
             JAXBContext ctx = JAXBContext.newInstance(MCCConfiguration.class);
             Unmarshaller um = ctx.createUnmarshaller();
-            
+
             MCCConfiguration MCCconfig = (MCCConfiguration) um.unmarshal(file);
-            System.out.println("host: "+MCCconfig.getPathFinderHost()+",port:"+MCCconfig.getPort()+",coutryCode:"+countryCode+",termDomain:"+MCCconfig.getTermDomain());
+            System.out.println("host: " + MCCconfig.getPathFinderHost() + ",port:" + MCCconfig.getPort() + "," +
+                    "coutryCode:" + countryCode + ",termDomain:" + MCCconfig.getTermDomain());
             sslClient.initialize(MCCconfig.getPathFinderHost(), MCCconfig.getPort());
 
             // Create SSLResolver and set host and port
             sslResolver = new SSLResolver(sslClient);
-             // perform query for ingle TN
-            
+            // perform query for ingle TN
+
             String tnResult = performSingleQuery(countryCode, endUser, MCCconfig, sslResolver);
-            System.out.println("tnResult:"+tnResult);
-            if ( (tnResult !=null) && (!tnResult.isEmpty()) ){
-                TN=getEndpointMnc(tnResult);
+            System.out.println("tnResult:" + tnResult);
+            if ((tnResult != null) && (!tnResult.isEmpty())) {
+                TN = getEndpointMnc(tnResult);
             }
-            
+
         } catch (Exception ioe) {
             System.err.println("Error while creating SSL socket");
-            ioe.printStackTrace();            
+            ioe.printStackTrace();
         }
-       
+
         return TN;
     }
-    
+
     public static String getEndpointMnc(String strMnc) {
-        
+
         String mnc = null;
-        
+
         Pattern p = Pattern.compile("(mnc=)(\\d+)");
         Matcher m = p.matcher(strMnc);
         while (m.find()) {
-            mnc = m.group(2);           
+            mnc = m.group(2);
         }
-          
+
         return mnc;
     }
 }

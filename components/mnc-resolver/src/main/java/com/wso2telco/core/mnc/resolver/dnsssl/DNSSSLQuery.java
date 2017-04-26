@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
- * 
+ *
  * WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,115 +27,114 @@ import com.wso2telco.core.mnc.resolver.Configuration;
 import com.wso2telco.core.mnc.resolver.MCCConfiguration;
 
 
- 
-
 // TODO: Auto-generated Javadoc
+
 /**
  * The Class DNSSSLQuery.
  */
 public class DNSSSLQuery implements DNSResponseCode {
 
-	 
-	/**
-	 * Execute.
-	 *
-	 * @param countryCode the country code
-	 * @param tn the tn
-	 * @param config the config
-	 * @param sslResolver the ssl resolver
-	 * @return the DNS query result
-	 * @throws Exception the exception
-	 */
-	public DNSQueryResult execute(final String countryCode,
-			final String tn, final MCCConfiguration config,
-			final SSLResolver sslResolver)
-					throws Exception {
 
-		DNSQueryResult queryResult = new DNSQueryResult();
+    /**
+     * Execute.
+     *
+     * @param countryCode the country code
+     * @param tn          the tn
+     * @param config      the config
+     * @param sslResolver the ssl resolver
+     * @return the DNS query result
+     * @throws Exception the exception
+     */
+    public DNSQueryResult execute(final String countryCode,
+                                  final String tn, final MCCConfiguration config,
+                                  final SSLResolver sslResolver)
+            throws Exception {
 
-		// Verify that tn and countryCode are numeric
-		try {
-			Integer.parseInt(countryCode);
-			Long.parseLong(tn);
-		} catch (NumberFormatException ne) {
-			System.err.println("TN or country code should be numeric");
-			throw new NumberFormatException("TN or country code should be numeric");
-		}
+        DNSQueryResult queryResult = new DNSQueryResult();
 
-		// transform the TN to a domain name; RFC3761
-		// For instance, "+15714345400" will be transformed to
-		// "0.0.4.5.4.3.4.1.7.5.1.<Terminating domain>"
-		String e164TN = TNUtils.getE164TN(countryCode,
-				tn, config.getTermDomain());
+        // Verify that tn and countryCode are numeric
+        try {
+            Integer.parseInt(countryCode);
+            Long.parseLong(tn);
+        } catch (NumberFormatException ne) {
+            System.err.println("TN or country code should be numeric");
+            throw new NumberFormatException("TN or country code should be numeric");
+        }
 
-		if (e164TN != null) {
+        // transform the TN to a domain name; RFC3761
+        // For instance, "+15714345400" will be transformed to
+        // "0.0.4.5.4.3.4.1.7.5.1.<Terminating domain>"
+        String e164TN = TNUtils.getE164TN(countryCode,
+                tn, config.getTermDomain());
 
-			try {
+        if (e164TN != null) {
 
-				// Create Name from String
-				Name name = Name.fromString(e164TN, Name.root);
+            try {
 
-				Record record = Record.newRecord(name, Type.NAPTR, DClass.IN);
+                // Create Name from String
+                Name name = Name.fromString(e164TN, Name.root);
 
-				Message query = Message.newQuery(record);
+                Record record = Record.newRecord(name, Type.NAPTR, DClass.IN);
 
-				Message response = sslResolver.send(query);
+                Message query = Message.newQuery(record);
 
-				queryResult.setMessageId(response.getHeader().getID());
+                Message response = sslResolver.send(query);
 
-				// Parse the response code to identify whether an error has
-				// occurred and populate the response
-				switch (response.getRcode()) {
-				case 0:
-					queryResult.setRcode(DNSResponseCode.RCODE.NO_ERROR);
-					Record[] answers = response.getSectionArray(Section.ANSWER);
+                queryResult.setMessageId(response.getHeader().getID());
 
-					// For most of the services a single NAPTR record is
-					// returned multiple NAPTR records are expected,
-					// navigate through the answers
+                // Parse the response code to identify whether an error has
+                // occurred and populate the response
+                switch (response.getRcode()) {
+                    case 0:
+                        queryResult.setRcode(DNSResponseCode.RCODE.NO_ERROR);
+                        Record[] answers = response.getSectionArray(Section.ANSWER);
 
-					int i = 0;
-					ArrayList<String> naptrArray = new ArrayList<String>();
-					while ((answers.length > 0) && (i < answers.length)) {
-						naptrArray.add(answers[i].rdataToString());
-						i++;
-					}
-					queryResult.setNaptrArray(naptrArray);
-					break;
-				case 1:
-					queryResult.setRcode(DNSResponseCode.RCODE.FORMAT_ERROR);
-					break;
-				case 2:
-					queryResult.setRcode(DNSResponseCode.RCODE.SERVFAIL);
-					break;
-				case 3:
-					queryResult.setRcode(DNSResponseCode.RCODE.NXDOMAIN);
-					break;
-				case 4:
-					queryResult.setRcode(DNSResponseCode.RCODE.IMPL_ERROR);
-					break;
-				case 5:
-					queryResult.setRcode(DNSResponseCode.RCODE.REFUSED);
-					break;
-				default:
-					queryResult.setRcode(DNSResponseCode.RCODE.UNANTICIPATED);
-				}
+                        // For most of the services a single NAPTR record is
+                        // returned multiple NAPTR records are expected,
+                        // navigate through the answers
 
-			}  catch (Exception e) {
-				System.err.println("Error occured in bulk queries flow ");
-				e.printStackTrace();
-				queryResult.setRcode(RCODE.UNANTICIPATED);
-			}
-		} else {
-			System.err.println("Error in parsing the number: CC["
-					+ countryCode + "] Number["
-					+ tn + "]");
-		}
+                        int i = 0;
+                        ArrayList<String> naptrArray = new ArrayList<String>();
+                        while ((answers.length > 0) && (i < answers.length)) {
+                            naptrArray.add(answers[i].rdataToString());
+                            i++;
+                        }
+                        queryResult.setNaptrArray(naptrArray);
+                        break;
+                    case 1:
+                        queryResult.setRcode(DNSResponseCode.RCODE.FORMAT_ERROR);
+                        break;
+                    case 2:
+                        queryResult.setRcode(DNSResponseCode.RCODE.SERVFAIL);
+                        break;
+                    case 3:
+                        queryResult.setRcode(DNSResponseCode.RCODE.NXDOMAIN);
+                        break;
+                    case 4:
+                        queryResult.setRcode(DNSResponseCode.RCODE.IMPL_ERROR);
+                        break;
+                    case 5:
+                        queryResult.setRcode(DNSResponseCode.RCODE.REFUSED);
+                        break;
+                    default:
+                        queryResult.setRcode(DNSResponseCode.RCODE.UNANTICIPATED);
+                }
 
-		queryResult.setCountryCode(countryCode);
+            } catch (Exception e) {
+                System.err.println("Error occured in bulk queries flow ");
+                e.printStackTrace();
+                queryResult.setRcode(RCODE.UNANTICIPATED);
+            }
+        } else {
+            System.err.println("Error in parsing the number: CC["
+                    + countryCode + "] Number["
+                    + tn + "]");
+        }
 
-		queryResult.setTn(tn);
+        queryResult.setCountryCode(countryCode);
 
-		return queryResult;
-	}
+        queryResult.setTn(tn);
+
+        return queryResult;
+    }
 }

@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
- * 
+ *
  * WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,51 +15,78 @@
  ******************************************************************************/
 package com.wso2telco.core.dbutils;
 
- 
+
 // TODO: Auto-generated Javadoc
+
 /**
  * The Class Operator.
  */
 
 public class Operator {
 
-    /** The isactive. */
-    int id,applicationid, operatorid,isactive;
-    
-    /** The operatorname. */
+    /**
+     * The isactive.
+     */
+    int id, applicationid, operatorid, isactive;
+
+    /**
+     * The operatorname.
+     */
     String operatorname;
-    
-    /** The note. */
+
+    /**
+     * The note.
+     */
     String note;
-    
-    /** The created. */
+
+    /**
+     * The created.
+     */
     String created;
-    
-    /** The created_date. */
+
+    /**
+     * The created_date.
+     */
     String created_date;
-    
-    /** The lastupdated. */
+
+    /**
+     * The lastupdated.
+     */
     String lastupdated;
-    
-    /** The lastupdated_date. */
+
+    /**
+     * The lastupdated_date.
+     */
     String lastupdated_date;
-    
-    /** The refreshtoken. */
+
+    /**
+     * The refreshtoken.
+     */
     String refreshtoken;
-    
-    /** The tokenvalidity. */
+
+    /**
+     * The tokenvalidity.
+     */
     long tokenvalidity;
-    
-    /** The tokentime. */
+
+    /**
+     * The tokentime.
+     */
     long tokentime;
-    
-    /** The token. */
+
+    /**
+     * The token.
+     */
     String token;
-    
-    /** The tokenurl. */
+
+    /**
+     * The tokenurl.
+     */
     String tokenurl;
-    
-    /** The tokenauth. */
+
+    /**
+     * The tokenauth.
+     */
     String tokenauth;
 
     /**
@@ -349,5 +376,5 @@ public class Operator {
     public void setTokenauth(String tokenauth) {
         this.tokenauth = tokenauth;
     }
-    
+
 }

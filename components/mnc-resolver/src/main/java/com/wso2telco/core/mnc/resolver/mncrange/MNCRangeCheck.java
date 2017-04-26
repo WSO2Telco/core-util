@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
- * 
+ *
  * WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,8 +21,9 @@ import com.wso2telco.core.mnc.resolver.IProviderNetwork;
 import com.wso2telco.core.mnc.resolver.MobileNtException;
 import com.wso2telco.core.mnc.resolver.NumberRange;
 
- 
+
 // TODO: Auto-generated Javadoc
+
 /**
  * The Class MNCRangeCheck.
  */
@@ -33,13 +34,13 @@ public class MNCRangeCheck implements IProviderNetwork {
 
         String fmtendUser = trimNumber(endUser);
         List<NumberRange> mccranges = McnRangeDbUtil.getMccNumberRanges(countryCode);
-        
+
         String operatorNetwork = null;
-        
+
         for (NumberRange m : mccranges) {
-            if (isInRange(m.getRangefrom(), m.getRangeto(), Long.parseLong(fmtendUser)) ) {
+            if (isInRange(m.getRangefrom(), m.getRangeto(), Long.parseLong(fmtendUser))) {
                 operatorNetwork = m.getBrand();
-                break;                
+                break;
             }
         }
 
@@ -51,7 +52,7 @@ public class MNCRangeCheck implements IProviderNetwork {
      *
      * @param lowerBound the lower bound
      * @param upperBound the upper bound
-     * @param value the value
+     * @param value      the value
      * @return true, if is in range
      */
     public static boolean isInRange(long lowerBound, long upperBound, long value) {
