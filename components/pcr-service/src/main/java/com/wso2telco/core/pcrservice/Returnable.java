@@ -26,5 +26,6 @@ public interface Returnable {
      * @return the id
      */
     public String getID();
+    public Boolean getAvailablity();
 
 }

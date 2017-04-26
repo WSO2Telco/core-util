@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright  (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
+ * Copyright  (c) 2015-2017, WSO2.Telco Inc. (http://www.wso2telco.com) All Rights Reserved.
  *
  * WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,28 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.pcrservice;
+package com.wso2telco.core.spprovisionservice.dao;
 
-import com.wso2telco.core.pcrservice.exception.PCRException;
-import com.wso2telco.core.pcrservice.model.RequestDTO;
-import com.wso2telco.core.pcrservice.persistable.UUIDPCRGenarator;
+import javax.naming.ConfigurationException;
+import java.sql.SQLException;
 
-// TODO: Auto-generated Javadoc
+public interface SpConfigurationDao {
 
-/**
- * The Interface PCRGeneratable.
- */
-public interface PCRGeneratable {
+    void insertSpToSpConfiguration(String clientId, String configKey, String configValue, String operator) throws
+            SQLException, ConfigurationException;
 
-    /**
-     * Gets the pcr.
-     *
-     * @param dto the dto
-     * @return the pcr
-     * @throws PCRException the PCR exception
-     */
-    public abstract Returnable getPCR(RequestDTO dto) throws PCRException;
-
-    public abstract Returnable isAppAvailableFor(String sector, String appId) throws PCRException;
-    
 }

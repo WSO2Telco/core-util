@@ -42,9 +42,11 @@
         <module>components/pcr-service</module>
         <module>components/config-util</module>
         <module>components/redis-client</module>
-        <module>components/sp-config-util</module>        
-	<module>features</module>
-    </modules>
+        <module>components/sp-config-util</module>
+        <module>components/sp-provisionservice</module>        
+		<module>features</module>
+		
+  </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -113,7 +115,7 @@
         <url>https://github.com/WSO2Telco/core-util.git</url>
         <developerConnection>scm:git:https://github.com/WSO2Telco/core-util.git</developerConnection>
         <connection>scm:git:https://github.com/WSO2Telco/core-util.git</connection>
-        <tag>v2.0.21-SNAPSHOT</tag>
+        <tag>v2.0.22-SNAPSHOT</tag>
     </scm>
 
     <build>

@@ -30,6 +30,11 @@ public class UUIDPCRService {
         authApplicationData = new OAuthApplicationData();
     }
 
+    public boolean isAppAvailableFor(String sector, String appId) throws PCRException {
+        KeyValueBasedPcrDAOImpl keyValueBasedPcrDAOImpl = new KeyValueBasedPcrDAOImpl();
+        return keyValueBasedPcrDAOImpl.checkApplicationExists(sector, appId);
+    }
+
     public String getPcr(RequestDTO requestDTO) throws PCRException {
 
         KeyValueBasedPcrDAOImpl keyValueBasedPcrDAO = new KeyValueBasedPcrDAOImpl();
@@ -117,10 +122,12 @@ public class UUIDPCRService {
 
     private void updateServiceProviderMap(String appId) throws PCRException {
 
-        if (DEBUG) log.debug("Updating Service Provider Map");
+        if (DEBUG)
+            log.debug("Updating Service Provider Map");
         try {
             OAuthConsumerAppDTO apps = authApplicationData.getApplicationData(appId);
-            if (DEBUG) log.debug("Application List recieved");
+            if (DEBUG)
+                log.debug("Application List recieved");
             if (apps == null) {
                 log.error("Application data not found - updateServiceProviderMap");
                 throw new PCRException("Null Application list - updateServiceProviderMap");
