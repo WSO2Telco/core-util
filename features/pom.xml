@@ -37,5 +37,6 @@
       <module>com.wso2telco.core.config.feature</module>
       <module>com.wso2telco.core.spconfig.feature</module>
       <module>com.wso2telco.core.pcrservice.feature</module>
+      <module>com.wso2telco.core.spprovisionservice.feature</module>
     </modules>
 </project>
