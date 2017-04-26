@@ -3,15 +3,14 @@ package com.wso2telco.core.pcrservice.internal;
 import com.wso2telco.core.pcrservice.PCRGeneratable;
 import com.wso2telco.core.pcrservice.persistable.UUIDPCRGenarator;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.ComponentContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.apache.felix.scr.annotations.*;
 
-@Component(name = "com.wso2telco.core.pcrservice.internal.PCRServiceComponen", immediate = true)
+@Component(name = "com.wso2telco.core.pcrservice.internal.PCRServiceComponent", immediate = true)
 public class PCRServiceComponent {
 
-	 @Activate
+	@Activate
     protected void activate(ComponentContext componentContext) {
         //do nothing
         PCRGeneratable pcrGeneratable = new UUIDPCRGenarator();
