@@ -470,7 +470,6 @@ public class MobileConnectConfig {
         this.authenticatorSelectionConfig = authenticatorSelectionConfig;
     }
 
-
     /**
      * Gets the data source name.
      *
@@ -660,7 +659,6 @@ public class MobileConnectConfig {
     public void setMSS(MSS mss) {
         this.mss = mss;
     }
-
 
     /**
      * The Class GSMAExchangeConfig.
@@ -870,7 +868,6 @@ public class MobileConnectConfig {
         public void setOperatorSmsConfigs(List<OperatorSmsConfig> operatorSmsConfigs) {
             this.operatorSmsConfigs = operatorSmsConfigs;
         }
-
         /**
          * The sms login message
          */
@@ -892,7 +889,6 @@ public class MobileConnectConfig {
         private OperatorSpecificMessages operatorSpecificMessages;
 
         /**
-         *
          * @return
          */
         @XmlElement(name = "RegistrationMessage")
@@ -902,7 +898,6 @@ public class MobileConnectConfig {
 
         /**
          * Gets SMS login message
-         *
          * @return the generic login message
          */
         @XmlElement(name = "LoginMessage")
@@ -921,7 +916,6 @@ public class MobileConnectConfig {
 
         /**
          * The Operator Specific SMS Messages
-         *
          * @return the operator specific messages object
          */
         @XmlElement(name = "OperatorSpecificMessages")
@@ -1094,7 +1088,6 @@ public class MobileConnectConfig {
             return accessToken;
         }
 
-
         /**
          * Returns the auth url for sms
          *
@@ -1120,7 +1113,6 @@ public class MobileConnectConfig {
          * @param senderAddress sender address
          */
 
-
         public void setSenderAddress(String senderAddress) {
             this.senderAddress = senderAddress;
         }
@@ -1136,7 +1128,6 @@ public class MobileConnectConfig {
 
         /**
          * Sets the SMS login message
-         *
          * @param loginMessage the login message
          */
         public void setLoginMessage(String loginMessage) {
@@ -1145,7 +1136,6 @@ public class MobileConnectConfig {
 
         /**
          * Sets the SMS registration message
-         *
          * @param registrationMessage the registration message
          */
         public void setRegistrationMessage(String registrationMessage) {
@@ -1159,7 +1149,6 @@ public class MobileConnectConfig {
 
         /**
          * Sets the operator specific messages
-         *
          * @param operatorSpecificMessages The operator specific messages
          */
         public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) {
@@ -2217,7 +2206,6 @@ public class MobileConnectConfig {
 
     }
 
-
     private DataPublisher dataPublisher;
 
     public void setDataPublisher(DataPublisher dataPublisher) {
@@ -2327,7 +2315,6 @@ public class MobileConnectConfig {
             this.mobileIPRanges = mobileIPRanges;
         }
 
-
         /**
          * Gets the operator name.
          *
@@ -2365,7 +2352,6 @@ public class MobileConnectConfig {
         public void setIpValidation(String ipValidation) {
             this.ipValidation = ipValidation;
         }
-
 
     }
 
@@ -2477,7 +2463,6 @@ public class MobileConnectConfig {
         public void setMssPinTest(String mssPinTest) {
             this.mssPinTest = mssPinTest;
         }
-
 
         /**
          * Gets the endpoint.
@@ -2861,6 +2846,474 @@ public class MobileConnectConfig {
 
         public void setMobileNetworkOperatorBasedSelectionEnabled(String mobileNetworkOperatorBasedSelectionEnabled) {
             this.mobileNetworkOperatorBasedSelectionEnabled = mobileNetworkOperatorBasedSelectionEnabled;
+        }
+    }
+
+    private boolean seamlessProvisioningEnabled;
+
+    @XmlElement(name = "SeamlessProvisioningEnabled")
+    public boolean isSeamlessProvisioningEnabled() {
+        return seamlessProvisioningEnabled;
+    }
+
+    public void setSeamlessProvisioningEnabled(boolean seamlessProvisioningEnabled) {
+        this.seamlessProvisioningEnabled = seamlessProvisioningEnabled;
+    }
+
+    private DiscoveryConfig discoveryConfig;
+
+    @XmlElement(name = "DiscoveryConfigs")
+    public DiscoveryConfig getDiscoveryConfig() {
+        return discoveryConfig;
+    }
+
+    public void setDiscoveryConfig(DiscoveryConfig discoveryConfig) {
+        this.discoveryConfig = discoveryConfig;
+    }
+
+    public static class DiscoveryConfig {
+
+        private EksDiscoveryConfig eksDiscoveryConfig;
+        private CrValidateDiscoveryConfig crValidateDiscoveryConfig;
+
+        @XmlElement(name = "DiscoveryCrConfig")
+        public CrValidateDiscoveryConfig getCrValidateDiscoveryConfig() {
+            return crValidateDiscoveryConfig;
+        }
+
+        public void setCrValidateDiscoveryConfig(CrValidateDiscoveryConfig crValidateDiscoveryConfig) {
+            this.crValidateDiscoveryConfig = crValidateDiscoveryConfig;
+        }
+
+        @XmlElement(name = "DiscoveryEksConfig")
+        public EksDiscoveryConfig getEksDiscoveryConfig() {
+            return eksDiscoveryConfig;
+        }
+
+        public void setEksDiscoveryConfig(EksDiscoveryConfig eksDiscoveryConfig) {
+            this.eksDiscoveryConfig = eksDiscoveryConfig;
+        }
+
+    }
+
+    public static class EksDiscoveryConfig {
+
+        private String serviceUrl;
+        private String redirectUrl;
+        private String msisdn;
+
+        @XmlElement(name = "EksRedirectUrl")
+        public String getRedirectUrl() {
+            return redirectUrl;
+        }
+
+        public void setRedirectUrl(String redirectUrl) {
+            this.redirectUrl = redirectUrl;
+        }
+
+        @XmlElement(name = "EksServiceUrl")
+        public String getServiceUrl() {
+            return serviceUrl;
+        }
+
+        public void setServiceUrl(String serviceUrl) {
+            this.serviceUrl = serviceUrl;
+        }
+
+        @XmlElement(name = "Msisdn")
+        public String getMsisdn() {
+            return msisdn;
+        }
+
+        public void setMsisdn(String msisdn) {
+            this.msisdn = msisdn;
+        }
+
+    }
+
+    public static class CrValidateDiscoveryConfig {
+
+        private String serviceUrl;
+
+        @XmlElement(name = "CrdServiceUrl")
+        public String getServiceUrl() {
+            return serviceUrl;
+        }
+
+        public void setServiceUrl(String serviceUrl) {
+            this.serviceUrl = serviceUrl;
+        }
+
+    }
+
+    private OpenAdminService openAdminService;
+
+    public void setOpenAdminService(OpenAdminService openAdminService) {
+        this.openAdminService = openAdminService;
+    }
+
+    @XmlElement(name = "OpenIDAdminServices")
+    public OpenAdminService getOpenAdminService() {
+        return openAdminService;
+    }
+
+    public static class OpenAdminService {
+        private String userName;
+        private String password;
+
+        @XmlElement(name = "UserName")
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        @XmlElement(name = "Password")
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+    }
+
+    private ServiceProvider serviceProvider;
+
+    public void setServiceProvider(ServiceProvider serviceProvider) {
+        this.serviceProvider = serviceProvider;
+    }
+
+    @XmlElement(name = "ServiceProviderHeaders")
+    public ServiceProvider getServiceProvider() {
+        return serviceProvider;
+    }
+
+    public static class ServiceProvider {
+        private String username;
+        private String password;
+
+        @XmlElement(name = "UserName")
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        @XmlElement(name = "Password")
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+    }
+
+    /*
+    * SP Provision confid
+    * */
+    private SpProvisionConfig spProvisionConfig;
+
+    @XmlElement(name = "SpProvisionConfig")
+    public SpProvisionConfig getSpProvisionConfig() {
+        return spProvisionConfig;
+    }
+
+    public void setSpProvisionConfig(SpProvisionConfig spProvisionConfig) {
+        this.spProvisionConfig = spProvisionConfig;
+    }
+
+    public static class SpProvisionConfig {
+
+        private String adminServiceUrl;
+        private String ApplicationManagementHostUrl;
+        private String stubAccessUserName;
+        private String stubAccessPassword;
+        private int maximumTotalHttpConnections;
+        private int maximumHttpConnectionsPerHost;
+        private Config config;
+
+        @XmlElement(name = "AdminServiceHostUrl")
+        public String getAdminServiceUrl() {
+            return adminServiceUrl;
+        }
+
+        public void setAdminServiceUrl(String adminServiceUrl) {
+            this.adminServiceUrl = adminServiceUrl;
+        }
+
+        @XmlElement(name = "ApplicationManagementHostUrl")
+        public String getApplicationManagementHostUrl() {
+            return ApplicationManagementHostUrl;
+        }
+
+        public void setApplicationManagementHostUrl(String applicationManagementHostUrl) {
+            ApplicationManagementHostUrl = applicationManagementHostUrl;
+        }
+
+        @XmlElement(name = "UserName")
+        public String getStubAccessUserName() {
+            return stubAccessUserName;
+        }
+
+        public void setStubAccessUserName(String stubAccessUserName) {
+            this.stubAccessUserName = stubAccessUserName;
+        }
+
+        @XmlElement(name = "Password")
+        public String getStubAccessPassword() {
+            return stubAccessPassword;
+        }
+
+        public void setStubAccessPassword(String stubAccessPassword) {
+            this.stubAccessPassword = stubAccessPassword;
+        }
+
+        @XmlElement(name = "MaximumTotalHttpConections")
+        public int getMaximumTotalHttpConections() {
+            return maximumTotalHttpConnections;
+        }
+
+        public void setMaximumTotalHttpConections(int maximumTotalHttpConections) {
+            this.maximumTotalHttpConnections = maximumTotalHttpConections;
+        }
+
+        @XmlElement(name = "MaximumHttpConnectionsPerHost")
+        public int getMaximumHttpConnectionsPerHost() {
+            return maximumHttpConnectionsPerHost;
+        }
+
+        public void setMaximumHttpConnectionsPerHost(int maximumHttpConnectionsPerHost) {
+            this.maximumHttpConnectionsPerHost = maximumHttpConnectionsPerHost;
+        }
+
+        @XmlElement(name = "config")
+        public Config getConfig() {
+            return config;
+        }
+
+        public void setConfig(Config config) {
+            this.config = config;
+        }
+    }
+
+    public static class Config {
+
+        private boolean alwaysSendMappedLocalSubjectId;
+        private boolean localClaimDialect;
+        private String inboundAuthType;
+        private boolean confidential;
+        private String defaultValue;
+        private String propertyName;
+        private boolean propertyRequired;
+        private boolean provisioningEnabled;
+        private String provisioningUserStore;
+        private boolean saasApp;
+        private String localAuthenticatorConfigsDisplayName;
+        private boolean localAuthenticatorConfigsEnabled;
+        private String localAuthenticatorConfigsName;
+        private boolean localAuthenticatorConfigsValid;
+        private String localAuthenticatorConfigsAuthenticationType;
+        private String username;
+        private String password;
+        private String oAuthVersion;
+        private String grantTypes;
+        private boolean pkceMandatory;
+        private boolean pkceSupportPlain;
+
+        @XmlElement(name = "AlwaysSendMappedLocalSubjectId")
+        public boolean isAlwaysSendMappedLocalSubjectId() {
+            return alwaysSendMappedLocalSubjectId;
+        }
+
+        public void setAlwaysSendMappedLocalSubjectId(boolean alwaysSendMappedLocalSubjectId) {
+            this.alwaysSendMappedLocalSubjectId = alwaysSendMappedLocalSubjectId;
+        }
+
+        @XmlElement(name = "LocalClaimDialect")
+        public boolean isLocalClaimDialect() {
+            return localClaimDialect;
+        }
+
+        public void setLocalClaimDialect(boolean localClaimDialect) {
+            this.localClaimDialect = localClaimDialect;
+        }
+
+        @XmlElement(name = "InboundAuthType")
+        public String getInboundAuthType() {
+            return inboundAuthType;
+        }
+
+        public void setInboundAuthType(String inboundAuthType) {
+            this.inboundAuthType = inboundAuthType;
+        }
+
+        @XmlElement(name = "Confidential")
+        public boolean isConfidential() {
+            return confidential;
+        }
+
+        public void setConfidential(boolean confidential) {
+            this.confidential = confidential;
+        }
+
+        @XmlElement(name = "DefaultValue")
+        public String getDefaultValue() {
+            return defaultValue;
+        }
+
+        public void setDefaultValue(String defaultValue) {
+            this.defaultValue = defaultValue;
+        }
+
+        @XmlElement(name = "PropertyName")
+        public String getPropertyName() {
+            return propertyName;
+        }
+
+        public void setPropertyName(String propertyName) {
+            this.propertyName = propertyName;
+        }
+
+        @XmlElement(name = "PropertyRequired")
+        public boolean isPropertyRequired() {
+            return propertyRequired;
+        }
+
+        public void setPropertyRequired(boolean propertyRequired) {
+            this.propertyRequired = propertyRequired;
+        }
+
+        @XmlElement(name = "ProvisioningEnabled")
+        public boolean isProvisioningEnabled() {
+            return provisioningEnabled;
+        }
+
+        public void setProvisioningEnabled(boolean provisioningEnabled) {
+            this.provisioningEnabled = provisioningEnabled;
+        }
+
+        @XmlElement(name = "ProvisioningUserStore")
+        public String getProvisioningUserStore() {
+            return provisioningUserStore;
+        }
+
+        public void setProvisioningUserStore(String provisioningUserStore) {
+            this.provisioningUserStore = provisioningUserStore;
+        }
+
+        @XmlElement(name = "SaasApp")
+        public boolean isSaasApp() {
+            return saasApp;
+        }
+
+        public void setSaasApp(boolean saasApp) {
+            this.saasApp = saasApp;
+        }
+
+        @XmlElement(name = "LocalAuthenticatorConfigsDisplayName")
+        public String getLocalAuthenticatorConfigsDisplayName() {
+            return localAuthenticatorConfigsDisplayName;
+        }
+
+        public void setLocalAuthenticatorConfigsDisplayName(String localAuthenticatorConfigsDisplayName) {
+            this.localAuthenticatorConfigsDisplayName = localAuthenticatorConfigsDisplayName;
+        }
+
+        @XmlElement(name = "LocalAuthenticatorConfigsEnabled")
+        public boolean isLocalAuthenticatorConfigsEnabled() {
+            return localAuthenticatorConfigsEnabled;
+        }
+
+        public void setLocalAuthenticatorConfigsEnabled(boolean localAuthenticatorConfigsEnabled) {
+            this.localAuthenticatorConfigsEnabled = localAuthenticatorConfigsEnabled;
+        }
+
+        @XmlElement(name = "LocalAuthenticatorConfigsName")
+        public String getLocalAuthenticatorConfigsName() {
+            return localAuthenticatorConfigsName;
+        }
+
+        public void setLocalAuthenticatorConfigsName(String localAuthenticatorConfigsName) {
+            this.localAuthenticatorConfigsName = localAuthenticatorConfigsName;
+        }
+
+        @XmlElement(name = "LocalAuthenticatorConfigsValid")
+        public boolean isLocalAuthenticatorConfigsValid() {
+            return localAuthenticatorConfigsValid;
+        }
+
+        public void setLocalAuthenticatorConfigsValid(boolean localAuthenticatorConfigsValid) {
+            this.localAuthenticatorConfigsValid = localAuthenticatorConfigsValid;
+        }
+
+        @XmlElement(name = "LocalAuthenticatorConfigsAuthenticationType")
+        public String getLocalAuthenticatorConfigsAuthenticationType() {
+            return localAuthenticatorConfigsAuthenticationType;
+        }
+
+        public void setLocalAuthenticatorConfigsAuthenticationType(String localAuthenticatorConfigsAuthenticationType) {
+            this.localAuthenticatorConfigsAuthenticationType = localAuthenticatorConfigsAuthenticationType;
+        }
+
+        @XmlElement(name = "UserName")
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        @XmlElement(name = "Password")
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        @XmlElement(name = "OauthVersion")
+        public String getoAuthVersion() {
+            return oAuthVersion;
+        }
+
+        public void setoAuthVersion(String oAuthVersion) {
+            this.oAuthVersion = oAuthVersion;
+        }
+
+        @XmlElement(name = "GrantTypes")
+        public String getGrantTypes() {
+            return grantTypes;
+        }
+
+        public void setGrantTypes(String grantTypes) {
+            this.grantTypes = grantTypes;
+        }
+
+        @XmlElement(name = "PkceMandatory")
+        public boolean isPkceMandatory() {
+            return pkceMandatory;
+        }
+
+        public void setPkceMandatory(boolean pkceMandatory) {
+            this.pkceMandatory = pkceMandatory;
+        }
+
+        @XmlElement(name = "PkceSupportPlain")
+        public boolean isPkceSupportPlain() {
+            return pkceSupportPlain;
+        }
+
+        public void setPkceSupportPlain(boolean pkceSupportPlain) {
+            this.pkceSupportPlain = pkceSupportPlain;
         }
     }
 

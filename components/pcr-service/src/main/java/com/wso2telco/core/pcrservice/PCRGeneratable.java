@@ -17,6 +17,7 @@ package com.wso2telco.core.pcrservice;
 
 import com.wso2telco.core.pcrservice.exception.PCRException;
 import com.wso2telco.core.pcrservice.model.RequestDTO;
+import com.wso2telco.core.pcrservice.persistable.UUIDPCRGenarator;
 
 // TODO: Auto-generated Javadoc
 
@@ -32,8 +33,10 @@ public interface PCRGeneratable {
      * @return the pcr
      * @throws PCRException the PCR exception
      */
-    Returnable getPCR(RequestDTO dto) throws PCRException;
+    public abstract Returnable getPCR(RequestDTO dto) throws PCRException;
 
+    public abstract Returnable isAppAvailableFor(String sector, String appId) throws PCRException;
+    
     /**
      * Gets the pcr.
      *
@@ -51,4 +54,5 @@ public interface PCRGeneratable {
      * @throws PCRException the PCR exception
      */
     Returnable getMsisdnByPcr(String sectorId, String pcr) throws PCRException;
+
 }

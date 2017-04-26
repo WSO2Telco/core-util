@@ -87,6 +87,7 @@ public class AdminServiceConfig {
         jksTrustStore = (String) adminConfig.get("jksTrustStore");
         maximumTotalHttpConnection = (int) adminConfig.get("maximumTotalHttpConnection");
         maximumHttpConnectionPerHost = (int) adminConfig.get("maximumHttpConnectionPerHost");
+
     }
 
     /**

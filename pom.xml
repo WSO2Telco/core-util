@@ -42,9 +42,11 @@
         <module>components/pcr-service</module>
         <module>components/config-util</module>
         <module>components/redis-client</module>
-        <module>components/sp-config-util</module>        
-	<module>features</module>
-    </modules>
+        <module>components/sp-config-util</module>
+        <module>components/sp-provisionservice</module>        
+		<module>features</module>
+		
+  </modules>
 
     <dependencyManagement>
         <dependencies>

@@ -83,6 +83,11 @@ public class UUIDPCRGenarator implements PCRGeneratable {
             public String getID() {                
                 return uuid;
             }
+	    @Override
+            public Boolean getAvailablity() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         };
 
     }
@@ -104,4 +109,32 @@ public class UUIDPCRGenarator implements PCRGeneratable {
             }
         };
     }
+
+    Boolean appAvailable = false;
+
+    @Override
+    public Returnable isAppAvailableFor(String sector, String appId) throws PCRException {
+
+        try {
+            UUIDPCRService uuidpcrService = new UUIDPCRService();
+            appAvailable = uuidpcrService.isAppAvailableFor(sector, appId);
+        } catch (Exception e) {
+            log.error("error in app availability check", e);
+            throw new PCRException("error in app availability check");
+        }
+
+        return new Returnable() {
+            @Override
+            public Boolean getAvailablity() {
+                // TODO Auto-generated method stub
+                return appAvailable;
+            }
+
+            @Override
+            public String getID() {
+                return null;
+            }
+        };
+    }
+
 }
