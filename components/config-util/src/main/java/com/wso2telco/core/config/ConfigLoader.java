@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) 
- * 
+ *
  * All Rights Reserved. WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,6 +15,8 @@
  ******************************************************************************/
 package com.wso2telco.core.config;
 
+import com.wso2telco.core.config.model.AuthenticationLevels;
+import com.wso2telco.core.config.model.MobileConnectConfig;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.utils.CarbonUtils;
@@ -24,22 +26,29 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class ConfigLoader.
  */
 public class ConfigLoader {
 
-    /** The log. */
+    /**
+     * The log.
+     */
     private Log log = LogFactory.getLog(ConfigLoader.class);
 
-    /** The loa config. */
-    private LOAConfig loaConfig;
-    
-    /** The mobile connect config. */
+    /**
+     * The loa config.
+     */
+    private AuthenticationLevels authenticationLevels;
+
+    /**
+     * The mobile connect config.
+     */
     private MobileConnectConfig mobileConnectConfig;
-    
-    /** The loader. */
+
+    /**
+     * The loader.
+     */
     private static ConfigLoader loader = new ConfigLoader();
 
     /**
@@ -47,8 +56,10 @@ public class ConfigLoader {
      */
     private ConfigLoader() {
         try {
-            this.loaConfig = initLoaConfig();
-            this.mobileConnectConfig = initMConnectConfig();
+            if (this.authenticationLevels == null)
+                this.authenticationLevels = initLoaConfig();
+            if (this.mobileConnectConfig == null)
+                this.mobileConnectConfig = initMConnectConfig();
         } catch (JAXBException e) {
             log.error("Error while initiating custom config files", e);
         }
@@ -64,17 +75,24 @@ public class ConfigLoader {
     }
 
     /**
+     * Resets the singleton and re-initiate
+     */
+    public static void reset() {
+        loader = new ConfigLoader();
+    }
+
+    /**
      * Inits the loa config.
      *
      * @return the LOA config
      * @throws JAXBException the JAXB exception
      */
-    private LOAConfig initLoaConfig() throws JAXBException {
+    private AuthenticationLevels initLoaConfig() throws JAXBException {
         String configPath = CarbonUtils.getCarbonConfigDirPath() + File.separator + "LOA.xml";
         File file = new File(configPath);
-        JAXBContext ctx = JAXBContext.newInstance(LOAConfig.class);
+        JAXBContext ctx = JAXBContext.newInstance(AuthenticationLevels.class);
         Unmarshaller um = ctx.createUnmarshaller();
-        return  (LOAConfig) um.unmarshal(file);
+        return (AuthenticationLevels) um.unmarshal(file);
     }
 
     /**
@@ -82,8 +100,8 @@ public class ConfigLoader {
      *
      * @return the loa config
      */
-    public LOAConfig getLoaConfig() {
-        return loaConfig;
+    public AuthenticationLevels getAuthenticationLevels() {
+        return this.authenticationLevels;
     }
 
     /**
@@ -105,8 +123,8 @@ public class ConfigLoader {
      *
      * @return the mobile connect config
      */
-    public MobileConnectConfig getMobileConnectConfig(){
-        return mobileConnectConfig;
+    public MobileConnectConfig getMobileConnectConfig() {
+        return this.mobileConnectConfig;
     }
 
 }

@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright (c) 2015-2016, WSO2.Telco Inc. (http://www.wso2telco.com) 
- * 
+ *
  * All Rights Reserved. WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,26 +15,16 @@
  ******************************************************************************/
 package com.wso2telco.core.config;
 
-// TODO: Auto-generated Javadoc
+import com.wso2telco.core.config.model.AuthenticationLevels;
+import com.wso2telco.core.config.model.MobileConnectConfig;
 
-/**
- * The Class DataHolder.
- */
+import java.util.Map;
+
 public class DataHolder {
-
-    /** The loa config. */
-    private LOAConfig loaConfig;
-    
-    /** The mobile connect config. */
+    private AuthenticationLevels authenticationLevels;
     private MobileConnectConfig mobileConnectConfig;
-
-    /** The this instance. */
+    private Map<String, MIFEAuthentication> authenticationLevelMap = null;
     private static DataHolder thisInstance = new DataHolder();
-
-    /**
-     * Instantiates a new data holder.
-     */
-    private DataHolder() {}
 
     /**
      * Gets the single instance of DataHolder.
@@ -50,8 +40,8 @@ public class DataHolder {
      *
      * @param config the new LOA config
      */
-    public void setLOAConfig(LOAConfig config) {
-        this.loaConfig = config;
+    public void setAuthenticationLevels(AuthenticationLevels config) {
+        this.authenticationLevels = config;
     }
 
     /**
@@ -59,8 +49,8 @@ public class DataHolder {
      *
      * @return the LOA config
      */
-    public LOAConfig getLOAConfig() {
-        return loaConfig;
+    public AuthenticationLevels getAuthenticationLevels() {
+        return authenticationLevels;
     }
 
     /**
@@ -80,4 +70,15 @@ public class DataHolder {
     public void setMobileConnectConfig(MobileConnectConfig mobileConnectConfig) {
         this.mobileConnectConfig = mobileConnectConfig;
     }
+
+
+    public Map<String, MIFEAuthentication> getAuthenticationLevelMap() {
+        return authenticationLevelMap;
+    }
+
+    public void setAuthenticationLevelMap(
+            Map<String, MIFEAuthentication> authenticationLevelMap) {
+        this.authenticationLevelMap = authenticationLevelMap;
+    }
+
 }
