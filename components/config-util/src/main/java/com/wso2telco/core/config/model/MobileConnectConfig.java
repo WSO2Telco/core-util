@@ -61,6 +61,8 @@ public class MobileConnectConfig {
 
     private SaaConfig saaConfig;
 
+    private MePinConfig mePinConfig;
+
     /**
      * toggles sp validation
      */
@@ -89,6 +91,14 @@ public class MobileConnectConfig {
 
     private boolean isPcrServiceEnabled;
 
+    @XmlElement(name = "MePin")
+    public MePinConfig getMePinConfig() {
+        return mePinConfig;
+    }
+
+    public void setMePinConfig(MePinConfig mePinConfig) {
+        this.mePinConfig = mePinConfig;
+    }
 
     public boolean isPcrServiceEnabled() {
         return isPcrServiceEnabled;
@@ -976,6 +986,135 @@ public class MobileConnectConfig {
         }
     }
 
+    public static class MePinConfig{
+
+        private String userEnrollmentEndpoint;
+
+        private String authorizationEndpoint;
+
+        private String statusCheckEndpoint;
+
+        private String transactionEndpoint;
+
+        private String authEndPoint;
+
+        private String username;
+
+        private String password;
+
+        private TestMsisdns testMsisdns;
+
+        @XmlElement(name = "CreateTransactionEndpoint")
+        public String getTransactionEndpoint() {
+            return transactionEndpoint;
+        }
+
+        public void setTransactionEndpoint(String transactionEndpoint) {
+            this.transactionEndpoint = transactionEndpoint;
+        }
+
+        @XmlElement(name = "UserEnrollmentEndpoint")
+        public String getUserEnrollmentEndpoint() {
+            return userEnrollmentEndpoint;
+        }
+
+        public void setUserEnrollmentEndpoint(String userEnrollmentEndpoint) {
+            this.userEnrollmentEndpoint = userEnrollmentEndpoint;
+        }
+
+        @XmlElement(name = "AuthorizationEndpoint")
+        public String getAuthorizationEndpoint() {
+            return authorizationEndpoint;
+        }
+
+        public void setAuthorizationEndpoint(String authorizationEndpoint) {
+            this.authorizationEndpoint = authorizationEndpoint;
+        }
+
+        @XmlElement(name = "StatusCheckEndpoint")
+        public String getStatusCheckEndpoint() {
+            return statusCheckEndpoint;
+        }
+
+        public void setStatusCheckEndpoint(String statusCheckEndpoint) {
+            this.statusCheckEndpoint = statusCheckEndpoint;
+        }
+
+        @XmlElement(name = "AuthEndpoint")
+        public String getAuthEndPoint() {
+            return authEndPoint;
+        }
+
+        public void setAuthEndPoint(String authEndPoint) {
+            this.authEndPoint = authEndPoint;
+        }
+
+        @XmlElement(name = "Username")
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        @XmlElement(name = "Password")
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public void setTestMsisdns(TestMsisdns testMsisdns) {
+            this.testMsisdns = testMsisdns;
+        }
+
+        @XmlElement(name = "TestMsisdns")
+        public TestMsisdns getTestMsisdns() {
+            return testMsisdns;
+        }
+    }
+
+    /**
+     * The Class for Operator Specific USSD Messages
+     */
+    public static class TestMsisdns {
+        private TestMsisdn[] msisdn;
+
+        public void setMsisdn(TestMsisdn[] msisdn) {
+            this.msisdn = msisdn;
+        }
+
+        @XmlElement(name = "TestMsisdn")
+        public TestMsisdn[] getMsisdn() {
+            return msisdn;
+        }
+    }
+
+    public static class TestMsisdn{
+        private String operator;
+        private String msisdn;
+
+        public void setOperator(String operator) {
+            this.operator = operator;
+        }
+
+        @XmlAttribute(name = "operator")
+        public String getOperator() {
+            return operator;
+        }
+
+        public void setMsisdn(String msisdn) {
+            this.msisdn = msisdn;
+        }
+
+        @XmlElement(name = "Msisdn")
+        public String getMsisdn() {
+            return msisdn;
+        }
+    }
     /**
      * The Class for Operator Specific USSD Message
      */
