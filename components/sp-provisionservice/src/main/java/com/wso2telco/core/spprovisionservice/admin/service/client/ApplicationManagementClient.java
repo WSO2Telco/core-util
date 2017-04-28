@@ -29,10 +29,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.identity.application.common.model.xsd.ApplicationBasicInfo;
 import org.wso2.carbon.identity.application.common.model.xsd.ServiceProvider;
-import org.wso2.carbon.identity.application.mgt.stub.IdentityApplicationManagementServiceIdentityApplicationManagementException;
+import org.wso2.carbon.identity.application.mgt.stub
+        .IdentityApplicationManagementServiceIdentityApplicationManagementException;
 import org.wso2.carbon.identity.application.mgt.stub.IdentityApplicationManagementServiceStub;
 
+import javax.naming.ConfigurationException;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 
 public class ApplicationManagementClient {
 
@@ -66,22 +69,27 @@ public class ApplicationManagementClient {
         authenticate(client);
         ApplicationBasicInfo[] applicationBasicInfo;
 
-        try {
-            applicationBasicInfo = getAllApplicationBasicInfo();
-
+        applicationBasicInfo = getAllApplicationBasicInfo();
+        if (applicationBasicInfo != null) {
             for (ApplicationBasicInfo appInfo : applicationBasicInfo) {
                 if (appInfo.getApplicationName().equals(applicationName)) {
-                    serviceProvider = stub.getApplication(applicationName);
+                    try {
+                        serviceProvider = stub.getApplication(applicationName);
+                    } catch (RemoteException e) {
+                        log.error("RemoteException occurred when getting Sp Application data for application :" +
+                                applicationName, e);
+                        throw new SpProvisionServiceException(e.getMessage());
+                    } catch (IdentityApplicationManagementServiceIdentityApplicationManagementException e) {
+                        log.error("IdentityApplicationManagementServiceIdentityApplicationManagementException " +
+                                "occurred when getting Sp Application data for application :" +
+                                applicationName, e);
+                        throw new SpProvisionServiceException(e.getMessage());
+                    }
                     break;
                 }
             }
-        } catch (RemoteException e) {
-            throw new SpProvisionServiceException(e.getMessage());
-        } catch (IdentityApplicationManagementServiceIdentityApplicationManagementException e) {
-            throw new SpProvisionServiceException(e.getMessage());
-        } catch (NullPointerException e) {
-            throw new SpProvisionServiceException(e.getMessage());
         }
+
         return serviceProvider;
     }
 
@@ -92,8 +100,11 @@ public class ApplicationManagementClient {
         try {
             applicationBasicInfo = stub.getAllApplicationBasicInfo();
         } catch (RemoteException e) {
+            log.error("RemoteException occurred when getting all Sp Application data", e);
             throw new SpProvisionServiceException(e.getMessage());
         } catch (IdentityApplicationManagementServiceIdentityApplicationManagementException e) {
+            log.error("IdentityApplicationManagementServiceIdentityApplicationManagementException occurred when " +
+                    "getting all Sp Application data", e);
             throw new SpProvisionServiceException(e.getMessage());
         }
 
@@ -111,8 +122,7 @@ public class ApplicationManagementClient {
                     .transformToServiceProviderToCreateApplication(serviceProviderDto);
             try {
                 stub.createApplication(serviceProvider);
-                spConfigurationDao.insertSpToSpConfiguration(serviceProviderDto.getInboundAuthKey(),"scope","openid",
-                        "ALL");
+                addSpConfigurationTable(serviceProviderDto.getInboundAuthKey());
 
             } catch (RemoteException e) {
                 throw new SpProvisionServiceException(e.getMessage());
@@ -123,6 +133,23 @@ public class ApplicationManagementClient {
             }
         } else {
             log.error("Service provider details are null");
+        }
+    }
+
+    private void addSpConfigurationTable(String authKey) {
+        try {
+            boolean availability = spConfigurationDao.getSpConfigDetails(authKey);
+
+            if (availability == false) {
+                spConfigurationDao.insertSpToSpConfiguration(authKey, "scope", "openid",
+                        "ALL");
+            } else {
+                log.info("Service Provider already available in the Sp Configurations table ");
+            }
+        } catch (SQLException e) {
+            log.error("SQLException occurred in adding SP s to the SPConfiguration table ", e);
+        } catch (ConfigurationException e) {
+            log.error("ConfigurationException occurred in adding SP s to the SPConfiguration table", e);
         }
     }
 
@@ -138,10 +165,17 @@ public class ApplicationManagementClient {
             try {
                 stub.updateApplication(serviceProvider);
             } catch (RemoteException e) {
+                log.error("RemoteException occurred when updating Sp Application:" + serviceProviderDto
+                        .getApplicationName(), e);
                 throw new SpProvisionServiceException(e.getMessage());
             } catch (IdentityApplicationManagementServiceIdentityApplicationManagementException e) {
+                log.error("IdentityApplicationManagementServiceIdentityApplicationManagementException occurred when " +
+                        "updating Sp Application:" + serviceProviderDto
+                        .getApplicationName(), e);
                 throw new SpProvisionServiceException(e.getMessage());
             } catch (Exception e) {
+                log.error("Exception occurred when updating Sp Application:" + serviceProviderDto
+                        .getApplicationName(), e);
                 throw new SpProvisionServiceException(e.getMessage());
             }
         } else {
@@ -155,10 +189,14 @@ public class ApplicationManagementClient {
         try {
             stub.deleteApplication(applicationName);
         } catch (RemoteException e) {
+            log.error("RemoteException occurred when deleting SP application" + applicationName, e);
             throw new SpProvisionServiceException(e.getMessage());
         } catch (IdentityApplicationManagementServiceIdentityApplicationManagementException e) {
+            log.error("IdentityApplicationManagementServiceIdentityApplicationManagementException occurred when " +
+                    "deleting SP application" + applicationName, e);
             throw new SpProvisionServiceException(e.getMessage());
         } catch (Exception e) {
+            log.error("Exception occurred when deleting SP application" + applicationName, e);
             throw new SpProvisionServiceException(e.getMessage());
         }
     }

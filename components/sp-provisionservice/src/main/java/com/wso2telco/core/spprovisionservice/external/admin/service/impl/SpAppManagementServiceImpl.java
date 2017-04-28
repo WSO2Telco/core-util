@@ -60,7 +60,7 @@ public class SpAppManagementServiceImpl implements SpAppManagementService {
                 applicationManagementServiceClient.createSpApplication(serviceProviderDto);
                 status = success;
             } catch (SpProvisionServiceException e) {
-                log.error("Error occurred in remove create Service Provider Application " + e.getMessage());
+                log.error("Error occurred in create Service Provider Application " + e.getMessage());
                 throw new SpProvisionServiceException(e.getMessage());
             } catch (NullPointerException e) {
                 log.error("Service Provider is not already available in the database " + e.getMessage());
