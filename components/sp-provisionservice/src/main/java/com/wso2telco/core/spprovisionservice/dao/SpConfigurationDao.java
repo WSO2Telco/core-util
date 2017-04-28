@@ -23,4 +23,5 @@ public interface SpConfigurationDao {
     void insertSpToSpConfiguration(String clientId, String configKey, String configValue, String operator) throws
             SQLException, ConfigurationException;
 
+    boolean getSpConfigDetails(String authKey) throws SQLException, ConfigurationException;
 }

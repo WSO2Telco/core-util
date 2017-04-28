@@ -44,11 +44,41 @@ public class SpConfigurationDaoImpl extends BaseDao implements SpConfigurationDa
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            throw new SQLException("Error occurred while retrieving operator properties.", e);
+            throw new SQLException("Error occurred while inserting values to SP_Configuration table", e);
         } catch (NamingException e) {
             throw new ConfigurationException("DataSource could not be found in mobile-connect.xml");
         } finally {
             closeAllConnections(preparedStatement, connection, resultSet);
         }
+    }
+
+    @Override
+    public boolean getSpConfigDetails(String authKey) throws SQLException, ConfigurationException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String queryToInsertSp = "SELECT * FROM sp_configuration";
+        boolean available = false;
+        String authorizationKey = null;
+        try {
+            connection = getConnectDBConnection();
+            preparedStatement = connection.prepareStatement(queryToInsertSp);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                authorizationKey = resultSet.getString("clientId");
+                if(authorizationKey.equals(authKey)){
+                    available = true;
+                    break;
+                }
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error occurred while retrieving SP_Configuration properties.", e);
+        } catch (NamingException e) {
+            throw new ConfigurationException("DataSource could not be found in mobile-connect.xml");
+        } finally {
+            closeAllConnections(preparedStatement, connection, resultSet);
+        }
+        return available;
     }
 }
