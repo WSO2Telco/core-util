@@ -949,6 +949,7 @@ public class MobileConnectConfig {
         private String authorizeCall;
         private String discoveryAPICall;
         private String discoveryAPIToken;
+        private String msisdnClaim;
 
         @XmlElement(name = "DiscoveryAPICall")
         public String getDiscoveryAPICall() { return discoveryAPICall; }
@@ -959,6 +960,11 @@ public class MobileConnectConfig {
         public String getDiscoveryAPIToken() { return discoveryAPIToken; }
 
         public void setDiscoveryAPIToken(String discoveryAPIToken) { this.discoveryAPIToken = discoveryAPIToken; }
+
+        @XmlElement(name = "MsisdnClaim")
+        public String getMsisdnClaim() { return msisdnClaim; }
+
+        public void setMsisdnClaim(String msisdnClaim) { this.msisdnClaim = msisdnClaim; }
 
         @XmlElement(name = "AuthorizeCall")
         public String getAuthorizeCall() { return authorizeCall; }
