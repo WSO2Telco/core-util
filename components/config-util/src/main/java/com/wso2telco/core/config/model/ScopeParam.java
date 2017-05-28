@@ -30,6 +30,7 @@ public class ScopeParam {
     private String scope;
     private int scope_id;
     private boolean isConsentPage;
+    private String description;
 
 
     public boolean isConsentPage() {
@@ -89,4 +90,12 @@ public class ScopeParam {
     public void setTncVisible(boolean isTncVisible) {
         this.isTncVisible = isTncVisible;
     }
+    
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }
