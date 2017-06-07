@@ -115,7 +115,7 @@ public class ApplicationManagementClient {
     public void createSpApplication(ServiceProviderDto serviceProviderDto) throws SpProvisionServiceException {
 
         authenticate(client);
-
+ 
         if (serviceProviderDto != null) {
             transformServiceProviderDto = new TransformServiceProviderDto();
             ServiceProvider serviceProvider = transformServiceProviderDto

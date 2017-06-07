@@ -2873,6 +2873,8 @@ public class MobileConnectConfig {
 
     public static class DiscoveryConfig {
 
+        private String auth_clientId;
+        private String auth_clientSecret;
         private EksDiscoveryConfig eksDiscoveryConfig;
         private CrValidateDiscoveryConfig crValidateDiscoveryConfig;
 
@@ -2893,6 +2895,26 @@ public class MobileConnectConfig {
         public void setEksDiscoveryConfig(EksDiscoveryConfig eksDiscoveryConfig) {
             this.eksDiscoveryConfig = eksDiscoveryConfig;
         }
+
+        @XmlElement(name = "Auth_clientId")
+        public String getAuth_clientId() {
+            return auth_clientId;
+        }
+
+        public void setAuth_clientId(String auth_clientId) {
+            this.auth_clientId = auth_clientId;
+        }
+
+        @XmlElement(name = "Auth_clientSecret")
+        public String getAuth_clientSecret() {
+            return auth_clientSecret;
+        }
+
+        public void setAuth_clientSecret(String auth_clientSecret) {
+            this.auth_clientSecret = auth_clientSecret;
+        }
+        
+        
 
     }
 
