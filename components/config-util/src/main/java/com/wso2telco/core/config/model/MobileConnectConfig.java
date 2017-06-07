@@ -90,7 +90,29 @@ public class MobileConnectConfig {
     private String adminPassword;
 
     private boolean isPcrServiceEnabled;
+    
+    private String discoveryURL;
+    
+    private String discoveryAuthCode;
 
+    @XmlElement(name = "DiscoveryURL")
+    public String getDiscoveryURL() {
+        return discoveryURL;
+    }
+
+    public void setDiscoveryURL(String discoveryURL) {
+        this.discoveryURL = discoveryURL;
+    }
+    
+    @XmlElement(name = "DiscoveryAuthCode")
+    public String getDiscoveryAuthCode() {
+        return discoveryAuthCode;
+    }
+
+    public void setDiscoveryAuthCode(String discoveryAuthCode) {
+        this.discoveryAuthCode = discoveryAuthCode;
+    }  
+    
     @XmlElement(name = "MePin")
     public MePinConfig getMePinConfig() {
         return mePinConfig;
@@ -1002,7 +1024,22 @@ public class MobileConnectConfig {
 
         private String password;
 
-        private TestMsisdns testMsisdns;
+		private TestMsisdns testMsisdns;
+
+        /**
+         * Property check for multi-operator scenario
+         */
+        private Boolean isHub;
+
+        /**
+         * Value configured for default image display url
+         */
+        private String defaultImageUrl;
+
+        /**
+         * List of configured operators for HUB deployment
+         */
+        private OperatorsList operators;
 
         @XmlElement(name = "CreateTransactionEndpoint")
         public String getTransactionEndpoint() {
@@ -1075,6 +1112,60 @@ public class MobileConnectConfig {
         public TestMsisdns getTestMsisdns() {
             return testMsisdns;
         }
+
+        /**
+         * 
+         * @return isHub environment config
+         */
+        @XmlElement(name = "IsHub")
+        public Boolean getIsHub() {
+            return isHub;
+        }
+
+        /**
+         * 
+         * @param isHub
+         *            sets environment config
+         */
+        public void setIsHub(Boolean isHub) {
+            this.isHub = isHub;
+        }
+
+        /**
+         * 
+         * @return defaultImageUrl endpoint
+         */
+        @XmlElement(name = "DefaultImageUrl")
+        public String getDefaultImageUrl() {
+            return defaultImageUrl;
+        }
+
+        /**
+         * 
+         * @param defaultImageUrl
+         *            sets display endpoint
+         */
+        public void setDefaultImageUrl(String defaultImageUrl) {
+            this.defaultImageUrl = defaultImageUrl;
+        }
+
+        /**
+         * 
+         * @return configured OperatorsList
+         */
+        @XmlElement(name = "OperatorsList")
+        public OperatorsList getOperatorsList() {
+            return operators;
+        }
+
+        /**
+         * 
+         * @param operators
+         *            that will be available
+         */
+        public void setOperatorsList(OperatorsList operators) {
+            this.operators = operators;
+        }
     }
 
     /**
@@ -1115,6 +1206,89 @@ public class MobileConnectConfig {
             return msisdn;
         }
     }
+    
+    /**
+     * 
+     * The Class to extract each configured operator
+     *
+     */
+    public static class OperatorsList {
+        /**
+         * array of configured operators
+         */
+        private OperatorDescription[] operator;
+
+        /**
+         * 
+         * @param operator
+         *            available currently
+         */
+        public void setOperatorDescription(OperatorDescription[] operator) {
+            this.operator = operator;
+        }
+
+        /**
+         * 
+         * @return existing operators details
+         */
+        @XmlElement(name = "OperatorDescription")
+        public OperatorDescription[] getOperatorDescription() {
+            return operator;
+        }
+    }
+
+    /**
+     * 
+     * The Class for image description of each operator
+     *
+     */
+    public static class OperatorDescription {
+        /**
+         * operator name as of discovered
+         */
+        private String name;
+        /**
+         * display imageUrl for operator
+         */
+        private String imageUrl;
+
+        /**
+         * 
+         * @param name
+         *            for each operator
+         */
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        /**
+         * 
+         * @return name configured for operator
+         */
+        @XmlAttribute(name = "name")
+        public String getName() {
+            return name;
+        }
+
+        /**
+         * 
+         * @param imageUrl
+         *            for each operator
+         */
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        /**
+         * 
+         * @return ImageUrl configured for operator
+         */
+        @XmlElement(name = "ImageUrl")
+        public String getImageUrl() {
+            return imageUrl;
+        }
+    }
+    
     /**
      * The Class for Operator Specific USSD Message
      */
