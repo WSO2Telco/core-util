@@ -21,6 +21,8 @@ public class DiscoveryServiceDto {
     private String clientSecret;
     private String msisdn;
     private String sectorId;
+    private String auth_clientId;
+    private String auth_clientSecret;
 
     public String getClientId() {
         return clientId;
@@ -53,5 +55,22 @@ public class DiscoveryServiceDto {
     public void setSectorId(String sectorId) {
         this.sectorId = sectorId;
     }
+
+    public String getAuth_clientId() {
+        return auth_clientId;
+    }
+
+    public void setAuth_clientId(String auth_clientId) {
+        this.auth_clientId = auth_clientId;
+    }
+
+    public String getAuth_clientSecret() {
+        return auth_clientSecret;
+    }
+
+    public void setAuth_clientSecret(String auth_clientSecret) {
+        this.auth_clientSecret = auth_clientSecret;
+    }
+    
 
 }
