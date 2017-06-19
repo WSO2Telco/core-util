@@ -90,7 +90,29 @@ public class MobileConnectConfig {
     private String adminPassword;
 
     private boolean isPcrServiceEnabled;
+    
+    private String discoveryURL;
+    
+    private String discoveryAuthCode;
 
+    @XmlElement(name = "DiscoveryURL")
+    public String getDiscoveryURL() {
+        return discoveryURL;
+    }
+
+    public void setDiscoveryURL(String discoveryURL) {
+        this.discoveryURL = discoveryURL;
+    }
+    
+    @XmlElement(name = "DiscoveryAuthCode")
+    public String getDiscoveryAuthCode() {
+        return discoveryAuthCode;
+    }
+
+    public void setDiscoveryAuthCode(String discoveryAuthCode) {
+        this.discoveryAuthCode = discoveryAuthCode;
+    }  
+    
     @XmlElement(name = "MePin")
     public MePinConfig getMePinConfig() {
         return mePinConfig;
@@ -1002,6 +1024,89 @@ public class MobileConnectConfig {
 
         private String password;
 
+		private TestMsisdns testMsisdns;
+
+        private String defaultBackgroundUrl;
+
+        private String callbackUrl;
+
+        private String basicConfirmationPolicies;
+
+        private String basicConfirmationPolicyMessage;
+
+        private String advancedConfirmationPolicies;
+
+        private String advancedConfirmationPolicyMessage;
+
+        @XmlElement(name = "BasicConfirmationPolicies")
+        public String getBasicConfirmationPolicies() {
+            return basicConfirmationPolicies;
+        }
+
+        public void setBasicConfirmationPolicies(String basicConfirmationPolicies) {
+            this.basicConfirmationPolicies = basicConfirmationPolicies;
+        }
+
+        @XmlElement(name = "AdvancedConfirmationPolicies")
+        public String getAdvancedConfirmationPolicies() {
+            return advancedConfirmationPolicies;
+        }
+
+        public void setAdvancedConfirmationPolicies(String advancedConfirmationPolicies) {
+            this.advancedConfirmationPolicies = advancedConfirmationPolicies;
+        }
+
+        @XmlElement(name = "DefaultBackgroundUrl")
+        public String getDefaultBackgroundUrl() {
+            return defaultBackgroundUrl;
+        }
+
+        public void setDefaultBackgroundUrl(String defaultBackgroundUrl) {
+            this.defaultBackgroundUrl = defaultBackgroundUrl;
+        }
+
+        @XmlElement(name = "CallbackUrl")
+        public String getCallbackUrl() {
+            return callbackUrl;
+        }
+
+        public void setCallbackUrl(String callbackUrl) {
+            this.callbackUrl = callbackUrl;
+        }
+
+        @XmlElement(name = "BasicConfirmationPolicyMessage")
+        public String getBasicConfirmationPolicyMessage() {
+            return basicConfirmationPolicyMessage;
+        }
+
+        public void setBasicConfirmationPolicyMessage(String basicConfirmationPolicyMessage) {
+            this.basicConfirmationPolicyMessage = basicConfirmationPolicyMessage;
+        }
+
+        @XmlElement(name = "AdvancedConfirmationPolicyMessage")
+        public String getAdvancedConfirmationPolicyMessage() {
+            return advancedConfirmationPolicyMessage;
+        }
+
+        public void setAdvancedConfirmationPolicyMessage(String advancedConfirmationPolicyMessage) {
+            this.advancedConfirmationPolicyMessage = advancedConfirmationPolicyMessage;
+        }
+
+        /**
+         * Property check for multi-operator scenario
+         */
+        private Boolean isHub;
+
+        /**
+         * Value configured for default image display url
+         */
+        private String defaultImageUrl;
+
+        /**
+         * List of configured operators for HUB deployment
+         */
+        private OperatorsList operators;
+
         @XmlElement(name = "CreateTransactionEndpoint")
         public String getTransactionEndpoint() {
             return transactionEndpoint;
@@ -1064,7 +1169,202 @@ public class MobileConnectConfig {
         public void setPassword(String password) {
             this.password = password;
         }
+
+        public void setTestMsisdns(TestMsisdns testMsisdns) {
+            this.testMsisdns = testMsisdns;
+        }
+
+        @XmlElement(name = "TestMsisdns")
+        public TestMsisdns getTestMsisdns() {
+            return testMsisdns;
+        }
+
+        /**
+         * 
+         * @return isHub environment config
+         */
+        @XmlElement(name = "IsHub")
+        public Boolean getIsHub() {
+            return isHub;
+        }
+
+        /**
+         * 
+         * @param isHub
+         *            sets environment config
+         */
+        public void setIsHub(Boolean isHub) {
+            this.isHub = isHub;
+        }
+
+        /**
+         * 
+         * @return defaultImageUrl endpoint
+         */
+        @XmlElement(name = "DefaultImageUrl")
+        public String getDefaultImageUrl() {
+            return defaultImageUrl;
+        }
+
+        /**
+         * 
+         * @param defaultImageUrl
+         *            sets display endpoint
+         */
+        public void setDefaultImageUrl(String defaultImageUrl) {
+            this.defaultImageUrl = defaultImageUrl;
+        }
+
+        /**
+         * 
+         * @return configured OperatorsList
+         */
+        @XmlElement(name = "OperatorsList")
+        public OperatorsList getOperatorsList() {
+            return operators;
+        }
+
+        /**
+         * 
+         * @param operators
+         *            that will be available
+         */
+        public void setOperatorsList(OperatorsList operators) {
+            this.operators = operators;
+        }
     }
+
+    /**
+     * The Class for Operator Specific USSD Messages
+     */
+    public static class TestMsisdns {
+        private TestMsisdn[] msisdn;
+
+        public void setMsisdn(TestMsisdn[] msisdn) {
+            this.msisdn = msisdn;
+        }
+
+        @XmlElement(name = "TestMsisdn")
+        public TestMsisdn[] getMsisdn() {
+            return msisdn;
+        }
+    }
+
+    public static class TestMsisdn{
+        private String operator;
+        private String msisdn;
+
+        public void setOperator(String operator) {
+            this.operator = operator;
+        }
+
+        @XmlAttribute(name = "operator")
+        public String getOperator() {
+            return operator;
+        }
+
+        public void setMsisdn(String msisdn) {
+            this.msisdn = msisdn;
+        }
+
+        @XmlElement(name = "Msisdn")
+        public String getMsisdn() {
+            return msisdn;
+        }
+    }
+    
+    /**
+     * 
+     * The Class to extract each configured operator
+     *
+     */
+    public static class OperatorsList {
+        /**
+         * array of configured operators
+         */
+        private OperatorDescription[] operator;
+
+        /**
+         * 
+         * @param operator
+         *            available currently
+         */
+        public void setOperatorDescription(OperatorDescription[] operator) {
+            this.operator = operator;
+        }
+
+        /**
+         * 
+         * @return existing operators details
+         */
+        @XmlElement(name = "OperatorDescription")
+        public OperatorDescription[] getOperatorDescription() {
+            return operator;
+        }
+    }
+
+    /**
+     * 
+     * The Class for image description of each operator
+     *
+     */
+    public static class OperatorDescription {
+        /**
+         * operator name as of discovered
+         */
+        private String name;
+        /**
+         * display imageUrl for operator
+         */
+        private String imageUrl;
+
+        private String backgroundUrl;
+        /**
+         * 
+         * @param name
+         *            for each operator
+         */
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        /**
+         * 
+         * @return name configured for operator
+         */
+        @XmlAttribute(name = "name")
+        public String getName() {
+            return name;
+        }
+
+        /**
+         * 
+         * @param imageUrl
+         *            for each operator
+         */
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        /**
+         * 
+         * @return ImageUrl configured for operator
+         */
+        @XmlElement(name = "ImageUrl")
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        @XmlElement(name = "BackgroundUrl")
+        public String getBackgroundUrl() {
+            return backgroundUrl;
+        }
+
+        public void setBackgroundUrl(String backgroundUrl) {
+            this.backgroundUrl = backgroundUrl;
+        }
+    }
+    
     /**
      * The Class for Operator Specific USSD Message
      */
