@@ -683,6 +683,7 @@ public class MobileConnectConfig {
         private OperatorSpecificMessages operatorSpecificMessages;
 
         /**
+         *
          * @return
          */
         @XmlElement(name = "RegistrationMessage")
