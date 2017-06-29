@@ -10,6 +10,16 @@ public  class OperatorSmsConfig {
     private String name;
     private String message;
     private boolean isDisabled;
+    private String smsEndpoint;
+
+    @XmlElement(name = "SMSEndpoint")
+    public String getSmsEndpoint() {
+        return smsEndpoint;
+    }
+
+    public void setSmsEndpoint(String smsEndpoint) {
+        this.smsEndpoint = smsEndpoint;
+    }
 
     @XmlElement(name = "Name")
     public String getName() {
