@@ -95,6 +95,17 @@ public class MobileConnectConfig {
 
     private boolean isPcrServiceEnabled;
 
+    private Map<String,String> operatorDiscoveryNameMap;
+
+    @XmlElementWrapper(name = "OperatorDiscoveryNamesMapping")
+    public Map<String, String> getOperatorDiscoveryNameMap() {
+        return operatorDiscoveryNameMap;
+    }
+
+    public void setOperatorDiscoveryNameMap(Map<String, String> operatorNameMap) {
+        this.operatorDiscoveryNameMap = operatorNameMap;
+    }
+
 
     public boolean isPcrServiceEnabled() {
         return isPcrServiceEnabled;
@@ -2533,5 +2544,52 @@ public class MobileConnectConfig {
         public void setMobileNetworkOperatorBasedSelectionEnabled(String mobileNetworkOperatorBasedSelectionEnabled) {
             this.mobileNetworkOperatorBasedSelectionEnabled = mobileNetworkOperatorBasedSelectionEnabled;
         }
+    }
+
+    @XmlElement(name = "OperatorRecovery")
+    private OperatorRecovery operatorRecovery;
+
+    public OperatorRecovery getOperatorRecovery() {
+        return operatorRecovery;
+    }
+
+    public void setOperatorRecovery(OperatorRecovery operatorRecovery) {
+        this.operatorRecovery = operatorRecovery;
+    }
+
+    public static class  OperatorRecovery{
+
+        @XmlElement(name = "RecoveryOption")
+        private String recoveryOption;
+        @XmlElement(name = "RecoveryOptionURL")
+        private String recoveryOptionURL;
+        @XmlElement(name = "RecoveryOptionAuthCode")
+        private String recoveryOptionAuthCode;
+
+        public String getRecoveryOptionURL() {
+            return recoveryOptionURL;
+        }
+
+        public void setRecoveryOptionURL(String recoveryOptionURL) {
+            this.recoveryOptionURL = recoveryOptionURL;
+        }
+
+        public String getRecoveryOptionAuthCode() {
+            return recoveryOptionAuthCode;
+        }
+
+        public void setRecoveryOptionAuthCode(String recoveryOptionAuthCode) {
+            this.recoveryOptionAuthCode = recoveryOptionAuthCode;
+        }
+
+
+        public String getRecoveryOption() {
+            return recoveryOption;
+        }
+
+        public void setRecoveryOption(String recoveryOption) {
+            this.recoveryOption = recoveryOption;
+        }
+
     }
 }
