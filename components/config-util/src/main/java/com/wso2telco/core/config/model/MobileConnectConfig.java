@@ -2904,4 +2904,57 @@ public class MobileConnectConfig {
         }
 
     }
+
+    @XmlElement(name = "OperatorRecovery")
+    private UserRegistrationAPI userRegistrationAPI;
+
+    public UserRegistrationAPI getUserRegistrationAPI() {
+        return userRegistrationAPI;
+    }
+
+    public void setUserRegistrationAPI(UserRegistrationAPI userRegistrationAPI) {
+        this.userRegistrationAPI = userRegistrationAPI;
+    }
+
+    public static class UserRegistrationAPI{
+
+        @XmlElement(name = "MaxMSISDNLimit")
+        private int maxMSISDNLimit;
+
+        public int getMaxMSISDNLimit() {
+            return maxMSISDNLimit;
+        }
+
+        public void setMaxMSISDNLimit(int maxMSISDNLimit) {
+            this.maxMSISDNLimit = maxMSISDNLimit;
+        }
+
+    }
+
+    @XmlElement(name = "UserUnRegistrationAPI")
+    private UserUnRegistrationAPI userUnRegistrationAPI;
+
+    public UserUnRegistrationAPI getUserUnRegistrationAPI() {
+        return userUnRegistrationAPI;
+    }
+
+    public void setUserUnRegistrationAPI(UserUnRegistrationAPI userUnRegistrationAPI) {
+        this.userUnRegistrationAPI = userUnRegistrationAPI;
+    }
+
+    public static class UserUnRegistrationAPI{
+
+        @XmlElement(name = "MaxMSISDNLimit")
+        private int maxMSISDNLimit;
+
+        public int getMaxMSISDNLimit() {
+            return maxMSISDNLimit;
+        }
+
+        public void setMaxMSISDNLimit(int maxMSISDNLimit) {
+            this.maxMSISDNLimit = maxMSISDNLimit;
+        }
+
+    }
+
 }
