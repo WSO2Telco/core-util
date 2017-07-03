@@ -90,7 +90,7 @@ public class MobileConnectConfig {
 
     private boolean isPcrServiceEnabled;
 
-    private Map<String,String> operatorDiscoveryNameMap;
+    private Map<String, String> operatorDiscoveryNameMap;
 
     @XmlElementWrapper(name = "OperatorDiscoveryNamesMapping")
     public Map<String, String> getOperatorDiscoveryNameMap() {
@@ -632,7 +632,7 @@ public class MobileConnectConfig {
             this.welcomeMessageDisabled = welcomeMessageDisabled;
         }
 
-        @XmlElementWrapper(name="OperatorWelcomeMessage")
+        @XmlElementWrapper(name = "OperatorWelcomeMessage")
         @XmlElement(name = "Operator")
         public List<OperatorSmsConfig> getOperatorSmsConfigs() {
             return operatorSmsConfigs;
@@ -641,6 +641,7 @@ public class MobileConnectConfig {
         public void setOperatorSmsConfigs(List<OperatorSmsConfig> operatorSmsConfigs) {
             this.operatorSmsConfigs = operatorSmsConfigs;
         }
+
         /**
          * The sms login message
          */
@@ -657,7 +658,6 @@ public class MobileConnectConfig {
         private OperatorSpecificMessages operatorSpecificMessages;
 
         /**
-         *
          * @return
          */
         @XmlElement(name = "RegistrationMessage")
@@ -667,6 +667,7 @@ public class MobileConnectConfig {
 
         /**
          * Gets SMS login message
+         *
          * @return the generic login message
          */
         @XmlElement(name = "LoginMessage")
@@ -676,6 +677,7 @@ public class MobileConnectConfig {
 
         /**
          * The Operator Specific SMS Messages
+         *
          * @return the operator specific messages object
          */
         @XmlElement(name = "OperatorSpecificMessages")
@@ -890,6 +892,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the SMS login message
+         *
          * @param loginMessage the login message
          */
         public void setLoginMessage(String loginMessage) {
@@ -898,6 +901,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the SMS registration message
+         *
          * @param registrationMessage the registration message
          */
         public void setRegistrationMessage(String registrationMessage) {
@@ -906,6 +910,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the operator specific messages
+         *
          * @param operatorSpecificMessages The operator specific messages
          */
         public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) {
@@ -2426,9 +2431,10 @@ public class MobileConnectConfig {
         }
     }
 
-    @XmlElement(name = "OperatorRecovery")
+
     private OperatorRecovery operatorRecovery;
 
+    @XmlElement(name = "OperatorRecovery")
     public OperatorRecovery getOperatorRecovery() {
         return operatorRecovery;
     }
@@ -2437,15 +2443,13 @@ public class MobileConnectConfig {
         this.operatorRecovery = operatorRecovery;
     }
 
-    public static class  OperatorRecovery{
+    public static class OperatorRecovery {
 
-        @XmlElement(name = "RecoveryOption")
         private String recoveryOption;
-        @XmlElement(name = "RecoveryOptionURL")
         private String recoveryOptionURL;
-        @XmlElement(name = "RecoveryOptionAuthCode")
         private String recoveryOptionAuthCode;
 
+        @XmlElement(name = "RecoveryOptionURL")
         public String getRecoveryOptionURL() {
             return recoveryOptionURL;
         }
@@ -2454,6 +2458,7 @@ public class MobileConnectConfig {
             this.recoveryOptionURL = recoveryOptionURL;
         }
 
+        @XmlElement(name = "RecoveryOptionAuthCode")
         public String getRecoveryOptionAuthCode() {
             return recoveryOptionAuthCode;
         }
@@ -2462,7 +2467,7 @@ public class MobileConnectConfig {
             this.recoveryOptionAuthCode = recoveryOptionAuthCode;
         }
 
-
+        @XmlElement(name = "RecoveryOption")
         public String getRecoveryOption() {
             return recoveryOption;
         }
@@ -2473,9 +2478,9 @@ public class MobileConnectConfig {
 
     }
 
-    @XmlElement(name = "OperatorRecovery")
     private UserRegistrationAPI userRegistrationAPI;
 
+    @XmlElement(name = "UserRegistrationAPI")
     public UserRegistrationAPI getUserRegistrationAPI() {
         return userRegistrationAPI;
     }
@@ -2484,11 +2489,11 @@ public class MobileConnectConfig {
         this.userRegistrationAPI = userRegistrationAPI;
     }
 
-    public static class UserRegistrationAPI{
+    public static class UserRegistrationAPI {
 
-        @XmlElement(name = "MaxMSISDNLimit")
         private int maxMSISDNLimit;
 
+        @XmlElement(name = "MaxMSISDNLimit")
         public int getMaxMSISDNLimit() {
             return maxMSISDNLimit;
         }
@@ -2499,9 +2504,9 @@ public class MobileConnectConfig {
 
     }
 
-    @XmlElement(name = "UserUnRegistrationAPI")
     private UserUnRegistrationAPI userUnRegistrationAPI;
 
+    @XmlElement(name = "UserUnRegistrationAPI")
     public UserUnRegistrationAPI getUserUnRegistrationAPI() {
         return userUnRegistrationAPI;
     }
@@ -2510,11 +2515,11 @@ public class MobileConnectConfig {
         this.userUnRegistrationAPI = userUnRegistrationAPI;
     }
 
-    public static class UserUnRegistrationAPI{
+    public static class UserUnRegistrationAPI {
 
-        @XmlElement(name = "MaxMSISDNLimit")
         private int maxMSISDNLimit;
 
+        @XmlElement(name = "MaxMSISDNLimit")
         public int getMaxMSISDNLimit() {
             return maxMSISDNLimit;
         }
