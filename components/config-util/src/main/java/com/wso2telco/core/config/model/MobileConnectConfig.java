@@ -666,6 +666,7 @@ public class MobileConnectConfig {
         public void setOperatorSmsConfigs(List<OperatorSmsConfig> operatorSmsConfigs) {
             this.operatorSmsConfigs = operatorSmsConfigs;
         }
+
         /**
          * The sms login message
          */
@@ -682,7 +683,6 @@ public class MobileConnectConfig {
         private OperatorSpecificMessages operatorSpecificMessages;
 
         /**
-         *
          * @return
          */
         @XmlElement(name = "RegistrationMessage")
@@ -692,6 +692,7 @@ public class MobileConnectConfig {
 
         /**
          * Gets SMS login message
+         *
          * @return the generic login message
          */
         @XmlElement(name = "LoginMessage")
@@ -701,6 +702,7 @@ public class MobileConnectConfig {
 
         /**
          * The Operator Specific SMS Messages
+         *
          * @return the operator specific messages object
          */
         @XmlElement(name = "OperatorSpecificMessages")
@@ -915,6 +917,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the SMS login message
+         *
          * @param loginMessage the login message
          */
         public void setLoginMessage(String loginMessage) {
@@ -923,6 +926,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the SMS registration message
+         *
          * @param registrationMessage the registration message
          */
         public void setRegistrationMessage(String registrationMessage) {
@@ -931,6 +935,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the operator specific messages
+         *
          * @param operatorSpecificMessages The operator specific messages
          */
         public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) {
