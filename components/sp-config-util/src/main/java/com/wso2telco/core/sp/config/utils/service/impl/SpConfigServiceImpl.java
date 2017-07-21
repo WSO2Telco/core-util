@@ -22,13 +22,14 @@ import com.wso2telco.core.sp.config.utils.dao.SpConfigDAO;
 import com.wso2telco.core.sp.config.utils.dao.impl.SpConfigDAOImpl;
 import com.wso2telco.core.sp.config.utils.domain.Config;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 /**
  * SP Config service
  */
-public class SpConfigServiceImpl implements SpConfigService {
+public class SpConfigServiceImpl implements SpConfigService,Serializable {
 
     SpConfigDAO spConfigDAO = null;
 
