@@ -20,12 +20,13 @@ import com.wso2telco.core.sp.config.utils.service.SpConfigService;
 import com.wso2telco.core.sp.config.utils.service.ScopeValidateService;
 import org.apache.log4j.Logger;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by isuru dilshan on 9/21/16.
  */
-public class ScopeValidateServiceImpl implements ScopeValidateService {
+public class ScopeValidateServiceImpl implements ScopeValidateService,Serializable {
 
     private static Logger logger = Logger.getLogger(ScopeValidateServiceImpl.class);
 

@@ -23,6 +23,7 @@ import com.wso2telco.core.sp.config.utils.exception.DataAccessException;
 import com.wso2telco.core.sp.config.utils.util.ConfigKey;
 import org.apache.log4j.Logger;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SpConfigDAOImpl implements SpConfigDAO {
+public class SpConfigDAOImpl implements SpConfigDAO,Serializable {
 
     private static Logger logger = Logger.getLogger(SpConfigDAOImpl.class);
 
