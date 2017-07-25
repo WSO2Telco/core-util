@@ -95,6 +95,18 @@ public class MobileConnectConfig {
 
     private boolean isPcrServiceEnabled;
 
+    private Map<String, String> operatorDiscoveryNameMap;
+
+    @XmlElementWrapper(name = "OperatorDiscoveryNamesMapping")
+    public Map<String, String> getOperatorDiscoveryNameMap() {
+        return operatorDiscoveryNameMap;
+    }
+
+    public void setOperatorDiscoveryNameMap(Map<String, String> operatorNameMap) {
+        this.operatorDiscoveryNameMap = operatorNameMap;
+    }
+
+
     public boolean isPcrServiceEnabled() {
         return isPcrServiceEnabled;
     }
@@ -234,6 +246,12 @@ public class MobileConnectConfig {
     @XmlElement(name = "MSS")
     protected MSS mss;
 
+    /**
+     * The headerenrich.
+     */
+    @XmlElement(name = "HEADERENRICH")
+    protected HEADERENRICH headerenrich;
+
     @XmlElement(name = "SessionUpdaterConfig")
     public SessionUpdaterConfig getSessionUpdaterConfig() {
         return sessionUpdaterConfig;
@@ -256,9 +274,6 @@ public class MobileConnectConfig {
     public AuthenticatorSelectionConfig getAuthenticatorSelectionConfig() {
         return authenticatorSelectionConfig;
     }
-
-    @XmlElement(name = "HEADERENRICH")
-    protected HEADERENRICH headerenrich;
 
     public void setAuthenticatorSelectionConfig(AuthenticatorSelectionConfig authenticatorSelectionConfig) {
         this.authenticatorSelectionConfig = authenticatorSelectionConfig;
@@ -454,6 +469,7 @@ public class MobileConnectConfig {
         this.mss = mss;
     }
 
+
     /**
      * The Class GSMAExchangeConfig.
      */
@@ -640,7 +656,7 @@ public class MobileConnectConfig {
             this.welcomeMessageDisabled = welcomeMessageDisabled;
         }
 
-        @XmlElementWrapper(name = "OperatorWelcomeMessage")
+        @XmlElementWrapper(name="OperatorWelcomeMessage")
         @XmlElement(name = "Operator")
         public List<OperatorSmsConfig> getOperatorSmsConfigs() {
             return operatorSmsConfigs;
@@ -649,7 +665,6 @@ public class MobileConnectConfig {
         public void setOperatorSmsConfigs(List<OperatorSmsConfig> operatorSmsConfigs) {
             this.operatorSmsConfigs = operatorSmsConfigs;
         }
-
         /**
          * The sms login message
          */
@@ -675,7 +690,6 @@ public class MobileConnectConfig {
 
         /**
          * Gets SMS login message
-         *
          * @return the generic login message
          */
         @XmlElement(name = "LoginMessage")
@@ -685,7 +699,6 @@ public class MobileConnectConfig {
 
         /**
          * The Operator Specific SMS Messages
-         *
          * @return the operator specific messages object
          */
         @XmlElement(name = "OperatorSpecificMessages")
@@ -883,6 +896,7 @@ public class MobileConnectConfig {
          * @param senderAddress sender address
          */
 
+
         public void setSenderAddress(String senderAddress) {
             this.senderAddress = senderAddress;
         }
@@ -898,7 +912,6 @@ public class MobileConnectConfig {
 
         /**
          * Sets the SMS login message
-         *
          * @param loginMessage the login message
          */
         public void setLoginMessage(String loginMessage) {
@@ -907,7 +920,6 @@ public class MobileConnectConfig {
 
         /**
          * Sets the SMS registration message
-         *
          * @param registrationMessage the registration message
          */
         public void setRegistrationMessage(String registrationMessage) {
@@ -916,23 +928,11 @@ public class MobileConnectConfig {
 
         /**
          * Sets the operator specific messages
-         *
          * @param operatorSpecificMessages The operator specific messages
          */
         public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) {
             this.operatorSpecificMessages = operatorSpecificMessages;
         }
-    }
-
-    private Map<String,String> operatorDiscoveryNameMap;
-
-    @XmlElementWrapper(name = "OperatorDiscoveryNamesMapping")
-    public Map<String, String> getOperatorDiscoveryNameMap() {
-        return operatorDiscoveryNameMap;
-    }
-
-    public void setOperatorDiscoveryNameMap(Map<String, String> operatorNameMap) {
-        this.operatorDiscoveryNameMap = operatorNameMap;
     }
 
     public static class SelfServicePortalConfig {
@@ -1885,6 +1885,7 @@ public class MobileConnectConfig {
 
     }
 
+
     private DataPublisher dataPublisher;
 
     public void setDataPublisher(DataPublisher dataPublisher) {
@@ -1994,6 +1995,7 @@ public class MobileConnectConfig {
             this.mobileIPRanges = mobileIPRanges;
         }
 
+
         /**
          * Gets the operator name.
          *
@@ -2031,6 +2033,7 @@ public class MobileConnectConfig {
         public void setIpValidation(String ipValidation) {
             this.ipValidation = ipValidation;
         }
+
 
     }
 
@@ -2142,6 +2145,7 @@ public class MobileConnectConfig {
         public void setMssPinTest(String mssPinTest) {
             this.mssPinTest = mssPinTest;
         }
+
 
         /**
          * Gets the endpoint.
@@ -2528,7 +2532,106 @@ public class MobileConnectConfig {
         }
     }
 
-    private boolean seamlessProvisioningEnabled;
+
+    private OperatorRecovery operatorRecovery;
+
+    @XmlElement(name = "OperatorRecovery")
+    public OperatorRecovery getOperatorRecovery() {
+        return operatorRecovery;
+    }
+
+    public void setOperatorRecovery(OperatorRecovery operatorRecovery) {
+        this.operatorRecovery = operatorRecovery;
+    }
+
+    public static class OperatorRecovery {
+
+        private String recoveryOption;
+        private String recoveryOptionURL;
+        private String recoveryOptionAuthCode;
+
+        @XmlElement(name = "RecoveryOptionURL")
+        public String getRecoveryOptionURL() {
+            return recoveryOptionURL;
+        }
+
+        public void setRecoveryOptionURL(String recoveryOptionURL) {
+            this.recoveryOptionURL = recoveryOptionURL;
+        }
+
+        @XmlElement(name = "RecoveryOptionAuthCode")
+        public String getRecoveryOptionAuthCode() {
+            return recoveryOptionAuthCode;
+        }
+
+        public void setRecoveryOptionAuthCode(String recoveryOptionAuthCode) {
+            this.recoveryOptionAuthCode = recoveryOptionAuthCode;
+        }
+
+        @XmlElement(name = "RecoveryOption")
+        public String getRecoveryOption() {
+            return recoveryOption;
+        }
+
+        public void setRecoveryOption(String recoveryOption) {
+            this.recoveryOption = recoveryOption;
+        }
+
+    }
+
+    private UserRegistrationAPI userRegistrationAPI;
+
+    @XmlElement(name = "UserRegistrationAPI")
+    public UserRegistrationAPI getUserRegistrationAPI() {
+        return userRegistrationAPI;
+    }
+
+    public void setUserRegistrationAPI(UserRegistrationAPI userRegistrationAPI) {
+        this.userRegistrationAPI = userRegistrationAPI;
+    }
+
+    public static class UserRegistrationAPI {
+
+        private int maxMSISDNLimit;
+
+        @XmlElement(name = "MaxMSISDNLimit")
+        public int getMaxMSISDNLimit() {
+            return maxMSISDNLimit;
+        }
+
+        public void setMaxMSISDNLimit(int maxMSISDNLimit) {
+            this.maxMSISDNLimit = maxMSISDNLimit;
+        }
+
+    }
+
+    private UserUnRegistrationAPI userUnRegistrationAPI;
+
+    @XmlElement(name = "UserUnRegistrationAPI")
+    public UserUnRegistrationAPI getUserUnRegistrationAPI() {
+        return userUnRegistrationAPI;
+    }
+
+    public void setUserUnRegistrationAPI(UserUnRegistrationAPI userUnRegistrationAPI) {
+        this.userUnRegistrationAPI = userUnRegistrationAPI;
+    }
+
+    public static class UserUnRegistrationAPI {
+
+        private int maxMSISDNLimit;
+
+        @XmlElement(name = "MaxMSISDNLimit")
+        public int getMaxMSISDNLimit() {
+            return maxMSISDNLimit;
+        }
+
+        public void setMaxMSISDNLimit(int maxMSISDNLimit) {
+            this.maxMSISDNLimit = maxMSISDNLimit;
+        }
+
+    }
+
+private boolean seamlessProvisioningEnabled;
 
     @XmlElement(name = "SeamlessProvisioningEnabled")
     public boolean isSeamlessProvisioningEnabled() {
@@ -3017,5 +3120,6 @@ public class MobileConnectConfig {
             this.pkceSupportPlain = pkceSupportPlain;
         }
     }
+
 
 }
