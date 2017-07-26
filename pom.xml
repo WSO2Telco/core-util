@@ -115,7 +115,7 @@
         <url>https://github.com/WSO2Telco/core-util.git</url>
         <developerConnection>scm:git:https://github.com/WSO2Telco/core-util.git</developerConnection>
         <connection>scm:git:https://github.com/WSO2Telco/core-util.git</connection>
-        <tag>v2.0.22-SNAPSHOT</tag>
+        <tag>v2.0.23-SNAPSHOT</tag>
     </scm>
 
     <build>
@@ -167,6 +167,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration> 
+					<additionalparam>-Xdoclint:none</additionalparam> 
+				</configuration> 
             </plugin>
         </plugins>
 
