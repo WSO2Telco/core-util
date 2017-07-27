@@ -113,7 +113,7 @@
         <url>https://github.com/WSO2Telco/core-util.git</url>
         <developerConnection>scm:git:https://github.com/WSO2Telco/core-util.git</developerConnection>
         <connection>scm:git:https://github.com/WSO2Telco/core-util.git</connection>
-        <tag>v2.0.21-SNAPSHOT</tag>
+        <tag>v2.0.23-SNAPSHOT</tag>
     </scm>
 
     <build>
