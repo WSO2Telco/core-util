@@ -193,8 +193,8 @@ public class SpConfigDAOImpl implements SpConfigDAO {
     @Override
     public String getSMSLoginMessage(String clientId) {
         try {
-            List<String> spUssdPinRegistrationMessages = getConfig(clientId, ConfigKey.SP_SMS_LOGIN_MESSAGE);
-            return spUssdPinRegistrationMessages.get(0);
+            List<String> spSMSLoginMessages = getConfig(clientId, ConfigKey.SP_SMS_LOGIN_MESSAGE);
+            return spSMSLoginMessages.get(0);
         }catch (Exception e){
             // return null if no configuration value found for sp
             return null;
@@ -204,8 +204,18 @@ public class SpConfigDAOImpl implements SpConfigDAO {
     @Override
     public String getSMSRegistrationMessage(String clientId) {
         try {
-            List<String> spUssdPinRegistrationMessages = getConfig(clientId, ConfigKey.SP_SMS_REGISTRATION_MESSAGE);
-            return spUssdPinRegistrationMessages.get(0);
+            List<String> spSMSRegagistrationMessages = getConfig(clientId, ConfigKey.SP_SMS_REGISTRATION_MESSAGE);
+            return spSMSRegagistrationMessages.get(0);
+        }catch (Exception e){
+            // return null if no configuration value found for sp
+            return null;
+        }
+    }
+
+    @Override public String getSMSOTPLoginMessage(String clientId) {
+        try {
+            List<String> spSMSOTPMessages = getConfig(clientId, ConfigKey.SP_SMS_OTP_MESSAGE);
+            return spSMSOTPMessages.get(0);
         }catch (Exception e){
             // return null if no configuration value found for sp
             return null;

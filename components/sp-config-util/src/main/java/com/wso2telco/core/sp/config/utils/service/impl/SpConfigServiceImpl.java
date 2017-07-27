@@ -88,6 +88,8 @@ public class SpConfigServiceImpl implements SpConfigService {
         return spConfigDAO.getSMSLoginMessage(clientId);
     }
 
+    @Override public String getSMSOTPMessage(String clientId) { return spConfigDAO.getSMSOTPLoginMessage(clientId);  }
+
     @Override
     public Map<String, String> getWelcomeSMSConfig(String clientId) throws DataAccessException {
         SpConfigDAO spConfigDAO = new SpConfigDAOImpl();
