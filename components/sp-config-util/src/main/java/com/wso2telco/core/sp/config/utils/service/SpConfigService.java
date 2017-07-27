@@ -46,5 +46,7 @@ public interface SpConfigService {
 
     String getSMSLoginMessage(String clientId);
 
+    String getSMSOTPMessage(String clientId);
+
     Map<String, String> getWelcomeSMSConfig(String clientId) throws DataAccessException;
 }

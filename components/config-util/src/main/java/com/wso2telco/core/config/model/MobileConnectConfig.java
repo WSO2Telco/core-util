@@ -595,6 +595,10 @@ public class MobileConnectConfig {
          * The url of the sms authentication
          */
         private String authUrl;
+        /**
+         * The lenght for sms otp
+         */
+        private int OTPLength;
 
         private Boolean welcomeMessageDisabled;
 
@@ -640,6 +644,11 @@ public class MobileConnectConfig {
         private String registrationMessage;
 
         /**
+         * The sms otp message
+         */
+        private String smsotpMessage;
+
+        /**
          * The Operator Specific Messages
          */
         private OperatorSpecificMessages operatorSpecificMessages;
@@ -660,6 +669,15 @@ public class MobileConnectConfig {
         @XmlElement(name = "LoginMessage")
         public String getLoginMessage() {
             return loginMessage;
+        }
+
+        /**
+         * Gets SMS OTP message
+         * @return the generic SMS OTP message
+         */
+        @XmlElement(name = "SMSOTPMessage")
+        public String getSmsotpMessage() {
+            return smsotpMessage;
         }
 
         /**
@@ -892,6 +910,11 @@ public class MobileConnectConfig {
             this.registrationMessage = registrationMessage;
         }
 
+
+        public void setSmsotpMessage(String smsotpMessage) {
+            this.smsotpMessage = smsotpMessage;
+        }
+
         /**
          * Sets the operator specific messages
          * @param operatorSpecificMessages The operator specific messages
@@ -899,6 +922,26 @@ public class MobileConnectConfig {
         public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) {
             this.operatorSpecificMessages = operatorSpecificMessages;
         }
+
+        /**
+         * Returns the OTP Length for the otp sms.
+         *
+         * @return the OTP Length for the otp sms
+         */
+        @XmlElement(name = "OTPLength")
+        public int getOTPLength() {
+            return OTPLength;
+        }
+
+        /**
+         * Sets the OTP Length for the otp sms
+         * @param OTPLength for the otp sms
+         */
+        public void setOTPLength(int OTPLength) {
+            this.OTPLength = OTPLength;
+        }
+
+
     }
 
     public static class SaaConfig {
@@ -995,6 +1038,8 @@ public class MobileConnectConfig {
          */
         private String loginMessage;
 
+        private String smsotpMessage;
+
         @XmlAttribute(name = "operator")
         public String getOperator() {
             return operator;
@@ -1010,17 +1055,22 @@ public class MobileConnectConfig {
             return loginMessage;
         }
 
+        @XmlElement(name = "SMSOTPMessage")
+        public String getSmsotpMessage() {
+            return smsotpMessage;
+        }
+
         public void setOperator(String operator) {
             this.operator = operator;
         }
 
-        public void setRegistrationMessage(String registrationMessage) {
-            this.registrationMessage = registrationMessage;
-        }
+        public void setRegistrationMessage(String registrationMessage) { this.registrationMessage = registrationMessage; }
 
         public void setLoginMessage(String loginMessage) {
             this.loginMessage = loginMessage;
         }
+
+        public void setSmsotpMessage(String smsotpMessage) { this.smsotpMessage = smsotpMessage; }
     }
 
     /**
