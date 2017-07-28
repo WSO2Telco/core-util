@@ -18,7 +18,6 @@ package com.wso2telco.core.config.service;
 
 import com.wso2telco.core.config.*;
 import com.wso2telco.core.config.model.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +39,9 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
         if (DataHolder.getInstance().getAuthenticationLevels() == null)
             DataHolder.getInstance().setAuthenticationLevels(ConfigLoader.getInstance().getAuthenticationLevels());
+
+        if (DataHolder.getInstance().getScopeDetailsConfig() == null)
+            DataHolder.getInstance().setScopeDetailsConfig(ConfigLoader.getInstance().getScopeDetailsConfig());
 
         if (DataHolder.getInstance().getAuthenticationLevelMap() == null) {
             Map<String, MIFEAuthentication> authenticationMap = loadMIFEAuthenticatorMap(ConfigLoader.getInstance()
@@ -66,6 +68,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
         ConfigLoader.reset();
         DataHolder.getInstance().setMobileConnectConfig(null);
         DataHolder.getInstance().setAuthenticationLevels(null);
+        DataHolder.getInstance().setScopeDetailsConfig(null);
         DataHolder.getInstance().setAuthenticationLevelMap(null);
     }
 
