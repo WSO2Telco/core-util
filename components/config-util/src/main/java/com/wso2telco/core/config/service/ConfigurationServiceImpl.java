@@ -41,6 +41,9 @@ public class ConfigurationServiceImpl implements ConfigurationService {
         if (DataHolder.getInstance().getAuthenticationLevels() == null)
             DataHolder.getInstance().setAuthenticationLevels(ConfigLoader.getInstance().getAuthenticationLevels());
 
+        if (DataHolder.getInstance().getScopeDetailsConfig() == null)
+            DataHolder.getInstance().setScopeDetailsConfig(ConfigLoader.getInstance().getScopeDetailsConfig());
+
         if (DataHolder.getInstance().getAuthenticationLevelMap() == null) {
             Map<String, MIFEAuthentication> authenticationMap = loadMIFEAuthenticatorMap(ConfigLoader.getInstance()
                     .getAuthenticationLevels());
@@ -71,6 +74,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
         ConfigLoader.reset();
         DataHolder.getInstance().setMobileConnectConfig(null);
         DataHolder.getInstance().setAuthenticationLevels(null);
+        DataHolder.getInstance().setScopeDetailsConfig(null);
         DataHolder.getInstance().setAuthenticationLevelMap(null);
         DataHolder.getInstance().setAuthenticatorMNOMap(null);
     }
