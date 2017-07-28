@@ -17,6 +17,7 @@ package com.wso2telco.core.config;
 
 import com.wso2telco.core.config.model.AuthenticationLevels;
 import com.wso2telco.core.config.model.MobileConnectConfig;
+import com.wso2telco.core.config.model.ScopeDetailsConfig;
 
 import java.util.Map;
 import java.util.Set;
@@ -24,6 +25,7 @@ import java.util.Set;
 public class DataHolder {
     private AuthenticationLevels authenticationLevels;
     private MobileConnectConfig mobileConnectConfig;
+    private ScopeDetailsConfig scopeDetailsConfig;
     private Map<String, MIFEAuthentication> authenticationLevelMap = null;
     private Map<String, Set<String>> authenticatorMNOMap = null;
     private static DataHolder thisInstance = new DataHolder();
@@ -83,6 +85,23 @@ public class DataHolder {
         this.authenticationLevelMap = authenticationLevelMap;
     }
 
+    /**
+     * Gets the mobile connect config.
+     *
+     * @return the mobile connect config
+     */
+    public ScopeDetailsConfig getScopeDetailsConfig() {
+        return scopeDetailsConfig;
+    }
+
+    /**
+     * Sets the mobile connect config.
+     *
+     * @param scopeDetailsConfig the new mobile connect config
+     */
+    public void setScopeDetailsConfig(ScopeDetailsConfig scopeDetailsConfig) {
+        this.scopeDetailsConfig = scopeDetailsConfig;
+    }
     public Map<String, Set<String>> getAuthenticatorMNOMap() {
         return authenticatorMNOMap;
     }
