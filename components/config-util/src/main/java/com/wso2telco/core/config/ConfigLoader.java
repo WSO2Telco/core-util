@@ -17,6 +17,7 @@ package com.wso2telco.core.config;
 
 import com.wso2telco.core.config.model.AuthenticationLevels;
 import com.wso2telco.core.config.model.MobileConnectConfig;
+import com.wso2telco.core.config.model.ScopeDetailsConfig;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.utils.CarbonUtils;
@@ -47,6 +48,11 @@ public class ConfigLoader {
     private MobileConnectConfig mobileConnectConfig;
 
     /**
+     * The scope config.
+     */
+    private ScopeDetailsConfig scopeDetailsConfig;
+
+    /**
      * The loader.
      */
     private static ConfigLoader loader = new ConfigLoader();
@@ -60,6 +66,8 @@ public class ConfigLoader {
                 this.authenticationLevels = initLoaConfig();
             if (this.mobileConnectConfig == null)
                 this.mobileConnectConfig = initMConnectConfig();
+            if (this.scopeDetailsConfig == null)
+                this.scopeDetailsConfig = initScopeDetailsConfig();
         } catch (JAXBException e) {
             log.error("Error while initiating custom config files", e);
         }
@@ -105,7 +113,7 @@ public class ConfigLoader {
     }
 
     /**
-     * Inits the m connect config.
+     * Inits the mconnect config.
      *
      * @return the mobile connect config
      * @throws JAXBException the JAXB exception
@@ -127,4 +135,26 @@ public class ConfigLoader {
         return this.mobileConnectConfig;
     }
 
+    /**
+     * Inits the scope config.
+     *
+     * @return the scope config
+     * @throws JAXBException the JAXB exception
+     */
+    private ScopeDetailsConfig initScopeDetailsConfig() throws JAXBException {
+        String configPath = CarbonUtils.getCarbonConfigDirPath() + File.separator + "scope-config.xml";
+        File file = new File(configPath);
+        JAXBContext ctx = JAXBContext.newInstance(ScopeDetailsConfig.class);
+        Unmarshaller um = ctx.createUnmarshaller();
+        return (ScopeDetailsConfig) um.unmarshal(file);
+    }
+
+    /**
+     * Gets the scope config config.
+     *
+     * @return the scope config
+     */
+    public ScopeDetailsConfig getScopeDetailsConfig() {
+        return this.scopeDetailsConfig;
+    }
 }
