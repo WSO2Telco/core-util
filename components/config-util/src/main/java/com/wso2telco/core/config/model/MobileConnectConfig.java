@@ -89,7 +89,6 @@ public class MobileConnectConfig {
 
     private boolean isPcrServiceEnabled;
 
-    private String locale;
 
     public boolean isPcrServiceEnabled() {
         return isPcrServiceEnabled;
@@ -157,15 +156,6 @@ public class MobileConnectConfig {
 
     public void setAdminUrl(String adminUrl) {
         this.adminUrl = adminUrl;
-    }
-    
-    @XmlElement(name = "Locale")
-    public String getLocale() {
-        return locale;
-    }
-
-    public void setLocale(String locale) {
-        this.locale = locale;
     }
 
     @XmlElement(name = "AdminUsername")
