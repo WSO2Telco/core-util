@@ -25,6 +25,7 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ScopeDetailsConfig {
 
+    @XmlElementWrapper(name = "Scopes")
     @XmlElement(name = "Scope")
     protected List<Scope> scope;
 
@@ -79,7 +80,7 @@ public class ScopeDetailsConfig {
          *
          * @return the requestDetails
          */
-        @XmlElement(name = "Request")
+        //@XmlElement(name = "Request")
         public List<Request> getRequest() {
             return requestDetails;
         }
@@ -98,7 +99,7 @@ public class ScopeDetailsConfig {
          *
          * @return the claimSet
          */
-        @XmlElement(name = "Claims")
+        //@XmlElement(name = "Claims")
         public List<ClaimSet> getClaimSet() {
             return claimSet;
         }
