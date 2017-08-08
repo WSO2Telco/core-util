@@ -53,8 +53,9 @@ public class ScopeDetailsConfig {
     public static class Scope {
 
         private String name;
-        private List<ClaimSet> claimSet;
-        private List<Request> requestDetails;
+        private List<String> claims;
+        private List<String> optionalValues;
+        private List<String> mandatoryValues;
 
         /**
          * Gets the scope name.
@@ -76,55 +77,6 @@ public class ScopeDetailsConfig {
         }
 
         /**
-         * Gets the Request Details.
-         *
-         * @return the requestDetails
-         */
-        //@XmlElement(name = "Request")
-        public List<Request> getRequest() {
-            return requestDetails;
-        }
-
-        /**
-         * Sets the requestDetails.
-         *
-         * @param requestDetails the new requestDetails
-         */
-        public void setRequest(List<Request> requestDetails) {
-            this.requestDetails = requestDetails;
-        }
-
-        /**
-         * Gets the Claim set.
-         *
-         * @return the claimSet
-         */
-        //@XmlElement(name = "Claims")
-        public List<ClaimSet> getClaimSet() {
-            return claimSet;
-        }
-
-        /**
-         * Sets the claimSet.
-         *
-         * @param claimSet the new claimSet
-         */
-        public void setClaimSet(List<ClaimSet> claimSet) {
-            this.claimSet = claimSet;
-        }
-    }
-
-    /**
-     * The Class Claims.
-     */
-    public static class ClaimSet {
-
-        /**
-         * The claim set.
-         */
-        private List<String> claims;
-
-        /**
          * Gets the claim values.
          *
          * @return the claim values list
@@ -143,19 +95,6 @@ public class ScopeDetailsConfig {
         public void setClaimSet(List<String> claims) {
             this.claims = claims;
         }
-    }
-
-    /**
-     * The Class Request.
-     * This contains the values that should be present in the request
-     */
-    public static class Request {
-
-        /**
-         * The Request Details including optional and mandatory values.
-         */
-        private List<String> optionalValues;
-        private List<String> mandatoryValues;
 
         /**
          * Gets the request Details-Optional Values.
@@ -197,5 +136,6 @@ public class ScopeDetailsConfig {
         public void setMandatoryValues(List<String> mandatoryValues) {
             this.mandatoryValues = mandatoryValues;
         }
+
     }
 }
