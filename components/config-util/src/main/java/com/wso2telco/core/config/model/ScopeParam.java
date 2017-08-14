@@ -45,6 +45,8 @@ public class ScopeParam {
     private int scope_id;
     private boolean isConsentPage;
     private String description;
+    private String consentType;
+    private String consent_validity_type;
 
     public boolean isConsentPage() {
 		return isConsentPage;
@@ -121,4 +123,20 @@ public class ScopeParam {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+    public String getConsentType() {
+        return consentType;
+    }
+
+    public void setConsentType(String consentType) {
+        this.consentType = consentType;
+    }
+
+    public String getConsent_validity_type() {
+        return consent_validity_type;
+    }
+
+    public void setConsent_validity_type(String consent_validity_type) {
+        this.consent_validity_type = consent_validity_type;
+    }
 }
