@@ -15,7 +15,6 @@
  ******************************************************************************/
 package com.wso2telco.core.config.model;
 
-
 import java.util.List;
 
 //todo: this class is duplicated also in gsma authenticator. need to move to core-utils
@@ -46,6 +45,8 @@ public class ScopeParam {
     private int scope_id;
     private boolean isConsentPage;
     private String description;
+    private String consentType;
+    private String consent_validity_type;
 
     public boolean isConsentPage() {
 		return isConsentPage;
@@ -63,22 +64,40 @@ public class ScopeParam {
 		this.scope_id = scope_id;
 	}
 
-    public List<LoginHintFormatDetails> getLoginHintFormat() {
+	public List<LoginHintFormatDetails> getLoginHintFormat() {
         return loginHintFormat;
     }
+
     public boolean isLoginHintMandatory() {
         return isLoginHintMandatory;
     }
+
     public boolean isHeaderMsisdnMandatory() { return isHeaderMsisdnMandatory; }
-    public String getScope() { return scope; }
+
     public msisdnMismatchResultTypes getMsisdnMismatchResult() {
         return msisdnMismatchResult;
     }
+
+    public String getScope() { return scope; }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
+
     public heFailureResults getHeFailureResult() {
         return heFailureResult;
     }
+
+    public void setHeFailureResult(heFailureResults heFailureResult) {
+        this.heFailureResult = heFailureResult;
+    }
+
     public boolean isTncVisible() {
         return isTncVisible;
+    }
+
+    public void setTncVisible(boolean isTncVisible) {
+        this.isTncVisible = isTncVisible;
     }
 
     public void setLoginHintFormat(List<LoginHintFormatDetails> loginHintFormat) {
@@ -97,23 +116,28 @@ public class ScopeParam {
         this.msisdnMismatchResult = msisdnMismatchResult;
     }
 
-    public void setScope(String scope) {
-        this.scope = scope;
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+    public String getConsentType() {
+        return consentType;
     }
 
-    public void setHeFailureResult(heFailureResults heFailureResult) {
-        this.heFailureResult = heFailureResult;
+    public void setConsentType(String consentType) {
+        this.consentType = consentType;
     }
 
-    public void setTncVisible(boolean isTncVisible) {
-        this.isTncVisible = isTncVisible;
+    public String getConsent_validity_type() {
+        return consent_validity_type;
     }
 
-    public String getDescription() {
-        return description;
+    public void setConsent_validity_type(String consent_validity_type) {
+        this.consent_validity_type = consent_validity_type;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }
