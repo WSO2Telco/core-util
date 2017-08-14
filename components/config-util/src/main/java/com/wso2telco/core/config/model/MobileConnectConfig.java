@@ -1975,6 +1975,12 @@ public class MobileConnectConfig {
          * The IP Header name
          */
         private String IPHeaderName;
+        
+        
+        /**
+         * The IP Header Override Attribute
+         */
+        private boolean isOverrideIpheader;
 
         /**
          * Gets the endpoint.
@@ -2051,6 +2057,23 @@ public class MobileConnectConfig {
         public void setOperators(List<OPERATOR> Operators) {
             this.Operators = Operators;
         }
+
+		/**
+		 * @return the isOverrideIpheader
+		 */
+        @XmlElement(name = "OverrideIpheader")
+		public boolean isOverrideIpheader() {
+			return isOverrideIpheader;
+		}
+
+		/**
+		 * @param isOverrideIpheader the isOverrideIpheader to set
+		 */
+		public void setOverrideIpheader(boolean isOverrideIpheader) {
+			this.isOverrideIpheader = isOverrideIpheader;
+		}
+        
+        
 
     }
 
