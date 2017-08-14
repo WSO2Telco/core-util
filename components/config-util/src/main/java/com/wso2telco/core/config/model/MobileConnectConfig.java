@@ -610,6 +610,15 @@ public class MobileConnectConfig {
          */
         private int OTPLength;
 
+        /**
+         * The SMS Message Version
+         */
+        private String SMSMessageVersion;
+        /**
+         * The Operator Mappings for codes
+         */
+        private List<OperatorMapping> OperatorMappings;
+
         private Boolean welcomeMessageDisabled;
 
         private String defaultWelcomeMessage;
@@ -951,7 +960,44 @@ public class MobileConnectConfig {
             this.OTPLength = OTPLength;
         }
 
+        /**
+         * Returns the SMS Message Version
+         *
+         * @return the SMS Message Version
+         */
+        @XmlElement(name = "SMSMessageVersion")
+        public String getSMSMessageVersion() {
+            return SMSMessageVersion;
+        }
 
+        /**
+         * Sets the SMS Message Version
+         * @param SMSMessageVersion for the SMS Message Version
+         */
+        public void setSMSMessageVersion(String SMSMessageVersion) {
+            this.SMSMessageVersion = SMSMessageVersion;
+        }
+
+
+
+        /**
+         * Returns the OperatorMapping
+         *
+         * @return the OperatorMapping
+         */
+        @XmlElementWrapper(name="OperatorMappings")
+        @XmlElement(name = "OperatorMapping")
+        public List<OperatorMapping> getOperatorMappings() {
+            return OperatorMappings;
+        }
+
+        /**
+         * Sets the operators
+         * @param OperatorMappings for operators
+         */
+        public void setOperatorMappings(List<OperatorMapping> OperatorMappings) {
+            this.OperatorMappings = OperatorMappings;
+        }
     }
 
     public static class SaaConfig {
