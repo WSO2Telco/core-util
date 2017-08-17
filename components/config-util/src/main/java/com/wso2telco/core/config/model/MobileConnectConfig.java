@@ -90,6 +90,175 @@ public class MobileConnectConfig {
     private boolean isPcrServiceEnabled;
 
     private String locale;
+    
+    /**
+     * Federated IDPs config
+     */
+    private FederatedIdentityProviders federatedIdentityProviders;
+
+    /**
+     * Federated IDP's callback
+     */
+    private String federatedCallbackUrl;
+
+    /**
+     * 
+     * @return Federated IDP's callback
+     */
+    @XmlElement(name = "FederatedCallbackUrl")
+    public String getFederatedCallbackUrl() {
+        return federatedCallbackUrl;
+    }
+
+    /**
+     * 
+     * @param federatedCallbackUrl
+     */
+    public void setFederatedCallbackUrl(String federatedCallbackUrl) {
+        this.federatedCallbackUrl = federatedCallbackUrl;
+    }
+
+    /**
+     * 
+     * @return Federated IDPs config
+     */
+    @XmlElement(name = "FederatedIdentityProviders")
+    public FederatedIdentityProviders getFederatedIdentityProviders() {
+        return federatedIdentityProviders;
+    }
+
+    /**
+     * 
+     * @param Federated IDPs
+     */
+    public void setFederatedIdentityProviders(FederatedIdentityProviders federatedIdentityProviders) {
+        this.federatedIdentityProviders = federatedIdentityProviders;
+    }
+
+    /**
+     * 
+     * Federated IDP config Class
+     *
+     */
+    public static class FederatedIdentityProviders {
+        /**
+         * Identity Provider
+         */
+        private Provider[] provider;
+
+        /**
+         * 
+         * @return Identity Provider
+         */
+        @XmlElement(name = "Provider")
+        public Provider[] getProvider() {
+            return provider;
+        }
+
+        /**
+         * 
+         * @param Identity Provider
+         */
+        public void setProvider(Provider[] provider) {
+            this.provider = provider;
+        }
+    }
+
+    /**
+     * 
+     * Federated Identity Provider Config class
+     *
+     */
+    public static class Provider {
+
+        /**
+         * Operator name of IDP
+         */
+        private String operator;
+
+        /**
+         * authorize endpoint of IDP
+         */
+        private String authzEndpoint;
+
+        /**
+         * token endpoint of IDP
+         */
+        private String tokenEndpoint;
+
+        /**
+         * userinfo endpoint of IDP
+         */
+        private String userInfoEndpoint;
+
+        /**
+         * 
+         * @return Operator name of IDP
+         */
+        @XmlAttribute(name = "operator")
+        public String getOperator() {
+            return operator;
+        }
+
+        /**
+         * 
+         * @return authorize endpoint of IDP
+         */
+        @XmlElement(name = "AuthzEndpoint")
+        public String getAuthzEndpoint() {
+            return authzEndpoint;
+        }
+
+        /**
+         * 
+         * @return token endpoint of IDP
+         */
+        @XmlElement(name = "TokenEndpoint")
+        public String getTokenEndpoint() {
+            return tokenEndpoint;
+        }
+
+        /**
+         * 
+         * @return userinfo endpoint of IDP
+         */
+        @XmlElement(name = "UserInfoEndpoint")
+        public String getUserInfoEndpoint() {
+            return userInfoEndpoint;
+        }
+
+        /**
+         * 
+         * @param Operator name of IDP
+         */
+        public void setOperator(String operator) {
+            this.operator = operator;
+        }
+
+        /**
+         * 
+         * @param authorize endpoint of IDP
+         */
+        public void setAuthzEndpoint(String authzEndpoint) {
+            this.authzEndpoint = authzEndpoint;
+        }
+
+        /**
+         * 
+         * @param token endpoint of IDP
+         */
+        public void setTokenEndpoint(String tokenEndpoint) {
+            this.tokenEndpoint = tokenEndpoint;
+        }
+
+        /**
+         * 
+         * @param userinfo endpoint of IDP
+         */
+        public void setUserInfoEndpoint(String userInfoEndpoint) {
+            this.userInfoEndpoint = userInfoEndpoint;
+        }
+    }
 
     public boolean isPcrServiceEnabled() {
         return isPcrServiceEnabled;
