@@ -3,7 +3,6 @@ package com.wso2telco.core.dbutils.model;
 public class FederatedIdpMappingDTO {
 
     private String operator;
-    private String authCode;
     private String fidp_authCode;
     private String accessToken;
     private String fidp_accessToken;
@@ -14,14 +13,6 @@ public class FederatedIdpMappingDTO {
 
     public void setOperator(String operator) {
         this.operator = operator;
-    }
-
-    public String getAuthCode() {
-        return authCode;
-    }
-
-    public void setAuthCode(String authCode) {
-        this.authCode = authCode;
     }
 
     public String getFidpAuthCode() {
