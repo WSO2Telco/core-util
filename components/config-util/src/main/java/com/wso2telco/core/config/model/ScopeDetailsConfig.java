@@ -56,6 +56,7 @@ public class ScopeDetailsConfig {
         private List<String> claims;
         private List<String> optionalValues;
         private List<String> mandatoryValues;
+        private List<String> displayAttributes;
 
         /**
          * Gets the scope name.
@@ -90,10 +91,31 @@ public class ScopeDetailsConfig {
         /**
          * Sets the claims.
          *
-         * @param claims the new mobile ip ranges
+         * @param claims the new claim list
          */
         public void setClaimSet(List<String> claims) {
             this.claims = claims;
+        }
+
+        /**
+         * Gets scope related display attributes.
+         *
+         * @return the display attribute list
+         */
+
+        @XmlElementWrapper(name = "AttributeToDisplay")
+        @XmlElement(name = "Attribute")
+        public List<String> getDisplayAttributes() {
+            return displayAttributes;
+        }
+
+        /**
+         * Sets the display attribute list.
+         *
+         * @param displayAttributes the new display attribute list for a specific scope.
+         */
+        public void setDisplayAttributes(List<String> displayAttributes) {
+            this.displayAttributes = displayAttributes;
         }
 
         /**
