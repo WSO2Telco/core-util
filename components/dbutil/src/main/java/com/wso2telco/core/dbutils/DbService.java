@@ -1152,12 +1152,10 @@ public class DbService {
      * Insert authorization code mappings between local & external
      * 
      * @param operator is the external IDP
-     * @param migAuthCode locally generated code
      * @param fidpAuthCode FIDP generated code
      */
 
-    public void insertFederatedAuthCodeMappings(String operator, String migAuthCode, String fidpAuthCode)
-            throws Exception {
+    public void insertFederatedAuthCodeMappings(String operator, String fidpAuthCode) throws Exception {
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -1168,11 +1166,10 @@ public class DbService {
                 throw new Exception("Connection not found.");
             }
 
-            String query = "INSERT INTO federated_idp_mappings (operator,authcode,federated_authcode) VALUES (?, ?, ?) ";
+            String query = "INSERT INTO federated_idp_mappings (operator,federated_authcode) VALUES (?,?) ";
 
             ps = con.prepareStatement(query.toString());
             ps.setString(1, operator);
-            ps.setString(2, migAuthCode);
             ps.setString(2, fidpAuthCode);
             ps.executeUpdate();
 
@@ -1191,7 +1188,7 @@ public class DbService {
      * @return the object for persisted authcode mapping
      * @throws Exception if an error occurs during this operation
      */
-    public FederatedIdpMappingDTO retrieveFederatedAuthCodeMappings(String migAuthCode) throws Exception {
+    public FederatedIdpMappingDTO retrieveFederatedAuthCodeMappings(String fidpAuthCode) throws Exception {
 
         Connection con = null;
         PreparedStatement ps = null;
@@ -1204,10 +1201,10 @@ public class DbService {
                 throw new Exception("Connection not found");
             }
 
-            String sql = "select operator,federated_authcode from federated_idp_mappings where authcode=? ";
+            String sql = "select operator,federated_authcode from federated_idp_mappings where federated_authcode=? ";
 
             ps = con.prepareStatement(sql);
-            ps.setString(1, migAuthCode);
+            ps.setString(1, fidpAuthCode);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -1293,6 +1290,42 @@ public class DbService {
             while (rs.next()) {
                 fidpMapping.setOperator(rs.getString("operator"));
                 fidpMapping.setFidpAccessToken(rs.getString("federated_accesstoken"));
+            }
+
+        } catch (SQLException e) {
+            log.error("Database operation error while retrieving federated access token from federated_idp_mappings ",
+                    e);
+            DbUtils.handleException("Error in retrieving federated access token mappings : " + e.getMessage(), e);
+        } finally {
+            DbUtils.closeAllConnections(ps, con, rs);
+        }
+        return fidpMapping;
+
+    }
+
+    public FederatedIdpMappingDTO checkIfExistingFederatedToken(String fidpAuthToken) throws Exception {
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        FederatedIdpMappingDTO fidpMapping = new FederatedIdpMappingDTO();
+
+        try {
+            con = DbUtils.getConnectDbConnection();
+            if (con == null) {
+                throw new Exception("Connection not found");
+            }
+
+            String sql = "select operator,accesstoken from federated_idp_mappings "
+                    + "where federated_accesstoken =? order by updated_time desc limit 1";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, fidpAuthToken);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                fidpMapping.setOperator(rs.getString("operator"));
+                fidpMapping.setAccessToken(rs.getString("accesstoken"));
             }
 
         } catch (SQLException e) {
