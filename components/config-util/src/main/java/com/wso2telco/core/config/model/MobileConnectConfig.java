@@ -90,6 +90,18 @@ public class MobileConnectConfig {
     private boolean isPcrServiceEnabled;
 
     private String locale;
+
+    private boolean isFederatedDeployment;
+
+    public boolean isFederatedDeployment() {
+        return isFederatedDeployment;
+    }
+
+    @XmlElement(name = "IsFederatedDeployment")
+    public void setIsFederatedDeployment(boolean isFederatedDeployment) {
+        this.isFederatedDeployment = isFederatedDeployment;
+    }
+
     
     /**
      * Federated IDPs config

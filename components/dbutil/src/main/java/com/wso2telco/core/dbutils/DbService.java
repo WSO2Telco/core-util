@@ -1231,7 +1231,7 @@ public class DbService {
      * @param fidpAuthToken FIDP generated token
      * @throws Exception if an error occurs during this operation
      */
-    public void insertFederatedTokenMappings(String migAuthToken, String migAuthCode, String fidpAuthToken)
+    public void insertFederatedTokenMappings(String migAuthToken, String fidpAuthCode, String fidpAuthToken)
             throws Exception {
 
         Connection con = null;
@@ -1243,12 +1243,12 @@ public class DbService {
                 throw new Exception("Connection not found");
             }
 
-            String query = "UPDATE federated_idp_mappings SET accesstoken = ?, federated_accesstoken = ? WHERE authcode = ? ";
+            String query = "UPDATE federated_idp_mappings SET accesstoken = ?, federated_accesstoken = ? WHERE federated_authcode = ? ";
 
             ps = con.prepareStatement(query.toString());
             ps.setString(1, migAuthToken);
             ps.setString(2, fidpAuthToken);
-            ps.setString(3, migAuthCode);
+            ps.setString(3, fidpAuthCode);
             ps.executeUpdate();
 
         } catch (SQLException e) {
