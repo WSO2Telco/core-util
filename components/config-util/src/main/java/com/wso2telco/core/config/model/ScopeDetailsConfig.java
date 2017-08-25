@@ -25,26 +25,48 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ScopeDetailsConfig {
 
-    @XmlElementWrapper(name = "Scopes")
+    @XmlElementWrapper(name = "PremiumInfoScopes")
     @XmlElement(name = "Scope")
-    protected List<Scope> scope;
+    protected List<Scope> premiumInfoScope;
+
+    @XmlElementWrapper(name = "UserInfoScopes")
+    @XmlElement(name = "Scope")
+    protected List<Scope> userInfoScope;
 
     /**
-     * Gets the scope.
+     * Gets the premium info related scope.
      *
      * @return the scope
      */
-    public List<Scope> getScope() {
-        return scope;
+    public List<Scope> getPremiumInfoScope() {
+        return premiumInfoScope;
     }
 
     /**
-     * Sets the scope.
+     * Sets the premium info related scope.
      *
-     * @param scope the new scope related details
+     * @param premiumInfoScope the new scope related details
      */
-    public void setScope(List<Scope> scope) {
-        this.scope = scope;
+    public void setPremiumInfoScope(List<Scope> premiumInfoScope) {
+        this.premiumInfoScope = premiumInfoScope;
+    }
+
+    /**
+     * Gets the user info related scope.
+     *
+     * @return the scope
+     */
+    public List<Scope> getUserInfoScope() {
+        return userInfoScope;
+    }
+
+    /**
+     * Sets the user info related scope.
+     *
+     * @param userInfoScope the new scope related details
+     */
+    public void setUserInfoScope(List<Scope> userInfoScope) {
+        this.userInfoScope = userInfoScope;
     }
 
     /**
