@@ -16,13 +16,8 @@
 package com.wso2telco.core.dbutils;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.*;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
@@ -1184,7 +1179,7 @@ public class DbService {
     /**
      * Read authorization code mappings between local & external
      * 
-     * @param migAuthCode locally generated code
+     * @param fidpAuthCode locally generated code
      * @return the object for persisted authcode mapping
      * @throws Exception if an error occurs during this operation
      */
@@ -1227,7 +1222,7 @@ public class DbService {
      * Insert authorization token mappings between local & external
      * 
      * @param migAuthToken locally generated token
-     * @param migAuthCode locally generated code
+     * @param fidpAuthCode locally generated code
      * @param fidpAuthToken FIDP generated token
      * @throws Exception if an error occurs during this operation
      */
@@ -1338,4 +1333,39 @@ public class DbService {
         return fidpMapping;
 
     }
+
+    public static  Map<String, Set<String>> getAllowedAuthenticatorSetForMNO()
+            throws Exception {
+
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * from allowed_authenticators_mno";
+        Map<String, Set<String>> authenticatorSet = new HashMap<String, Set<String>>();
+        try {
+            connection = DbUtils.getConnectDbConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String mobile_network_operator=rs.getString("mobile_network_operator");
+                String allowed_authenticator=rs.getString("allowed_authenticator");
+                Set<String> MNOAuth = new HashSet<>();
+                if(authenticatorSet.containsKey(mobile_network_operator)){
+                    MNOAuth=authenticatorSet.remove(mobile_network_operator);
+                    MNOAuth.add(allowed_authenticator);
+                }else{
+                    MNOAuth.add(allowed_authenticator);
+                }
+                authenticatorSet.put(mobile_network_operator,MNOAuth);
+            }
+        } catch (SQLException e) {
+            log.error("Database operation error while retrieving allowed authenticators for MNOs ",
+                    e);
+            DbUtils.handleException("Error in retrieving allowed authenticators for MNOs mappings : " + e.getMessage(), e);
+        } finally {
+            DbUtils.closeAllConnections(ps, connection, rs);
+        }
+        return authenticatorSet;
+    }
+
 }

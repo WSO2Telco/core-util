@@ -18,11 +18,11 @@ package com.wso2telco.core.config.service;
 
 import com.wso2telco.core.config.*;
 import com.wso2telco.core.config.model.*;
+import com.wso2telco.core.dbutils.DbService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Configuration service is OSGi service exposing DataHolder object which contains configuration data loaded from XML
@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class ConfigurationServiceImpl implements ConfigurationService {
 
-
+    private static Log log = LogFactory.getLog(ConfigurationServiceImpl.class);
     /**
      * The ConfigurationServiceImpl constructor. Loads data to data holder if they are not initialized
      */
@@ -45,6 +45,11 @@ public class ConfigurationServiceImpl implements ConfigurationService {
             Map<String, MIFEAuthentication> authenticationMap = loadMIFEAuthenticatorMap(ConfigLoader.getInstance()
                     .getAuthenticationLevels());
             DataHolder.getInstance().setAuthenticationLevelMap(authenticationMap);
+        }
+
+        if (DataHolder.getInstance().getAuthenticatorMNOMap() == null) {
+            Map<String, Set<String>> authenticatorMNOMap = loadauthenticatorMNOMap();
+            DataHolder.getInstance().setAuthenticatorMNOMap(authenticatorMNOMap);
         }
     }
 
@@ -67,6 +72,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
         DataHolder.getInstance().setMobileConnectConfig(null);
         DataHolder.getInstance().setAuthenticationLevels(null);
         DataHolder.getInstance().setAuthenticationLevelMap(null);
+        DataHolder.getInstance().setAuthenticatorMNOMap(null);
     }
 
     /**
@@ -99,5 +105,21 @@ public class ConfigurationServiceImpl implements ConfigurationService {
             authenticatorMap.put(authenticationLevelValue, mifeAuthentication);
         }
         return authenticatorMap;
+    }
+
+    /**
+     * Loads MIFE Authenticators into a Map
+     *
+     * @return MIFE Authenticator Map
+     */
+    private Map<String, Set<String>> loadauthenticatorMNOMap() {
+        Map<String, Set<String>> authenticatorMNOMap = null;
+        try {
+            authenticatorMNOMap=new DbService().getAllowedAuthenticatorSetForMNO();
+        } catch (Exception e) {
+            log.error("Error while fetching authenticator MNO Map",e);
+        }
+
+        return authenticatorMNOMap;
     }
 }
