@@ -132,11 +132,11 @@ public class ScopeParam {
         this.consentType = consentType;
     }
 
-    public String getConsent_validity_type() {
+    public String getConsentValidityType() {
         return consent_validity_type;
     }
 
-    public void setConsent_validity_type(String consent_validity_type) {
+    public void setConsentValidityType(String consent_validity_type) {
         this.consent_validity_type = consent_validity_type;
     }
 
