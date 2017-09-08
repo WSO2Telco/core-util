@@ -27,28 +27,28 @@ public class ScopeDetailsConfig {
 
     @XmlElementWrapper(name = "PremiumInfoScopes")
     @XmlElement(name = "Scope")
-    protected List<Scope> premiumInfoScope;
+    protected List<PremiumInfoScope> premiumScopes;
 
     @XmlElementWrapper(name = "UserInfoScopes")
     @XmlElement(name = "Scope")
-    protected List<Scope> userInfoScope;
+    protected List<UserInfoScope> userInfoScope;
 
     /**
-     * Gets the premium info related scope.
+     * Gets the premium info related scopes.
      *
      * @return the scope
      */
-    public List<Scope> getPremiumInfoScope() {
-        return premiumInfoScope;
+    public List<PremiumInfoScope> getPremiumScopes() {
+        return premiumScopes;
     }
 
     /**
      * Sets the premium info related scope.
      *
-     * @param premiumInfoScope the new scope related details
+     * @param premiumScopes the new scope related details
      */
-    public void setPremiumInfoScope(List<Scope> premiumInfoScope) {
-        this.premiumInfoScope = premiumInfoScope;
+    public void setPremiumScopes(List<PremiumInfoScope> premiumScopes) {
+        this.premiumScopes = premiumScopes;
     }
 
     /**
@@ -56,7 +56,7 @@ public class ScopeDetailsConfig {
      *
      * @return the scope
      */
-    public List<Scope> getUserInfoScope() {
+    public List<UserInfoScope> getUserInfoScope() {
         return userInfoScope;
     }
 
@@ -65,14 +65,14 @@ public class ScopeDetailsConfig {
      *
      * @param userInfoScope the new scope related details
      */
-    public void setUserInfoScope(List<Scope> userInfoScope) {
+    public void setUserInfoScope(List<UserInfoScope> userInfoScope) {
         this.userInfoScope = userInfoScope;
     }
 
     /**
-     * The Class Scope.
+     * The Class UserInfoScope.
      */
-    public static class Scope {
+    public static class UserInfoScope {
 
         private String name;
         private List<String> claims;
@@ -181,5 +181,142 @@ public class ScopeDetailsConfig {
             this.mandatoryValues = mandatoryValues;
         }
 
+    }
+
+    /**
+     * The Class PremiumInfoScope.
+     */
+    public static class PremiumInfoScope {
+
+        private String name;
+        private List<String> claims;
+        private List<String> displayAttributes;
+        private List<MandatoryScope> mandatoryValues;
+
+        /**
+         * Gets the scope name.
+         *
+         * @return the scope name
+         */
+        @XmlElement(name = "Name")
+        public String getName() {
+            return name;
+        }
+
+        /**
+         * Sets the scope name.
+         *
+         * @param scopeName the new data source name
+         */
+        public void setName(String scopeName) {
+            this.name = scopeName;
+        }
+
+        /**
+         * Gets the claim values.
+         *
+         * @return the claim values list
+         */
+        @XmlElementWrapper(name = "Claims")
+        @XmlElement(name = "ClaimValue")
+        public List<String> getClaimSet() {
+            return claims;
+        }
+
+        /**
+         * Sets the claims.
+         *
+         * @param claims the new claim list
+         */
+        public void setClaimSet(List<String> claims) {
+            this.claims = claims;
+        }
+
+        /**
+         * Gets scope related display attributes.
+         *
+         * @return the display attribute list
+         */
+
+        @XmlElementWrapper(name = "AttributeToDisplay")
+        @XmlElement(name = "Attribute")
+        public List<String> getDisplayAttributes() {
+            return displayAttributes;
+        }
+
+        /**
+         * Sets the display attribute list.
+         *
+         * @param displayAttributes the new display attribute list for a specific scope.
+         */
+        public void setDisplayAttributes(List<String> displayAttributes) {
+            this.displayAttributes = displayAttributes;
+        }
+
+        /**
+         * Gets the request Details-Mandatory Values.
+         *
+         * @return the request details -Mandatory scopes
+         */
+        @XmlElement(name = "MandatoryRequestClaimParams")
+        public List<MandatoryScope> getMandatoryValues() {
+            return mandatoryValues;
+        }
+
+        /**
+         * Sets the request Details-Mandatory values.
+         *
+         * @param mandatoryValues the new Mandatory Scopes
+         */
+        public void setMandatoryValues(List<MandatoryScope> mandatoryValues) {
+            this.mandatoryValues = mandatoryValues;
+        }
+    }
+
+    /**
+     * The Class MandatoryScope.
+     */
+    public static class MandatoryScope {
+
+        private String name;
+        private List<String> subset;
+
+        /**
+         * Gets name of the mandatory scopes.
+         *
+         * @return the name of the scope
+         */
+        @XmlElement(name = "Name")
+        public String getName() {
+            return name;
+        }
+
+        /**
+         * Sets Name of the mandatory attribute in request.
+         *
+         * @param name the name of the scope
+         */
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        /**
+         * Gets subValue  of the mandatory scopes.
+         *
+         * @return the subvalue of te mandatory attribute of the scope
+         */
+        @XmlElement(name = "SubValue")
+        public List<String> getSubset() {
+            return subset;
+        }
+
+        /**
+         * Sets sub value of the mandatory attribute in request.
+         *
+         * @param subset the sub value of the scope
+         */
+        public void setSubset(List<String> subset) {
+            this.subset = subset;
+        }
     }
 }
