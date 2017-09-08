@@ -189,6 +189,7 @@ public class ScopeDetailsConfig {
     public static class PremiumInfoScope {
 
         private String name;
+        private boolean isHashed;
         private List<String> claims;
         private List<String> displayAttributes;
         private List<MandatoryScope> mandatoryValues;
@@ -210,6 +211,25 @@ public class ScopeDetailsConfig {
          */
         public void setName(String scopeName) {
             this.name = scopeName;
+        }
+
+        /**
+         * Gets the is Hashed value.
+         *
+         * @return the isHashed value
+         */
+        @XmlElement(name = "IsHashed")
+        public boolean isHashed() {
+            return isHashed;
+        }
+
+        /**
+         * Sets the isHashed Value.
+         *
+         * @param hashed the new hashed value
+         */
+        public void setHashed(boolean hashed) {
+            isHashed = hashed;
         }
 
         /**
