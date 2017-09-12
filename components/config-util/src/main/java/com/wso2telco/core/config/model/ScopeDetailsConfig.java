@@ -27,18 +27,18 @@ public class ScopeDetailsConfig {
 
     @XmlElementWrapper(name = "PremiumInfoScopes")
     @XmlElement(name = "Scope")
-    protected List<PremiumInfoScope> premiumScopes;
+    protected List<Scope> premiumScopes;
 
     @XmlElementWrapper(name = "UserInfoScopes")
     @XmlElement(name = "Scope")
-    protected List<UserInfoScope> userInfoScope;
+    protected List<Scope> userInfoScope;
 
     /**
      * Gets the premium info related scopes.
      *
      * @return the scope
      */
-    public List<PremiumInfoScope> getPremiumScopes() {
+    public List<Scope> getPremiumScopes() {
         return premiumScopes;
     }
 
@@ -47,7 +47,7 @@ public class ScopeDetailsConfig {
      *
      * @param premiumScopes the new scope related details
      */
-    public void setPremiumScopes(List<PremiumInfoScope> premiumScopes) {
+    public void setPremiumScopes(List<Scope> premiumScopes) {
         this.premiumScopes = premiumScopes;
     }
 
@@ -56,7 +56,7 @@ public class ScopeDetailsConfig {
      *
      * @return the scope
      */
-    public List<UserInfoScope> getUserInfoScope() {
+    public List<Scope> getUserInfoScope() {
         return userInfoScope;
     }
 
@@ -65,128 +65,14 @@ public class ScopeDetailsConfig {
      *
      * @param userInfoScope the new scope related details
      */
-    public void setUserInfoScope(List<UserInfoScope> userInfoScope) {
+    public void setUserInfoScope(List<Scope> userInfoScope) {
         this.userInfoScope = userInfoScope;
     }
 
     /**
-     * The Class UserInfoScope.
+     * The Class Scope.
      */
-    public static class UserInfoScope {
-
-        private String name;
-        private List<String> claims;
-        private List<String> optionalValues;
-        private List<String> mandatoryValues;
-        private List<String> displayAttributes;
-
-        /**
-         * Gets the scope name.
-         *
-         * @return the scope name
-         */
-        @XmlElement(name = "Name")
-        public String getName() {
-            return name;
-        }
-
-        /**
-         * Sets the scope name.
-         *
-         * @param scopeName the new data source name
-         */
-        public void setName(String scopeName) {
-            this.name = scopeName;
-        }
-
-        /**
-         * Gets the claim values.
-         *
-         * @return the claim values list
-         */
-        @XmlElementWrapper(name = "Claims")
-        @XmlElement(name = "ClaimValue")
-        public List<String> getClaimSet() {
-            return claims;
-        }
-
-        /**
-         * Sets the claims.
-         *
-         * @param claims the new claim list
-         */
-        public void setClaimSet(List<String> claims) {
-            this.claims = claims;
-        }
-
-        /**
-         * Gets scope related display attributes.
-         *
-         * @return the display attribute list
-         */
-
-        @XmlElementWrapper(name = "AttributeToDisplay")
-        @XmlElement(name = "Attribute")
-        public List<String> getDisplayAttributes() {
-            return displayAttributes;
-        }
-
-        /**
-         * Sets the display attribute list.
-         *
-         * @param displayAttributes the new display attribute list for a specific scope.
-         */
-        public void setDisplayAttributes(List<String> displayAttributes) {
-            this.displayAttributes = displayAttributes;
-        }
-
-        /**
-         * Gets the request Details-Optional Values.
-         *
-         * @return the request details list
-         */
-
-        @XmlElementWrapper(name = "Request")
-        @XmlElement(name = "Optional")
-        public List<String> getOptionalValues() {
-            return optionalValues;
-        }
-
-        /**
-         * Gets the request Details-Mandatory Values.
-         *
-         * @return the request details -Mandatory scopes
-         */
-        @XmlElementWrapper(name = "Request")
-        @XmlElement(name = "Mandatory")
-        public List<String> getMandatoryValues() {
-            return mandatoryValues;
-        }
-
-        /**
-         * Sets the request Details-Optional values.
-         *
-         * @param optionalValues the new Optional scopes
-         */
-        public void setOptionalValues(List<String> optionalValues) {
-            this.optionalValues = optionalValues;
-        }
-
-        /**
-         * Sets the request Details-Mandatory values.
-         *
-         * @param mandatoryValues the new Mandatory Scopes
-         */
-        public void setMandatoryValues(List<String> mandatoryValues) {
-            this.mandatoryValues = mandatoryValues;
-        }
-
-    }
-
-    /**
-     * The Class PremiumInfoScope.
-     */
-    public static class PremiumInfoScope {
+    public static class Scope {
 
         private String name;
         private boolean isHashed;
