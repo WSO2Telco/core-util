@@ -485,21 +485,23 @@ public class DbUtils {
         }
     }
 
-    public static HashMap<DataSourceNames, String> getDbNames() {
+    public static Map<DataSourceNames, String> getDbNames() {
 
         if (dbNames == null) {
-            dbNames = new HashMap();
+            dbNames = new HashMap<>();
             Connection con = null;
-            for (DataSourceNames name : DataSourceNames.values()) {
-                try {
+            try {
+                for (DataSourceNames name : DataSourceNames.values()) {
                     con = DbUtils.getDbConnection(name);
-                    dbNames.put(name, con.getCatalog());
-                    con.close();
-                } catch (Exception e) {
-                    log.error("Error while getting database names", e);
-                } finally {
-                    DbUtils.closeConnection(con);
+                    if (con != null) {
+                        dbNames.put(name, con.getCatalog());
+                        closeConnection(con);
+                    }
                 }
+            } catch (Exception e) {
+                log.error("Error while getting database names", e);
+            } finally {
+                closeConnection(con);
             }
         }
 
