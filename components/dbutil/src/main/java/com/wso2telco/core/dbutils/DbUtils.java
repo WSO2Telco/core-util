@@ -490,19 +490,20 @@ public class DbUtils {
         if (dbNames == null) {
             dbNames = new HashMap<>();
             Connection con = null;
-            try {
-                for (DataSourceNames name : DataSourceNames.values()) {
+
+            for (DataSourceNames name : DataSourceNames.values()) {
+                try {
                     con = DbUtils.getDbConnection(name);
                     if (con != null) {
                         dbNames.put(name, con.getCatalog());
-                        closeConnection(con);
                     }
+                } catch (Exception e) {
+                    log.error("Error while getting database names", e);
+                } finally {
+                    closeConnection(con);
                 }
-            } catch (Exception e) {
-                log.error("Error while getting database names", e);
-            } finally {
-                closeConnection(con);
             }
+
         }
 
         return dbNames;
