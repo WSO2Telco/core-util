@@ -15,20 +15,18 @@
  ******************************************************************************/
 package com.wso2telco.core.dbutils;
 
-import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.math.BigDecimal;
+import com.wso2telco.core.dbutils.util.DataSourceNames;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.wso2telco.core.dbutils.util.DataSourceNames;
+import java.math.BigDecimal;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 // TODO: Auto-generated Javadoc
 
@@ -77,6 +75,8 @@ public class DbUtils {
     private static final String CONNECT_DB = "jdbc/CONNECT_DB";
 
     private static Map<DataSourceNames, DataSource> dbDataSourceMap;
+
+    private static HashMap<DataSourceNames,String> dbNames = null;
 
     static {
         dbDataSourceMap = new HashMap<DataSourceNames, DataSource>();
@@ -483,5 +483,26 @@ public class DbUtils {
                         e);
             }
         }
+    }
+
+    public static HashMap<DataSourceNames, String> getDbNames() {
+
+        if (dbNames == null) {
+            dbNames = new HashMap();
+            Connection con = null;
+            for (DataSourceNames name : DataSourceNames.values()) {
+                try {
+                    con = DbUtils.getDbConnection(name);
+                    dbNames.put(name, con.getCatalog());
+                    con.close();
+                } catch (Exception e) {
+                    log.error("Error while getting database names", e);
+                } finally {
+                    DbUtils.closeConnection(con);
+                }
+            }
+        }
+
+        return dbNames;
     }
 }
