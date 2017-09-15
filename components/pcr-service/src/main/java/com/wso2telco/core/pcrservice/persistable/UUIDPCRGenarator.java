@@ -63,4 +63,43 @@ public class UUIDPCRGenarator implements PCRGeneratable {
             }
         };
     }
+
+
+
+    @Override
+    public Returnable getExistingPCR(RequestDTO dto) throws PCRException {
+        try {
+            UUIDPCRService uuidpcrService = new UUIDPCRService();
+            uuid = uuidpcrService.getExistingPCR(dto);
+        } catch (Exception e) {
+            log.error("error in receiving a PCR", e);
+            throw new PCRException("error in receiving a PCR");
+        }
+
+        return new Returnable() {
+            @Override
+            public String getID() {                
+                return uuid;
+            }
+        };
+
+    }
+
+    @Override
+    public Returnable getMsisdnByPcr(String sectorId, String pcr) throws PCRException {
+        try {
+            UUIDPCRService uuidpcrService = new UUIDPCRService();
+            uuid = uuidpcrService.getMsisdnByPcr(sectorId,pcr);
+        } catch (Exception e) {
+            log.error("error in receiving a MSISDN", e);
+            throw new PCRException("error in receiving a PCR");
+        }
+
+        return new Returnable() {
+            @Override
+            public String getID() {
+                return uuid;
+            }
+        };
+    }
 }
