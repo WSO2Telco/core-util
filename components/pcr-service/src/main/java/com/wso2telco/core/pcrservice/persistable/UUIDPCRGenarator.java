@@ -34,6 +34,8 @@ public class UUIDPCRGenarator implements PCRGeneratable {
     }
 
     private static Logger log = LoggerFactory.getLogger(UUIDPCRGenarator.class);
+    public static final String ERROR_IN_RECEIVING_A_PCR = "error in receiving a PCR";
+    public static final String ERROR_IN_RECIEVING_MSISDN = "error in receiving a MSISDN";
 
     /**
      * The uuid.
@@ -72,7 +74,7 @@ public class UUIDPCRGenarator implements PCRGeneratable {
             UUIDPCRService uuidpcrService = new UUIDPCRService();
             uuid = uuidpcrService.getExistingPCR(dto);
         } catch (Exception e) {
-            log.error("error in receiving a PCR", e);
+            log.error(ERROR_IN_RECEIVING_A_PCR, e);
             throw new PCRException("error in receiving a PCR");
         }
 
@@ -91,7 +93,7 @@ public class UUIDPCRGenarator implements PCRGeneratable {
             UUIDPCRService uuidpcrService = new UUIDPCRService();
             uuid = uuidpcrService.getMsisdnByPcr(sectorId,pcr);
         } catch (Exception e) {
-            log.error("error in receiving a MSISDN", e);
+            log.error(ERROR_IN_RECIEVING_MSISDN, e);
             throw new PCRException("error in receiving a PCR");
         }
 
