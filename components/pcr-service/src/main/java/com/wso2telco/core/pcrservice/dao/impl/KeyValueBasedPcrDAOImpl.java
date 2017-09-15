@@ -24,9 +24,6 @@ import com.wso2telco.core.pcrservice.model.RequestDTO;
 import com.wso2telco.core.pcrservice.util.RedisUtil;
 
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.ScanParams;
-import redis.clients.jedis.ScanResult;
 
 // TODO: Auto-generated Javadoc
 
@@ -166,8 +163,8 @@ public class KeyValueBasedPcrDAOImpl implements PersistablePcr {
     @Override
     public String getMSISDNbyPcr(String sectorId, String pcr) throws PCRException {
 
-        String msisdn = null;
-        List<String> retreiveMsisdnList = new ArrayList();
+        String msisdn=null;
+        List<String> retreiveMsisdnList;
 
         Jedis jedis = RedisUtil.getInstance().getResource();
         retreiveMsisdnList = jedis.lrange(sectorId + ":" + pcr, 0, -1);
