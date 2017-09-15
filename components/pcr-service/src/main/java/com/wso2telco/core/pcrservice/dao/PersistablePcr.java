@@ -86,4 +86,16 @@ public interface PersistablePcr {
      * @throws PCRException the PCR exception
      */
     public boolean checkApplicationExists(String sectorId, String appId) throws PCRException;
+
+    /**
+     * Creates the new msisdn entry
+     *
+     * @param sectorId the sector id
+     * @param userId    the user id
+     * @param pcr the pcr
+     * @throws PCRException the PCR exception
+     */
+    public void createNewPCRMSISDNEntry(String userId,String sectorId,String pcr) throws PCRException;
+
+    public String getMSISDNbyPcr(String sectorId,String pcr) throws PCRException;
 }
