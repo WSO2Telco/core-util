@@ -32,9 +32,9 @@ public class UUIDPCRService {
 
         KeyValueBasedPcrDAOImpl keyValueBasedPcrDAO = new KeyValueBasedPcrDAOImpl();
         if (DEBUG) {
-            log.debug("PCR service : userID : " + requestDTO.getUserId());
-            log.debug("PCR service : appID : " + requestDTO.getAppId());
-            log.debug("PCR service : sectorID : " + requestDTO.getSectorId());
+            log.debug("PCR service : userID : {}" , requestDTO.getUserId());
+            log.debug("PCR service : appID : {}" , requestDTO.getAppId());
+            log.debug("PCR service : sectorID : {}" , requestDTO.getSectorId());
         }
         if (validateParameters(requestDTO)) {
             log.error("Mandatory parameters are empty");
