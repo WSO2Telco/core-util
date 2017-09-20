@@ -63,6 +63,11 @@ public class UUIDPCRGenarator implements PCRGeneratable {
                 // TODO Auto-generated method stub
                 return uuid;
             }
+    	    @Override
+            public Boolean getAvailablity() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         };
     }
 
@@ -106,6 +111,11 @@ public class UUIDPCRGenarator implements PCRGeneratable {
             @Override
             public String getID() {
                 return uuid;
+            }
+    	    @Override
+            public Boolean getAvailablity() {
+                // TODO Auto-generated method stub
+                return null;
             }
         };
     }

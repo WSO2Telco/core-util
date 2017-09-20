@@ -108,17 +108,6 @@ public class MobileConnectConfig {
         this.isFederatedDeployment = isFederatedDeployment;
     }
 
-    private Map<String,String> operatorDiscoveryNameMap;
-
-    @XmlElementWrapper(name = "OperatorDiscoveryNamesMapping")
-    public Map<String, String> getOperatorDiscoveryNameMap() {
-        return operatorDiscoveryNameMap;
-    }
-
-    public void setOperatorDiscoveryNameMap(Map<String, String> operatorNameMap) {
-        this.operatorDiscoveryNameMap = operatorNameMap;
-    }
-
     
     /**
      * Federated IDPs config
