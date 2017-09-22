@@ -1,8 +1,6 @@
 package com.wso2telco.core.pcrservice.persistable;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -34,9 +32,9 @@ public class UUIDPCRService {
 
         KeyValueBasedPcrDAOImpl keyValueBasedPcrDAO = new KeyValueBasedPcrDAOImpl();
         if (DEBUG) {
-            log.debug("PCR service : userID : " + requestDTO.getUserId());
-            log.debug("PCR service : appID : " + requestDTO.getAppId());
-            log.debug("PCR service : sectorID : " + requestDTO.getSectorId());
+            log.debug("PCR service : userID : {}" , requestDTO.getUserId());
+            log.debug("PCR service : appID : {}" , requestDTO.getAppId());
+            log.debug("PCR service : sectorID : {}" , requestDTO.getSectorId());
         }
         if (validateParameters(requestDTO)) {
             log.error("Mandatory parameters are empty");
@@ -66,6 +64,8 @@ public class UUIDPCRService {
                 log.debug("PCR service : No Existing app for the given UserID, SectorID");
                 updateServiceProviderMap(requestDTO.getAppId());
                 uuid = createAndPersistNewPcr(requestDTO);
+                updatePcrMsisdnMap(requestDTO,uuid);
+
             } else {
                 // if there is/are application/s for the given userId, sector id
                 // combination
@@ -100,13 +100,16 @@ public class UUIDPCRService {
                                 requestDTO.getSectorId());
                         uuid = keyValueBasedPcrDAO.getExistingPCR(newRequestDTO);
                         createAndPersistNewPcr(requestDTO, uuid);
+
                     } else {
                         uuid = createAndPersistNewPcr(requestDTO);
+                        updatePcrMsisdnMap(requestDTO,uuid);
                     }
                 } else {
                     // if the app is not related return a new pcr and
                     // persist
                     uuid = createAndPersistNewPcr(requestDTO);
+                    updatePcrMsisdnMap(requestDTO,uuid);
                 }
 
             }
@@ -137,6 +140,18 @@ public class UUIDPCRService {
         }
     }
 
+    private void updatePcrMsisdnMap(RequestDTO requestDTO, String pcrValue) throws PCRException {
+        if (DEBUG) log.debug("Updating PCR MSISDN Map");
+
+        String userId= requestDTO.getUserId();
+        String sectorId = requestDTO.getSectorId();
+        String pcr = pcrValue;
+
+            KeyValueBasedPcrDAOImpl keyValueBasedPcrDAO = new KeyValueBasedPcrDAOImpl();
+            keyValueBasedPcrDAO.createNewPCRMSISDNEntry(userId,sectorId,pcr);
+
+    }
+
     private String createAndPersistNewPcr(RequestDTO requestDTO) throws PCRException {
         KeyValueBasedPcrDAOImpl keyValueBasedPcrDAO = new KeyValueBasedPcrDAOImpl();
         UUID uuidPcr = UUID.randomUUID();
@@ -154,4 +169,13 @@ public class UUIDPCRService {
                 || dto.getUserId().equals("") || dto.getAppId().equals("") || dto.getSectorId().equals("");
     }
 
+    public String getExistingPCR(RequestDTO requestDTO) throws PCRException {
+        KeyValueBasedPcrDAOImpl keyValueBasedPcrDAO = new KeyValueBasedPcrDAOImpl();
+        return keyValueBasedPcrDAO.getExistingPCR(requestDTO);
+    }
+
+    public String getMsisdnByPcr(String sectorId, String pcr) throws PCRException {
+        KeyValueBasedPcrDAOImpl keyValueBasedPcrDAO = new KeyValueBasedPcrDAOImpl();
+        return keyValueBasedPcrDAO.getMSISDNbyPcr(sectorId, pcr);
+    }
 }
