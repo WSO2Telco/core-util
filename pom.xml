@@ -42,8 +42,9 @@
         <module>components/pcr-service</module>
         <module>components/config-util</module>
         <module>components/redis-client</module>
-        <module>components/sp-config-util</module>        
-	<module>features</module>
+        <module>components/sp-config-util</module>   
+        <module>components/auth-filter</module>     
+	    <module>features</module>
     </modules>
 
     <dependencyManagement>
@@ -105,6 +106,12 @@
                 <groupId>org.wso2.carbon.identity</groupId>
                 <artifactId>org.wso2.carbon.identity.application.authentication.framework</artifactId>
                 <version>${identity.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.apimgt</groupId>
+                <artifactId>org.wso2.carbon.apimgt.impl</artifactId>
+                <version>${org.wso2.carbon.apimgt.version}</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -274,6 +281,7 @@
         <identity.framework.version>5.2.2</identity.framework.version>
         <redis.clients.version>2.8.0</redis.clients.version>
         <org.apache.commons.version>2.4.2</org.apache.commons.version>
+        <org.wso2.carbon.apimgt.version>6.0.4</org.wso2.carbon.apimgt.version>
     </properties>
 
     <profiles>
