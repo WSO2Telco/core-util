@@ -93,6 +93,8 @@ public class MobileConnectConfig {
 
     private boolean isFederatedDeployment;
 
+    private VoiceConfig voiceConfig;
+
     public boolean isFederatedDeployment() {
         return isFederatedDeployment;
     }
@@ -102,7 +104,15 @@ public class MobileConnectConfig {
         this.isFederatedDeployment = isFederatedDeployment;
     }
 
-    
+    @XmlElement(name = "VOICE")
+    public VoiceConfig getVoiceConfig() {
+        return voiceConfig;
+    }
+
+    public void setVoiceConfig(VoiceConfig voiceConfig) {
+        this.voiceConfig = voiceConfig;
+    }
+
     /**
      * Federated IDPs config
      */
@@ -2722,5 +2732,33 @@ public class MobileConnectConfig {
         public void setMobileNetworkOperatorBasedSelectionEnabled(String mobileNetworkOperatorBasedSelectionEnabled) {
             this.mobileNetworkOperatorBasedSelectionEnabled = mobileNetworkOperatorBasedSelectionEnabled;
         }
+    }
+
+    public static class VoiceConfig {
+        private String userEnrollmentCheckEndpoint;
+
+        private String verifyUserEndpoint;
+
+        @XmlElement(name = "UserEnrollmentCheckEndpoint")
+        public String getUserEnrollmentCheckEndpoint() {
+            return userEnrollmentCheckEndpoint;
+        }
+
+        public void setUserEnrollmentCheckEndpoint(String userEnrollmentCheckEndpoint) {
+            this.userEnrollmentCheckEndpoint = userEnrollmentCheckEndpoint;
+        }
+
+        @XmlElement(name = "VerifyUserEndpoint")
+        public String getVerifyUserEndpoint() {
+            return verifyUserEndpoint;
+        }
+
+        public void setVerifyUserEndpoint(String verifyUserEndpoint) {
+            this.verifyUserEndpoint = verifyUserEndpoint;
+        }
+
+
+
+
     }
 }
