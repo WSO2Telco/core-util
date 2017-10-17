@@ -2735,30 +2735,50 @@ public class MobileConnectConfig {
     }
 
     public static class VoiceConfig {
-        private String userEnrollmentCheckEndpoint;
 
-        private String verifyUserEndpoint;
+        private String userStatusCheckEndpoint;
+
+        private String userAuthenticationEndpoint;
+
+        private String userOnboardEndpoint;
+
+        private String serviceId;
+
 
         @XmlElement(name = "UserEnrollmentCheckEndpoint")
-        public String getUserEnrollmentCheckEndpoint() {
-            return userEnrollmentCheckEndpoint;
+        public String getUserStatusCheckEndpoint() {
+            return userStatusCheckEndpoint;
         }
 
-        public void setUserEnrollmentCheckEndpoint(String userEnrollmentCheckEndpoint) {
-            this.userEnrollmentCheckEndpoint = userEnrollmentCheckEndpoint;
+        public void setUserStatusCheckEndpoint(String userStatusCheckEndpoint) {
+            this.userStatusCheckEndpoint = userStatusCheckEndpoint;
         }
 
-        @XmlElement(name = "VerifyUserEndpoint")
-        public String getVerifyUserEndpoint() {
-            return verifyUserEndpoint;
+        @XmlElement(name = "UserAuthenticationEndpoint")
+        public String getUserAuthenticationEndpoint() {
+            return userAuthenticationEndpoint;
         }
 
-        public void setVerifyUserEndpoint(String verifyUserEndpoint) {
-            this.verifyUserEndpoint = verifyUserEndpoint;
+        public void setUserAuthenticationEndpoint(String userAuthenticationEndpoint) {
+            this.userAuthenticationEndpoint = userAuthenticationEndpoint;
         }
 
+        @XmlElement(name = "UserOnboardEndpoint")
+        public String getUserOnboardEndpoint() {
+            return userOnboardEndpoint;
+        }
 
+        public void setUserOnboardEndpoint(String userOnboardEndpoint) {
+            this.userOnboardEndpoint = userOnboardEndpoint;
+        }
 
+        @XmlElement(name = "ServiceId")
+        public String getServiceId() {
+            return serviceId;
+        }
 
+        public void setServiceId(String serviceId) {
+            this.serviceId = serviceId;
+        }
     }
 }
