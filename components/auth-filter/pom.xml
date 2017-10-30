@@ -39,7 +39,7 @@
 						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Name>${project.artifactId}</Bundle-Name>
 						<Private-Package>
-							com.wso2telco.core.authfilter.authentication,com.wso2telco.core.authfilter.authorization
+							com.wso2telco.core.authfilter.impl,com.wso2telco.core.authfilter.authentication,com.wso2telco.core.authfilter.authorization,com.wso2telco.core.authfilter.util
 						</Private-Package>
 						<Export-Package>
 							com.wso2telco.core.authfilter

@@ -26,7 +26,6 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import com.wso2telco.core.authfilter.authentication.BasicAuthenticator;
 import com.wso2telco.core.authfilter.authorization.UserAuthorizationValidator;
 import com.wso2telco.core.authfilter.util.AuthFilterParam;

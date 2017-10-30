@@ -15,28 +15,28 @@
  ******************************************************************************/
 package com.wso2telco.core.authfilter;
 
-import java.io.IOException;
+import javax.ws.rs.container.ContainerRequestFilter;
 import java.lang.reflect.Method;
 import java.util.List;
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.Provider;
 import com.wso2telco.core.authfilter.impl.AuthenticationFilter;
 import com.wso2telco.core.authfilter.impl.AuthenticationFilterFactory;
 import com.wso2telco.core.authfilter.util.AuthFilterParam;
 
+@Provider
 public class Authentication implements ContainerRequestFilter {
 
 	@Context
 	private ResourceInfo resourceInformation;
 
-	@Override
-	public void filter(ContainerRequestContext requestContext) throws IOException {
+	public void filter(ContainerRequestContext requestContext) {
 
 		Response accessDenied = Response.status(Response.Status.UNAUTHORIZED).entity("You cannot access this resource")
 				.build();
@@ -59,7 +59,7 @@ public class Authentication implements ContainerRequestFilter {
 			final MultivaluedMap<String, String> headers = requestContext.getHeaders();
 
 			// get authorization header
-			final List<String> authorization = headers.get(AuthFilterParam.AUTHORIZATION_PROPERTY.getDeclaringClass());
+			final List<String> authorization = headers.get(AuthFilterParam.AUTHORIZATION_PROPERTY.getTObject());
 
 			// deny access if there is no authorization information
 			if (authorization == null || authorization.isEmpty()) {
