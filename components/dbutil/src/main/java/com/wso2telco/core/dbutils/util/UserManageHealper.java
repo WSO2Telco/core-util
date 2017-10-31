@@ -10,7 +10,7 @@ import com.wso2telco.core.dbutils.exception.BusinessException;
 import com.wso2telco.core.dbutils.exception.GenaralError;
 
 public class UserManageHealper {
-	Log LOG = LogFactory.getLog(UserManageHealper.class);
+	Log log = LogFactory.getLog(UserManageHealper.class);
 	UserManageHealper() {
 
 	}
@@ -36,45 +36,45 @@ public class UserManageHealper {
 		 * validate null
 		 */
 		if(authHeader==null) {
-			LOG.debug("Auth header is null : "+authHeader);
+			log.debug("Auth header is null : "+authHeader);
 			throw new BusinessException(GenaralError.AUTH_HEADER_NULL);
 		}
 		/**
 		 * validate auth Header string this need to formated as Basic encodeBase64(userName:password)
 		 */
 		if(!(authHeader.contains("Basic")||authHeader.contains("basic"))) { //if Basic missing in the string
-			LOG.debug("keyword Basic is missing in the string : "+authHeader);
+			log.debug("keyword Basic is missing in the string : "+authHeader);
 			throw new BusinessException(GenaralError.INVALID_AUTH_HEADER);
 		}
 		if(authHeader.length()<=5) { //if encodeBase64(userName:password) missing in the string
-			LOG.debug("encodeBase64(userName:password) is missing in the string : "+authHeader);
+			log.debug("encodeBase64(userName:password) is missing in the string : "+authHeader);
 			throw new BusinessException(GenaralError.INVALID_AUTH_HEADER);
 		}
 		
-		final String  _credential= authHeader.substring(5,authHeader.length()-1).trim();
+		final String  credential= authHeader.substring(5,authHeader.length()-1).trim();
 			
 		try {
 			/**
 			 * decode the credential and convert into string
 			 */
-			final String _user_Pwd = new String(  Base64.getDecoder().decode(_credential), "utf-8");
-			String [] _userPwdArry= _user_Pwd.split(":");
+			final String userPwd = new String(  Base64.getDecoder().decode(credential), "utf-8");
+			String [] userPwdArry= userPwd.split(":");
 			/**
 			 * Split the username:password by :
 			 */
-			if(_userPwdArry.length==2) {//get the user name from the array as first index
-				return _userPwdArry[0];
+			if(userPwdArry.length==2) {//get the user name from the array as first index
+				return userPwdArry[0];
 			}else {
 				
 				/**
 				 *  if length is less than two, that implies error on format
 				 */
 				
-				LOG.debug("Invalid format of userName:password  in the string : "+authHeader);
+				log.debug("Invalid format of userName:password  in the string : "+authHeader);
 				throw new BusinessException(GenaralError.INVALID_AUTH_HEADER);
 			}
 		} catch (UnsupportedEncodingException e) {
-			LOG.error("invalid Auth header format" +authHeader,e);
+			log.error("invalid Auth header format" +authHeader,e);
 			throw new BusinessException(GenaralError.INVALID_AUTH_HEADER);
 		}
 	}
