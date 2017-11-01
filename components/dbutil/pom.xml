@@ -8,7 +8,8 @@
 	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
 	the specific language governing permissions and limitations under the License. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<groupId>com.wso2telco.core</groupId>
 		<artifactId>core-parent</artifactId>
@@ -25,6 +26,26 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-common</artifactId>
+			<version>2.17</version>
+		</dependency>
+		<dependency>
 			<groupId>org.wso2.carbon</groupId>
 			<artifactId>javax.cache.wso2</artifactId>
 		</dependency>
@@ -33,68 +54,68 @@
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<version>1.0.1.Final</version>
 		</dependency>
-		                <dependency>
-                       <groupId>org.hibernate</groupId>
-                       <artifactId>hibernate-core</artifactId>
-                       <version>5.2.1.Final</version>
-               </dependency>
-               <dependency>
-                       <groupId>mysql</groupId>
-                       <artifactId>mysql-connector-java</artifactId>
-                       <version>5.1.9</version>
-               </dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.2.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.9</version>
+		</dependency>
 
-               <!-- Hibernate core -->
-               <dependency>
-                       <groupId>hibernate</groupId>
-                       <artifactId>hibernate3</artifactId>
-                       <version>3.2.3.GA</version>
-               </dependency>
+		<!-- Hibernate core -->
+		<dependency>
+			<groupId>hibernate</groupId>
+			<artifactId>hibernate3</artifactId>
+			<version>3.2.3.GA</version>
+		</dependency>
 
-               <!-- Hibernate annotation -->
-               <dependency>
-                       <groupId>hibernate-annotations</groupId>
-                       <artifactId>hibernate-annotations</artifactId>
-                       <version>3.3.0.GA</version>
-               </dependency>
+		<!-- Hibernate annotation -->
+		<dependency>
+			<groupId>hibernate-annotations</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>3.3.0.GA</version>
+		</dependency>
 
-               <dependency>
-                       <groupId>hibernate-commons-annotations</groupId>
-                       <artifactId>hibernate-commons-annotations</artifactId>
-                       <version>3.0.0.GA</version>
-               </dependency>
+		<dependency>
+			<groupId>hibernate-commons-annotations</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>3.0.0.GA</version>
+		</dependency>
 
-               <!-- Hibernate library dependecy start -->
-               <dependency>
-                       <groupId>dom4j</groupId>
-                       <artifactId>dom4j</artifactId>
-                       <version>1.6.1</version>
-               </dependency>
+		<!-- Hibernate library dependecy start -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
 
-               <dependency>
-                       <groupId>commons-logging</groupId>
-                       <artifactId>commons-logging</artifactId>
-                       <version>1.1.1</version>
-               </dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
 
-               <dependency>
-                       <groupId>commons-collections</groupId>
-                       <artifactId>commons-collections</artifactId>
-                       <version>3.2.1</version>
-               </dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
 
-               <dependency>
-                       <groupId>cglib</groupId>
-                       <artifactId>cglib</artifactId>
-                       <version>2.2</version>
-               </dependency>
-               <!-- Hibernate library dependecy end -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<!-- Hibernate library dependecy end -->
 
-               <dependency>
-                       <groupId>javax.transaction</groupId>
-                       <artifactId>jta</artifactId>
-                       <version>1.1</version>
-               </dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
 
 	</dependencies>
 
