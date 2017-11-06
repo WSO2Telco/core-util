@@ -21,6 +21,7 @@ import org.apache.commons.logging.LogFactory;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NameNotFoundException;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
@@ -496,14 +497,14 @@ public class DbUtils {
                     con = DbUtils.getDbConnection(name);
                     if (con != null) {
                         dbNames.put(name, con.getCatalog());
+                        con.close();
                     }
+                } catch (NameNotFoundException e) {
+                    log.error("Failed to get database name for " + name);
                 } catch (Exception e) {
                     log.error("Error while getting database names", e);
-                } finally {
-                    closeConnection(con);
                 }
             }
-
         }
 
         return dbNames;
