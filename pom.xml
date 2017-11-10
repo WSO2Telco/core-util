@@ -265,7 +265,7 @@
     </distributionManagement>
 
     <properties>
-        <carbon.p2.plugin.version>1.5.3</carbon.p2.plugin.version>
+        <carbon.p2.plugin.version>1.5.8</carbon.p2.plugin.version>
         <maven.checkstyle.plugin.version>2.17</maven.checkstyle.plugin.version>
         <commons.logging>1.2</commons.logging>
         <maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
