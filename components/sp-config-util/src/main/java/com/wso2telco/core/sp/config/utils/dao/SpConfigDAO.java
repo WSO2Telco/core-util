@@ -48,5 +48,7 @@ public interface SpConfigDAO {
 
     String getSMSRegistrationMessage(String clientId);
 
+    String getSMSOTPLoginMessage(String clientId);
+
     Map<String, String> getWelcomeSMSConfig(String clientId) throws DataAccessException;
 }

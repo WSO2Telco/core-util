@@ -18,7 +18,8 @@ package com.wso2telco.core.dbutils.exception;
 public enum ServiceError implements ThrowableError {
     SERVICE_ERROR_OCCURED("SVC0001", "A service error occurred. Error code is %1"),
     INVALID_INPUT_VALUE("SVC0002", "Invalid input value for message part %1"),
-    INVALID_ADDRESS("SVC0004", "No valid addresses provided in message part %1");
+    INVALID_ADDRESS("SVC0004", "No valid addresses provided in message part %1"),
+    NO_RESOURCES("SVC1000","No resources");
 
     private String code;
     private String message;

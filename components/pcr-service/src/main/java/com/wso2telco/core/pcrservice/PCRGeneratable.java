@@ -33,4 +33,22 @@ public interface PCRGeneratable {
      * @throws PCRException the PCR exception
      */
     Returnable getPCR(RequestDTO dto) throws PCRException;
+
+    /**
+     * Gets the pcr.
+     *
+     * @param dto the dto
+     * @return the pcr
+     * @throws PCRException the PCR exception
+     */
+    Returnable getExistingPCR(RequestDTO dto) throws PCRException;
+
+    /**
+     * Gets the msisdn.
+     *
+     * @param sectorId the sectorId
+     * @return the msisdn
+     * @throws PCRException the PCR exception
+     */
+    Returnable getMsisdnByPcr(String sectorId, String pcr) throws PCRException;
 }

@@ -19,11 +19,13 @@ import com.wso2telco.core.config.model.AuthenticationLevels;
 import com.wso2telco.core.config.model.MobileConnectConfig;
 
 import java.util.Map;
+import java.util.Set;
 
 public class DataHolder {
     private AuthenticationLevels authenticationLevels;
     private MobileConnectConfig mobileConnectConfig;
     private Map<String, MIFEAuthentication> authenticationLevelMap = null;
+    private Map<String, Set<String>> authenticatorMNOMap = null;
     private static DataHolder thisInstance = new DataHolder();
 
     /**
@@ -81,4 +83,11 @@ public class DataHolder {
         this.authenticationLevelMap = authenticationLevelMap;
     }
 
+    public Map<String, Set<String>> getAuthenticatorMNOMap() {
+        return authenticatorMNOMap;
+    }
+
+    public void setAuthenticatorMNOMap(Map<String, Set<String>> authenticatorMNOMap) {
+        this.authenticatorMNOMap = authenticatorMNOMap;
+    }
 }

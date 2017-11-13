@@ -8,7 +8,8 @@ public class LoginHintFormatDetails {
     public enum loginHintFormatTypes {
         PLAINTEXT,
         ENCRYPTED,
-        MSISDN
+        MSISDN,
+        PCR
     }
 
     public void setFormatType(loginHintFormatTypes formatType) {

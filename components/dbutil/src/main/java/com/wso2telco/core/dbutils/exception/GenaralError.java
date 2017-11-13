@@ -4,7 +4,10 @@ import com.wso2telco.core.dbutils.exception.ThrowableError;
 
 public enum GenaralError implements ThrowableError {
 
-    UNDEFINED("CORE0001", "Undefined Error"), INTERNAL_SERVER_ERROR("CORE0299", "Internal Server Error");
+    UNDEFINED("CORE0001", "Undefined Error"), 
+    INTERNAL_SERVER_ERROR("CORE0299", "Internal Server Error"),
+    AUTH_HEADER_NULL("CORE0300", "Auth Header is null"),
+    INVALID_AUTH_HEADER("CORE0301", "Auth Header needs to be Basic encodeBase64(username:password)");
 
     private String code;
     private String desc;

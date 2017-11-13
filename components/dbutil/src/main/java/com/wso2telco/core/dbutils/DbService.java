@@ -16,17 +16,14 @@
 package com.wso2telco.core.dbutils;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.*;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
 import com.wso2telco.core.dbutils.dao.SpendLimitDAO;
+import com.wso2telco.core.dbutils.model.FederatedIdpMappingDTO;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -1145,4 +1142,230 @@ public class DbService {
         }
         return paidTime;
     }
+
+    /**
+     * Insert authorization code mappings between local & external
+     * 
+     * @param operator is the external IDP
+     * @param fidpAuthCode FIDP generated code
+     */
+
+    public void insertFederatedAuthCodeMappings(String operator, String fidpAuthCode) throws Exception {
+
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        try {
+            con = DbUtils.getConnectDbConnection();
+            if (con == null) {
+                throw new Exception("Connection not found.");
+            }
+
+            String query = "INSERT INTO federated_idp_mappings (operator,federated_authcode) VALUES (?,?) ";
+
+            ps = con.prepareStatement(query.toString());
+            ps.setString(1, operator);
+            ps.setString(2, fidpAuthCode);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            log.error("Database operation error while inserting auth code in to federated_idp_mappings ", e);
+            DbUtils.handleException("Error in inserting federated auth code mappings : " + e.getMessage(), e);
+        } finally {
+            DbUtils.closeAllConnections(ps, con, null);
+        }
+    }
+
+    /**
+     * Read authorization code mappings between local & external
+     * 
+     * @param fidpAuthCode locally generated code
+     * @return the object for persisted authcode mapping
+     * @throws Exception if an error occurs during this operation
+     */
+    public FederatedIdpMappingDTO retrieveFederatedAuthCodeMappings(String fidpAuthCode) throws Exception {
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        FederatedIdpMappingDTO fidpMapping = new FederatedIdpMappingDTO();
+
+        try {
+            con = DbUtils.getConnectDbConnection();
+            if (con == null) {
+                throw new Exception("Connection not found");
+            }
+
+            String sql = "select operator,federated_authcode from federated_idp_mappings where federated_authcode=? ";
+
+            ps = con.prepareStatement(sql);
+            ps.setString(1, fidpAuthCode);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                fidpMapping.setOperator(rs.getString("operator"));
+                fidpMapping.setFidpAuthCode(rs.getString("federated_authcode"));
+            }
+
+        } catch (SQLException e) {
+            log.error("Database operation error while retrieving federated auth code from federated_idp_mappings ", e);
+            DbUtils.handleException("Error in retrieving federated auth code mappings : " + e.getMessage(), e);
+
+        } finally {
+            DbUtils.closeAllConnections(ps, con, rs);
+        }
+        return fidpMapping;
+
+    }
+
+    /**
+     * Insert authorization token mappings between local & external
+     * 
+     * @param migAuthToken locally generated token
+     * @param fidpAuthCode locally generated code
+     * @param fidpAuthToken FIDP generated token
+     * @throws Exception if an error occurs during this operation
+     */
+    public void insertFederatedTokenMappings(String migAuthToken, String fidpAuthCode, String fidpAuthToken)
+            throws Exception {
+
+        Connection con = null;
+        PreparedStatement ps = null;
+
+        try {
+            con = DbUtils.getConnectDbConnection();
+            if (con == null) {
+                throw new Exception("Connection not found");
+            }
+
+            String query = "UPDATE federated_idp_mappings SET accesstoken = ?, federated_accesstoken = ? WHERE federated_authcode = ? ";
+
+            ps = con.prepareStatement(query.toString());
+            ps.setString(1, migAuthToken);
+            ps.setString(2, fidpAuthToken);
+            ps.setString(3, fidpAuthCode);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            log.error("Database operation error in updating federated access token to federated_idp_mappings", e);
+            DbUtils.handleException("Error in inserting federated access token mappings : " + e.getMessage(), e);
+        } finally {
+            DbUtils.closeAllConnections(ps, con, null);
+        }
+
+    }
+
+    /**
+     * Read authorization token mappings between local & external
+     * 
+     * @param migAuthToken FIDP generated token
+     * @return the object for persisted access token mapping
+     * @throws Exception
+     */
+    public FederatedIdpMappingDTO retrieveFederatedTokenMappings(String migAuthToken) throws Exception {
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        FederatedIdpMappingDTO fidpMapping = new FederatedIdpMappingDTO();
+
+        try {
+            con = DbUtils.getConnectDbConnection();
+            if (con == null) {
+                throw new Exception("Connection not found");
+            }
+
+            String sql = "select operator,federated_accesstoken from federated_idp_mappings "
+                    + "where accesstoken=? order by updated_time desc limit 1";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, migAuthToken);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                fidpMapping.setOperator(rs.getString("operator"));
+                fidpMapping.setFidpAccessToken(rs.getString("federated_accesstoken"));
+            }
+
+        } catch (SQLException e) {
+            log.error("Database operation error while retrieving federated access token from federated_idp_mappings ",
+                    e);
+            DbUtils.handleException("Error in retrieving federated access token mappings : " + e.getMessage(), e);
+        } finally {
+            DbUtils.closeAllConnections(ps, con, rs);
+        }
+        return fidpMapping;
+
+    }
+
+    public FederatedIdpMappingDTO checkIfExistingFederatedToken(String fidpAuthToken) throws Exception {
+
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        FederatedIdpMappingDTO fidpMapping = new FederatedIdpMappingDTO();
+
+        try {
+            con = DbUtils.getConnectDbConnection();
+            if (con == null) {
+                throw new Exception("Connection not found");
+            }
+
+            String sql = "select operator,accesstoken from federated_idp_mappings "
+                    + "where federated_accesstoken =? order by updated_time desc limit 1";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, fidpAuthToken);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                fidpMapping.setOperator(rs.getString("operator"));
+                fidpMapping.setAccessToken(rs.getString("accesstoken"));
+            }
+
+        } catch (SQLException e) {
+            log.error("Database operation error while retrieving federated access token from federated_idp_mappings ",
+                    e);
+            DbUtils.handleException("Error in retrieving federated access token mappings : " + e.getMessage(), e);
+        } finally {
+            DbUtils.closeAllConnections(ps, con, rs);
+        }
+        return fidpMapping;
+
+    }
+
+    public static  Map<String, Set<String>> getAllowedAuthenticatorSetForMNO()
+            throws Exception {
+
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT * from allowed_authenticators_mno";
+        Map<String, Set<String>> authenticatorSet = new HashMap<String, Set<String>>();
+        try {
+            connection = DbUtils.getConnectDbConnection();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String mobile_network_operator=rs.getString("mobile_network_operator");
+                String allowed_authenticator=rs.getString("allowed_authenticator");
+                Set<String> MNOAuth = new HashSet<>();
+                if(authenticatorSet.containsKey(mobile_network_operator)){
+                    MNOAuth=authenticatorSet.remove(mobile_network_operator);
+                    MNOAuth.add(allowed_authenticator);
+                }else{
+                    MNOAuth.add(allowed_authenticator);
+                }
+                authenticatorSet.put(mobile_network_operator,MNOAuth);
+            }
+        } catch (SQLException e) {
+            log.error("Database operation error while retrieving allowed authenticators for MNOs ",
+                    e);
+            DbUtils.handleException("Error in retrieving allowed authenticators for MNOs mappings : " + e.getMessage(), e);
+        } finally {
+            DbUtils.closeAllConnections(ps, connection, rs);
+        }
+        return authenticatorSet;
+    }
+
 }
