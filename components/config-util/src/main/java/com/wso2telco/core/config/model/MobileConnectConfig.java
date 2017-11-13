@@ -95,6 +95,17 @@ public class MobileConnectConfig {
 
     private VoiceConfig voiceConfig;
 
+    private String wso2APIMDataSourceName;
+
+    @XmlElement(name = "WSO2APIMDataSourceName")
+    public String getWso2APIMDataSourceName() {
+        return wso2APIMDataSourceName;
+    }
+
+    public void setWso2APIMDataSourceName(String wso2APIMDataSourceName) {
+        this.wso2APIMDataSourceName = wso2APIMDataSourceName;
+    }
+
     public boolean isFederatedDeployment() {
         return isFederatedDeployment;
     }
