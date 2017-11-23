@@ -94,6 +94,8 @@ public class BasicAuthenticationFilter implements AuthenticationFilter {
 	@Override
 	public boolean isAuthorized(ContainerRequestContext requestContext, Method method) {
 
+		requestContext.getHeaders().add("user-name", userName);
+		
 		// validate user authorization by using user roles
 		if (method.isAnnotationPresent(RolesAllowed.class)) {
 
