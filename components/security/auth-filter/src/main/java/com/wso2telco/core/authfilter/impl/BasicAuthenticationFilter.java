@@ -29,6 +29,7 @@ import org.apache.commons.logging.LogFactory;
 import com.wso2telco.core.authfilter.authentication.BasicAuthenticator;
 import com.wso2telco.core.authfilter.authorization.UserAuthorizationValidator;
 import com.wso2telco.core.authfilter.util.AuthFilterParam;
+import com.wso2telco.core.authfilter.util.HeaderParam;
 
 public class BasicAuthenticationFilter implements AuthenticationFilter {
 
@@ -94,7 +95,7 @@ public class BasicAuthenticationFilter implements AuthenticationFilter {
 	@Override
 	public boolean isAuthorized(ContainerRequestContext requestContext, Method method) {
 
-		requestContext.getHeaders().add("user-name", userName);
+		requestContext.getHeaders().add(HeaderParam.USER_NAME.getTObject(), userName);
 		
 		// validate user authorization by using user roles
 		if (method.isAnnotationPresent(RolesAllowed.class)) {
