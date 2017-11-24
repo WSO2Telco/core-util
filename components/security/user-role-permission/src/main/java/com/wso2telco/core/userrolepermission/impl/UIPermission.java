@@ -16,6 +16,7 @@
 package com.wso2telco.core.userrolepermission.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -60,7 +61,7 @@ public class UIPermission implements UserRolePermission {
 		} catch (Exception e) {
 
 			log.error("unable to retrieve ui permissions : ", e);
-			return uiPermissionList;
+			Collections.emptyList();
 		}
 
 		return uiPermissionList;
