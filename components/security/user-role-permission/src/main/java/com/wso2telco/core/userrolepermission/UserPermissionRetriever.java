@@ -69,7 +69,7 @@ public class UserPermissionRetriever {
 				UIPermissionNode rolePermissions = userAdminStub.getRolePermissions(roleName);
 				
 				UserRolePermission userRolePermission = userRolePermissionFactory
-						.loadUserRolePermission(userRolePermissionType);
+						.getUserRolePermissionExecuter(userRolePermissionType);
 				userRolePermissionList = userRolePermission.getUserRolePermissions(rolePermissions);
 				
 				if(!userRolePermissionList.isEmpty()){
