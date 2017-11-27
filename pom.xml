@@ -43,7 +43,8 @@
         <module>components/config-util</module>
         <module>components/redis-client</module>
         <module>components/sp-config-util</module>   
-        <module>components/auth-filter</module>     
+        <module>components/security/auth-filter</module>
+        <module>components/security/user-role-permission</module>
 	    <module>features</module>
     </modules>
 
@@ -112,6 +113,12 @@
                 <artifactId>org.wso2.carbon.apimgt.impl</artifactId>
                 <version>${org.wso2.carbon.apimgt.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+              <groupId>org.wso2.carbon.apimgt</groupId>
+              <artifactId>org.wso2.carbon.apimgt.hostobjects</artifactId>
+              <version>${org.wso2.carbon.apimgt.version}</version>
+              <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

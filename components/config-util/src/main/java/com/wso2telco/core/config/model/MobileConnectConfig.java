@@ -93,6 +93,19 @@ public class MobileConnectConfig {
 
     private boolean isFederatedDeployment;
 
+    private VoiceConfig voiceConfig;
+
+    private String wso2APIMDataSourceName;
+
+    @XmlElement(name = "WSO2APIMDataSourceName")
+    public String getWso2APIMDataSourceName() {
+        return wso2APIMDataSourceName;
+    }
+
+    public void setWso2APIMDataSourceName(String wso2APIMDataSourceName) {
+        this.wso2APIMDataSourceName = wso2APIMDataSourceName;
+    }
+
     public boolean isFederatedDeployment() {
         return isFederatedDeployment;
     }
@@ -102,7 +115,15 @@ public class MobileConnectConfig {
         this.isFederatedDeployment = isFederatedDeployment;
     }
 
-    
+    @XmlElement(name = "VOICE")
+    public VoiceConfig getVoiceConfig() {
+        return voiceConfig;
+    }
+
+    public void setVoiceConfig(VoiceConfig voiceConfig) {
+        this.voiceConfig = voiceConfig;
+    }
+
     /**
      * Federated IDPs config
      */
@@ -2721,6 +2742,54 @@ public class MobileConnectConfig {
 
         public void setMobileNetworkOperatorBasedSelectionEnabled(String mobileNetworkOperatorBasedSelectionEnabled) {
             this.mobileNetworkOperatorBasedSelectionEnabled = mobileNetworkOperatorBasedSelectionEnabled;
+        }
+    }
+
+    public static class VoiceConfig {
+
+        private String userStatusCheckEndpoint;
+
+        private String userAuthenticationEndpoint;
+
+        private String userOnboardEndpoint;
+
+        private String serviceId;
+
+
+        @XmlElement(name = "UserEnrollmentCheckEndpoint")
+        public String getUserStatusCheckEndpoint() {
+            return userStatusCheckEndpoint;
+        }
+
+        public void setUserStatusCheckEndpoint(String userStatusCheckEndpoint) {
+            this.userStatusCheckEndpoint = userStatusCheckEndpoint;
+        }
+
+        @XmlElement(name = "UserAuthenticationEndpoint")
+        public String getUserAuthenticationEndpoint() {
+            return userAuthenticationEndpoint;
+        }
+
+        public void setUserAuthenticationEndpoint(String userAuthenticationEndpoint) {
+            this.userAuthenticationEndpoint = userAuthenticationEndpoint;
+        }
+
+        @XmlElement(name = "UserOnboardEndpoint")
+        public String getUserOnboardEndpoint() {
+            return userOnboardEndpoint;
+        }
+
+        public void setUserOnboardEndpoint(String userOnboardEndpoint) {
+            this.userOnboardEndpoint = userOnboardEndpoint;
+        }
+
+        @XmlElement(name = "ServiceId")
+        public String getServiceId() {
+            return serviceId;
+        }
+
+        public void setServiceId(String serviceId) {
+            this.serviceId = serviceId;
         }
     }
 }
