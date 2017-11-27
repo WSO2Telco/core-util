@@ -19,7 +19,7 @@ import com.wso2telco.core.userrolepermission.util.UserRolePermissionType;
 
 public class UserRolePermissionFactory {
 
-	public UserRolePermission loadUserRolePermission(UserRolePermissionType userRolePermissionType) {
+	public UserRolePermission getUserRolePermissionExecuter(UserRolePermissionType userRolePermissionType) {
 
 		UserRolePermission userRolePermission = null;
 
