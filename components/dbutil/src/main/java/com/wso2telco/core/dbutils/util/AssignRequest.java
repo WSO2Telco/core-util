@@ -16,21 +16,18 @@ package com.wso2telco.core.dbutils.util;
  * limitations under the License.
  */
 
-import com.fasterxml.jackson.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "taskId"
 })
-public class AppAssignRequest {
+public class AssignRequest {
 
     @JsonProperty("taskId")
     private String taskId;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("taskId")
     public String getTaskId() {
@@ -41,16 +38,5 @@ public class AppAssignRequest {
     public void setTaskId(String taskId) {
         this.taskId = taskId;
     }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
-
 }
 
