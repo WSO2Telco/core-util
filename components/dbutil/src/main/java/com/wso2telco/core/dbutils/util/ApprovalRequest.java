@@ -15,11 +15,7 @@ package com.wso2telco.core.dbutils.util;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import java.util.HashMap;
-import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -30,9 +26,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "description",
         "selectedTier",
         "status",
-        "creditPlan"
+        "creditPlan",
+        "selectedRate"
 })
-public class AppApprovalRequest {
+public class ApprovalRequest {
 
     @JsonProperty("taskId")
     private String taskId;
@@ -44,8 +41,8 @@ public class AppApprovalRequest {
     private String status;
     @JsonProperty("creditPlan")
     private String creditPlan;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    @JsonProperty("selectedRate")
+    private String selectedRate;
 
     @JsonProperty("taskId")
     public String getTaskId() {
@@ -97,14 +94,14 @@ public class AppApprovalRequest {
         this.creditPlan = creditPlan;
     }
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+    @JsonProperty("selectedRate")
+    public String getSelectedRate() {
+        return selectedRate;
     }
 
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+    @JsonProperty("selectedRate")
+    public void setSelectedRate(String selectedRate) {
+        this.selectedRate = selectedRate;
     }
 
 }
