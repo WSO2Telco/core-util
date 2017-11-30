@@ -37,6 +37,6 @@
       <module>com.wso2telco.core.config.feature</module>
       <module>com.wso2telco.core.spconfig.feature</module>
       <module>com.wso2telco.core.pcrservice.feature</module>
-      <module>com.wso2telco.core.userrolepermission.feature</module>
+      <module>com.wso2telco.core.userprofile.feature</module>
     </modules>
 </project>
