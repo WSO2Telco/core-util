@@ -25,11 +25,11 @@
         <relativePath>../pom.xml</relativePath>
     </parent>    
 
-    <artifactId>com.wso2telco.core.userrolepermission.feature</artifactId>
+    <artifactId>com.wso2telco.core.userprofile.feature</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2.Telco User Role Permission</name>
+    <name>WSO2.Telco User Profile</name>
     <url>http://wso2.org</url>
-    <description>This feature contains the server bundles required for user role permission functionality</description>
+    <description>This feature contains the server bundles required for user role profile functionality</description>
 
     <build>
         <plugins>
@@ -45,7 +45,7 @@
                             <goal>p2-feature-gen</goal>
                         </goals>
                         <configuration>
-                            <id>com.wso2telco.core.userrolepermission</id>
+                            <id>com.wso2telco.core.userprofile</id>
                             <propertiesFile>../feature.properties</propertiesFile>
                             <adviceFile>
                                 <properties>
@@ -54,7 +54,7 @@
                                 </properties>
                             </adviceFile>
                             <bundles>
-                                <bundleDef>com.wso2telco.core:user-role-permission:${com.wso2telco.core.version}</bundleDef>
+                                <bundleDef>com.wso2telco.core:user-profile:${com.wso2telco.core.version}</bundleDef>
                                 <bundleDef>dnsjava.wso2:dnsjava:${dnsjava.version}</bundleDef>                                
                             </bundles>
                         </configuration>
