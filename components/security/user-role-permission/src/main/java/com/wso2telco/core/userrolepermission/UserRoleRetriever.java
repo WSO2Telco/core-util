@@ -23,12 +23,13 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.user.api.RealmConfiguration;
 import org.wso2.carbon.user.core.service.RealmService;
+import com.wso2telco.core.userrolepermission.dto.UserRoleDTO;
 
 public class UserRoleRetriever {
 
 	private final Log log = LogFactory.getLog(UserRoleRetriever.class);
 
-	public List<String> getUserRoles(String userName) {
+	public List<String> getRolesByUserName(String userName) {
 
 		PrivilegedCarbonContext carbonContext = PrivilegedCarbonContext.getThreadLocalCarbonContext();
 		RealmService realmService = (RealmService) carbonContext.getOSGiService(RealmService.class, null);
@@ -54,5 +55,30 @@ public class UserRoleRetriever {
 
 			return Collections.emptyList();
 		}
+	}
+
+	public UserRoleDTO getUserRoles(String userName) {
+
+		UserRoleDTO userRoleDTO = null;
+		
+		List<String> currentUserRoleList = getRolesByUserName(userName);
+
+		if (!currentUserRoleList.isEmpty()) {
+
+			String[] userRoles = new String[currentUserRoleList.size()];
+			userRoles = currentUserRoleList.toArray(userRoles);
+			userRoleDTO = new UserRoleDTO();
+			
+			userRoleDTO = fillUserRoleDTO(userRoles, userRoleDTO);
+		}
+
+		return userRoleDTO;
+	}
+
+	private UserRoleDTO fillUserRoleDTO(String[] userRoles, UserRoleDTO userRoleDTO) {
+
+		userRoleDTO.setUserRoles(userRoles);
+		
+		return userRoleDTO;
 	}
 }

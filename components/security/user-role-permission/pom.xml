@@ -44,7 +44,7 @@
             <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
             <Bundle-Name>${project.artifactId}</Bundle-Name>
             <Private-Package>
-              com.wso2telco.core.userrolepermission.impl,com.wso2telco.core.userrolepermission.util
+              com.wso2telco.core.userrolepermission.dto,com.wso2telco.core.userrolepermission.impl,com.wso2telco.core.userrolepermission.util
             </Private-Package>
             <Export-Package>
               com.wso2telco.core.userrolepermission
