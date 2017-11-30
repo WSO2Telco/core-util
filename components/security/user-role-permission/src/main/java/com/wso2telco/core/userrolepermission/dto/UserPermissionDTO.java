@@ -13,22 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.userrolepermission.util;
+package com.wso2telco.core.userrolepermission.dto;
 
-public enum AdminServicePath {
+public class UserPermissionDTO {
 
-	USER_ADMIN("services/UserAdmin"),
-	REMOTE_USER_STORE_MANAGER_SERVICE("services/RemoteUserStoreManagerService");
+	private String[] userPermissions;
 
-	AdminServicePath(String tObject) {
-
-		this.tObject = tObject;
+	public String[] getUserPermissions() {
+		return userPermissions;
 	}
 
-	public String getTObject() {
-
-		return this.tObject;
+	public void setUserPermissions(String[] userPermissions) {
+		this.userPermissions = userPermissions;
 	}
-
-	String tObject;
 }

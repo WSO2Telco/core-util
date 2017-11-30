@@ -15,12 +15,11 @@
  ******************************************************************************/
 package com.wso2telco.core.userrolepermission.util;
 
-public enum AdminServicePath {
+public enum UserProfileType {
 
-	USER_ADMIN("services/UserAdmin"),
-	REMOTE_USER_STORE_MANAGER_SERVICE("services/RemoteUserStoreManagerService");
+	DEFAULT("default");
 
-	AdminServicePath(String tObject) {
+	UserProfileType(String tObject) {
 
 		this.tObject = tObject;
 	}

@@ -28,6 +28,7 @@ import org.wso2.carbon.user.mgt.stub.UserAdminStub;
 import org.wso2.carbon.user.mgt.stub.UserAdminUserAdminException;
 import org.wso2.carbon.user.mgt.stub.types.carbon.UIPermissionNode;
 import org.wso2.carbon.utils.CarbonUtils;
+import com.wso2telco.core.userrolepermission.dto.UserPermissionDTO;
 import com.wso2telco.core.userrolepermission.impl.UserRolePermission;
 import com.wso2telco.core.userrolepermission.impl.UserRolePermissionFactory;
 import com.wso2telco.core.userrolepermission.util.AdminServicePath;
@@ -35,7 +36,7 @@ import com.wso2telco.core.userrolepermission.util.UserRolePermissionType;
 
 public class UserPermissionRetriever {
 
-	private final Log log = LogFactory.getLog(UserRolePermission.class);
+	private final Log log = LogFactory.getLog(UserPermissionRetriever.class);
 
 	UserRolePermissionFactory userRolePermissionFactory;
 
@@ -44,7 +45,7 @@ public class UserPermissionRetriever {
 		userRolePermissionFactory = new UserRolePermissionFactory();
 	}
 
-	public List<String> getUserRolePermissions(String userName, UserRolePermissionType userRolePermissionType) {
+	public List<String> getUserPermissionsByUserName(String userName, UserRolePermissionType userRolePermissionType) {
 
 		List<String> userRolePermissionList = null;
 
@@ -55,28 +56,28 @@ public class UserPermissionRetriever {
 					+ AdminServicePath.USER_ADMIN.getTObject();
 			String adminUsername = config.getFirstProperty(APIConstants.AUTH_MANAGER_USERNAME);
 			String adminPassword = config.getFirstProperty(APIConstants.AUTH_MANAGER_PASSWORD);
-			
+
 			UserAdminStub userAdminStub = new UserAdminStub(userAdminServiceEndpoint);
 			CarbonUtils.setBasicAccessSecurityHeaders(adminUsername, adminPassword, userAdminStub._getServiceClient());
-			
+
 			UserRoleRetriever userRoleRetriever = new UserRoleRetriever();
-			List<String> currentUserRoleList = userRoleRetriever.getUserRoles(userName);
+			List<String> currentUserRoleList = userRoleRetriever.getRolesByUserName(userName);
 
 			for (Iterator<String> iterator = currentUserRoleList.iterator(); iterator.hasNext();) {
-				
+
 				String roleName = iterator.next();
-				
+
 				UIPermissionNode rolePermissions = userAdminStub.getRolePermissions(roleName);
-				
+
 				UserRolePermission userRolePermission = userRolePermissionFactory
 						.getUserRolePermissionExecuter(userRolePermissionType);
 				userRolePermissionList = userRolePermission.getUserRolePermissions(rolePermissions);
-				
-				if(!userRolePermissionList.isEmpty()){
-					
+
+				if (!userRolePermissionList.isEmpty()) {
+
 					break;
 				}
-			}		
+			}
 		} catch (RemoteException | UserAdminUserAdminException e) {
 
 			log.error("unable to retrieve " + userRolePermissionType + " permissions for user " + userName + " : ", e);
@@ -89,5 +90,30 @@ public class UserPermissionRetriever {
 
 			return Collections.emptyList();
 		}
+	}
+
+	public UserPermissionDTO getUserPermissions(String userName, UserRolePermissionType userRolePermissionType) {
+
+		UserPermissionDTO userPermissionDTO = null;
+
+		List<String> userRolePermissionList = getUserPermissionsByUserName(userName, userRolePermissionType);
+
+		if (!userRolePermissionList.isEmpty()) {
+
+			String[] userPermissions = new String[userRolePermissionList.size()];
+			userPermissions = userRolePermissionList.toArray(userPermissions);
+			userPermissionDTO = new UserPermissionDTO();
+
+			userPermissionDTO = fillUserPermissionDTO(userPermissions, userPermissionDTO);
+		}
+
+		return userPermissionDTO;
+	}
+
+	private UserPermissionDTO fillUserPermissionDTO(String[] userPermissions, UserPermissionDTO userPermissionDTO) {
+		
+		userPermissionDTO.setUserPermissions(userPermissions);
+		
+		return userPermissionDTO;
 	}
 }
