@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.userrolepermission.dto;
+package com.wso2telco.core.userprofile.dto;
 
-public class UserPermissionDTO {
+public class UserRoleDTO {
 
-	private String[] userPermissions;
+	private String[] userRoles;
 
-	public String[] getUserPermissions() {
-		return userPermissions;
+	public String[] getUserRoles() {
+		return userRoles;
 	}
 
-	public void setUserPermissions(String[] userPermissions) {
-		this.userPermissions = userPermissions;
+	public void setUserRoles(String[] userRoles) {
+		this.userRoles = userRoles;
 	}
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.userrolepermission;
+package com.wso2telco.core.userprofile.prosser;
 
 import java.rmi.RemoteException;
 import java.util.Collections;
@@ -28,19 +28,20 @@ import org.wso2.carbon.user.mgt.stub.UserAdminStub;
 import org.wso2.carbon.user.mgt.stub.UserAdminUserAdminException;
 import org.wso2.carbon.user.mgt.stub.types.carbon.UIPermissionNode;
 import org.wso2.carbon.utils.CarbonUtils;
-import com.wso2telco.core.userrolepermission.dto.UserPermissionDTO;
-import com.wso2telco.core.userrolepermission.impl.UserRolePermission;
-import com.wso2telco.core.userrolepermission.impl.UserRolePermissionFactory;
-import com.wso2telco.core.userrolepermission.util.AdminServicePath;
-import com.wso2telco.core.userrolepermission.util.UserRolePermissionType;
 
-public class UserPermissionRetriever {
+import com.wso2telco.core.userprofile.dto.UserPermissionDTO;
+import com.wso2telco.core.userprofile.permission.impl.UserRolePermission;
+import com.wso2telco.core.userprofile.permission.impl.UserRolePermissionFactory;
+import com.wso2telco.core.userprofile.util.AdminServicePath;
+import com.wso2telco.core.userprofile.util.UserRolePermissionType;
 
-	private final Log log = LogFactory.getLog(UserPermissionRetriever.class);
+public class UserPermissionProsser {
+
+	private final Log log = LogFactory.getLog(UserPermissionProsser.class);
 
 	UserRolePermissionFactory userRolePermissionFactory;
 
-	public UserPermissionRetriever() {
+	public UserPermissionProsser() {
 
 		userRolePermissionFactory = new UserRolePermissionFactory();
 	}
@@ -60,7 +61,7 @@ public class UserPermissionRetriever {
 			UserAdminStub userAdminStub = new UserAdminStub(userAdminServiceEndpoint);
 			CarbonUtils.setBasicAccessSecurityHeaders(adminUsername, adminPassword, userAdminStub._getServiceClient());
 
-			UserRoleRetriever userRoleRetriever = new UserRoleRetriever();
+			UserRoleProsser userRoleRetriever = new UserRoleProsser();
 			List<String> currentUserRoleList = userRoleRetriever.getRolesByUserName(userName);
 
 			for (Iterator<String> iterator = currentUserRoleList.iterator(); iterator.hasNext();) {

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.userrolepermission.dto;
+package com.wso2telco.core.userprofile.dto;
 
-public class UserProfileDTO {
+public class UserClaimDTO {
 
 	private String userName;
 	private String firstName;
@@ -23,8 +23,6 @@ public class UserProfileDTO {
 	private String emailAddress;
 	private String organization;
 	private String department;
-	private String[] userRoles;
-	private String[] uiPermissions;
 
 	public String getUserName() {
 		return userName;
@@ -72,21 +70,5 @@ public class UserProfileDTO {
 
 	public void setDepartment(String department) {
 		this.department = department;
-	}
-
-	public String[] getUserRoles() {
-		return userRoles;
-	}
-
-	public void setUserRoles(String[] userRoles) {
-		this.userRoles = userRoles;
-	}
-
-	public String[] getUiPermissions() {
-		return uiPermissions;
-	}
-
-	public void setUiPermissions(String[] uiPermissions) {
-		this.uiPermissions = uiPermissions;
 	}
 }

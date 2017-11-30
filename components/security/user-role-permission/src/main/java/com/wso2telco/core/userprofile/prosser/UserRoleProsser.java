@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.userrolepermission;
+package com.wso2telco.core.userprofile.prosser;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,11 +23,12 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
 import org.wso2.carbon.user.api.RealmConfiguration;
 import org.wso2.carbon.user.core.service.RealmService;
-import com.wso2telco.core.userrolepermission.dto.UserRoleDTO;
 
-public class UserRoleRetriever {
+import com.wso2telco.core.userprofile.dto.UserRoleDTO;
 
-	private final Log log = LogFactory.getLog(UserRoleRetriever.class);
+public class UserRoleProsser {
+
+	private final Log log = LogFactory.getLog(UserRoleProsser.class);
 
 	public List<String> getRolesByUserName(String userName) {
 

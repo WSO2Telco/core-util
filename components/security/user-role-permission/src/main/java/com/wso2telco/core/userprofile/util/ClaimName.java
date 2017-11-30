@@ -13,22 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.userrolepermission.util;
+package com.wso2telco.core.userprofile.util;
 
-public enum AdminServicePath {
+public enum ClaimName {
 
-	USER_ADMIN("services/UserAdmin"),
-	REMOTE_USER_STORE_MANAGER_SERVICE("services/RemoteUserStoreManagerService");
+	FIRST_NAME("firstname", "http://wso2.org/claims/givenname"),
+	LAST_NAME("lastname", "http://wso2.org/claims/lastname"),
+	EMAIL_ADDRESS("emailaddress", "http://wso2.org/claims/emailaddress"),
+	ORGANIZATION("organization", "http://wso2.org/claims/organization"),
+	DEPARTMENT("department", "http://wso2.org/claims/department");
+	
+	ClaimName(String claim, String claimURL) {
 
-	AdminServicePath(String tObject) {
-
-		this.tObject = tObject;
+		this.claim = claim;
+		this.claimURL = claimURL;
 	}
 
-	public String getTObject() {
+	public String getClaim() {
 
-		return this.tObject;
+		return this.claim;
+	}
+	
+	public String getClaimURL() {
+
+		return this.claimURL;
 	}
 
-	String tObject;
+	String claim;
+	String claimURL;
 }

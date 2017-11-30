@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.userrolepermission.impl;
+package com.wso2telco.core.userprofile.permission.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +21,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.user.mgt.stub.types.carbon.UIPermissionNode;
-import com.wso2telco.core.userrolepermission.util.UserRolePermissionType;
+
+import com.wso2telco.core.userprofile.util.UserRolePermissionType;
 
 public class UIPermission implements UserRolePermission {
 
