@@ -9,9 +9,9 @@
 		<relativePath>../../../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>user-role-permission</artifactId>
-	<name>User Role Permission</name>
-	<description>User Role Permission Module</description>
+	<artifactId>user-profile</artifactId>
+	<name>User Profile</name>
+	<description>User Profile Module</description>
 	<packaging>bundle</packaging>
 
 	<dependencies>
