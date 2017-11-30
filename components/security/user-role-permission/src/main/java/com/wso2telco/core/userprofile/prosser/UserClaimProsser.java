@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.userrolepermission;
+package com.wso2telco.core.userprofile.prosser;
 
 import java.rmi.RemoteException;
 import java.util.Arrays;
@@ -31,15 +31,16 @@ import org.wso2.carbon.um.ws.api.stub.RemoteUserStoreManagerServiceStub;
 import org.wso2.carbon.um.ws.api.stub.RemoteUserStoreManagerServiceUserStoreExceptionException;
 import org.wso2.carbon.user.core.claim.Claim;
 import org.wso2.carbon.utils.CarbonUtils;
-import com.wso2telco.core.userrolepermission.dto.UserClaimDTO;
-import com.wso2telco.core.userrolepermission.util.AdminServicePath;
-import com.wso2telco.core.userrolepermission.util.ClaimName;
-import com.wso2telco.core.userrolepermission.util.ClaimUtil;
-import com.wso2telco.core.userrolepermission.util.UserProfileType;
 
-public class UserClaimRetriever {
+import com.wso2telco.core.userprofile.dto.UserClaimDTO;
+import com.wso2telco.core.userprofile.util.AdminServicePath;
+import com.wso2telco.core.userprofile.util.ClaimName;
+import com.wso2telco.core.userprofile.util.ClaimUtil;
+import com.wso2telco.core.userprofile.util.UserProfileType;
 
-	private final Log log = LogFactory.getLog(UserClaimRetriever.class);
+public class UserClaimProsser {
+
+	private final Log log = LogFactory.getLog(UserClaimProsser.class);
 
 	private EnumMap<ClaimName, String> userClaimDetails = new EnumMap<>(ClaimName.class);
 

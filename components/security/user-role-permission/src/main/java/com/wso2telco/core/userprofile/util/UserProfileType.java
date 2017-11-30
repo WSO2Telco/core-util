@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.userrolepermission.util;
+package com.wso2telco.core.userprofile.util;
 
-public enum UserRolePermissionType {
+public enum UserProfileType {
 
-	UI_PERMISSION("UI Module Permission");
+	DEFAULT("default");
 
-	UserRolePermissionType(String tObject) {
+	UserProfileType(String tObject) {
 
 		this.tObject = tObject;
 	}

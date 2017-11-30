@@ -1,4 +1,4 @@
-package com.wso2telco.core.userrolepermission.util;
+package com.wso2telco.core.userprofile.util;
 
 import org.wso2.carbon.um.ws.api.stub.ClaimDTO;
 

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.userrolepermission.impl;
+package com.wso2telco.core.userprofile.permission.impl;
 
 import java.util.List;
 import org.wso2.carbon.user.mgt.stub.types.carbon.UIPermissionNode;

@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.userrolepermission.util;
+package com.wso2telco.core.userprofile.util;
 
-public enum UserProfileType {
+public enum AdminServicePath {
 
-	DEFAULT("default");
+	USER_ADMIN("services/UserAdmin"),
+	REMOTE_USER_STORE_MANAGER_SERVICE("services/RemoteUserStoreManagerService");
 
-	UserProfileType(String tObject) {
+	AdminServicePath(String tObject) {
 
 		this.tObject = tObject;
 	}

@@ -13,15 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.userrolepermission;
+package com.wso2telco.core.userprofile;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.wso2telco.core.userrolepermission.dto.UserClaimDTO;
-import com.wso2telco.core.userrolepermission.dto.UserPermissionDTO;
-import com.wso2telco.core.userrolepermission.dto.UserProfileDTO;
-import com.wso2telco.core.userrolepermission.dto.UserRoleDTO;
-import com.wso2telco.core.userrolepermission.util.UserRolePermissionType;
+
+import com.wso2telco.core.userprofile.dto.UserClaimDTO;
+import com.wso2telco.core.userprofile.dto.UserPermissionDTO;
+import com.wso2telco.core.userprofile.dto.UserProfileDTO;
+import com.wso2telco.core.userprofile.dto.UserRoleDTO;
+import com.wso2telco.core.userprofile.prosser.UserClaimProsser;
+import com.wso2telco.core.userprofile.prosser.UserPermissionProsser;
+import com.wso2telco.core.userprofile.prosser.UserRoleProsser;
+import com.wso2telco.core.userprofile.util.UserRolePermissionType;
 
 public class UserProfileRetriever {
 
@@ -33,14 +37,14 @@ public class UserProfileRetriever {
 
 		log.debug("retrieve user profile for user : " + userName);
 
-		UserRoleRetriever userRoleRetriever = new UserRoleRetriever();
+		UserRoleProsser userRoleRetriever = new UserRoleProsser();
 		UserRoleDTO userRoleDTO = userRoleRetriever.getUserRoles(userName);
 
-		UserPermissionRetriever userPermissionRetriever = new UserPermissionRetriever();
+		UserPermissionProsser userPermissionRetriever = new UserPermissionProsser();
 		UserPermissionDTO userUIPermissionDTO = userPermissionRetriever.getUserPermissions(userName,
 				UserRolePermissionType.UI_PERMISSION);
 
-		UserClaimRetriever userClaimRetriever = new UserClaimRetriever();
+		UserClaimProsser userClaimRetriever = new UserClaimProsser();
 		UserClaimDTO userClaimDTO = userClaimRetriever.getUserClaims(userName);
 
 		fillUserProfileDTO(userName, userRoleDTO, userUIPermissionDTO, userClaimDTO);
