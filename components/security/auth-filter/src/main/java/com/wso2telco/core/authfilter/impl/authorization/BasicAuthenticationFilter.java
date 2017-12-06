@@ -42,13 +42,13 @@ public class BasicAuthenticationFilter implements AuthenticationFilter {
 	private UserAuthorizationValidator userAuthorizationValidator = new UserAuthorizationValidator();
 
 	private String userName = null;
-	private String password = null;
-	private boolean isAuthenticated = false;
-	private boolean isAuthorized = false;
 
 	@Override
 	public boolean isAuthenticated(ContainerRequestContext requestContext, Method method, String authorizationHeader) {
 
+		String password = null;
+		boolean isAuthenticated = false;
+		
 		// get base 64 encoded username and password
 		final String encodedUserPassword = authorizationHeader
 				.replaceFirst(AuthFilterParam.AUTHENTICATION_SCHEME_BASIC.getTObject() + " ", "");
@@ -96,6 +96,8 @@ public class BasicAuthenticationFilter implements AuthenticationFilter {
 	@Override
 	public boolean isAuthorized(ContainerRequestContext requestContext, Method method) {
 
+		boolean isAuthorized = false;
+		
 		requestContext.getHeaders().add(HeaderParam.USER_NAME.getTObject(), userName);
 		
 		// validate user authorization by using user roles
