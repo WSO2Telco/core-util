@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.authfilter.util;
+package com.wso2telco.core.authfilter.impl.cookie;
 
-public enum AuthFilterParam {
+import java.lang.reflect.Method;
+import javax.ws.rs.container.ContainerRequestContext;
 
-	AUTHORIZATION_PROPERTY("Authorization"), 
-	AUTHENTICATION_SCHEME_BASIC("Basic"),
-	COOKIE("Cookie"),
-	JSESSION_ID("JSESSIONID");
-	
-	AuthFilterParam(String tObject) {
+import com.wso2telco.core.authfilter.impl.AuthenticationFilter;
 
-		this.tObject = tObject;
+public class JSessionAuthenticationFilter implements AuthenticationFilter {
+
+	@Override
+	public boolean isAuthenticated(ContainerRequestContext requestContext, Method method, String authorizationHeader) {
+		
+		return true;
 	}
 
-	public String getTObject() {
+	@Override
+	public boolean isAuthorized(ContainerRequestContext requestContext, Method method) {
 
-		return this.tObject;
+		return true;
 	}
-
-	String tObject;
 }

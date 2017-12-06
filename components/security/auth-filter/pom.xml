@@ -7,7 +7,8 @@
 	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
 	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
 	the specific language governing permissions and limitations under the License. -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<groupId>com.wso2telco.core</groupId>
 		<artifactId>core-parent</artifactId>
@@ -39,7 +40,7 @@
 						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Name>${project.artifactId}</Bundle-Name>
 						<Private-Package>
-							com.wso2telco.core.authfilter.impl,com.wso2telco.core.authfilter.authentication,com.wso2telco.core.authfilter.authorization,com.wso2telco.core.authfilter.util
+							com.wso2telco.core.authfilter.impl,com.wso2telco.core.authfilter.impl.authorization,com.wso2telco.core.authfilter.impl.cookie,com.wso2telco.core.authfilter.authentication,com.wso2telco.core.authfilter.authorization,com.wso2telco.core.authfilter.util
 						</Private-Package>
 						<Export-Package>
 							com.wso2telco.core.authfilter

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.authfilter.impl;
+package com.wso2telco.core.authfilter.impl.authorization;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -28,6 +28,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.wso2telco.core.authfilter.authentication.BasicAuthenticator;
 import com.wso2telco.core.authfilter.authorization.UserAuthorizationValidator;
+import com.wso2telco.core.authfilter.impl.AuthenticationFilter;
 import com.wso2telco.core.authfilter.util.AuthFilterParam;
 import com.wso2telco.core.authfilter.util.HeaderParam;
 

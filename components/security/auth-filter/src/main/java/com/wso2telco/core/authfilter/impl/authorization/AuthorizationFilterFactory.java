@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.authfilter.util;
+package com.wso2telco.core.authfilter.impl.authorization;
 
-public enum AuthFilterParam {
+import com.wso2telco.core.authfilter.impl.AuthenticationFilter;
+import com.wso2telco.core.authfilter.impl.AuthenticationProsser;
+import com.wso2telco.core.authfilter.util.AuthFilterParam;
 
-	AUTHORIZATION_PROPERTY("Authorization"), 
-	AUTHENTICATION_SCHEME_BASIC("Basic"),
-	COOKIE("Cookie"),
-	JSESSION_ID("JSESSIONID");
-	
-	AuthFilterParam(String tObject) {
+public class AuthorizationFilterFactory extends AuthenticationProsser{
 
-		this.tObject = tObject;
+	@Override
+	protected AuthenticationFilter loadFilter(String header) {
+		
+		AuthenticationFilter authenticationFilter = null;
+		
+		if (header.contains(AuthFilterParam.AUTHENTICATION_SCHEME_BASIC.getTObject())) {
+
+			authenticationFilter = new BasicAuthenticationFilter();
+		}
+		
+		return authenticationFilter;
 	}
-
-	public String getTObject() {
-
-		return this.tObject;
-	}
-
-	String tObject;
 }

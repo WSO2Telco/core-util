@@ -13,19 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.authfilter.impl;
+package com.wso2telco.core.authfilter.impl.cookie;
 
+import com.wso2telco.core.authfilter.impl.AuthenticationFilter;
+import com.wso2telco.core.authfilter.impl.AuthenticationProsser;
 import com.wso2telco.core.authfilter.util.AuthFilterParam;
 
-public class AuthenticationFilterFactory {
+public class CookieFilterFactory extends AuthenticationProsser {
 
-	public AuthenticationFilter loadAuthenticationFilter(String authorizationHeader) {
+	@Override
+	protected AuthenticationFilter loadFilter(String header) {
 
 		AuthenticationFilter authenticationFilter = null;
 
-		if (authorizationHeader.contains(AuthFilterParam.AUTHENTICATION_SCHEME_BASIC.getTObject())) {
+		if (header.contains(AuthFilterParam.JSESSION_ID.getTObject())) {
 
-			authenticationFilter = new BasicAuthenticationFilter();
+			authenticationFilter = new JSessionAuthenticationFilter();
 		}
 
 		return authenticationFilter;
