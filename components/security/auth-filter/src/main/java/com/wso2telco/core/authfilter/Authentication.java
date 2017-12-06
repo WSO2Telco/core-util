@@ -27,7 +27,9 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import com.wso2telco.core.authfilter.impl.AuthenticationFilter;
-import com.wso2telco.core.authfilter.impl.AuthenticationFilterFactory;
+import com.wso2telco.core.authfilter.impl.AuthenticationProsser;
+import com.wso2telco.core.authfilter.impl.authorization.AuthorizationFilterFactory;
+import com.wso2telco.core.authfilter.impl.cookie.CookieFilterFactory;
 import com.wso2telco.core.authfilter.util.AuthFilterParam;
 
 @Provider
@@ -64,26 +66,45 @@ public class Authentication implements ContainerRequestFilter {
 			// deny access if there is no authorization information
 			if (authorization == null || authorization.isEmpty()) {
 
-				requestContext.abortWith(accessDenied);
-				return;
-			}
+				final List<String> cookie = headers.get(AuthFilterParam.COOKIE.getTObject());
 
-			// get authorization header
-			String authorizationHeader = authorization.get(0);
+				if (cookie == null || cookie.isEmpty()) {
 
-			// get relevant authentication filter based on authorization type
-			AuthenticationFilterFactory authenticationFilterFactory = new AuthenticationFilterFactory();
-			AuthenticationFilter authenticationFilter = authenticationFilterFactory
-					.loadAuthenticationFilter(authorizationHeader);
+					requestContext.abortWith(accessDenied);
+					return;
+				} else {
 
-			if (authenticationFilter != null) {
+					// get cookie header
+					String cookieHeader = cookie.get(0);
 
-				authenticationFilter.isAuthenticated(requestContext, method, authorizationHeader);
-				authenticationFilter.isAuthorized(requestContext, method);
+					// get relevant authentication filter based on cookie
+					// type
+					AuthenticationProsser authenticationProsser = new CookieFilterFactory();
+					AuthenticationFilter authenticationFilter = authenticationProsser.verifyUser(requestContext, method,
+							cookieHeader);
+
+					if (authenticationFilter == null) {
+
+						requestContext.abortWith(accessDenied);
+						return;
+					}
+				}
 			} else {
 
-				requestContext.abortWith(accessDenied);
-				return;
+				// get authorization header
+				String authorizationHeader = authorization.get(0);
+
+				// get relevant authentication filter based on authorization
+				// type
+				AuthenticationProsser authenticationProsser = new AuthorizationFilterFactory();
+				AuthenticationFilter authenticationFilter = authenticationProsser.verifyUser(requestContext, method,
+						authorizationHeader);
+
+				if (authenticationFilter == null) {
+
+					requestContext.abortWith(accessDenied);
+					return;
+				}
 			}
 		}
 	}
