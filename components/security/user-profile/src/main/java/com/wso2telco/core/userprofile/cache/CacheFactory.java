@@ -36,7 +36,7 @@ public final class CacheFactory {
 		}
 	}
 
-	public CacheFactory getInstance(CacheType type)  throws BusinessException{
+	public static CacheFactory getInstance(CacheType type)  throws BusinessException{
 		if (instance == null) {
 			instance = new CacheFactory(type);
 		}
