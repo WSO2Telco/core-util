@@ -31,7 +31,6 @@ import org.wso2.carbon.um.ws.api.stub.RemoteUserStoreManagerServiceStub;
 import org.wso2.carbon.um.ws.api.stub.RemoteUserStoreManagerServiceUserStoreExceptionException;
 import org.wso2.carbon.user.core.claim.Claim;
 import org.wso2.carbon.utils.CarbonUtils;
-
 import com.wso2telco.core.userprofile.dto.UserClaimDTO;
 import com.wso2telco.core.userprofile.util.AdminServicePath;
 import com.wso2telco.core.userprofile.util.ClaimName;
@@ -59,7 +58,9 @@ public class UserClaimProsser {
 			CarbonUtils.setBasicAccessSecurityHeaders(adminUsername, adminPassword,
 					userStoreManagerStub._getServiceClient());
 
-			Claim[] claims = ClaimUtil.convertToClaims(
+			ClaimUtil claimUtil = new ClaimUtil();
+
+			Claim[] claims = claimUtil.convertToClaims(
 					userStoreManagerStub.getUserClaimValues(userName, UserProfileType.DEFAULT.getTObject()));
 
 			List<ClaimName> somethingList = Arrays.asList(ClaimName.values());

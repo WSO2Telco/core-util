@@ -4,7 +4,7 @@ import org.wso2.carbon.um.ws.api.stub.ClaimDTO;
 
 public class ClaimUtil {
 
-	public static org.wso2.carbon.user.core.claim.Claim[] convertToClaims(ClaimDTO[] claims) {
+	public org.wso2.carbon.user.core.claim.Claim[] convertToClaims(ClaimDTO[] claims) {
 
 		if (claims == null) {
 
@@ -22,7 +22,7 @@ public class ClaimUtil {
 		return claimz;
 	}
 
-	public static org.wso2.carbon.user.core.claim.Claim convertToClaim(ClaimDTO claim) {
+	public org.wso2.carbon.user.core.claim.Claim convertToClaim(ClaimDTO claim) {
 
 		if (claim == null) {
 
@@ -32,7 +32,7 @@ public class ClaimUtil {
 		return convertToClaim(claim, null);
 	}
 
-	private static org.wso2.carbon.user.core.claim.Claim convertToClaim(ClaimDTO claimDTO,
+	private org.wso2.carbon.user.core.claim.Claim convertToClaim(ClaimDTO claimDTO,
 			org.wso2.carbon.um.ws.api.stub.Claim claim) {
 
 		if (claim == null) {
@@ -63,7 +63,7 @@ public class ClaimUtil {
 		return claimz;
 	}
 
-	public static org.wso2.carbon.user.core.claim.Claim convertToClaim(org.wso2.carbon.um.ws.api.stub.Claim claim) {
+	public org.wso2.carbon.user.core.claim.Claim convertToClaim(org.wso2.carbon.um.ws.api.stub.Claim claim) {
 
 		if (claim == null) {
 
