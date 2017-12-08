@@ -17,6 +17,21 @@ public class BusinessException extends Exception {
 		super(cause);
 	}
 
+	public BusinessException(final String cause)  {
+		this(new ThrowableError() {
+			
+			@Override
+			public String getMessage() {
+				return cause;
+			}
+			
+			@Override
+			public String getCode() {
+				return "Undefined";
+			}
+		});
+	}
+	
 	public ThrowableError getErrorType() {
 		return this.error;
 	}
