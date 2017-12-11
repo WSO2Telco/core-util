@@ -13,14 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.userprofile.cache;
+package com.wso2telco.core.userprofile.util;
 
-import com.wso2telco.core.dbutils.exception.BusinessException;
-import com.wso2telco.core.userprofile.dto.UserProfileDTO;
-
-public interface UserProfileCachable {
-	
-	public UserProfileDTO get(String key) throws BusinessException;
-	public void cache(final String key,UserProfileDTO profile) throws BusinessException;
-	public boolean isExpired(String key)throws BusinessException;
+public enum CacheType {
+	 REDIS ,
+	 MEMCHACHED,
+	 LOCAL;
 }
