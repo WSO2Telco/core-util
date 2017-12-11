@@ -16,7 +16,7 @@
 package com.wso2telco.core.userprofile.util;
 
 public enum CacheType {
-	 Redis ,
-	 Memchached,
-	 Local;
+	 REDIS ,
+	 MEMCHACHED,
+	 LOCAL;
 }

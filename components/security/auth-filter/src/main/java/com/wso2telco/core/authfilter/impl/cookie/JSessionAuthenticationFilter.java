@@ -50,7 +50,7 @@ public class JSessionAuthenticationFilter implements AuthenticationFilter {
 
 		try {
 
-			UserProfileCachable cachable = CacheFactory.getInstance(CacheType.Local).getService();
+			UserProfileCachable cachable = CacheFactory.getInstance(CacheType.LOCAL).getService();
 			String sessionId = header.replace("JSESSIONID=", "");
 			isExpired = cachable.isExpired(sessionId);
 

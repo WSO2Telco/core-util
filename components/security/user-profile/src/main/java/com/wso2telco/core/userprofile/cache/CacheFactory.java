@@ -34,14 +34,14 @@ public final class CacheFactory {
 
 	private CacheFactory(CacheType type) throws BusinessException {
 
-		log.debug(" cache factory invoked " + type);
+		log.debug("cache factory invoked : " + type);
 		switch (type) {
 
-		case Memchached:
+		case MEMCHACHED:
 			throw new BusinessException("memcached not supported yet,factory initialization failed");
 			// break;
-		case Redis:
-			throw new BusinessException("memcached not supported yet,factory initialization failed");
+		case REDIS:
+			throw new BusinessException("redis not supported yet,factory initialization failed");
 			// break;
 		default:
 			cachable = new DefaultCachedService();

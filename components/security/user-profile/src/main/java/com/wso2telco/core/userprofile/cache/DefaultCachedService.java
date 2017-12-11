@@ -23,12 +23,12 @@ import com.wso2telco.core.userprofile.dto.UserProfileDTO;
 class DefaultCachedService extends AbstractCacheServie {
 
 	private Map<String, CacheEntry> localCache;
-	// default session expiry  is 15 seconds
-	private final long defaultSessionExpiory = 900000;
+	// default session expiry is 15 seconds
+	private static final long DEFAULTSESSIONEXPIRY = 900000;
 
 	DefaultCachedService() {
 
-		localCache = new HashMap<String, CacheEntry>();
+		localCache = new HashMap<>();
 	}
 
 	@Override
@@ -45,7 +45,7 @@ class DefaultCachedService extends AbstractCacheServie {
 
 			long created = localCache.get(key).getCreatedTimeinMls();
 
-			boolean expierdStatus = created + defaultSessionExpiory < System.currentTimeMillis() ? true : false;
+			boolean expierdStatus = created + DEFAULTSESSIONEXPIRY < System.currentTimeMillis() ? true : false;
 			if (expierdStatus) {
 
 				localCache.remove(key);
