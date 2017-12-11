@@ -48,7 +48,7 @@
 						<Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Name>${project.artifactId}</Bundle-Name>
 						<Private-Package>
-							com.wso2telco.core.userprofile.dto,com.wso2telco.core.userprofile.permission.impl,com.wso2telco.core.userprofile.prosser,com.wso2telco.core.userprofile.util
+							com.wso2telco.core.userprofile.dto,com.wso2telco.core.userprofile.permission.impl,com.wso2telco.core.userprofile.prosser,com.wso2telco.core.userprofile.cache,com.wso2telco.core.userprofile.util 
 						</Private-Package>
 						<Export-Package>
 							com.wso2telco.core.userprofile
