@@ -15,10 +15,12 @@
  ******************************************************************************/
 package com.wso2telco.core.userprofile.permission.impl;
 
-import java.util.List;
-import org.wso2.carbon.user.mgt.stub.types.carbon.UIPermissionNode;
+import java.util.Map;
+
+import com.wso2telco.core.dbutils.exception.BusinessException;
 
 public interface UserRolePermission {
 
-	public List<String> getUserRolePermissions(UIPermissionNode rolePermissions);
+
+	public  Map<String,Object> build(final String userName)throws BusinessException;
 }

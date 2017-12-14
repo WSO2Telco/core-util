@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 package com.wso2telco.core.userprofile.dto;
-
+@Deprecated
 public class UserPermissionDTO {
 
 	private String[] userPermissions;

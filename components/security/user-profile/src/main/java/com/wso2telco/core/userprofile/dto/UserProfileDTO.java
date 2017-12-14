@@ -15,6 +15,8 @@
  ******************************************************************************/
 package com.wso2telco.core.userprofile.dto;
 
+import java.util.Map;
+
 public class UserProfileDTO {
 
 	private String userName;
@@ -24,7 +26,7 @@ public class UserProfileDTO {
 	private String organization;
 	private String department;
 	private String[] userRoles;
-	private String[] uiPermissions;
+	private Map<String,Object> uiPermissions;
 
 	public String getUserName() {
 		return userName;
@@ -82,11 +84,11 @@ public class UserProfileDTO {
 		this.userRoles = userRoles;
 	}
 
-	public String[] getUiPermissions() {
+	public Map<String,Object>  getUiPermissions() {
 		return uiPermissions;
 	}
 
-	public void setUiPermissions(String[] uiPermissions) {
+	public void setUiPermissions(Map<String,Object>  uiPermissions) {
 		this.uiPermissions = uiPermissions;
 	}
 }

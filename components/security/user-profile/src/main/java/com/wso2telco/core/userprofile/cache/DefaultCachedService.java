@@ -27,8 +27,8 @@ class DefaultCachedService extends AbstractCacheServie {
 	private static final long DEFAULTSESSIONEXPIRY = 900000;
 
 	DefaultCachedService() {
+		localCache = new HashMap<String, CacheEntry>();
 
-		localCache = new HashMap<>();
 	}
 
 	@Override

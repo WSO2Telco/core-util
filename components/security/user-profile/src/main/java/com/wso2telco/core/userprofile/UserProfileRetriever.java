@@ -15,15 +15,19 @@
  ******************************************************************************/
 package com.wso2telco.core.userprofile;
 
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.wso2telco.core.dbutils.exception.BusinessException;
 import com.wso2telco.core.userprofile.dto.UserClaimDTO;
 import com.wso2telco.core.userprofile.dto.UserPermissionDTO;
 import com.wso2telco.core.userprofile.dto.UserProfileDTO;
 import com.wso2telco.core.userprofile.dto.UserRoleDTO;
+import com.wso2telco.core.userprofile.permission.impl.UserRolePermission;
+import com.wso2telco.core.userprofile.permission.impl.UserRolePermissionFactory;
 import com.wso2telco.core.userprofile.prosser.UserClaimProsser;
-import com.wso2telco.core.userprofile.prosser.UserPermissionProsser;
 import com.wso2telco.core.userprofile.prosser.UserRoleProsser;
 import com.wso2telco.core.userprofile.util.UserRolePermissionType;
 
@@ -31,40 +35,41 @@ public class UserProfileRetriever {
 
 	private final Log log = LogFactory.getLog(UserProfileRetriever.class);
 
-	private UserProfileDTO userProfileDTO = new UserProfileDTO();
+	private UserRoleProsser userRoleRetriever = new UserRoleProsser();
+	
+	
 
-	public UserProfileDTO getUserProfile(String userName) {
+	public UserProfileDTO getUserProfile(String userName) throws BusinessException {
 
 		log.debug("retrieve user profile for user : " + userName);
-
-		UserRoleProsser userRoleRetriever = new UserRoleProsser();
+		
 		UserRoleDTO userRoleDTO = userRoleRetriever.getUserRoles(userName);
-
-		UserPermissionProsser userPermissionRetriever = new UserPermissionProsser();
-		UserPermissionDTO userUIPermissionDTO = userPermissionRetriever.getUserPermissions(userName,
-				UserRolePermissionType.UI_PERMISSION);
-
+		UserRolePermission uiPermissionBuilder = UserRolePermissionFactory.getInstance().getUserRolePermissionExecuter(UserRolePermissionType.UI_PERMISSION);
+		Map<String, Object> uiPermissionTree = uiPermissionBuilder.build(userName);
+		
 		UserClaimProsser userClaimRetriever = new UserClaimProsser();
 		UserClaimDTO userClaimDTO = userClaimRetriever.getUserClaims(userName);
 
-		fillUserProfileDTO(userName, userRoleDTO, userUIPermissionDTO, userClaimDTO);
+		return fillUserProfileDTO(userName, userRoleDTO, uiPermissionTree, userClaimDTO);
 
-		return userProfileDTO;
 	}
 
-	private void fillUserProfileDTO(String userName, UserRoleDTO userRoleDTO, UserPermissionDTO userUIPermissionDTO,
+	private UserProfileDTO fillUserProfileDTO(String userName, UserRoleDTO userRoleDTO, Map<String, Object> uiPermissionTree,
 			UserClaimDTO userClaimDTO) {
+		
+		
+		UserProfileDTO userProfileDTO = new UserProfileDTO();
 
 		userProfileDTO.setUserName(userName);
 
-		if (userRoleDTO != null) {
+		if (userRoleDTO.getUserRoles() != null) {
 
 			userProfileDTO.setUserRoles(userRoleDTO.getUserRoles());
 		}
 
-		if (userUIPermissionDTO != null) {
+		if (uiPermissionTree != null) {
 
-			userProfileDTO.setUiPermissions(userUIPermissionDTO.getUserPermissions());
+			userProfileDTO.setUiPermissions(uiPermissionTree);
 		}
 
 		if (userClaimDTO != null) {
@@ -75,5 +80,6 @@ public class UserProfileRetriever {
 			userProfileDTO.setOrganization(userClaimDTO.getOrganization());
 			userProfileDTO.setDepartment(userClaimDTO.getDepartment());
 		}
+		return userProfileDTO;
 	}
 }
