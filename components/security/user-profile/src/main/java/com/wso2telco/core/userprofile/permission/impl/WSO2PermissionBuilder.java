@@ -19,10 +19,12 @@ import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.axis2.AxisFault;
 import org.apache.commons.lang.StringUtils;
@@ -46,8 +48,7 @@ class WSO2PermissionBuilder implements UserRolePermission {
 
 	private final Log log = LogFactory.getLog(WSO2PermissionBuilder.class);
 	private UserAdminStub userAdminStub;
-	
-	
+
 	public WSO2PermissionBuilder() throws BusinessException {
 		APIManagerConfiguration config = HostObjectComponent.getAPIManagerConfiguration();
 		String userAdminServiceEndpoint = config.getFirstProperty(APIConstants.AUTH_MANAGER_URL)
@@ -57,31 +58,31 @@ class WSO2PermissionBuilder implements UserRolePermission {
 		try {
 			userAdminStub = new UserAdminStub(userAdminServiceEndpoint);
 		} catch (AxisFault e) {
-			log.error("",e);
+			log.error("", e);
 			throw new BusinessException(GenaralError.INTERNAL_SERVER_ERROR);
 		}
-			CarbonUtils.setBasicAccessSecurityHeaders(adminUsername, adminPassword, userAdminStub._getServiceClient());
+		CarbonUtils.setBasicAccessSecurityHeaders(adminUsername, adminPassword, userAdminStub._getServiceClient());
 	}
-	
-	
-/**
- * This will build the permision tree using given users name
- */
-	public  Map<String,Object> build(final String userName)throws BusinessException{
-		Map<String,Object> permisionTree =Collections.emptyMap();;
+
+	/**
+	 * This will build the permision tree using given users name
+	 */
+	public Map<String, Object> build(final String userName) throws BusinessException {
+		Map<String, Object> permisionTree = Collections.emptyMap();
+		RetunEntitiy retunItem = new RetunEntitiy();
 		try {
-			
 			UserRoleProsser userRoleRetriever = new UserRoleProsser();
 			UIPermissionNode uiPermissionTree = null;
-
+			
+			
 			List<String> currentUserRoleList = userRoleRetriever.getRolesByUserName(userName);
 			/**
 			 * None of the roles are assign for the user
 			 */
-			if(currentUserRoleList.isEmpty()) {
-				throw new BusinessException("No roles assigned for user :"+ userName);
+			if (currentUserRoleList.isEmpty()) {
+				throw new BusinessException("No roles assigned for user :" + userName);
 			}
-			
+
 			for (Iterator<String> iterator = currentUserRoleList.iterator(); iterator.hasNext();) {
 
 				String roleName = iterator.next();
@@ -90,83 +91,108 @@ class WSO2PermissionBuilder implements UserRolePermission {
 				/**
 				 * if the permission node is empty
 				 */
-				if(rolePermissions==null || rolePermissions.getNodeList()==null) {
+				if (rolePermissions == null || rolePermissions.getNodeList() == null) {
 					continue;
 				}
-				
+
 				/**
 				 * filter out ui permission only
 				 */
-				 Optional<UIPermissionNode> optNode =	Arrays.stream(rolePermissions.getNodeList()).filter(rowItem -> rowItem.getDisplayName()
-						.equalsIgnoreCase(UserRolePermissionType.UI_PERMISSION.getTObject())).findFirst();
-				
+				Optional<UIPermissionNode> optNode = Arrays.stream(rolePermissions.getNodeList())
+						.filter(rowItem -> rowItem.getDisplayName()
+								.equalsIgnoreCase(UserRolePermissionType.UI_PERMISSION.getTObject()))
+						.findFirst();
+
 				/**
 				 * check for existence of node
 				 */
-				 if(optNode.isPresent() ) {
-					 uiPermissionTree =optNode.get() ;
-					 
-					 if(uiPermissionTree.getNodeList()!=null && uiPermissionTree.getNodeList().length>0) {
-						 break;
-					 }else {
-						 /**
-						  * if the current role does not contain Ui permission then continue
-						  */
-						 continue;
-					 }
-				 }
-				 
+				if (optNode.isPresent()) {
+					uiPermissionTree = optNode.get();
+
+					if (uiPermissionTree.getNodeList() != null && uiPermissionTree.getNodeList().length > 0) {
+						retunItem = popUserRolePermissions(uiPermissionTree.getNodeList());
+						if (retunItem.atLeastOneSelected) {
+							break;
+						}
+					} else {
+						/**
+						 * if the current role does not contain Ui permission then continue
+						 */
+						continue;
+					}
+				}
+
 			}
-			
-			
-			if(uiPermissionTree==null ) {
-				throw new BusinessException(UserRolePermissionType.UI_PERMISSION.getTObject() + " not assigned for the user :"+userName + " , assigned roles :[ " + StringUtils.join(currentUserRoleList,",")+"]");
+
+			if (retunItem.returnMap.isEmpty()) {
+				throw new BusinessException(
+						UserRolePermissionType.UI_PERMISSION.getTObject() + " not assigned for the user :" + userName
+								+ " , assigned roles :[ " + StringUtils.join(currentUserRoleList, ",") + "]");
 			}
-			if( uiPermissionTree.getNodeList()==null) {
-				throw new BusinessException("No ui permissions tree defined found for the role :[ " + UserRolePermissionType.UI_PERMISSION.getTObject() +"]");
-			}
-			permisionTree= popUserRolePermissions(uiPermissionTree.getNodeList());
-			
+
 		} catch (RemoteException | UserAdminUserAdminException e) {
-			log.error("UIPermission.build",e);
+			log.error("UIPermission.build", e);
 			throw new BusinessException(GenaralError.INTERNAL_SERVER_ERROR);
 		}
-		if(permisionTree==null) {
-			log.warn(" No ui permission tree found for "+userName);
+		if (retunItem.returnMap.isEmpty()) {
+			log.warn(" No ui permission tree found for " + userName);
 			return Collections.emptyMap();
-		}else {
-		return permisionTree;
+		} else {
+			return retunItem.returnMap;
 		}
-		
+
 	}
-	
+
 	/**
 	 * recuresvly build the permission tree and return as tree of maps
+	 * 
 	 * @param rootPermissionTree
 	 * @return
 	 */
 
-	private Map<String, Object> popUserRolePermissions(UIPermissionNode[] rootPermissionTree) {
-		Map<String, Object> returnMap = new HashMap<>();
+	private RetunEntitiy popUserRolePermissions(UIPermissionNode[] rootPermissionTree) {
+		RetunEntitiy entity = new RetunEntitiy();
 		Arrays.stream(rootPermissionTree).forEach(item -> {
-					/**
-					 * if node has child elements
-					 */
-					UIPermissionNode[] uiPermissionArray = item.getNodeList();
-					if (uiPermissionArray!=null && uiPermissionArray.length > 0) {
+			/**
+			 * if node has child elements
+			 */
+			UIPermissionNode[] uiPermissionArray = item.getNodeList();
+			if (uiPermissionArray != null && uiPermissionArray.length > 0) {
 
-						Map<String, Object> temp = popUserRolePermissions(uiPermissionArray);
-						returnMap.put(item.getDisplayName(), temp);
+				RetunEntitiy temp = popUserRolePermissions(uiPermissionArray);
+				entity.mergeMapEntry(item.getDisplayName(), temp);
 
-					} else {
-						/**
-						 * node don't have children
-						 */
-						returnMap.put(item.getDisplayName(), item.getSelected());
-					}
+			} else {
+				/**
+				 * node don't have children
+				 */
+				 
+				entity.mergeMapEntry(item);
+			}
 
-				});
+		});
 
-		return returnMap;
+		return entity;
+	}
+
+	class RetunEntitiy {
+		private boolean atLeastOneSelected = false;
+		private Map<String, Object> returnMap = new HashMap<>();
+
+		 
+		public void mergeMapEntry(UIPermissionNode item) {
+			this.returnMap.put(item.getDisplayName(),item.getSelected());
+			if(item.getSelected()) {
+				atLeastOneSelected=true;
+			}
+		}
+
+		public void mergeMapEntry(String entryName, RetunEntitiy mergeEntry) {
+			this.returnMap.put(entryName, mergeEntry.returnMap);
+			if(mergeEntry.atLeastOneSelected) {
+				this.atLeastOneSelected = mergeEntry.atLeastOneSelected;
+				}
+		}
+
 	}
 }
