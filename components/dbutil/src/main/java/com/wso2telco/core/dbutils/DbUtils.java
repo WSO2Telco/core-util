@@ -15,19 +15,28 @@
  ******************************************************************************/
 package com.wso2telco.core.dbutils;
 
-import com.wso2telco.core.dbutils.util.DataSourceNames;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NameNotFoundException;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.math.BigDecimal;
-import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.wso2telco.core.dbutils.exception.BusinessException;
+import com.wso2telco.core.dbutils.exception.GenaralError;
+import com.wso2telco.core.dbutils.util.DataSourceNames;
 
 // TODO: Auto-generated Javadoc
 
@@ -82,6 +91,16 @@ public class DbUtils {
     static {
         dbDataSourceMap = new HashMap<DataSourceNames, DataSource>();
     }
+    private DbUtils() {}
+    private static DbUtils instance;
+    
+    public static DbUtils getInstance() {
+    	if(instance ==null) {
+    		instance = new DbUtils();
+    	}
+    	
+    	return instance;
+    }
 
     /**
      * Initialize datasources.
@@ -132,7 +151,9 @@ public class DbUtils {
      * @return the db connection
      * @throws SQLException    the SQL exception
      * @throws DBUtilException the dbutilException exception
+     * use instance getConnection
      */
+    @Deprecated 
     public static Connection getDBConnection() throws SQLException, DBUtilException {
         initializeDatasources();
 
@@ -183,6 +204,47 @@ public class DbUtils {
             log.info("Error while looking up the data source: " + dataSourceName.toString(), e);
             throw e;
         }
+    }
+    
+    /**
+     * Gets the db connection.
+     *
+     * @return the db connection
+     * @throws SQLException the SQL exception
+     */
+    public   Connection getConnection(DataSourceNames dataSourceName) throws BusinessException {
+    	
+
+        try {
+			if (!dbDataSourceMap.containsKey(dataSourceName)) {
+
+			    Context ctx = new InitialContext();
+			    dbDataSourceMap.put(dataSourceName, (DataSource) ctx.lookup(dataSourceName.jndiName()));
+			}
+
+			DataSource dbDatasource = dbDataSourceMap.get(dataSourceName);
+
+			if (dbDatasource != null) {
+
+			    log.info(dataSourceName.toString() + " DB Initialize successfully.");
+			    return dbDatasource.getConnection();
+			} else {
+
+			    log.info(dataSourceName.toString() + " DB NOT Initialize successfully.");
+			    return null;
+			}
+		} catch (NamingException | SQLException e) {
+			log.error("",e);
+			throw new BusinessException(GenaralError.INTERNAL_SERVER_ERROR);
+		}
+    
+/*
+ * 
+        try {} catch (Exception e) {
+
+            log.info("Error while looking up the data source: " + dataSourceName.toString(), e);
+            throw e;
+        }*/
     }
 
     /**
@@ -509,4 +571,5 @@ public class DbUtils {
 
         return dbNames;
     }
+
 }
