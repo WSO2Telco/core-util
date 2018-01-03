@@ -160,7 +160,9 @@ class WSO2PermissionBuilder implements UserRolePermission {
 			if (uiPermissionArray != null && uiPermissionArray.length > 0) {
 
 				RetunEntitiy temp = popUserRolePermissions(uiPermissionArray);
+				if (temp.atLeastOneSelected) {
 				entity.mergeMapEntry(item.getDisplayName(), temp);
+				}
 
 			} else {
 				/**
