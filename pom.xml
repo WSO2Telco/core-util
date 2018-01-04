@@ -120,6 +120,12 @@
               <version>${org.wso2.carbon.apimgt.version}</version>
               <scope>provided</scope>
             </dependency>
+            <dependency>
+                <groupId>com.wso2telco.core</groupId>
+                <artifactId>user-profile</artifactId>
+                <version>${com.wso2telco.core.version}</version>
+                <scope>provided</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
