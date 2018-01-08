@@ -160,10 +160,8 @@ class WSO2PermissionBuilder implements UserRolePermission {
 			if (uiPermissionArray != null && uiPermissionArray.length > 0) {
 
 				RetunEntitiy temp = popUserRolePermissions(uiPermissionArray);
-				if (temp.atLeastOneSelected) {
 				entity.mergeMapEntry(item.getDisplayName(), temp);
-				}
-
+				
 			} else {
 				/**
 				 * node don't have children
@@ -181,7 +179,9 @@ class WSO2PermissionBuilder implements UserRolePermission {
 		private boolean atLeastOneSelected = false;
 		private Map<String, Object> returnMap = new HashMap<>();
 
-		 
+		public void setEntryName(String key,Object value ) {
+			returnMap.put(key, value);
+		} 
 		public void mergeMapEntry(UIPermissionNode item) {
 			this.returnMap.put(item.getDisplayName(),item.getSelected());
 			if(item.getSelected()) {
