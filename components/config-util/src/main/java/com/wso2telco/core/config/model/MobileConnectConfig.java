@@ -59,6 +59,9 @@ public class MobileConnectConfig {
      */
     private USSDConfig ussdConfig;
 
+    /**
+     * The saa config.
+     */
     private SaaConfig saaConfig;
 
     /**
@@ -1220,6 +1223,16 @@ public class MobileConnectConfig {
         private String pushServiceEndpoint;
 
         /**
+         * fcm url
+         */
+        private String fcmEndpoint;
+
+        /**
+         * fcm key related to the certificate from fcm server
+         */
+        private String fcmKey;
+
+        /**
          * get the auth endpoint
          *
          * @return
@@ -1274,6 +1287,44 @@ public class MobileConnectConfig {
          */
         public void setPushServiceEndpoint(String pushServiceEndpoint) {
             this.pushServiceEndpoint = pushServiceEndpoint;
+        }
+
+        /**
+         * gets the fcm endpoint
+         *
+         * @return return fcm endpoint
+         */
+        @XmlElement(name = "fcmEndpoint")
+        public String getFcmEndpoint() {
+            return fcmEndpoint;
+        }
+
+        /**
+         * sets fcm endpoint
+         *
+         * @param fcmEndpoint fcm endpoint
+         */
+        public void setFcmEndpoint(String fcmEndpoint) {
+            this.fcmEndpoint= fcmEndpoint;
+        }
+
+        /**
+         * gets fcm certificate key
+         *
+         * @return return push service endpoint
+         */
+        @XmlElement(name = "fcmKey")
+        public String getFcmKey() {
+            return fcmKey;
+        }
+
+        /**
+         * sets fcm certificate key
+         *
+         * @param fcmKey push service endpoint
+         */
+        public void setFcmKey(String fcmKey) {
+            this.fcmKey = fcmKey;
         }
     }
 
