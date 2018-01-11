@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Map;
 
 // TODO: Auto-generated Javadoc
 
@@ -93,8 +94,19 @@ public class MobileConnectConfig {
 
     private boolean isFederatedDeployment;
 
+    protected OperatorsList operatorsList;
+
     public boolean isFederatedDeployment() {
         return isFederatedDeployment;
+    }
+
+    @XmlElement(name = "OperatorsList")
+    public OperatorsList getOperatorsList() {
+        return operatorsList;
+    }
+
+    public void setOperatorsList(OperatorsList operatorsList) {
+        this.operatorsList = operatorsList;
     }
 
     @XmlElement(name = "IsFederatedDeployment")
@@ -102,7 +114,7 @@ public class MobileConnectConfig {
         this.isFederatedDeployment = isFederatedDeployment;
     }
 
-    
+
     /**
      * Federated IDPs config
      */
@@ -114,7 +126,7 @@ public class MobileConnectConfig {
     private String federatedCallbackUrl;
 
     /**
-     * 
+     *
      * @return Federated IDP's callback
      */
     @XmlElement(name = "FederatedCallbackUrl")
@@ -123,7 +135,7 @@ public class MobileConnectConfig {
     }
 
     /**
-     * 
+     *
      * @param federatedCallbackUrl
      */
     public void setFederatedCallbackUrl(String federatedCallbackUrl) {
@@ -131,7 +143,7 @@ public class MobileConnectConfig {
     }
 
     /**
-     * 
+     *
      * @return Federated IDPs config
      */
     @XmlElement(name = "FederatedIdentityProviders")
@@ -140,7 +152,7 @@ public class MobileConnectConfig {
     }
 
     /**
-     * 
+     *
      * @param Federated IDPs
      */
     public void setFederatedIdentityProviders(FederatedIdentityProviders federatedIdentityProviders) {
@@ -148,7 +160,7 @@ public class MobileConnectConfig {
     }
 
     /**
-     * 
+     *
      * Federated IDP config Class
      *
      */
@@ -159,7 +171,7 @@ public class MobileConnectConfig {
         private Provider[] provider;
 
         /**
-         * 
+         *
          * @return Identity Provider
          */
         @XmlElement(name = "Provider")
@@ -168,7 +180,7 @@ public class MobileConnectConfig {
         }
 
         /**
-         * 
+         *
          * @param Identity Provider
          */
         public void setProvider(Provider[] provider) {
@@ -177,7 +189,7 @@ public class MobileConnectConfig {
     }
 
     /**
-     * 
+     *
      * Federated Identity Provider Config class
      *
      */
@@ -204,7 +216,7 @@ public class MobileConnectConfig {
         private String userInfoEndpoint;
 
         /**
-         * 
+         *
          * @return Operator name of IDP
          */
         @XmlAttribute(name = "operator")
@@ -213,7 +225,7 @@ public class MobileConnectConfig {
         }
 
         /**
-         * 
+         *
          * @return authorize endpoint of IDP
          */
         @XmlElement(name = "AuthzEndpoint")
@@ -222,7 +234,7 @@ public class MobileConnectConfig {
         }
 
         /**
-         * 
+         *
          * @return token endpoint of IDP
          */
         @XmlElement(name = "TokenEndpoint")
@@ -231,7 +243,7 @@ public class MobileConnectConfig {
         }
 
         /**
-         * 
+         *
          * @return userinfo endpoint of IDP
          */
         @XmlElement(name = "UserInfoEndpoint")
@@ -240,7 +252,7 @@ public class MobileConnectConfig {
         }
 
         /**
-         * 
+         *
          * @param Operator name of IDP
          */
         public void setOperator(String operator) {
@@ -248,7 +260,7 @@ public class MobileConnectConfig {
         }
 
         /**
-         * 
+         *
          * @param authorize endpoint of IDP
          */
         public void setAuthzEndpoint(String authzEndpoint) {
@@ -256,7 +268,7 @@ public class MobileConnectConfig {
         }
 
         /**
-         * 
+         *
          * @param token endpoint of IDP
          */
         public void setTokenEndpoint(String tokenEndpoint) {
@@ -264,7 +276,7 @@ public class MobileConnectConfig {
         }
 
         /**
-         * 
+         *
          * @param userinfo endpoint of IDP
          */
         public void setUserInfoEndpoint(String userInfoEndpoint) {
@@ -339,7 +351,7 @@ public class MobileConnectConfig {
     public void setAdminUrl(String adminUrl) {
         this.adminUrl = adminUrl;
     }
-    
+
     @XmlElement(name = "Locale")
     public String getLocale() {
         return locale;
@@ -1975,8 +1987,8 @@ public class MobileConnectConfig {
          * The IP Header name
          */
         private String IPHeaderName;
-        
-        
+
+
         /**
          * The IP Header Override Attribute
          */
@@ -2072,8 +2084,8 @@ public class MobileConnectConfig {
 		public void setOverrideIpheader(boolean isOverrideIpheader) {
 			this.isOverrideIpheader = isOverrideIpheader;
 		}
-        
-        
+
+
 
     }
 
@@ -2723,4 +2735,61 @@ public class MobileConnectConfig {
             this.mobileNetworkOperatorBasedSelectionEnabled = mobileNetworkOperatorBasedSelectionEnabled;
         }
     }
+    public static class OperatorsList {
+
+        private List<OperatorData> operatorData;
+
+        @XmlElement(name = "OperatorData")
+        public List<OperatorData> getOperatorData() {
+            return operatorData;
+        }
+
+        public void setOperatorData(List<OperatorData> operatorData) {
+            this.operatorData = operatorData;
+        }
+    }
+
+    public static class OperatorData {
+
+        private String operatorName;
+        private String userInfoEndPointType;
+        private String className;
+        private String userInfoEndPointURL;
+
+        public String getClassName() {
+            return className;
+        }
+        @XmlElement(name = "ClassName")
+        public void setClassName(String className) {
+            this.className = className;
+        }
+
+        @XmlElement(name = "OperatorName")
+        public String getOperatorName() {
+            return operatorName;
+        }
+
+        public void setOperatorName(String operaterName) {
+            this.operatorName = operaterName;
+        }
+
+        @XmlElement(name = "UserInfoEndPointType")
+        public String getUserInfoEndPointType() {
+            return userInfoEndPointType;
+        }
+
+        public void setUserInfoEndPointType(String userInfoEndPointType) {
+            this.userInfoEndPointType = userInfoEndPointType;
+        }
+
+        @XmlElement(name = "UserInfoEndPointURL")
+        public String getUserInfoEndPointURL() {
+            return userInfoEndPointURL;
+        }
+
+        public void setUserInfoEndPointURL(String userInfoEndPointURL) {
+            this.userInfoEndPointURL = userInfoEndPointURL;
+        }
+    }
+
 }
