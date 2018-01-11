@@ -26,6 +26,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import com.wso2telco.core.authfilter.authorization.UserAuthorizationValidator;
 import com.wso2telco.core.authfilter.impl.AuthenticationFilter;
+import com.wso2telco.core.authfilter.util.AuthFilterParam;
 import com.wso2telco.core.authfilter.util.HeaderParam;
 import com.wso2telco.core.dbutils.exception.BusinessException;
 import com.wso2telco.core.userprofile.cache.CacheFactory;
@@ -51,7 +52,7 @@ public class JSessionAuthenticationFilter implements AuthenticationFilter {
 		try {
 
 			UserProfileCachable cachable = CacheFactory.getInstance(CacheType.LOCAL).getService();
-			String sessionId = header.replace("JSESSIONID=", "");
+			String sessionId = header.replace(AuthFilterParam.JSESSION_ID.getTObject(), "");
 			isExpired = cachable.isExpired(sessionId);
 
 			if (isExpired) {

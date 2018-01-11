@@ -13,24 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.wso2telco.core.authfilter.util;
+package com.wso2telco.core.userprofile.util;
 
-public enum AuthFilterParam {
+public class UserRole {
 
-	AUTHORIZATION_PROPERTY("Authorization"), 
-	AUTHENTICATION_SCHEME_BASIC("Basic"),
-	COOKIE("Cookie"),
-	JSESSION_ID("JSESSIONID=");
-	
-	AuthFilterParam(String tObject) {
+	private UserRole() {
 
-		this.tObject = tObject;
 	}
 
-	public String getTObject() {
-
-		return this.tObject;
-	}
-
-	String tObject;
+	public static final String ADMIN = "admin";
+	public static final String HUB_ADMIN = "hub-admin";
+	public static final String OPERATOR_ADMIN = "operator-admin";
+	public static final String GATEWAY_ADMIN = "gateway-admin";
 }
