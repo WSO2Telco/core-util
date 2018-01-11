@@ -36,17 +36,29 @@ public class UserProfileRetriever {
 	private final Log log = LogFactory.getLog(UserProfileRetriever.class);
 
 	private UserRoleProsser userRoleRetriever = new UserRoleProsser();
-	
-	
+
+	private static UserProfileRetriever instance;
+
+	/*private UserProfileRetriever() {
+
+	}*/
+
+	public static UserProfileRetriever getInstance() {
+		if (instance != null) {
+			instance = new UserProfileRetriever();
+		}
+		return instance;
+	}
 
 	public UserProfileDTO getUserProfile(String userName) throws BusinessException {
 
 		log.debug("retrieve user profile for user : " + userName);
-		
+
 		UserRoleDTO userRoleDTO = userRoleRetriever.getUserRoles(userName);
-		UserRolePermission uiPermissionBuilder = UserRolePermissionFactory.getInstance().getUserRolePermissionExecuter(UserRolePermissionType.UI_PERMISSION);
+		UserRolePermission uiPermissionBuilder = UserRolePermissionFactory.getInstance()
+				.getUserRolePermissionExecuter(UserRolePermissionType.UI_PERMISSION);
 		Map<String, Object> uiPermissionTree = uiPermissionBuilder.build(userName);
-		
+
 		UserClaimProsser userClaimRetriever = new UserClaimProsser();
 		UserClaimDTO userClaimDTO = userClaimRetriever.getUserClaims(userName);
 
@@ -54,10 +66,9 @@ public class UserProfileRetriever {
 
 	}
 
-	private UserProfileDTO fillUserProfileDTO(String userName, UserRoleDTO userRoleDTO, Map<String, Object> uiPermissionTree,
-			UserClaimDTO userClaimDTO) {
-		
-		
+	private UserProfileDTO fillUserProfileDTO(String userName, UserRoleDTO userRoleDTO,
+			Map<String, Object> uiPermissionTree, UserClaimDTO userClaimDTO) {
+
 		UserProfileDTO userProfileDTO = new UserProfileDTO();
 
 		userProfileDTO.setUserName(userName);
