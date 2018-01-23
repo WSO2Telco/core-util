@@ -20,7 +20,7 @@ import java.util.List;
 //todo: this class is duplicated also in gsma authenticator. need to move to core-utils
 public class ScopeParam {
 
-    public enum msisdnMismatchResultTypes {
+    public enum MsisdnMismatchResultTypes {
         ERROR_RETURN,
         OFFNET_FALLBACK,
         OFFNET_FALLBACK_TRUST_LOGINHINT,
@@ -28,7 +28,7 @@ public class ScopeParam {
         CONTINUE_WITH_HEADER
     }
 
-    public enum heFailureResults {
+    public enum HeFailureResults {
         BREAK,
         UNTRUST_MSISDN,
         TRUST_HEADER_MSISDN,
@@ -39,14 +39,14 @@ public class ScopeParam {
     private boolean isHeaderMsisdnMandatory;
     private List<LoginHintFormatDetails> loginHintFormat;
     private boolean isTncVisible;
-    private msisdnMismatchResultTypes msisdnMismatchResult;
-    private heFailureResults heFailureResult;
+    private MsisdnMismatchResultTypes msisdnMismatchResult;
+    private HeFailureResults heFailureResult;
     private String scope;
-    private int scope_id;
+    private int scopeId;
     private boolean isConsentPage;
     private String description;
     private String consentType;
-    private String consent_validity_type;
+    private String consentValidityType;
 
     public boolean isConsentPage() {
 		return isConsentPage;
@@ -56,12 +56,12 @@ public class ScopeParam {
 		this.isConsentPage = isConsentPage;
 	}
 
-	public int getScope_id() {
-		return scope_id;
+	public int getScopeId() {
+		return scopeId;
 	}
 
-	public void setScope_id(int scope_id) {
-		this.scope_id = scope_id;
+	public void setScopeId(int scopeId) {
+		this.scopeId = scopeId;
 	}
 
 	public List<LoginHintFormatDetails> getLoginHintFormat() {
@@ -74,7 +74,7 @@ public class ScopeParam {
 
     public boolean isHeaderMsisdnMandatory() { return isHeaderMsisdnMandatory; }
 
-    public msisdnMismatchResultTypes getMsisdnMismatchResult() {
+    public MsisdnMismatchResultTypes getMsisdnMismatchResult() {
         return msisdnMismatchResult;
     }
 
@@ -84,11 +84,11 @@ public class ScopeParam {
         this.scope = scope;
     }
 
-    public heFailureResults getHeFailureResult() {
+    public HeFailureResults getHeFailureResult() {
         return heFailureResult;
     }
 
-    public void setHeFailureResult(heFailureResults heFailureResult) {
+    public void setHeFailureResult(HeFailureResults heFailureResult) {
         this.heFailureResult = heFailureResult;
     }
 
@@ -112,7 +112,7 @@ public class ScopeParam {
         isHeaderMsisdnMandatory = headerMsisdnMandatory;
     }
 
-    public void setMsisdnMismatchResult(msisdnMismatchResultTypes msisdnMismatchResult) {
+    public void setMsisdnMismatchResult(MsisdnMismatchResultTypes msisdnMismatchResult) {
         this.msisdnMismatchResult = msisdnMismatchResult;
     }
 
@@ -133,11 +133,11 @@ public class ScopeParam {
     }
 
     public String getConsentValidityType() {
-        return consent_validity_type;
+        return consentValidityType;
     }
 
-    public void setConsentValidityType(String consent_validity_type) {
-        this.consent_validity_type = consent_validity_type;
+    public void setConsentValidityType(String consentValidityType) {
+        this.consentValidityType = consentValidityType;
     }
 
 }
