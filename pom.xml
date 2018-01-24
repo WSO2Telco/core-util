@@ -14,7 +14,7 @@
     <groupId>com.wso2telco.core</groupId>
     <artifactId>core-parent</artifactId>
     <packaging>pom</packaging>
-    <version>2.4.1-SNAPSHOT</version>
+    <version>2.4.1</version>
     <name>WSO2Telco Core Utility - Aggregate Pom</name>
     <description>WSO2Telco Core Utility Aggregate Pom</description>
     <url>http://wso2telco.com</url>
@@ -133,7 +133,7 @@
         <url>https://github.com/WSO2Telco/core-util.git</url>
         <developerConnection>scm:git:https://github.com/WSO2Telco/core-util.git</developerConnection>
         <connection>scm:git:https://github.com/WSO2Telco/core-util.git</connection>
-        <tag>v2.0.24-SNAPSHOT</tag>
+        <tag>v2.4.1</tag>
     </scm>
 
     <build>
