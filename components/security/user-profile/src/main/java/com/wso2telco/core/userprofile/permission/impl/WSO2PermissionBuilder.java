@@ -27,6 +27,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.apache.axis2.AxisFault;
+import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,6 +49,8 @@ class WSO2PermissionBuilder implements UserRolePermission {
 
 	private final Log log = LogFactory.getLog(WSO2PermissionBuilder.class);
 	private UserAdminStub userAdminStub;
+	private static final Integer DEFAULT_SO_TIMEOUT=1000*60*2;//2mins as default
+	private static final Integer DEFAULT_CONNECTION_TIMEOUT= 1000*60*2;
 
 	public WSO2PermissionBuilder() throws BusinessException {
 		APIManagerConfiguration config = HostObjectComponent.getAPIManagerConfiguration();
@@ -57,6 +60,8 @@ class WSO2PermissionBuilder implements UserRolePermission {
 		String adminPassword = config.getFirstProperty(APIConstants.AUTH_MANAGER_PASSWORD);
 		try {
 			userAdminStub = new UserAdminStub(userAdminServiceEndpoint);
+			userAdminStub._getServiceClient().getOptions().setProperty(HTTPConstants.SO_TIMEOUT, DEFAULT_SO_TIMEOUT); //set so time out and connection timeout to 2min
+			userAdminStub._getServiceClient().getOptions().setProperty(HTTPConstants.CONNECTION_TIMEOUT, DEFAULT_CONNECTION_TIMEOUT);
 		} catch (AxisFault e) {
 			log.error("", e);
 			throw new BusinessException(GenaralError.INTERNAL_SERVER_ERROR);
