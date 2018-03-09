@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015-2017, WSO2.Telco Inc. (http://www.wso2telco.com)
+ * Copyright (c) 2015-2018, WSO2.Telco Inc. (http://www.wso2telco.com)
  *
  * All Rights Reserved. WSO2.Telco Inc. licences this file to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.*;
 import java.util.List;
 
 /**
- * The Class Scope.
+ * Class to read scope-config.xml(xml includes scope related details) in component-ids..
  */
 @XmlRootElement(name = "ScopeConfigs")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -70,7 +70,7 @@ public class ScopeDetailsConfig {
     }
 
     /**
-     * The Class Scope.
+     * The Class to read main Scope tag in the xml.
      */
     public static class Scope {
 
@@ -180,7 +180,7 @@ public class ScopeDetailsConfig {
     }
 
     /**
-     * The Class MandatoryScope.
+     * The Class to read sub tag (MandatoryScope)in the xml.
      */
     public static class MandatoryScope {
 
