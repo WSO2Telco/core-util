@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Map;
 
 // TODO: Auto-generated Javadoc
 
@@ -100,6 +101,8 @@ public class MobileConnectConfig {
 
     private String wso2APIMDataSourceName;
 
+    protected OperatorsList operatorsList;
+
     @XmlElement(name = "WSO2APIMDataSourceName")
     public String getWso2APIMDataSourceName() {
         return wso2APIMDataSourceName;
@@ -111,6 +114,15 @@ public class MobileConnectConfig {
 
     public boolean isFederatedDeployment() {
         return isFederatedDeployment;
+    }
+
+    @XmlElement(name = "OperatorsList")
+    public OperatorsList getOperatorsList() {
+        return operatorsList;
+    }
+
+    public void setOperatorsList(OperatorsList operatorsList) {
+        this.operatorsList = operatorsList;
     }
 
     @XmlElement(name = "IsFederatedDeployment")
@@ -138,7 +150,6 @@ public class MobileConnectConfig {
     private String federatedCallbackUrl;
 
     /**
-     * 
      * @return Federated IDP's callback
      */
     @XmlElement(name = "FederatedCallbackUrl")
@@ -147,7 +158,6 @@ public class MobileConnectConfig {
     }
 
     /**
-     * 
      * @param federatedCallbackUrl
      */
     public void setFederatedCallbackUrl(String federatedCallbackUrl) {
@@ -155,7 +165,6 @@ public class MobileConnectConfig {
     }
 
     /**
-     * 
      * @return Federated IDPs config
      */
     @XmlElement(name = "FederatedIdentityProviders")
@@ -164,17 +173,14 @@ public class MobileConnectConfig {
     }
 
     /**
-     * 
-     * @param Federated IDPs
+     * @param federatedIdentityProviders
      */
     public void setFederatedIdentityProviders(FederatedIdentityProviders federatedIdentityProviders) {
         this.federatedIdentityProviders = federatedIdentityProviders;
     }
 
     /**
-     * 
      * Federated IDP config Class
-     *
      */
     public static class FederatedIdentityProviders {
         /**
@@ -183,7 +189,6 @@ public class MobileConnectConfig {
         private Provider[] provider;
 
         /**
-         * 
          * @return Identity Provider
          */
         @XmlElement(name = "Provider")
@@ -192,8 +197,7 @@ public class MobileConnectConfig {
         }
 
         /**
-         * 
-         * @param Identity Provider
+         * @param provider
          */
         public void setProvider(Provider[] provider) {
             this.provider = provider;
@@ -201,9 +205,7 @@ public class MobileConnectConfig {
     }
 
     /**
-     * 
      * Federated Identity Provider Config class
-     *
      */
     public static class Provider {
 
@@ -228,7 +230,6 @@ public class MobileConnectConfig {
         private String userInfoEndpoint;
 
         /**
-         * 
          * @return Operator name of IDP
          */
         @XmlAttribute(name = "operator")
@@ -237,7 +238,6 @@ public class MobileConnectConfig {
         }
 
         /**
-         * 
          * @return authorize endpoint of IDP
          */
         @XmlElement(name = "AuthzEndpoint")
@@ -246,7 +246,6 @@ public class MobileConnectConfig {
         }
 
         /**
-         * 
          * @return token endpoint of IDP
          */
         @XmlElement(name = "TokenEndpoint")
@@ -255,7 +254,6 @@ public class MobileConnectConfig {
         }
 
         /**
-         * 
          * @return userinfo endpoint of IDP
          */
         @XmlElement(name = "UserInfoEndpoint")
@@ -264,32 +262,28 @@ public class MobileConnectConfig {
         }
 
         /**
-         * 
-         * @param Operator name of IDP
+         * @param operator name of IDP
          */
         public void setOperator(String operator) {
             this.operator = operator;
         }
 
         /**
-         * 
-         * @param authorize endpoint of IDP
+         * @param authzEndpoint endpoint of IDP
          */
         public void setAuthzEndpoint(String authzEndpoint) {
             this.authzEndpoint = authzEndpoint;
         }
 
         /**
-         * 
-         * @param token endpoint of IDP
+         * @param tokenEndpoint endpoint of IDP
          */
         public void setTokenEndpoint(String tokenEndpoint) {
             this.tokenEndpoint = tokenEndpoint;
         }
 
         /**
-         * 
-         * @param userinfo endpoint of IDP
+         * @param userInfoEndpoint endpoint of IDP
          */
         public void setUserInfoEndpoint(String userInfoEndpoint) {
             this.userInfoEndpoint = userInfoEndpoint;
@@ -363,7 +357,7 @@ public class MobileConnectConfig {
     public void setAdminUrl(String adminUrl) {
         this.adminUrl = adminUrl;
     }
-    
+
     @XmlElement(name = "Locale")
     public String getLocale() {
         return locale;
@@ -848,7 +842,7 @@ public class MobileConnectConfig {
             this.welcomeMessageDisabled = welcomeMessageDisabled;
         }
 
-        @XmlElementWrapper(name="OperatorWelcomeMessage")
+        @XmlElementWrapper(name = "OperatorWelcomeMessage")
         @XmlElement(name = "Operator")
         public List<OperatorSmsConfig> getOperatorSmsConfigs() {
             return operatorSmsConfigs;
@@ -857,6 +851,7 @@ public class MobileConnectConfig {
         public void setOperatorSmsConfigs(List<OperatorSmsConfig> operatorSmsConfigs) {
             this.operatorSmsConfigs = operatorSmsConfigs;
         }
+
         /**
          * The sms login message
          */
@@ -878,7 +873,6 @@ public class MobileConnectConfig {
         private OperatorSpecificMessages operatorSpecificMessages;
 
         /**
-         *
          * @return
          */
         @XmlElement(name = "RegistrationMessage")
@@ -888,6 +882,7 @@ public class MobileConnectConfig {
 
         /**
          * Gets SMS login message
+         *
          * @return the generic login message
          */
         @XmlElement(name = "LoginMessage")
@@ -897,6 +892,7 @@ public class MobileConnectConfig {
 
         /**
          * Gets SMS OTP message
+         *
          * @return the generic SMS OTP message
          */
         @XmlElement(name = "SMSOTPMessage")
@@ -906,6 +902,7 @@ public class MobileConnectConfig {
 
         /**
          * The Operator Specific SMS Messages
+         *
          * @return the operator specific messages object
          */
         @XmlElement(name = "OperatorSpecificMessages")
@@ -1120,6 +1117,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the SMS login message
+         *
          * @param loginMessage the login message
          */
         public void setLoginMessage(String loginMessage) {
@@ -1128,6 +1126,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the SMS registration message
+         *
          * @param registrationMessage the registration message
          */
         public void setRegistrationMessage(String registrationMessage) {
@@ -1141,6 +1140,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the operator specific messages
+         *
          * @param operatorSpecificMessages The operator specific messages
          */
         public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) {
@@ -1159,6 +1159,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the OTP Length for the otp sms
+         *
          * @param OTPLength for the otp sms
          */
         public void setOTPLength(int OTPLength) {
@@ -1177,6 +1178,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the SMS Message Version
+         *
          * @param SMSMessageVersion for the SMS Message Version
          */
         public void setSMSMessageVersion(String SMSMessageVersion) {
@@ -1184,13 +1186,12 @@ public class MobileConnectConfig {
         }
 
 
-
         /**
          * Returns the OperatorMapping
          *
          * @return the OperatorMapping
          */
-        @XmlElementWrapper(name="OperatorMappings")
+        @XmlElementWrapper(name = "OperatorMappings")
         @XmlElement(name = "OperatorMapping")
         public List<OperatorMapping> getOperatorMappings() {
             return OperatorMappings;
@@ -1198,6 +1199,7 @@ public class MobileConnectConfig {
 
         /**
          * Sets the operators
+         *
          * @param OperatorMappings for operators
          */
         public void setOperatorMappings(List<OperatorMapping> OperatorMappings) {
@@ -1305,7 +1307,7 @@ public class MobileConnectConfig {
          * @param fcmEndpoint fcm endpoint
          */
         public void setFcmEndpoint(String fcmEndpoint) {
-            this.fcmEndpoint= fcmEndpoint;
+            this.fcmEndpoint = fcmEndpoint;
         }
 
         /**
@@ -1373,13 +1375,17 @@ public class MobileConnectConfig {
             this.operator = operator;
         }
 
-        public void setRegistrationMessage(String registrationMessage) { this.registrationMessage = registrationMessage; }
+        public void setRegistrationMessage(String registrationMessage) {
+            this.registrationMessage = registrationMessage;
+        }
 
         public void setLoginMessage(String loginMessage) {
             this.loginMessage = loginMessage;
         }
 
-        public void setSmsotpMessage(String smsotpMessage) { this.smsotpMessage = smsotpMessage; }
+        public void setSmsotpMessage(String smsotpMessage) {
+            this.smsotpMessage = smsotpMessage;
+        }
     }
 
     /**
@@ -2047,8 +2053,8 @@ public class MobileConnectConfig {
          * The IP Header name
          */
         private String IPHeaderName;
-        
-        
+
+
         /**
          * The IP Header Override Attribute
          */
@@ -2130,22 +2136,21 @@ public class MobileConnectConfig {
             this.Operators = Operators;
         }
 
-		/**
-		 * @return the isOverrideIpheader
-		 */
+        /**
+         * @return the isOverrideIpheader
+         */
         @XmlElement(name = "OverrideIpheader")
-		public boolean isOverrideIpheader() {
-			return isOverrideIpheader;
-		}
+        public boolean isOverrideIpheader() {
+            return isOverrideIpheader;
+        }
 
-		/**
-		 * @param isOverrideIpheader the isOverrideIpheader to set
-		 */
-		public void setOverrideIpheader(boolean isOverrideIpheader) {
-			this.isOverrideIpheader = isOverrideIpheader;
-		}
-        
-        
+        /**
+         * @param isOverrideIpheader the isOverrideIpheader to set
+         */
+        public void setOverrideIpheader(boolean isOverrideIpheader) {
+            this.isOverrideIpheader = isOverrideIpheader;
+        }
+
 
     }
 
@@ -2841,6 +2846,64 @@ public class MobileConnectConfig {
 
         public void setServiceId(String serviceId) {
             this.serviceId = serviceId;
+        }
+    }
+
+    public static class OperatorsList {
+
+        private List<OperatorData> operatorData;
+
+        @XmlElement(name = "OperatorData")
+        public List<OperatorData> getOperatorData() {
+            return operatorData;
+        }
+
+        public void setOperatorData(List<OperatorData> operatorData) {
+            this.operatorData = operatorData;
+        }
+    }
+
+    public static class OperatorData {
+
+        private String operatorName;
+        private String userInfoEndPointType;
+        private String className;
+        private String userInfoEndPointURL;
+
+        public String getClassName() {
+            return className;
+        }
+
+        @XmlElement(name = "ClassName")
+        public void setClassName(String className) {
+            this.className = className;
+        }
+
+        @XmlElement(name = "OperatorName")
+        public String getOperatorName() {
+            return operatorName;
+        }
+
+        public void setOperatorName(String operaterName) {
+            this.operatorName = operaterName;
+        }
+
+        @XmlElement(name = "UserInfoEndPointType")
+        public String getUserInfoEndPointType() {
+            return userInfoEndPointType;
+        }
+
+        public void setUserInfoEndPointType(String userInfoEndPointType) {
+            this.userInfoEndPointType = userInfoEndPointType;
+        }
+
+        @XmlElement(name = "UserInfoEndPointURL")
+        public String getUserInfoEndPointURL() {
+            return userInfoEndPointURL;
+        }
+
+        public void setUserInfoEndPointURL(String userInfoEndPointURL) {
+            this.userInfoEndPointURL = userInfoEndPointURL;
         }
     }
 }

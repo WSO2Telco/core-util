@@ -8,7 +8,8 @@
 	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
 	the specific language governing permissions and limitations under the License. -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.wso2telco.core</groupId>
@@ -42,10 +43,10 @@
         <module>components/pcr-service</module>
         <module>components/config-util</module>
         <module>components/redis-client</module>
-        <module>components/sp-config-util</module>   
+        <module>components/sp-config-util</module>
         <module>components/security/auth-filter</module>
         <module>components/security/user-profile</module>
-	    <module>features</module>
+        <module>features</module>
     </modules>
 
     <dependencyManagement>
@@ -115,10 +116,10 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-              <groupId>org.wso2.carbon.apimgt</groupId>
-              <artifactId>org.wso2.carbon.apimgt.hostobjects</artifactId>
-              <version>${org.wso2.carbon.apimgt.version}</version>
-              <scope>provided</scope>
+                <groupId>org.wso2.carbon.apimgt</groupId>
+                <artifactId>org.wso2.carbon.apimgt.hostobjects</artifactId>
+                <version>${org.wso2.carbon.apimgt.version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.wso2telco.core</groupId>
@@ -185,9 +186,9 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration> 
-					<additionalparam>-Xdoclint:none</additionalparam> 
-				</configuration> 
+                <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
             </plugin>
         </plugins>
 
