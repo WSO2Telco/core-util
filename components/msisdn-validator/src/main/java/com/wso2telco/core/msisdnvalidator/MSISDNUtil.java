@@ -49,4 +49,8 @@ public class MSISDNUtil {
 
 		return formattedNumber;
 	}
+        
+        public boolean resourceInMsisdnFormat(String msisdnResurce) {
+            return (appendPlusIfNotExist(msisdnResurce) != null );            
+        }
 }
