@@ -25,13 +25,13 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
-@Component(name = "configuration.component", immediate = true)
+//@Component(name = "configuration.component", immediate = true)
 public class CoreConfigComponent {
     private static final Log log = LogFactory.getLog(CoreConfigComponent.class);
     private ServiceRegistration serviceRegistration;
     private ConfigurationService configurationService;
 
-    @Activate
+//    @Activate
     protected void activate(ComponentContext context) throws Exception {
 
         try {
@@ -45,7 +45,7 @@ public class CoreConfigComponent {
         }
     }
 
-    @Deactivate
+//    @Deactivate
     protected void deactivate(ComponentContext ctx) {
 
         //configurationService.unregisterDataHolder();
