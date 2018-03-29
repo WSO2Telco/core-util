@@ -131,6 +131,38 @@ public class McnRangeDbUtil {
         }
         return mncBrand;
     }
+    
+    public static String getMncBrand(String mncCode) throws MobileNtException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT brand "
+                + "FROM operator_brands "
+                + "WHERE operatorcode = ?";
+
+
+        String mncBrand = null;
+
+        try {
+            conn = DbUtils.getDbConnection(DataSourceNames.WSO2TELCO_DEP_DB);
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, mncCode);
+            
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                mncBrand = rs.getString("brand");
+            }
+        } catch (SQLException e) {
+            handleException("Error occured while getting Brand for for mncCode :" +mncCode + ""
+                    + " database", e);
+        } catch (Exception e) {
+            handleException("Error occured while getting Brand for for mncCode :" +mncCode + ""+
+                    " database", e);
+        } finally {
+            DbUtils.closeAllConnections(ps, conn, rs);
+        }
+        return mncBrand;
+    }
 
 
     /**
