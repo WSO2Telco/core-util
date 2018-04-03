@@ -15,6 +15,7 @@
  ******************************************************************************/
 package com.wso2telco.core.config.model;
 
+import java.util.EnumSet;
 import java.util.List;
 
 //todo: this class is duplicated also in gsma authenticator. need to move to core-utils
@@ -33,6 +34,11 @@ public class ScopeParam {
         UNTRUST_MSISDN,
         TRUST_HEADER_MSISDN,
         TRUST_LOGINHINT_MSISDN
+    }
+
+    public enum scopeTypes {
+        MAIN,
+        APICONSENT
     }
 
     private boolean isLoginHintMandatory;
@@ -95,6 +101,7 @@ public class ScopeParam {
     public boolean isTncVisible() {
         return isTncVisible;
     }
+    private EnumSet<scopeTypes> scopeTypesList;
 
     public void setTncVisible(boolean isTncVisible) {
         this.isTncVisible = isTncVisible;
@@ -140,4 +147,7 @@ public class ScopeParam {
         this.consentValidityType = consentValidityType;
     }
 
+    public EnumSet<scopeTypes> getScopeTypesList() {  return scopeTypesList;  }
+
+    public void setScopeTypesList(EnumSet<scopeTypes> scopeTypesList) {    this.scopeTypesList = scopeTypesList;  }
 }
