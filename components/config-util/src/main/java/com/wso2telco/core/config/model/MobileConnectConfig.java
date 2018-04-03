@@ -2923,6 +2923,7 @@ public class MobileConnectConfig {
         private String authorizeEndpoint;
         private String ussdNotifyUrl;
         private String smsCallbackUrl;
+        private String tokenEndpoint;
 
         @XmlElement(name="authorizeEndpoint")
         public String getAuthorizeEndpoint() {
@@ -2949,6 +2950,15 @@ public class MobileConnectConfig {
 
         public void setSmsCallbackUrl(String smsCallbackUrl) {
             this.smsCallbackUrl = smsCallbackUrl;
+        }
+
+        @XmlElement(name="tokenEndpoint")
+        public String getTokenEndpoint() {
+            return tokenEndpoint;
+        }
+
+        public void setTokenEndpoint(String tokenEndpoint) {
+            this.tokenEndpoint = tokenEndpoint;
         }
     }
 }
