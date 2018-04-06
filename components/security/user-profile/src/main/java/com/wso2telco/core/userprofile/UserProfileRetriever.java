@@ -83,6 +83,15 @@ public class UserProfileRetriever {
 			userProfileDTO.setUiPermissions(uiPermissionTree);
 		}
 
+		for(String role: userRoleDTO.getUserRoles()){
+
+			if(role.equalsIgnoreCase("admin")){
+				userProfileDTO.setAdmin(true);
+			}else if(role.equalsIgnoreCase("operator-admin")){
+				userProfileDTO.setOperatorAdmin(true);
+			}
+		}
+		log.info("is admin:" +userProfileDTO.isAdmin()+" is operator"+userProfileDTO.isOperatorAdmin());
 		if (userClaimDTO != null) {
 
 			userProfileDTO.setFirstName(userClaimDTO.getFirstName());
@@ -90,6 +99,10 @@ public class UserProfileRetriever {
 			userProfileDTO.setEmailAddress(userClaimDTO.getEmailAddress());
 			userProfileDTO.setOrganization(userClaimDTO.getOrganization());
 			userProfileDTO.setDepartment(userClaimDTO.getDepartment());
+			if(userProfileDTO.isOperatorAdmin()){
+				userProfileDTO.setOperatorName(userClaimDTO.getOperatorName());
+			}
+			log.info(userProfileDTO.getOperatorName());
 		}
 		return userProfileDTO;
 	}
