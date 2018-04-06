@@ -102,7 +102,6 @@ public class UserProfileRetriever {
 			if(userProfileDTO.isOperatorAdmin()){
 				userProfileDTO.setOperatorName(userClaimDTO.getOperatorName());
 			}
-			log.info(userProfileDTO.getOperatorName());
 		}
 		return userProfileDTO;
 	}
