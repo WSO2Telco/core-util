@@ -25,8 +25,37 @@ public class UserProfileDTO {
 	private String emailAddress;
 	private String organization;
 	private String department;
+	private String operatorName;
 	private String[] userRoles;
 	private Map<String,Object> uiPermissions;
+	private boolean isAdmin;
+	private boolean operatorAdmin;
+	
+	
+
+	public String getOperatorName() {
+		return operatorName;
+	}
+
+	public void setOperatorName(String operatorName) {
+		this.operatorName = operatorName;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public boolean isOperatorAdmin() {
+		return operatorAdmin;
+	}
+
+	public void setOperatorAdmin(boolean operatorAdmin) {
+		this.operatorAdmin = operatorAdmin;
+	}
 
 	public String getUserName() {
 		return userName;

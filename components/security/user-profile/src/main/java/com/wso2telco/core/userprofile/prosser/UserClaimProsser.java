@@ -118,7 +118,7 @@ public class UserClaimProsser {
 		userClaimDTO.setEmailAddress(userClaims.get(ClaimName.EMAIL_ADDRESS));
 		userClaimDTO.setOrganization(userClaims.get(ClaimName.ORGANIZATION));
 		userClaimDTO.setDepartment(userClaims.get(ClaimName.DEPARTMENT));
-
+		userClaimDTO.setOperatorName(userClaims.get(ClaimName.OPERATOR_NAME));
 		return userClaimDTO;
 	}
 }

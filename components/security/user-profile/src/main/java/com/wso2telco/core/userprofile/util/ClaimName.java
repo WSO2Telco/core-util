@@ -21,7 +21,8 @@ public enum ClaimName {
 	LAST_NAME("lastname", "http://wso2.org/claims/lastname"),
 	EMAIL_ADDRESS("emailaddress", "http://wso2.org/claims/emailaddress"),
 	ORGANIZATION("organization", "http://wso2.org/claims/organization"),
-	DEPARTMENT("department", "http://wso2.org/claims/department");
+	DEPARTMENT("department", "http://wso2.org/claims/department"),
+	OPERATOR_NAME("operatorName", "http://wso2.org/claims/operatorName");
 	
 	ClaimName(String claim, String claimURL) {
 

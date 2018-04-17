@@ -23,6 +23,17 @@ public class UserClaimDTO {
 	private String emailAddress;
 	private String organization;
 	private String department;
+	private String operatorName;
+
+	
+	
+	public String getOperatorName() {
+		return operatorName;
+	}
+
+	public void setOperatorName(String operatorName) {
+		this.operatorName = operatorName;
+	}
 
 	public String getUserName() {
 		return userName;
