@@ -103,6 +103,8 @@ public class MobileConnectConfig {
 
     protected OperatorsList operatorsList;
 
+    private BackChannelConfig backChannelConfig;
+
     @XmlElement(name = "WSO2APIMDataSourceName")
     public String getWso2APIMDataSourceName() {
         return wso2APIMDataSourceName;
@@ -137,6 +139,15 @@ public class MobileConnectConfig {
 
     public void setVoiceConfig(VoiceConfig voiceConfig) {
         this.voiceConfig = voiceConfig;
+    }
+
+    @XmlElement(name = "BackChannelConfig")
+    public BackChannelConfig getBackChannelConfig() {
+        return backChannelConfig;
+    }
+
+    public void setBackChannelConfig(BackChannelConfig backChannelConfig) {
+        this.backChannelConfig = backChannelConfig;
     }
 
     /**
@@ -2904,6 +2915,50 @@ public class MobileConnectConfig {
 
         public void setUserInfoEndPointURL(String userInfoEndPointURL) {
             this.userInfoEndPointURL = userInfoEndPointURL;
+        }
+    }
+
+    public static class BackChannelConfig {
+
+        private String authorizeEndpoint;
+        private String ussdNotifyUrl;
+        private String smsCallbackUrl;
+        private String tokenEndpoint;
+
+        @XmlElement(name="authorizeEndpoint")
+        public String getAuthorizeEndpoint() {
+            return authorizeEndpoint;
+        }
+
+        public void setAuthorizeEndpoint(String authorizeEndpoint) {
+            this.authorizeEndpoint = authorizeEndpoint;
+        }
+
+        @XmlElement(name="ussdNotifyUrl")
+        public String getUssdNotifyUrl() {
+            return ussdNotifyUrl;
+        }
+
+        public void setUssdNotifyUrl(String ussdNotifyUrl) {
+            this.ussdNotifyUrl = ussdNotifyUrl;
+        }
+
+        @XmlElement(name="smsCallbackUrl")
+        public String getSmsCallbackUrl() {
+            return smsCallbackUrl;
+        }
+
+        public void setSmsCallbackUrl(String smsCallbackUrl) {
+            this.smsCallbackUrl = smsCallbackUrl;
+        }
+
+        @XmlElement(name="tokenEndpoint")
+        public String getTokenEndpoint() {
+            return tokenEndpoint;
+        }
+
+        public void setTokenEndpoint(String tokenEndpoint) {
+            this.tokenEndpoint = tokenEndpoint;
         }
     }
 }
