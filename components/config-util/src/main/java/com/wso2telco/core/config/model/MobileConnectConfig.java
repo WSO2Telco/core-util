@@ -1547,6 +1547,11 @@ public class MobileConnectConfig {
         private String pinMismatchMessage;
 
         /**
+         * The redirect to pin reset Flow messaage
+         */
+        private String pinResetFlowMessage;
+
+        /**
          * The pin registration success message
          */
         private String pinRegistrationSuccessMessage;
@@ -1617,6 +1622,11 @@ public class MobileConnectConfig {
         @XmlElement(name = "PinMismatchMessage")
         public String getPinMismatchMessage() {
             return pinMismatchMessage;
+        }
+
+        @XmlElement(name = "PinResetFlowMessage")
+        public String getPinResetFlowMessage() {
+            return pinResetFlowMessage;
         }
 
         @XmlElement(name = "PinRegistrationSuccessMessage")
@@ -1925,6 +1935,10 @@ public class MobileConnectConfig {
 
         public void setPinMismatchMessage(String pinMismatchMessage) {
             this.pinMismatchMessage = pinMismatchMessage;
+        }
+
+        public void setPinResetFlowMessage(String pinResetFlowMessage) {
+            this.pinResetFlowMessage = pinResetFlowMessage;
         }
 
         public void setPinRegistrationSuccessMessage(String pinRegistrationSuccessMessage) {
