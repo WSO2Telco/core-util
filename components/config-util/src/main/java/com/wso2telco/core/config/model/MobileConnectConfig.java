@@ -105,6 +105,8 @@ public class MobileConnectConfig {
 
     private BackChannelConfig backChannelConfig;
 
+    private SpProvisionConfig spProvisionConfig;
+
     @XmlElement(name = "WSO2APIMDataSourceName")
     public String getWso2APIMDataSourceName() {
         return wso2APIMDataSourceName;
@@ -148,6 +150,15 @@ public class MobileConnectConfig {
 
     public void setBackChannelConfig(BackChannelConfig backChannelConfig) {
         this.backChannelConfig = backChannelConfig;
+    }
+
+    @XmlElement(name = "SpProvisionConfig")
+    public SpProvisionConfig getSpProvisionConfig() {
+        return spProvisionConfig;
+    }
+
+    public void setSpProvisionConfig(SpProvisionConfig spProvisionConfig) {
+        this.spProvisionConfig = spProvisionConfig;
     }
 
     /**
@@ -2973,6 +2984,175 @@ public class MobileConnectConfig {
 
         public void setTokenEndpoint(String tokenEndpoint) {
             this.tokenEndpoint = tokenEndpoint;
+        }
+    }
+
+    public static class SpProvisionConfig{
+        private String defaultUserPassword;
+        private String apiManagerUrl;
+        private String migUserName;
+        private String migUserPassword;
+        private String authUrl;
+        private String TokenUrl;
+        private String amTokenUrl;
+        private String UserInfoUrl;
+        private ApiConfigs apiConfigs;
+        private String oauthVersion;
+        private String grantTypes;
+
+        @XmlElement(name="DefaultUserPassword")
+        public String getDefaultUserPassword() {
+            return defaultUserPassword;
+        }
+
+        public void setDefaultUserPassword(String defaultUserPassword) {
+            this.defaultUserPassword = defaultUserPassword;
+        }
+
+        @XmlElement(name="ApiManagerUrl")
+        public String getApiManagerUrl() {
+            return apiManagerUrl;
+        }
+
+        public void setApiManagerUrl(String apiManagerUrl) {
+            this.apiManagerUrl = apiManagerUrl;
+        }
+
+        @XmlElement(name="MigUserName")
+        public String getMigUserName() {
+            return migUserName;
+        }
+
+        public void setMigUserName(String migUserName) {
+            this.migUserName = migUserName;
+        }
+
+        @XmlElement(name="MigUserPassword")
+        public String getMigUserPassword() {
+            return migUserPassword;
+        }
+
+        public void setMigUserPassword(String migUserPassword) {
+            this.migUserPassword = migUserPassword;
+        }
+
+        @XmlElement(name="AuthUrl")
+        public String getAuthUrl() {
+            return authUrl;
+        }
+
+        public void setAuthUrl(String authUrl) {
+            this.authUrl = authUrl;
+        }
+
+        @XmlElement(name="TokenUrl")
+        public String getTokenUrl() {
+            return TokenUrl;
+        }
+
+        public void setTokenUrl(String tokenUrl) {
+            TokenUrl = tokenUrl;
+        }
+
+        @XmlElement(name="AmTokenUrl")
+        public String getAmTokenUrl() {
+            return amTokenUrl;
+        }
+
+        public void setAmTokenUrl(String amTokenUrl) {
+            this.amTokenUrl = amTokenUrl;
+        }
+
+        @XmlElement(name="UserInfoUrl")
+        public String getUserInfoUrl() {
+            return UserInfoUrl;
+        }
+
+        public void setUserInfoUrl(String userInfoUrl) {
+            UserInfoUrl = userInfoUrl;
+        }
+
+        @XmlElement(name="ApiConfigs")
+        public ApiConfigs getApiConfigs() {
+            return apiConfigs;
+        }
+
+        public void setApiConfigs(ApiConfigs apiConfigs) {
+            this.apiConfigs = apiConfigs;
+        }
+
+        @XmlElement(name="OauthVersion")
+        public String getOauthVersion() {
+            return oauthVersion;
+        }
+
+        public void setOauthVersion(String oauthVersion) {
+            this.oauthVersion = oauthVersion;
+        }
+
+        @XmlElement(name="GrantTypes")
+        public String getGrantTypes() {
+            return grantTypes;
+        }
+
+        public void setGrantTypes(String grantTypes) {
+            this.grantTypes = grantTypes;
+        }
+    }
+
+    public static class ApiConfigs{
+        private List<Api> apiList;
+
+        @XmlElement(name="Api")
+        public List<Api> getApiList() {
+            return apiList;
+        }
+
+        public void setApiList(List<Api> apiList) {
+            this.apiList = apiList;
+        }
+    }
+
+    public static class Api{
+        private String apiName;
+        private String apiVersion;
+        private String apiprovider;
+        private String apiTier;
+
+        @XmlElement(name="ApiName")
+        public String getApiName() {
+            return apiName;
+        }
+
+        public void setApiName(String apiName) {
+            this.apiName = apiName;
+        }
+
+        @XmlElement(name="ApiVersion")
+        public String getApiVersion() {
+            return apiVersion;
+        }
+
+        public void setApiVersion(String apiVersion) {
+            this.apiVersion = apiVersion;
+        }
+
+        @XmlElement(name="ApiProvider")
+        public String getApiprovider() {
+            return apiprovider;
+        }
+
+        public void setApiprovider(String apiprovider) {
+            this.apiprovider = apiprovider;
+        }
+
+        @XmlElement(name="ApiTier")
+        public String getApiTier() {
+            return apiTier;
+        }
+
+        public void setApiTier(String apiTier) {
+            this.apiTier = apiTier;
         }
     }
 }
