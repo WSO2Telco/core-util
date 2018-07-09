@@ -2987,7 +2987,7 @@ public class MobileConnectConfig {
         }
     }
 
-    public static class SpProvisionConfig{
+    public static class SpProvisionConfig {
         private String defaultUserPassword;
         private String apiManagerUrl;
         private String migUserName;
@@ -2999,6 +2999,7 @@ public class MobileConnectConfig {
         private ApiConfigs apiConfigs;
         private String oauthVersion;
         private String grantTypes;
+        private String migUrl;
 
         @XmlElement(name="DefaultUserPassword")
         public String getDefaultUserPassword() {
@@ -3097,6 +3098,15 @@ public class MobileConnectConfig {
 
         public void setGrantTypes(String grantTypes) {
             this.grantTypes = grantTypes;
+        }
+
+        @XmlElement(name = "MIGUrl")
+        public String getMigUrl() {
+            return migUrl;
+        }
+
+        public void setMigUrl(String migUrl) {
+            this.migUrl = migUrl;
         }
     }
 
