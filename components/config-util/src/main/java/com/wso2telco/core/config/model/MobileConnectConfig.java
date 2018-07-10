@@ -2987,7 +2987,7 @@ public class MobileConnectConfig {
         }
     }
 
-    public static class SpProvisionConfig{
+    public static class SpProvisionConfig {
         private String defaultUserPassword;
         private String apiManagerUrl;
         private String migUserName;
