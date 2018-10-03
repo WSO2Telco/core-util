@@ -1362,6 +1362,8 @@ public class MobileConnectConfig {
 
         private String smsotpMessage;
 
+        private String apiConsentMessage;
+
         @XmlAttribute(name = "operator")
         public String getOperator() {
             return operator;
@@ -1382,6 +1384,11 @@ public class MobileConnectConfig {
             return smsotpMessage;
         }
 
+        @XmlElement(name = "APIConsentMessage")
+        public String getApiConsentMessage() {
+            return apiConsentMessage;
+        }
+
         public void setOperator(String operator) {
             this.operator = operator;
         }
@@ -1397,6 +1404,11 @@ public class MobileConnectConfig {
         public void setSmsotpMessage(String smsotpMessage) {
             this.smsotpMessage = smsotpMessage;
         }
+
+        public void setApiConsentMessage(String apiConsentMessage) {
+            this.apiConsentMessage = apiConsentMessage;
+        }
+
     }
 
     /**
@@ -1512,6 +1524,11 @@ public class MobileConnectConfig {
         private String ussdLoginMessage;
 
         /**
+         * The ussd message for api consent
+         */
+        private String apiConsentMessage;
+
+        /**
          * The pin registration notification url
          */
         private String pinRegistrationNotifyUrl;
@@ -1599,6 +1616,18 @@ public class MobileConnectConfig {
          * The Operator Specific Messages
          */
         private OperatorSpecificPinMessages operatorSpecificPinMessages;
+        /**
+         * The USSD approve once responses
+         */
+        private String approveOnceInputs;
+        /**
+         * The USSD approve always responses
+         */
+        private String approveAlwaysInputs;
+        /**
+         * The USSD deny responses
+         */
+        private String denyInputs;
 
         @XmlElement(name = "TimeoutConfig")
         public TimeoutConfig getTimeoutConfig() {
@@ -1697,6 +1726,11 @@ public class MobileConnectConfig {
         @XmlElement(name = "InvalidFormatPinAttempts")
         public String getInvalidFormatPinAttempts() {
             return invalidFormatPinAttempts;
+        }
+
+        @XmlElement(name = "APIConsentMessage")
+        public String getApiConsentMessage() {
+            return apiConsentMessage;
         }
 
         /**
@@ -1804,6 +1838,21 @@ public class MobileConnectConfig {
             return operatorSpecificMessages;
         }
 
+        @XmlElement(name = "ApproveOnceInputs")
+        public String getApproveOnceInputs() {
+            return approveOnceInputs;
+        }
+
+        @XmlElement(name = "ApproveAlwaysInputs")
+        public String getApproveAlwaysInputs() {
+            return approveAlwaysInputs;
+        }
+
+        @XmlElement(name = "DenyInputs")
+        public String getDenyInputs() {
+            return denyInputs;
+        }
+
         public void setLoginNotifyUrl(String loginNotifyUrl) {
             this.loginNotifyUrl = loginNotifyUrl;
         }
@@ -1901,6 +1950,10 @@ public class MobileConnectConfig {
             this.ussdRegistrationMessage = ussdRegistrationMessage;
         }
 
+        public void setApiConsentMessage(String apiConsentMessage) {
+            this.apiConsentMessage = apiConsentMessage;
+        }
+
         public void setPinRegistrationMessage(String pinRegistrationMessage) {
             this.pinRegistrationMessage = pinRegistrationMessage;
         }
@@ -1967,6 +2020,18 @@ public class MobileConnectConfig {
 
         public void setRejectUserInputs(String rejectUserInputs) {
             this.rejectUserInputs = rejectUserInputs;
+        }
+
+        public void setApproveOnceInputs(String approveOnceInputs) {
+            this.approveOnceInputs = approveOnceInputs;
+        }
+
+        public void setApproveAlwaysInputs(String approveAlwaysInputs) {
+            this.approveAlwaysInputs = approveAlwaysInputs;
+        }
+
+        public void setDenyInputs(String denyInputs) {
+            this.denyInputs = denyInputs;
         }
 
         public void setOperatorSpecificMessages(OperatorSpecificMessages operatorSpecificMessages) {

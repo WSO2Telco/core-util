@@ -26,6 +26,7 @@ public class ConfigKey {
     public static final String SP_USSD_REGISTRATION_MESSAGE = "spUssdRegistrationMessage";
     public static final String SP_USSD_PIN_LOGIN_MESSAGE = "spUssdPinLoginMessage";
     public static final String SP_USSD_PIN_REGISTRATION_MESSAGE = "spUssdPinRegistrationMessage";
+    public static final String SP_USSD_APICONSENT_MESSAGE = "spUssdAPIConsentMessage";
     public static final String SP_SMS_REGISTRATION_MESSAGE = "spSmsRegistrationMessage";
     public static final String SP_SMS_LOGIN_MESSAGE = "spSmsLoginMessage";
     public static final String SP_SMS_OTP_MESSAGE = "spSmsOTPMessage";
