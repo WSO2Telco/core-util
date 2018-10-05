@@ -20,7 +20,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
-import java.util.Map;
 
 // TODO: Auto-generated Javadoc
 
@@ -3003,6 +3002,8 @@ public class MobileConnectConfig {
         private String ussdNotifyUrl;
         private String smsCallbackUrl;
         private String tokenEndpoint;
+        private String ussdApiNotifyUrl;
+        private String ussdApiRegNotifyUrl;
 
         @XmlElement(name="authorizeEndpoint")
         public String getAuthorizeEndpoint() {
@@ -3038,6 +3039,24 @@ public class MobileConnectConfig {
 
         public void setTokenEndpoint(String tokenEndpoint) {
             this.tokenEndpoint = tokenEndpoint;
+        }
+
+        @XmlElement(name="ussdApiNotifyUrl")
+        public String getUssdApiNotifyUrl() {
+            return ussdApiNotifyUrl;
+        }
+
+        public void setUssdApiNotifyUrl(String ussdApiNotifyUrl) {
+            this.ussdApiNotifyUrl = ussdApiNotifyUrl;
+        }
+
+        @XmlElement(name="ussdApiRegNotifyUrl")
+        public String getUssdApiRegNotifyUrl() {
+            return ussdApiRegNotifyUrl;
+        }
+
+        public void setUssdApiRegNotifyUrl(String ussdApiRegNotifyUrl) {
+            this.ussdApiRegNotifyUrl = ussdApiRegNotifyUrl;
         }
     }
 }
