@@ -192,6 +192,17 @@ public class SpConfigDAOImpl implements SpConfigDAO,Serializable {
     }
 
     @Override
+    public String getUSSDAPIConsentMessage(String clientId) {
+        try {
+            List<String> spUssdLoginMessages = getConfig(clientId, ConfigKey.SP_USSD_APICONSENT_MESSAGE);
+            return spUssdLoginMessages.get(0);
+        } catch (Exception e) {
+            // return null if no configuration value found for sp
+            return null;
+        }
+    }
+
+    @Override
     public String getSMSLoginMessage(String clientId) {
         try {
             List<String> spSMSLoginMessages = getConfig(clientId, ConfigKey.SP_SMS_LOGIN_MESSAGE);

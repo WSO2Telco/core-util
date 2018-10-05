@@ -80,6 +80,11 @@ public class SpConfigServiceImpl implements SpConfigService,Serializable {
     }
 
     @Override
+    public String getUSSDAPIConsentMessage(String clientId) {
+        return spConfigDAO.getUSSDAPIConsentMessage(clientId);
+    }
+
+    @Override
     public String getSMSRegistrationMessage(String clientId) {
         return spConfigDAO.getSMSRegistrationMessage(clientId);
     }
