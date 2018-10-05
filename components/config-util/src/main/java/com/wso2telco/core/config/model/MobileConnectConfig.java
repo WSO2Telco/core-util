@@ -3002,6 +3002,7 @@ public class MobileConnectConfig {
         private String ussdNotifyUrl;
         private String smsCallbackUrl;
         private String tokenEndpoint;
+        private String userConsentEndpoint;
         private String ussdApiNotifyUrl;
         private String ussdApiRegNotifyUrl;
 
@@ -3039,6 +3040,15 @@ public class MobileConnectConfig {
 
         public void setTokenEndpoint(String tokenEndpoint) {
             this.tokenEndpoint = tokenEndpoint;
+        }
+
+        @XmlElement(name="userConsentEndpoint")
+        public String getUserConsentEndpoint() {
+            return userConsentEndpoint;
+        }
+
+        public void setUserConsentEndpoint(String userConsentEndpoint) {
+            this.userConsentEndpoint = userConsentEndpoint;
         }
 
         @XmlElement(name="ussdApiNotifyUrl")
