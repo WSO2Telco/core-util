@@ -3005,6 +3005,7 @@ public class MobileConnectConfig {
         private String userConsentEndpoint;
         private String ussdApiNotifyUrl;
         private String ussdApiRegNotifyUrl;
+        private String trustedNotifyUrl;
 
         @XmlElement(name="authorizeEndpoint")
         public String getAuthorizeEndpoint() {
@@ -3067,6 +3068,15 @@ public class MobileConnectConfig {
 
         public void setUssdApiRegNotifyUrl(String ussdApiRegNotifyUrl) {
             this.ussdApiRegNotifyUrl = ussdApiRegNotifyUrl;
+        }
+
+        @XmlElement(name ="trustedNotifyUrl")
+        public String getTrustedNotifyUrl() {
+            return trustedNotifyUrl;
+        }
+
+        public void setTrustedNotifyUrl(String trustedNotifyUrl) {
+            this.trustedNotifyUrl = trustedNotifyUrl;
         }
     }
 }
