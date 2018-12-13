@@ -26,7 +26,7 @@
         </ManagementPermission>
         <ManagementPermission>
             <DisplayName>Credit Plan</DisplayName>
-            <ResourceId>/permission/UIModulePermission/application/CreditPlan</ResourceId>
+            <ResourceId>/permission/UIModulePermission/application/creditPlan</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
             <DisplayName>Tiers</DisplayName>
