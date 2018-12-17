@@ -23,12 +23,7 @@ import com.wso2telco.core.userprofile.util.UserRolePermissionType;
 
 public class UserRolePermissionFactory {
 	private static UserRolePermissionFactory instance;
-	
-	private  Map<UserRolePermissionType,UserRolePermission> permissionBuilderMap;
-	
-	private UserRolePermissionFactory() {
-		permissionBuilderMap = new HashMap<UserRolePermissionType,UserRolePermission>();
-	}
+
 	public static UserRolePermissionFactory getInstance() {
 		if(instance==null) {
 			instance= new UserRolePermissionFactory();
@@ -43,12 +38,7 @@ public class UserRolePermissionFactory {
 
 		switch (userRolePermissionType) {
 		case UI_PERMISSION:{
-				if(permissionBuilderMap.containsKey(userRolePermissionType)) {
-					userRolePermission = permissionBuilderMap.get(userRolePermissionType);
-				}else {
 					userRolePermission = new WSO2PermissionBuilder();
-					permissionBuilderMap.put(userRolePermissionType, userRolePermission);
-				}
 			}
 			break;
 		default:
