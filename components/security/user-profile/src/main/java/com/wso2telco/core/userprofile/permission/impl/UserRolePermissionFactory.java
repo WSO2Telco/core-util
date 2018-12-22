@@ -15,8 +15,6 @@
  ******************************************************************************/
 package com.wso2telco.core.userprofile.permission.impl;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import com.wso2telco.core.dbutils.exception.BusinessException;
 import com.wso2telco.core.userprofile.util.UserRolePermissionType;
@@ -32,19 +30,19 @@ public class UserRolePermissionFactory {
 	}
 	
 
-	public UserRolePermission getUserRolePermissionExecuter(UserRolePermissionType userRolePermissionType) throws BusinessException  {
+    public UserRolePermission getUserRolePermissionExecuter(UserRolePermissionType userRolePermissionType) throws BusinessException {
 
-		UserRolePermission userRolePermission = null;
+        UserRolePermission userRolePermission = null;
 
-		switch (userRolePermissionType) {
-		case UI_PERMISSION:{
-					userRolePermission = new WSO2PermissionBuilder();
-			}
-			break;
-		default:
-			break;
-		}
+        switch (userRolePermissionType) {
+            case UI_PERMISSION: {
+                userRolePermission = new WSO2PermissionBuilder();
+            }
+            break;
+            default:
+                break;
+        }
 
-		return userRolePermission;
-	}
+        return userRolePermission;
+    }
 }

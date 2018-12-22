@@ -200,7 +200,7 @@ class WSO2PermissionBuilder implements UserRolePermission {
 			this.returnMap.put(resourcePathSplit[resourcePathSplit.length-1], mergeEntry.returnMap);
 			if(mergeEntry.atLeastOneSelected) {
 				this.atLeastOneSelected = mergeEntry.atLeastOneSelected;
-				}
+			}
 		}
 
 	}

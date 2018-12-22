@@ -92,5 +92,9 @@
             <DisplayName>Whitelist</DisplayName>
             <ResourceId>/permission/UIModulePermission/whiteList</ResourceId>
         </ManagementPermission>
+        <ManagementPermission>
+            <DisplayName>User Mask</DisplayName>
+            <ResourceId>/permission/UIModulePermission/user-mask</ResourceId>
+        </ManagementPermission>
     </ManagementPermissions>
 </component>
