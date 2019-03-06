@@ -60,4 +60,35 @@ public class UserAuthorizationValidator {
 		log.error("authorization failed for user : " + userName);
 		return false;
 	}
+
+	/**
+	 * Checks the list of allowed scopes for a api resource against the scopes
+	 * granted to a token
+	 *
+	 * @param currentTokenScopes Scopes granted to the token being evaluated
+	 * @param allowedScopeSet Scopes allowed to access the APIs resource
+	 * @return Boolean
+	 *
+	 */
+	public Boolean isAuthorizedScope(String[] currentTokenScopes, Set<String> allowedScopeSet){
+
+		List<String> currentTokenScopesList = Arrays.asList(currentTokenScopes);
+
+		Iterator<String> iterator = allowedScopeSet.iterator();
+		while (iterator.hasNext()) {
+
+			String allowedScope = iterator.next();
+			if (currentTokenScopesList.contains(allowedScope)) {
+
+				return true;
+			}
+		}
+
+		if(log.isDebugEnabled()){
+			log.debug("Required OAuth Scopes: " + allowedScopeSet);
+			log.debug("Available OAuth Scopes: " + currentTokenScopesList);
+		}
+
+	return false;
+	}
 }
