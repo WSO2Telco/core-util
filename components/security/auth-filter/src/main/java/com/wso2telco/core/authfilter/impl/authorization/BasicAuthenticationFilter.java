@@ -15,106 +15,107 @@
  ******************************************************************************/
 package com.wso2telco.core.authfilter.impl.authorization;
 
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.StringTokenizer;
-import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.core.Response;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import com.wso2telco.core.authfilter.authentication.BasicAuthenticator;
 import com.wso2telco.core.authfilter.authorization.UserAuthorizationValidator;
 import com.wso2telco.core.authfilter.impl.AuthenticationFilter;
 import com.wso2telco.core.authfilter.util.AuthFilterParam;
 import com.wso2telco.core.authfilter.util.HeaderParam;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.Response;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 public class BasicAuthenticationFilter implements AuthenticationFilter {
 
-	private final Log log = LogFactory.getLog(BasicAuthenticationFilter.class);
+    private final Log log = LogFactory.getLog(BasicAuthenticationFilter.class);
 
-	Response accessDenied = Response.status(Response.Status.UNAUTHORIZED).entity("You cannot access this resource")
-			.build();
-	private BasicAuthenticator userAuthentication = new BasicAuthenticator();
-	private UserAuthorizationValidator userAuthorizationValidator = new UserAuthorizationValidator();
+    Response accessDenied = Response.status(Response.Status.UNAUTHORIZED).entity("You cannot access this resource")
+            .build();
+    private BasicAuthenticator userAuthentication = new BasicAuthenticator();
+    private UserAuthorizationValidator userAuthorizationValidator = new UserAuthorizationValidator();
 
-	private String userName = null;
+    private String userName = null;
 
-	@Override
-	public boolean isAuthenticated(ContainerRequestContext requestContext, Method method, String authorizationHeader) {
+    @Override
+    public boolean isAuthenticated(ContainerRequestContext requestContext, Method method, String authorizationHeader) {
 
-		String password = null;
-		boolean isAuthenticated = false;
-		
-		// get base 64 encoded username and password
-		final String encodedUserPassword = authorizationHeader
-				.replaceFirst(AuthFilterParam.AUTHENTICATION_SCHEME_BASIC.getTObject() + " ", "");
+        String password = null;
+        boolean isAuthenticated = false;
 
-		log.debug("base64 encoded username and password : " + encodedUserPassword);
+        // get base 64 encoded username and password
+        final String encodedUserPassword = authorizationHeader
+                .replaceFirst(AuthFilterParam.AUTHENTICATION_SCHEME_BASIC.getTObject() + " ", "");
 
-		if (encodedUserPassword != null && encodedUserPassword.trim().length() > 0) {
+        log.debug("base64 encoded username and password : " + encodedUserPassword);
 
-			// decode username and password
-			String usernameAndPassword = new String(Base64.decodeBase64(encodedUserPassword.getBytes()));
+        if (encodedUserPassword != null && encodedUserPassword.trim().length() > 0) {
 
-			// split username and password by :
-			final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
+            // decode username and password
+            String usernameAndPassword = new String(Base64.decodeBase64(encodedUserPassword.getBytes()));
 
-			if (tokenizer.countTokens() > 1) {
+            // split username and password by :
+            final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
 
-				userName = tokenizer.nextToken();
-				password = tokenizer.nextToken();
+            if (tokenizer.countTokens() > 1) {
 
-				log.debug("username : " + userName);
-				log.debug("password : " + password);
+                userName = tokenizer.nextToken();
+                password = tokenizer.nextToken();
 
-				// validate user authentication
-				isAuthenticated = userAuthentication.isAuthenticatedUser(userName, password);
+                log.debug("username : " + userName);
+                log.debug("password : " + password);
 
-				if (!isAuthenticated) {
+                // validate user authentication
+                isAuthenticated = userAuthentication.isAuthenticatedUser(userName, password);
 
-					requestContext.abortWith(accessDenied);
-					return false;
-				}
-			} else {
+                if (!isAuthenticated) {
 
-				requestContext.abortWith(accessDenied);
-				return false;
-			}
-		} else {
+                    requestContext.abortWith(accessDenied);
+                    return false;
+                }
+            } else {
 
-			requestContext.abortWith(accessDenied);
-			return false;
-		}
+                requestContext.abortWith(accessDenied);
+                return false;
+            }
+        } else {
 
-		return true;
-	}
+            requestContext.abortWith(accessDenied);
+            return false;
+        }
 
-	@Override
-	public boolean isAuthorized(ContainerRequestContext requestContext, Method method) {
+        return true;
+    }
 
-		boolean isAuthorized = false;
-		
-		requestContext.getHeaders().add(HeaderParam.USER_NAME.getTObject(), userName);
-		
-		// validate user authorization by using user roles
-		if (method.isAnnotationPresent(RolesAllowed.class)) {
+    @Override
+    public boolean isAuthorized(ContainerRequestContext requestContext, Method method) {
 
-			RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
-			Set<String> allowedRolesSet = new HashSet<>(Arrays.asList(rolesAnnotation.value()));
+        boolean isAuthorized = false;
 
-			isAuthorized = userAuthorizationValidator.isAuthorizedRole(userName, allowedRolesSet);
+        requestContext.getHeaders().add(HeaderParam.USER_NAME.getTObject(), userName);
 
-			if (!isAuthorized) {
+        // validate user authorization by using user roles
+        if (method.isAnnotationPresent(RolesAllowed.class)) {
 
-				requestContext.abortWith(accessDenied);
-				return false;
-			}
-		}
+            RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
+            Set<String> allowedRolesSet = new HashSet<>(Arrays.asList(rolesAnnotation.value()));
 
-		return true;
-	}
+            isAuthorized = userAuthorizationValidator.isAuthorizedRole(userName, allowedRolesSet);
+
+            if (!isAuthorized) {
+
+                requestContext.abortWith(accessDenied);
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
