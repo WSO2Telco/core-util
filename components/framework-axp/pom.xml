@@ -6,6 +6,7 @@
         <artifactId>core-parent</artifactId>
         <groupId>com.wso2telco.core</groupId>
         <version>2.4.5-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
