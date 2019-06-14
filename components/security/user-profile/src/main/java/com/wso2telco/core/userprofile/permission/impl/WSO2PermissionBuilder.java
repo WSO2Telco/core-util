@@ -55,7 +55,7 @@ class WSO2PermissionBuilder implements UserRolePermission {
             userAdminStub._getServiceClient().getOptions().setProperty(HTTPConstants.CONNECTION_TIMEOUT, DEFAULT_CONNECTION_TIMEOUT);
         } catch (AxisFault e) {
             log.error("", e);
-            throw new BusinessException(GenaralError.INTERNAL_SERVER_ERROR);
+            throw new BusinessException(GenaralError.INTERNAL_SERVER_ERROR, e);
         }
         CarbonUtils.setBasicAccessSecurityHeaders(adminUsername, adminPassword, userAdminStub._getServiceClient());
     }
@@ -128,7 +128,7 @@ class WSO2PermissionBuilder implements UserRolePermission {
 
         } catch (RemoteException | UserAdminUserAdminException e) {
             log.error("UIPermission.build", e);
-            throw new BusinessException(GenaralError.INTERNAL_SERVER_ERROR);
+            throw new BusinessException(GenaralError.INTERNAL_SERVER_ERROR, e);
         }
         if (retunItem.returnMap.isEmpty()) {
             log.warn(" No ui permission tree found for " + userName);

@@ -30,7 +30,7 @@ public class UserRolePermissionFactory {
         permissionBuilderMap = new HashMap<UserRolePermissionType, UserRolePermission>();
     }
 
-    public static UserRolePermissionFactory getInstance() {
+    public static synchronized UserRolePermissionFactory getInstance() {
         if (instance == null) {
             instance = new UserRolePermissionFactory();
         }
