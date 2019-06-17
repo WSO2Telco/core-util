@@ -3,12 +3,14 @@ package framework.cache;
 import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.google.common.base.Joiner;
+import framework.logging.LazyLogger;
+import framework.logging.LazyLoggerFactory;
 
 /**
  * Cache implementation for the AXP.
@@ -18,6 +20,7 @@ import org.apache.commons.logging.LogFactory;
  * <p>
  * Note that in the implementation {@link SoftReference} has used to wrap the object.
  * softly-reachable objects are guaranteed to have been cleared before the virtual machine throws an OutOfMemoryError.
+ * There is a separate task to clean cleared soft references from the map.
  * <p>
  * !!! HIGH IMPORTANT !!!
  * <p>
@@ -27,15 +30,27 @@ import org.apache.commons.logging.LogFactory;
 public final class AXPCache implements ICache
 {
 
+  /**
+   * five minutes delay between purging task
+   */
+  private static final long DEFAULT_PURGING_TIME = 5 * 60 * 60 * 1000;
+
+  /**
+   * one minute delay between soft reference cleaning task
+   */
+  private static final long EMPTY_REFERENCE_CLEANING_TASK_DELAY = 60 * 60 * 1000;
+
+  private static LazyLogger log = LazyLoggerFactory.getLogger(AXPCache.class);
+
+  private final ConcurrentHashMap<Object, SoftReference<CacheObject>> cache = new ConcurrentHashMap<>();
+
   private boolean noTimeLimit;
 
   private long ttl;
 
-  private static Log log = LogFactory.getLog(AXPCache.class);
+  private ScheduledExecutorService purgeExecutor;
 
-  private final ConcurrentHashMap<Object, SoftReference<CacheObject>> cache = new ConcurrentHashMap<>();
-
-  private static final long DEFAULT_PURGING_TIME = 5 * 60 * 60 * 1000;
+  private ScheduledExecutorService cleanEmptyReferencesExecutor;
 
   /**
    * Initialize cache with the given time to live value.
@@ -46,7 +61,7 @@ public final class AXPCache implements ICache
   public AXPCache(long ttl)
   {
     this.ttl = ttl;
-    initPurgingTask(this.ttl);
+    initCleaningTasks(this.ttl);
   }
 
   /**
@@ -62,7 +77,7 @@ public final class AXPCache implements ICache
     if (!noTimeLimit)
     {
       ttl = getDefaultTTLFromConfiguration();
-      initPurgingTask(ttl);
+      initCleaningTasks(ttl);
     }
     else
     {
@@ -70,7 +85,7 @@ public final class AXPCache implements ICache
       /**
        * if there are any expired objects available in the cache need to clean them.
        */
-      initPurgingTask(DEFAULT_PURGING_TIME);
+      initCleaningTasks(DEFAULT_PURGING_TIME);
     }
   }
 
@@ -81,7 +96,7 @@ public final class AXPCache implements ICache
   public AXPCache()
   {
     ttl = getDefaultTTLFromConfiguration();
-    initPurgingTask(ttl);
+    initCleaningTasks(ttl);
   }
 
   /**
@@ -205,22 +220,28 @@ public final class AXPCache implements ICache
     return ttl;
   }
 
-  private void initPurgingTask(final long ttl)
+  private void initCleaningTasks(final long ttl)
+  {
+    initSoftReferenceCleaningTask();
+    initPurgingTask(ttl);
+  }
+
+  private void initPurgingTask(long ttl)
   {
     if (ttl <= 0)
     {
       return;
     }
-    TimerTask cleanerTask = new TimerTask()
-    {
-      @Override
-      public void run()
-      {
-        purge();
-      }
-    };
-    Timer timer = new Timer("Timer");
-    timer.scheduleAtFixedRate(cleanerTask, ttl, ttl);
+
+    purgeExecutor = Executors.newSingleThreadScheduledExecutor();
+    purgeExecutor.scheduleAtFixedRate(() -> purge(), ttl, ttl, TimeUnit.MILLISECONDS);
+  }
+
+  private void initSoftReferenceCleaningTask()
+  {
+    cleanEmptyReferencesExecutor = Executors.newSingleThreadScheduledExecutor();
+    cleanEmptyReferencesExecutor.scheduleAtFixedRate(() -> cleanEmptyReferences(), EMPTY_REFERENCE_CLEANING_TASK_DELAY,
+        EMPTY_REFERENCE_CLEANING_TASK_DELAY, TimeUnit.MILLISECONDS);
   }
 
   /**
@@ -228,11 +249,34 @@ public final class AXPCache implements ICache
    */
   private void purge()
   {
+    log.debug(() -> Joiner.on(" ").join("Purging cache. class: ", this.getClass().getName()));
     cache.entrySet().removeIf(
         entry -> Optional.ofNullable(entry.getValue()).map(SoftReference::get)
             .map(CacheObject::isExpired).orElse(false));
   }
 
+  /**
+   * Clean garbage collected soft reference object from the map
+   */
+  private void cleanEmptyReferences()
+  {
+    cache.values().removeIf(e -> e.get() == null);
+  }
+
+  @Override
+  protected void finalize() throws Throwable
+  {
+    super.finalize();
+
+    if (purgeExecutor != null)
+    {
+      purgeExecutor.shutdown();
+    }
+    if (cleanEmptyReferencesExecutor != null)
+    {
+      cleanEmptyReferencesExecutor.shutdown();
+    }
+  }
 
   /**
    * Class to hold the cache value and expiration time
