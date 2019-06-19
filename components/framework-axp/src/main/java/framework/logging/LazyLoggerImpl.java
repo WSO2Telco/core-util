@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
  * Implementation for the {@link LazyLogger}
  * This implementation is based on the {@link Logger}
  */
-public final class LazyLoggerImpl implements LazyLogger
+final class LazyLoggerImpl implements LazyLogger
 {
 
   private final Logger logger;
