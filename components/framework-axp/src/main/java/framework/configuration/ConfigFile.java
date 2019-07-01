@@ -5,10 +5,27 @@ package framework.configuration;
  */
 public enum ConfigFile
 {
+
+  /**
+   * oneapi-validation-conf.properties
+   */
+  ONEAPI_VALIDATION_CONF("oneapi-validation-conf.properties"),
+
+  /**
+   * mediator-conf.properties
+   */
+  MEDIATOR_CONF("mediator-conf.properties"),
+
   /**
    * framework.properties
    */
-  FRAMEWORK_CONF("framework.properties");
+  FRAMEWORK_CONF("framework.properties"),
+
+  /**
+   * MobileCountryConfig.xml
+   */
+  MOBILE_COUNTRY_CONF("MobileCountryConfig.xml");
+
 
   private final String name;
 
