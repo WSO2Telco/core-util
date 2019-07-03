@@ -22,29 +22,40 @@ import com.wso2telco.core.dbutils.exception.BusinessException;
 import com.wso2telco.core.userprofile.util.UserRolePermissionType;
 
 public class UserRolePermissionFactory {
-	private static UserRolePermissionFactory instance;
+    private static UserRolePermissionFactory instance;
 
-	public static UserRolePermissionFactory getInstance() {
-		if(instance==null) {
-			instance= new UserRolePermissionFactory();
-		}
-		return instance;
-	}
-	
+    private Map<UserRolePermissionType, UserRolePermission> permissionBuilderMap;
 
-	public UserRolePermission getUserRolePermissionExecuter(UserRolePermissionType userRolePermissionType) throws BusinessException  {
+    private UserRolePermissionFactory() {
+        permissionBuilderMap = new HashMap<UserRolePermissionType, UserRolePermission>();
+    }
 
-		UserRolePermission userRolePermission = null;
+    public static UserRolePermissionFactory getInstance() {
+        if (instance == null) {
+            instance = new UserRolePermissionFactory();
+        }
+        return instance;
+    }
 
-		switch (userRolePermissionType) {
-		case UI_PERMISSION:{
-					userRolePermission = new WSO2PermissionBuilder();
-			}
-			break;
-		default:
-			break;
-		}
 
-		return userRolePermission;
-	}
+    public UserRolePermission getUserRolePermissionExecuter(UserRolePermissionType userRolePermissionType) throws BusinessException {
+
+        UserRolePermission userRolePermission = null;
+
+        switch (userRolePermissionType) {
+            case UI_PERMISSION: {
+                if (permissionBuilderMap.containsKey(userRolePermissionType)) {
+                    userRolePermission = permissionBuilderMap.get(userRolePermissionType);
+                } else {
+                    userRolePermission = new WSO2PermissionBuilder();
+                    permissionBuilderMap.put(userRolePermissionType, userRolePermission);
+                }
+            }
+            break;
+            default:
+                break;
+        }
+
+        return userRolePermission;
+    }
 }

@@ -23,14 +23,18 @@ public class AuthorizationFilterFactory extends AuthenticationProsser{
 
 	@Override
 	protected AuthenticationFilter loadFilter(String header) {
-		
+
 		AuthenticationFilter authenticationFilter = null;
-		
+
 		if (header.contains(AuthFilterParam.AUTHENTICATION_SCHEME_BASIC.getTObject())) {
 
 			authenticationFilter = new BasicAuthenticationFilter();
 		}
-		
+
+		if (header.contains(AuthFilterParam.AUTHENTICATION_SCHEME_BEARER.getTObject())){
+			authenticationFilter = new BearerAuthenticationFilter();
+		}
+
 		return authenticationFilter;
 	}
 }
