@@ -184,8 +184,10 @@ public class DbUtils {
         try {
             if (!dbDataSourceMap.containsKey(dataSourceName)) {
 
-                Context ctx = new InitialContext();
-                dbDataSourceMap.put(dataSourceName, (DataSource) ctx.lookup(dataSourceName.jndiName()));
+                synchronized (dbDataSourceMap) {
+                    Context ctx = new InitialContext();
+                    dbDataSourceMap.put(dataSourceName, (DataSource) ctx.lookup(dataSourceName.jndiName()));
+                }
             }
 
             DataSource dbDatasource = dbDataSourceMap.get(dataSourceName);

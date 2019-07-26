@@ -13,6 +13,8 @@
 
 package framework.configuration.impl;
 
+import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +38,7 @@ public class ConfigFileReaderServiceImpl implements IConfigFileReaderService
 
   private static final String DOT = ".";
 
-  private IAXPLoadingCache<String, Map<String, String>> axpLoadingCache = AXPCacheBuilder.newBuilder()
-      .setNoTimeLimit(true).build(new PropertyFileCacheLoader());
+  private Map<String, Map<String, String>> propertyCacheMap = new HashMap<>();
 
   private ConfigFileReaderServiceImpl()
   {
@@ -61,39 +62,22 @@ public class ConfigFileReaderServiceImpl implements IConfigFileReaderService
    * @throws Exception
    */
   @Override
-  public Map<String, String> readFile(ConfigFile configFile) throws Exception
-  {
-    return axpLoadingCache.getData(configFile.getName());
-  }
-
-  /**
-   * Implementation of {@link IAXPCacheLoader}
-   * Responsible for loading cache missed entries
-   */
-  class PropertyFileCacheLoader implements IAXPCacheLoader<String, Map<String, String>>
+  public Map<String, String> readFile(ConfigFile configFile) throws IOException
   {
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param cacheKeyList cache key list
-     * @return
-     * @throws Exception
-     */
-    @Override
-    public Map<String, Map<String, String>> load(List<String> cacheKeyList) throws Exception
+    Map<String,String> propertyMap = propertyCacheMap.get(configFile.getName());
+    if(propertyMap == null)
     {
       ConfigFileReaderStrategy configFileReaderStrategy = ConfigFileReaderStrategy.getInstance();
-      Map<String, Map<String, String>> filePropertiesMap = new HashMap<>();
-      for (String fileName : cacheKeyList)
-      {
-        IConfigFileReaderStrategy strategy = configFileReaderStrategy
-            .getStrategy(fileName.substring(fileName.lastIndexOf(DOT) + 1));
-        Map<String, String> propertiesMap = strategy.readFile(fileName);
-        filePropertiesMap.put(fileName, propertiesMap);
-      }
 
-      return filePropertiesMap;
+      String fileName = configFile.getName();
+      IConfigFileReaderStrategy strategy = configFileReaderStrategy
+              .getStrategy(fileName.substring(fileName.lastIndexOf(DOT) + 1));
+      propertyMap = Collections.unmodifiableMap(strategy.readFile(fileName));
+      propertyCacheMap.put(fileName, propertyMap);
     }
+
+    return propertyMap;
+
   }
 }

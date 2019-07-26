@@ -13,6 +13,7 @@
 
 package framework.configuration;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -28,5 +29,5 @@ public interface IConfigFileReaderService
    * @return
    * @throws Exception
    */
-  <K, V> Map<K, V> readFile(ConfigFile configFile) throws Exception;
+  <K, V> Map<K, V> readFile(ConfigFile configFile) throws IOException;
 }
