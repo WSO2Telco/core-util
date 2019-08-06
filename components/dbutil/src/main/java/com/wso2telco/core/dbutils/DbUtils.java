@@ -179,14 +179,19 @@ public class DbUtils {
      * @return the db connection
      * @throws SQLException the SQL exception
      */
-    public static synchronized Connection getDbConnection(DataSourceNames dataSourceName) throws Exception {
+    public static Connection getDbConnection(DataSourceNames dataSourceName) throws Exception {
 
         try {
-            if (!dbDataSourceMap.containsKey(dataSourceName)) {
 
+            if (!dbDataSourceMap.containsKey(dataSourceName)) {
+                
                 synchronized (dbDataSourceMap) {
-                    Context ctx = new InitialContext();
-                    dbDataSourceMap.put(dataSourceName, (DataSource) ctx.lookup(dataSourceName.jndiName()));
+                    
+                    if (!dbDataSourceMap.containsKey(dataSourceName)) {
+                        
+                        Context ctx = new InitialContext();
+                        dbDataSourceMap.put(dataSourceName, (DataSource) ctx.lookup(dataSourceName.jndiName()));
+                    }
                 }
             }
 

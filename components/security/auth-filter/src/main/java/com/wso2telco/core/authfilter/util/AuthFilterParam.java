@@ -19,6 +19,7 @@ public enum AuthFilterParam {
 
 	AUTHORIZATION_PROPERTY("Authorization"), 
 	AUTHENTICATION_SCHEME_BASIC("Basic"),
+	AUTHENTICATION_SCHEME_BEARER("Bearer"),
 	COOKIE("Cookie"),
 	JSESSION_ID("JSESSIONID=");
 	

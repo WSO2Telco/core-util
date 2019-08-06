@@ -17,6 +17,17 @@ public class BusinessException extends Exception {
 		super(cause);
 	}
 
+  /**
+   * Constructor with the support of @{@link ThrowableError} and {@link Throwable}
+   *
+   * @param cause
+   * @param error
+   */
+	public BusinessException(ThrowableError error, Throwable cause) {
+		super(cause);
+		this.error = error;
+	}
+
 	public BusinessException(final String cause)  {
 		this(new ThrowableError() {
 			

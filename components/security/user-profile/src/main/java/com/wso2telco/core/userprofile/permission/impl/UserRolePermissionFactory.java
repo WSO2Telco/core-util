@@ -22,28 +22,39 @@ import com.wso2telco.core.dbutils.exception.BusinessException;
 import com.wso2telco.core.userprofile.util.UserRolePermissionType;
 
 public class UserRolePermissionFactory {
-	private static UserRolePermissionFactory instance;
+    private static UserRolePermissionFactory instance;
 
-	public static UserRolePermissionFactory getInstance() {
-		if(instance==null) {
-			instance= new UserRolePermissionFactory();
-		}
-		return instance;
-	}
-	
+    private Map<UserRolePermissionType, UserRolePermission> permissionBuilderMap;
+
+    private UserRolePermissionFactory() {
+        permissionBuilderMap = new HashMap<UserRolePermissionType, UserRolePermission>();
+    }
+
+    public static synchronized UserRolePermissionFactory getInstance() {
+        if (instance == null) {
+            instance = new UserRolePermissionFactory();
+        }
+        return instance;
+    }
+
 
 	public UserRolePermission getUserRolePermissionExecuter(UserRolePermissionType userRolePermissionType) throws BusinessException  {
 
 		UserRolePermission userRolePermission = null;
 
-		switch (userRolePermissionType) {
-		case UI_PERMISSION:{
-					userRolePermission = new WSO2PermissionBuilder();
-			}
-			break;
-		default:
-			break;
-		}
+        switch (userRolePermissionType) {
+            case UI_PERMISSION: {
+                if (permissionBuilderMap.containsKey(userRolePermissionType)) {
+                    userRolePermission = permissionBuilderMap.get(userRolePermissionType);
+                } else {
+                    userRolePermission = new WSO2PermissionBuilder();
+                    permissionBuilderMap.put(userRolePermissionType, userRolePermission);
+                }
+            }
+            break;
+            default:
+                break;
+        }
 
 		return userRolePermission;
 	}
