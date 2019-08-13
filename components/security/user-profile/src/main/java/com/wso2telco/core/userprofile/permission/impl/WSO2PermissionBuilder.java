@@ -156,7 +156,7 @@ class WSO2PermissionBuilder implements UserRolePermission {
             if (uiPermissionArray != null && uiPermissionArray.length > 0) {
 
                 RetunEntitiy temp = popUserRolePermissions(uiPermissionArray);
-                entity.mergeMapEntry(item.getDisplayName(), temp);
+                entity.mergeMapEntry(item.getResourcePath(), temp);
 
             } else {
                 /**
@@ -180,14 +180,16 @@ class WSO2PermissionBuilder implements UserRolePermission {
         }
 
         public void mergeMapEntry(UIPermissionNode item) {
-            this.returnMap.put(item.getDisplayName(), item.getSelected());
+            String[] resourcePathSplit = item.getResourcePath().split("/");
+            this.returnMap.put(resourcePathSplit[resourcePathSplit.length-1],item.getSelected());
             if (item.getSelected()) {
                 atLeastOneSelected = true;
             }
         }
 
-        public void mergeMapEntry(String entryName, RetunEntitiy mergeEntry) {
-            this.returnMap.put(entryName, mergeEntry.returnMap);
+        public void mergeMapEntry(String resourcePath, RetunEntitiy mergeEntry) {
+            String[] resourcePathSplit = resourcePath.split("/");
+            this.returnMap.put(resourcePathSplit[resourcePathSplit.length-1], mergeEntry.returnMap);
             if (mergeEntry.atLeastOneSelected) {
                 this.atLeastOneSelected = mergeEntry.atLeastOneSelected;
             }
