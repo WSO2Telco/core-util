@@ -17,8 +17,16 @@ public class OAuthApplicationData {
     private GenericObjectPool stubs;
     private static boolean DEBUG = log.isDebugEnabled();
 
+    /**
+     * @deprecated use {@link #OAuthApplicationData(GenericObjectPool genericObjectPool)} instead.
+     */
+    @Deprecated
     public OAuthApplicationData() {
         stubs = new GenericObjectPool(new OAuthApplicationDataStubFactory());
+    }
+
+    public OAuthApplicationData(GenericObjectPool genericObjectPool) {
+        stubs = genericObjectPool;
     }
 
     public OAuthConsumerAppDTO getApplicationData(String appId) throws PCRException {

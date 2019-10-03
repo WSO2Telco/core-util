@@ -1,4 +1,4 @@
-package com.wso2telco.core.pcrservice;
+package com.wso2telco.core.pcrservice.persistable;
 
 import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
@@ -18,10 +18,10 @@ import org.testng.annotations.Test;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class PCRFactoryTest {
+public class PersistableUUIDGeneratorFactoryTest {
 
     @Test
-    public void testGetPCRGenarator_shouldReturnPcrGenerator_always() {
-        Assertions.assertThat(new PCRFactory().getPCRGenarator()).isInstanceOf(PCRGeneratable.class);
+    public void testCreateGenarator_shouldReturnNewUUIDPCRGenarator_always() {
+        Assertions.assertThat(new PersistableUUIDGeneratorFactory().createGenarator()).isInstanceOf(UUIDPCRGenarator.class);
     }
 }
