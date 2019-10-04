@@ -3,6 +3,7 @@ package com.wso2telco.core.pcrservice.persistable;
 import java.util.List;
 import java.util.UUID;
 
+import com.wso2telco.core.pcrservice.dao.PersistablePcr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.identity.oauth.stub.dto.OAuthConsumerAppDTO;
@@ -24,13 +25,28 @@ public class UUIDPCRService {
     private static boolean DEBUG = log.isDebugEnabled();
     OAuthApplicationData authApplicationData = null;
 
+    /**
+     * @deprecated use {@link #UUIDPCRService(OAuthApplicationData oAuthApplicationData)} instead
+     */
+    @Deprecated
     public UUIDPCRService() {
         authApplicationData = new OAuthApplicationData();
     }
 
-    public String getPcr(RequestDTO requestDTO) throws PCRException {
+    public UUIDPCRService(OAuthApplicationData oAuthApplicationData) {
+        authApplicationData = oAuthApplicationData;
+    }
 
-        KeyValueBasedPcrDAOImpl keyValueBasedPcrDAO = new KeyValueBasedPcrDAOImpl();
+    /**
+     * @deprecated use {@link #getPcr(RequestDTO requestDTO)} instead
+     */
+    @Deprecated
+    public String getPcr(RequestDTO requestDTO) throws PCRException {
+        return getPcr(requestDTO, new KeyValueBasedPcrDAOImpl());
+    }
+
+    public String getPcr(RequestDTO requestDTO, PersistablePcr keyValueBasedPcrDAO) throws PCRException {
+
         if (DEBUG) {
             log.debug("PCR service : userID : {}" , requestDTO.getUserId());
             log.debug("PCR service : appID : {}" , requestDTO.getAppId());
@@ -169,13 +185,27 @@ public class UUIDPCRService {
                 || dto.getUserId().equals("") || dto.getAppId().equals("") || dto.getSectorId().equals("");
     }
 
+    /**
+     * @deprecated use {@link #getExistingPCR(RequestDTO requestDTO, PersistablePcr keyValueBasedPcrDAO)} instead
+     */
+    @Deprecated
     public String getExistingPCR(RequestDTO requestDTO) throws PCRException {
-        KeyValueBasedPcrDAOImpl keyValueBasedPcrDAO = new KeyValueBasedPcrDAOImpl();
+        return getExistingPCR(requestDTO, new KeyValueBasedPcrDAOImpl());
+    }
+
+    public String getExistingPCR(RequestDTO requestDTO, PersistablePcr keyValueBasedPcrDAO) throws PCRException {
         return keyValueBasedPcrDAO.getExistingPCR(requestDTO);
     }
 
+    /**
+     * @deprecated use {@link #getMsisdnByPcr(String sectorId, String pcr, PersistablePcr keyValueBasedPcrDAO)} instead
+     */
+    @Deprecated
     public String getMsisdnByPcr(String sectorId, String pcr) throws PCRException {
-        KeyValueBasedPcrDAOImpl keyValueBasedPcrDAO = new KeyValueBasedPcrDAOImpl();
+        return getMsisdnByPcr(sectorId, pcr, new KeyValueBasedPcrDAOImpl());
+    }
+
+    public String getMsisdnByPcr(String sectorId, String pcr, PersistablePcr keyValueBasedPcrDAO) throws PCRException {
         return keyValueBasedPcrDAO.getMSISDNbyPcr(sectorId, pcr);
     }
 }

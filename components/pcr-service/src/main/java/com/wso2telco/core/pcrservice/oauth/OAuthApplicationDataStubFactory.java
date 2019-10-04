@@ -32,8 +32,17 @@ public class OAuthApplicationDataStubFactory extends BasePoolableObjectFactory {
     AdminServiceConfig config;
     private HttpClient httpClient;
 
+    /**
+     * @deprecated use {@link #OAuthApplicationDataStubFactory(AdminServiceConfig adminServiceConfig)} instead
+     */
+    @Deprecated
     public OAuthApplicationDataStubFactory() {
         this.config = AdminServiceConfig.getInstance();
+        this.httpClient = createHttpClient();
+    }
+
+    public OAuthApplicationDataStubFactory(AdminServiceConfig adminServiceConfig) {
+        this.config = adminServiceConfig;
         this.httpClient = createHttpClient();
     }
 
