@@ -20,15 +20,6 @@ import static org.mockito.Mockito.*;
 public class DbUtilsTest {
     DbUtils dbUtils;
 
-    @Mock
-    DataSourceNames dataSourceNames;
-
-    @Mock
-    Class cls;
-
-
-
-
     @BeforeTest
     public void setUp() {
         dbUtils = DbUtils.getInstance();
@@ -218,7 +209,6 @@ public class DbUtilsTest {
     @Test
     public void testDisconnect() throws Exception {
         Connection moccon = Mockito.mock(Connection.class);
-
         DbUtils.getInstance().disconnect(moccon);
         verify(moccon,times(1)).commit();
         verify(moccon,times(1)).close();
