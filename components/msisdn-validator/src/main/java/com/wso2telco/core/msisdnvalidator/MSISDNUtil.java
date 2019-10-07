@@ -31,19 +31,30 @@ public class MSISDNUtil {
 			throw new InvalidMSISDNException(Google2InternalErrorMapper.mapErrorType(e.getErrorType()) );
 		}
 	}
-	
+
+	/**
+	 * '+' should be appended to the prefix of the msisdn if it is not present for all valid formats.
+	 * @param rawmsisdn
+	 * @return
+	 */
 	private String appendPlusIfNotExist(String rawmsisdn) {
+
+
 		String formattedNumber = null;
 		String validationRegex = "tel\\:[a-zA-Z0-9]+";
+		String digitsOnlyRegex = "\\d+";
 
 		if (rawmsisdn != null && rawmsisdn.matches(validationRegex)) {
 			StringBuilder builder = new StringBuilder(rawmsisdn);
 			builder.insert(4, "+");
 			formattedNumber = builder.toString();
-		} else if (rawmsisdn.contains("etel:")) {
+		} else if (rawmsisdn != null && rawmsisdn.contains("etel:")) {
 			String[] msidn = rawmsisdn.split(":");
 			formattedNumber = msidn[0] + "+" + msidn[1];
-		} else {
+        } else if (rawmsisdn != null && rawmsisdn.matches(digitsOnlyRegex)) {
+			formattedNumber = "+"+rawmsisdn;
+        }
+		else {
 			formattedNumber = rawmsisdn;
 		}
 
