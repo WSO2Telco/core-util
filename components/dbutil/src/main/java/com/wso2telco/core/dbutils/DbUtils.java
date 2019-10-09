@@ -125,18 +125,29 @@ public class DbUtils {
     }
 
     /**
+     * @deprecated use {@link #initializeConnectDatasource(Context ctx)} instead
+     */
+    @Deprecated
+    public static void initializeConnectDatasource() throws SQLException, DBUtilException {
+        try {
+            initializeConnectDatasource(new InitialContext());
+        } catch (NamingException e) {
+            handleException("Error while looking up the data source: " + CONNECT_DB, e);
+        }
+    }
+
+    /**
      * Initialize datasources.
      *
      * @throws SQLException the SQL exception
      *                      the db util exception
      */
-    public static void initializeConnectDatasource() throws SQLException, DBUtilException {
+    public static void initializeConnectDatasource(Context ctx) throws SQLException, DBUtilException {
         if (connectDatasource != null) {
             return;
         }
 
         try {
-            Context ctx = new InitialContext();
             connectDatasource = (DataSource) ctx.lookup(CONNECT_DB);
 
         } catch (NamingException e) {
@@ -165,7 +176,6 @@ public class DbUtils {
 
     public static Connection getConnectDbConnection() throws SQLException, DBUtilException {
         initializeConnectDatasource();
-
         if (connectDatasource != null) {
             return connectDatasource.getConnection();
         } else {
@@ -174,24 +184,29 @@ public class DbUtils {
     }
 
     /**
+     * @deprecated use {@link #getDbConnection(DataSourceNames dataSourceName,Context ctx) instead
+     */
+    public static synchronized Connection getDbConnection(DataSourceNames dataSourceName) throws Exception {
+        return getDbConnection(dataSourceName,new InitialContext());
+    }
+
+    /**
      * Gets the db connection.
      *
      * @return the db connection
      * @throws SQLException the SQL exception
      */
-    public static synchronized Connection getDbConnection(DataSourceNames dataSourceName) throws Exception {
+    public static synchronized Connection getDbConnection(DataSourceNames dataSourceName,Context ctx) throws Exception {
 
         try {
             if (!dbDataSourceMap.containsKey(dataSourceName)) {
 
-                Context ctx = new InitialContext();
                 dbDataSourceMap.put(dataSourceName, (DataSource) ctx.lookup(dataSourceName.jndiName()));
             }
 
             DataSource dbDatasource = dbDataSourceMap.get(dataSourceName);
 
             if (dbDatasource != null) {
-
                 log.info(dataSourceName.toString() + " DB Initialize successfully.");
                 return dbDatasource.getConnection();
             } else {
@@ -342,9 +357,6 @@ public class DbUtils {
     /**
      * Format.
      *
-     * @param decData   the dec data
-     * @param precision the precision
-     * @param scale     the scale
      * @return the string
      * @throws Exception the exception
      */
@@ -548,7 +560,14 @@ public class DbUtils {
         }
     }
 
-    public static Map<DataSourceNames, String> getDbNames() {
+    /**
+     * @deprecated use {@link #getDbNames(Context ctx)} instead
+     */
+    public static Map<DataSourceNames, String> getDbNames() throws NamingException {
+        return getDbNames(new InitialContext());
+    }
+
+    public static Map<DataSourceNames, String> getDbNames(Context ctx) {
 
         if (dbNames == null) {
             dbNames = new HashMap<>();
@@ -556,7 +575,7 @@ public class DbUtils {
 
             for (DataSourceNames name : DataSourceNames.values()) {
                 try {
-                    con = DbUtils.getDbConnection(name);
+                    con = DbUtils.getDbConnection(name,ctx);
                     if (con != null) {
                         dbNames.put(name, con.getCatalog());
                         con.close();
