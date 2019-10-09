@@ -235,38 +235,24 @@ public class SpConfigDAOImpl implements SpConfigDAO,Serializable {
     }
 
     private List<String> getConfig(String clientId, String configKey) throws Exception {
-        Connection connectDBConnection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
 
-        List<String> configList = new ArrayList<String>();
+        List<String> configList = new ArrayList<>();
+        final String query = "SELECT config_value FROM sp_configuration WHERE client_id = ? AND config_key = ?";
 
-        try {
-            connectDBConnection = DbUtils.getConnectDbConnection();
-            String query = "SELECT config_value FROM sp_configuration WHERE client_id = ? AND config_key = ?";
+        try (final Connection connectDBConnection = DbUtils.getConnectDbConnection();
+             final PreparedStatement preparedStatement = connectDBConnection.prepareStatement(query)){
 
-            preparedStatement = connectDBConnection.prepareStatement(query);
             preparedStatement.setString(1, clientId);
             preparedStatement.setString(2, configKey);
 
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                configList.add(resultSet.getString("config_value"));
+            try(final ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    configList.add(resultSet.getString("config_value"));
+                }
             }
         } catch (Exception e) {
             logger.error("Error occurred while Getting the database connection");
             throw new Exception(e);
-        } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
-            if (resultSet != null) {
-                resultSet.close();
-            }
-
-            if (connectDBConnection != null) {
-                connectDBConnection.close();
-            }
         }
 
         if (configList.isEmpty()) {
