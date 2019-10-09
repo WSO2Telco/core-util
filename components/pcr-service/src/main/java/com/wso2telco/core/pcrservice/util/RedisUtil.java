@@ -9,7 +9,7 @@ import redis.clients.jedis.JedisPoolConfig;
 
 public class RedisUtil {
 
-    private static volatile JedisPool pool = null;
+    private static JedisPool pool = null;
 
     public static JedisPool getInstance() {
         if (pool == null) {
