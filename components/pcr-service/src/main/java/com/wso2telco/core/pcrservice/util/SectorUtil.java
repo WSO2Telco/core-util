@@ -21,12 +21,12 @@ public class SectorUtil {
                 sector = url.getHost();
             }
         } catch (MalformedURLException e) {
-            log.error("malformed url found! continues with the given Url : " + callbackUrl);
+            log.error("malformed url found! continues with the given Url : {}", callbackUrl);
             sector = callbackUrl;
         }
 
-        if (sector.equals(null) || sector.equals("")) {
-            log.error("malformed url found! continues with the given Url : " + callbackUrl);
+        if (sector == null || sector.equals("")) {
+            log.error("malformed url found! continues with the given Url : {}", callbackUrl);
             sector = callbackUrl;
         }
         return sector;
