@@ -87,10 +87,7 @@ public class UserClaimProsser {
 		Map<ClaimName, String> userClaims = getUserClaimsByUserName(userName);
 
 		if (!userClaims.isEmpty()) {
-
-			userClaimDTO = new UserClaimDTO();
-
-			userClaimDTO = fillUserClaimDTO(userClaims, userClaimDTO);
+			userClaimDTO = fillUserClaimDTO(userClaims, new UserClaimDTO());
 		}
 
 		return userClaimDTO;
