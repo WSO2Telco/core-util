@@ -297,7 +297,7 @@ public class DbUtils {
      *
      * @return the connection
      * @throws Exception the exception
-     */
+     *
     public Connection connect() throws Exception {
         System.out.println("-------- JDBC Connection Init ------------");
         Connection connection = null;
@@ -318,7 +318,7 @@ public class DbUtils {
         connection.setAutoCommit(false);
 
         return connection;
-    } // connect
+    } // connect*/
 
     /**
      * Disconnect.
@@ -330,7 +330,7 @@ public class DbUtils {
         System.out.println();
         // System.out.println(" Disconnect from database.");
 
-        // makes all changes made since the previous commit/rollback permanent
+        // makes all cconnecthanges made since the previous commit/rollback permanent
         // and releases any database locks currrently held by the Connection.
         con.commit();
 

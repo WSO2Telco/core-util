@@ -389,7 +389,7 @@ public class DbUtils {
      *
      * @return the connection
      * @throws Exception the exception
-     */
+     *
     public Connection connect() throws Exception {
         System.out.println("-------- JDBC Connection Init ------------");
         Connection connection = null;
@@ -410,7 +410,7 @@ public class DbUtils {
         connection.setAutoCommit(false);
 
         return connection;
-    }
+    }*/
 
     /**
      * Disconnect.
