@@ -25,8 +25,7 @@ public class MSISDNUtil {
 		try {
 			rowmsisdn = appendPlusIfNotExist(rowmsisdn);
 			PhoneNumber number = util.parse(rowmsisdn, null);
-			MSISDN msisdn = new MSISDN(number.getCountryCode(), number.getNationalNumber());
-			return msisdn;
+			return new MSISDN(number.getCountryCode(), number.getNationalNumber());
 		} catch (NumberParseException e) {
 			throw new InvalidMSISDNException(Google2InternalErrorMapper.mapErrorType(e.getErrorType()) );
 		}
@@ -40,7 +39,7 @@ public class MSISDNUtil {
 			StringBuilder builder = new StringBuilder(rawmsisdn);
 			builder.insert(4, "+");
 			formattedNumber = builder.toString();
-		} else if (rawmsisdn.contains("etel:")) {
+		} else if (rawmsisdn != null && rawmsisdn.contains("etel:")) {
 			String[] msidn = rawmsisdn.split(":");
 			formattedNumber = msidn[0] + "+" + msidn[1];
 		} else {
