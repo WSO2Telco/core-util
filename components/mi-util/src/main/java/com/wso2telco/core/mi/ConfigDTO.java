@@ -14,11 +14,8 @@ public class ConfigDTO extends Configuration implements Serializable {
      */
     private static final long serialVersionUID = -8356032431902326005L;
 
-    private DataSourceFactory dataSourceFactory
-            = new DataSourceFactory();
-
     @JsonProperty("database")
-    private DataSourceFactory database = new DataSourceFactory();
+    private DataSourceFactory dataSourceFactory = new DataSourceFactory();
 
 	/*@JsonProperty
 	private String host;
@@ -44,12 +41,12 @@ public class ConfigDTO extends Configuration implements Serializable {
 
 
     public DataSourceFactory getDataSourceFactory() {
-        return database;
+        return dataSourceFactory;
     }
 
     @Override
     public String toString() {
-        return "ConfigDTO [database=" + database + ", isMaster=" + isMaster + "]";
+        return "ConfigDTO [database=" + dataSourceFactory + ", isMaster=" + isMaster + "]";
     }
 
 
