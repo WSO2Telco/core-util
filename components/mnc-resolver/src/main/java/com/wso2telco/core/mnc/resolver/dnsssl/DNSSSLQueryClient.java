@@ -207,43 +207,44 @@ public class DNSSSLQueryClient implements IProviderNetwork {
 
             Iterator<String> naptIt = naptrArray.listIterator();
 
-            if ((queryResult != null) && (queryResult.getRcode() == RCODE.REFUSED)) {
-                System.err
-                        .println("Got refused response from server.\n "
-                                + "Please contact NeuStar customer support, "
-                                + "with the IP address and X.509 cert of the client machine");
-            } else if (queryResult.getRcode() == RCODE.NXDOMAIN) {
-                System.err
-                        .println("TN not found.\n"
-                                + " Please verify with NeuStar customer support that "
-                                + "the terminating domain setting above matches the profile configuration");
-            } else if (queryResult.getRcode() == RCODE.FORMAT_ERROR) {
-                System.err
-                        .println("The query format appears to be incorrect,\n"
-                                + " please verify whether you are using correct ENUM format for queries");
+            if((queryResult != null)) {
+                if ((queryResult.getRcode() == RCODE.REFUSED)) {
+                    System.err
+                            .println("Got refused response from server.\n "
+                                    + "Please contact NeuStar customer support, "
+                                    + "with the IP address and X.509 cert of the client machine");
+                } else if (queryResult.getRcode() == RCODE.NXDOMAIN) {
+                    System.err
+                            .println("TN not found.\n"
+                                    + " Please verify with NeuStar customer support that "
+                                    + "the terminating domain setting above matches the profile configuration");
+                } else if (queryResult.getRcode() == RCODE.FORMAT_ERROR) {
+                    System.err
+                            .println("The query format appears to be incorrect,\n"
+                                    + " please verify whether you are using correct ENUM format for queries");
 
-            } else if (queryResult.getRcode() == RCODE.SERVFAIL) {
-                System.err
-                        .println("There was an internal server error which caused a failure to respond\n"
-                                + " Please report to NeuStar customer support.");
+                } else if (queryResult.getRcode() == RCODE.SERVFAIL) {
+                    System.err
+                            .println("There was an internal server error which caused a failure to respond\n"
+                                    + " Please report to NeuStar customer support.");
 
-            } else if (queryResult.getRcode() == RCODE.SERVER_NOT_FOUND) {
-                System.err
-                        .println("Server could not be found, please check host name and port.");
-            } else if (queryResult.getRcode() == RCODE.NO_ERROR) {
-                System.out.println("TN match success. Route = ");
-                naptrArray = queryResult.getNaptrArray();
-                naptIt = naptrArray.listIterator();
-                while (naptIt.hasNext()) {
-                    String naptrResult = naptIt.next();
-                    TN += " | " + naptrResult;
+                } else if (queryResult.getRcode() == RCODE.SERVER_NOT_FOUND) {
+                    System.err
+                            .println("Server could not be found, please check host name and port.");
+                } else if (queryResult.getRcode() == RCODE.NO_ERROR) {
+                    System.out.println("TN match success. Route = ");
+                    naptrArray = queryResult.getNaptrArray();
+                    naptIt = naptrArray.listIterator();
+                    while (naptIt.hasNext()) {
+                        String naptrResult = naptIt.next();
+                        TN += " | " + naptrResult;
+                    }
+                } else {
+                    System.err.println("Unanticipated error: "
+                            + queryResult.getRcode()
+                            + ". Please contact NeuStar customer support");
                 }
-            } else {
-                System.err.println("Unanticipated error: "
-                        + queryResult.getRcode()
-                        + ". Please contact NeuStar customer support");
             }
-
             // perform the clean up
             sslResolver.cleanUp();
 
