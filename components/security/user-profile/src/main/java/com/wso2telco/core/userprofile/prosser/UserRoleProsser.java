@@ -68,9 +68,7 @@ public class UserRoleProsser {
 
 			String[] userRoles = new String[currentUserRoleList.size()];
 			userRoles = currentUserRoleList.toArray(userRoles);
-			userRoleDTO = new UserRoleDTO();
-			
-			userRoleDTO = fillUserRoleDTO(userRoles, userRoleDTO);
+			userRoleDTO = fillUserRoleDTO(userRoles, new UserRoleDTO());
 		}
 
 		return userRoleDTO;
