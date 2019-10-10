@@ -1083,8 +1083,6 @@ public class DbService {
             ps.setString(5, msisdn);
             rs = ps.executeQuery();
 
-            rs = ps.executeQuery();
-
             if (rs.next()) {
                 spendLimitDAO = new SpendLimitDAO();
                 spendLimitDAO.setAmount(rs.getDouble("amount"));
