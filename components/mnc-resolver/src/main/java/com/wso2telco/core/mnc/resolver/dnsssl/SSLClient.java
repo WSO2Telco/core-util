@@ -190,7 +190,7 @@ public class SSLClient {
                 sslos.close();
             }
             if (sslsocket != null) {
-                sslis.close();
+                sslsocket.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
