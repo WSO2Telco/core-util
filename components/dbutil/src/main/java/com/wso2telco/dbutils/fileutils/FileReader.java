@@ -34,11 +34,8 @@ public class FileReader {
 
         HashMap<String, String> confPropertyMap = new HashMap<String, String>();
         Properties props = new Properties();
-        FileInputStream fileStream = null;
 
-        try {
-
-            fileStream = new FileInputStream(file);
+        try (final FileInputStream fileStream = new FileInputStream(file)){
 
             props.load(fileStream);
 
@@ -53,15 +50,6 @@ public class FileReader {
         } catch (IOException e) {
 
             log.debug("unable to close " + file, e);
-        } finally {
-
-            try {
-
-                fileStream.close();
-            } catch (IOException e) {
-
-                log.debug("unable to close " + file, e);
-            }
         }
 
         return confPropertyMap;
