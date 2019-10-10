@@ -86,12 +86,8 @@ public class DNSSSLQueryClient implements IProviderNetwork {
 
         String dataStr = null;
 
-        BufferedReader reader = null;
-
-        Writer writer = null;
-
-        try {
-            reader = new BufferedReader(new FileReader(inputFile));
+        try(final BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            final Writer writer = new PrintWriter(new FileWriter(outPutFile))) {
 
             // read the list of queries from input file
             while ((dataStr = reader.readLine()) != null) {
@@ -117,8 +113,6 @@ public class DNSSSLQueryClient implements IProviderNetwork {
 
             Iterator<DNSQueryResult> resultIterator = queriesResults
                     .listIterator();
-
-            writer = new PrintWriter(new FileWriter(outPutFile));
 
             List<String> naptrArray = new ArrayList<String>();
 
@@ -168,18 +162,6 @@ public class DNSSSLQueryClient implements IProviderNetwork {
         } catch (Exception e) {
             System.err.println("Exception occured while sending bulk query");
             e.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-                if (writer != null) {
-                    writer.close();
-                }
-            } catch (IOException e) {
-                System.err
-                        .println("Problem occured while closing output stream.");
-            }
         }
     }
 
