@@ -68,9 +68,9 @@ public class DbUtils {
     /**
      * The datasource.
      */
-    private static volatile DataSource Datasource = null;
+    private static DataSource Datasource = null;
 
-    private static volatile DataSource connectDatasource = null;
+    private static DataSource connectDatasource = null;
 
     /**
      * The Constant DEP_DATA_SOURCE.

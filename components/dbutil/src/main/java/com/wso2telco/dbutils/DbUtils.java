@@ -64,7 +64,7 @@ public class DbUtils {
     /**
      * The axiata datasource.
      */
-    private static volatile DataSource axiataDatasource = null;
+    private static DataSource axiataDatasource = null;
 
     /**
      * The Constant AXIATA_DATA_SOURCE.
