@@ -108,7 +108,7 @@ public class MNCQueryClient {
                 }
             }
         } else {
-            log.info("MCC is NULL");
+            log.debug("MCC is NULL");
         }
 
         return MobileNetwork;
