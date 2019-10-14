@@ -75,36 +75,40 @@ public class MNCQueryClient {
             }
         }
 
-        log.debug("MNCQueryClient : QueryNetwork : getStage :" + mcc.getStage());
+        if (mcc != null) {
+            log.debug("MNCQueryClient : QueryNetwork : getStage :" + mcc.getStage());
 
 
-        if (mcc.getStage() == 0) {
-            //only one operator for the country
-            MobileNetwork = mcc.getDefaultMnc();
-        } else if (mcc.getStage() == 1) {
-            //1 range check only 
-            IProviderNetwork networkprovider = new MNCRangeCheck();
-            MobileNetwork = networkprovider.queryNetwork(String.valueOf(mcc.getCode()), endUser);
-        } else if (mcc.getStage() == 2) {
-            //path finder
-            IProviderNetwork networkprovider = new DNSSSLQueryClient();
-            String pfapiMnc = networkprovider.queryNetwork(String.valueOf(mcc.getCallingCode()), endUser.substring
-                    (mcc.getCallingCode().length()));
-            log.debug("MNCQueryClient : QueryNetwork : pfapiMnc :" + pfapiMnc);
-
-            if (pfapiMnc != null) {
-                MobileNetwork = McnRangeDbUtil.getMncBrand(String.valueOf(mcc.getCode()), pfapiMnc);
-            }
-
-
-        } else if (mcc.getStage() == 3) {
-            //range checker with fallback
-            IProviderNetwork networkprovider = new MNCRangeCheck();
-            MobileNetwork = networkprovider.queryNetwork(String.valueOf(mcc.getCode()), endUser);
-
-            if (MobileNetwork == null) {
+            if (mcc.getStage() == 0) {
+                //only one operator for the country
+                MobileNetwork = mcc.getDefaultMnc();
+            } else if (mcc.getStage() == 1) {
+                //1 range check only
+                IProviderNetwork networkprovider = new MNCRangeCheck();
                 MobileNetwork = networkprovider.queryNetwork(String.valueOf(mcc.getCode()), endUser);
+            } else if (mcc.getStage() == 2) {
+                //path finder
+                IProviderNetwork networkprovider = new DNSSSLQueryClient();
+                String pfapiMnc = networkprovider.queryNetwork(String.valueOf(mcc.getCallingCode()), endUser.substring
+                        (mcc.getCallingCode().length()));
+                log.debug("MNCQueryClient : QueryNetwork : pfapiMnc :" + pfapiMnc);
+
+                if (pfapiMnc != null) {
+                    MobileNetwork = McnRangeDbUtil.getMncBrand(String.valueOf(mcc.getCode()), pfapiMnc);
+                }
+
+
+            } else if (mcc.getStage() == 3) {
+                //range checker with fallback
+                IProviderNetwork networkprovider = new MNCRangeCheck();
+                MobileNetwork = networkprovider.queryNetwork(String.valueOf(mcc.getCode()), endUser);
+
+                if (MobileNetwork == null) {
+                    MobileNetwork = networkprovider.queryNetwork(String.valueOf(mcc.getCode()), endUser);
+                }
             }
+        } else {
+            log.debug("MCC is NULL");
         }
 
         return MobileNetwork;
