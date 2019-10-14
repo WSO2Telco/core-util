@@ -381,23 +381,22 @@ public class DbService {
 
         Integer newid = 0;
 
-        for (Integer d : operators) {
-            StringBuilder queryString = new StringBuilder("INSERT INTO ");
-            queryString.append("operatorapps ");
-            queryString.append("(applicationid,operatorid) ");
-            queryString.append("VALUES (?, ? ) ");
+        StringBuilder queryString = new StringBuilder("INSERT INTO ");
+        queryString.append("operatorapps ");
+        queryString.append("(applicationid,operatorid) ");
+        queryString.append("VALUES (?, ? ) ");
 
-            try (Connection con = DbUtils.getDBConnection();
-                 PreparedStatement statement = con.prepareStatement(queryString.toString())) {
+        try (Connection con = DbUtils.getDBConnection();
+             PreparedStatement statement = con.prepareStatement(queryString.toString())) {
+            for (Integer d : operators) {
                 statement.setInt(1, appID);
                 statement.setInt(2, d);
                 statement.executeUpdate();
-
-            } catch (PersistenceException e) {
-                log.error("database operation error in inserting operatorapps", e);
-            } catch (Exception e) {
-                log.error("database operation error in inserting operatorapps", e);
             }
+        } catch (PersistenceException e) {
+            log.error("database operation error in inserting operatorapps", e);
+        } catch (Exception e) {
+            log.error("database operation error in inserting operatorapps", e);
         }
 
         return newid;
