@@ -18,12 +18,8 @@ package com.wso2telco.core.mnc.resolver.dnsssl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
-
-// TODO: Auto-generated Javadoc
 
 /**
  * The Class SSLClient.
@@ -57,59 +53,17 @@ public class SSLClient {
      * @param host the host
      * @param port the port
      * @throws IOException              Signals that an I/O exception has occurred.
-     * @throws NoSuchAlgorithmException the no such algorithm exception
-     * @throws KeyManagementException   the key management exception
      */
-    public void initialize(final String host, final int port)
-            throws IOException, NoSuchAlgorithmException, KeyManagementException {
+    public synchronized void initialize(final String host, final int port) throws IOException {
         SSLSocketFactory socketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
         if (sslsocket == null) {
-        /*            
-                    //temp to bypass proxy
-                                    TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
+            sslsocket = (SSLSocket) socketFactory.createSocket(host, port);
 
-                public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                }
-
-                public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                }
-            }
-                };
-
-                // Install the all-trusting trust manager
-                SSLContext sc = SSLContext.getInstance("SSL");
-                sc.init(null, trustAllCerts, new java.security.SecureRandom());
-                HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-
-                // Create all-trusting host name verifier
-                HostnameVerifier allHostsValid = new HostnameVerifier() {
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true;
-                    }
-                };
-
-                // Install the all-trusting host verifier
-                //HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-                    
-                   SSLSocketFactory socketFactory = sc.getSocketFactory(); 
-  */
-            synchronized (SSLClient.class) {
-
-                if (sslsocket == null) {
-                    sslsocket = (SSLSocket) socketFactory.createSocket(host, port);
-                }
-
-                // Set the keep alive setting to true
-                sslsocket.setKeepAlive(true);
-
-                sslis = sslsocket.getInputStream();
-
-                sslos = sslsocket.getOutputStream();
-            }
+            // Set the keep alive setting to true
+            sslsocket.setKeepAlive(true);
+            sslis = sslsocket.getInputStream();
+            sslos = sslsocket.getOutputStream();
         }
     }
 
