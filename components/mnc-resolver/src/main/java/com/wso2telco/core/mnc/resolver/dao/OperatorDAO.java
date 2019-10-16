@@ -33,7 +33,7 @@ import com.wso2telco.core.dbutils.util.DataSourceNames;
 import com.wso2telco.core.mnc.resolver.MobileNtException;
 
 public class OperatorDAO {
-	private static volatile DataSource datasource = null;
+	private static DataSource datasource = null;
 	
 	private static final Log log = LogFactory.getLog(OperatorDAO.class);
 	
