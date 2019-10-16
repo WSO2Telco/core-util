@@ -302,7 +302,7 @@ public class DbUtils {
         System.out.println();
         // System.out.println(" Disconnect from database.");
 
-        // makes all cconnecthanges made since the previous commit/rollback permanent
+        // makes all changes made since the previous commit/rollback permanent
         // and releases any database locks currrently held by the Connection.
         con.commit();
 
