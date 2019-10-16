@@ -1276,31 +1276,23 @@ public class AxiataDbService {
 
 
         String resultcode = null;
-        Connection con = null;
-        Statement st = null;
-        ResultSet rs = null;
 
         if (merchant == null || merchant.isEmpty()) {
             return resultcode;
         }
 
-        try {
-            con = DbUtils.getAxiataDBConnection();
-            if (con == null) {
-                throw new Exception("Connection not found");
-            }
+        String sql = "SELECT merchantopco_blacklist.id id "
+                + "FROM merchantopco_blacklist, operators "
+                + "WHERE merchantopco_blacklist.operator_id = operators.id "
+                + "AND application_id = " + appid + " "
+                + "AND operatorname = '" + operatorid + "' "
+                + "AND subscriber = '" + subscriber + "' "
+                + "AND lower(merchant) = '" + merchant.toLowerCase() + "'";
 
-            //is aggrigator
-            st = con.createStatement();
-            String sql = "SELECT merchantopco_blacklist.id id "
-                    + "FROM merchantopco_blacklist, operators "
-                    + "WHERE merchantopco_blacklist.operator_id = operators.id "
-                    + "AND application_id = " + appid + " "
-                    + "AND operatorname = '" + operatorid + "' "
-                    + "AND subscriber = '" + subscriber + "' "
-                    + "AND lower(merchant) = '" + merchant.toLowerCase() + "'";
+        try (Connection con = DbUtils.getAxiataDBConnection();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(sql)){
 
-            rs = st.executeQuery(sql);
             if (rs.next()) {
                 resultcode = String.valueOf(rs.getInt("id"));
             } else {
@@ -1312,16 +1304,15 @@ public class AxiataDbService {
                         + "AND operatorname = '" + operatorid + "' "
                         + "AND lower(merchant) = '" + merchant.toLowerCase() + "'";
 
-                rs = st.executeQuery(sql);
-                if (rs.next()) {
-                    resultcode = String.valueOf(rs.getInt("id"));
+                try(final ResultSet rs2 = st.executeQuery(sql)) {
+                    if (rs2.next()) {
+                        resultcode = String.valueOf(rs2.getInt("id"));
+                    }
                 }
             }
 
         } catch (Exception e) {
             DbUtils.handleException("Error while selecting black listed merchant. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
         }
         return resultcode;
     }
@@ -1340,20 +1331,11 @@ public class AxiataDbService {
     public boolean insertMerchantProvision(Integer appID, String subscriber, String operator,
                                            String[] merchants) throws Exception {
 
-        Connection con = null;
-        Statement st = null;
-        ResultSet rs = null;
-        PreparedStatement pst = null;
+        String sql = "SELECT id FROM operators WHERE operatorname = '" + operator + "'";
 
-        try {
-            con = DbUtils.getAxiataDBConnection();
-
-            st = con.createStatement();
-            String sql = "SELECT id "
-                    + "FROM operators "
-                    + "WHERE operatorname = '" + operator + "'";
-
-            rs = st.executeQuery(sql);
+        try (final Connection con = DbUtils.getAxiataDBConnection();
+             final Statement st = con.createStatement();
+             final ResultSet rs = st.executeQuery(sql)){
 
             int operatorid = 0;
             if (rs.next()) {
@@ -1362,28 +1344,25 @@ public class AxiataDbService {
                 throw new Exception("Operator Not Found");
             }
 
-            pst = null;
             for (int i = 0; i < merchants.length; i++) {
                 sql = "INSERT INTO merchantopco_blacklist (application_id, operator_id, subscriber, merchant) VALUES "
                         + "(?, ?, ?, ?)";
 
-                pst = con.prepareStatement(sql);
-                if (appID == null) {
-                    pst.setNull(1, Types.INTEGER);
-                } else {
-                    pst.setInt(1, appID);
+                try(final PreparedStatement pst = con.prepareStatement(sql)) {
+                    if (appID == null) {
+                        pst.setNull(1, Types.INTEGER);
+                    } else {
+                        pst.setInt(1, appID);
+                    }
+                    pst.setInt(2, operatorid);
+                    pst.setString(3, subscriber);
+                    pst.setString(4, merchants[i]);
+                    pst.executeUpdate();
                 }
-                pst.setInt(2, operatorid);
-                pst.setString(3, subscriber);
-                pst.setString(4, merchants[i]);
-                pst.executeUpdate();
             }
 
         } catch (Exception e) {
             DbUtils.handleException("Error while Provisioning Merchant", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
-            DbUtils.closeAllConnections(pst, null, null);
         }
         return true;
     }
@@ -1402,20 +1381,11 @@ public class AxiataDbService {
     public boolean removeMerchantProvision(Integer appID, String subscriber, String operator,
                                            String[] merchants) throws Exception {
 
-        Connection con = null;
-        Statement st = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
+        String sql = "SELECT id FROM operators WHERE operatorname = '" + operator + "'";
 
-        try {
-            con = DbUtils.getAxiataDBConnection();
-
-            st = con.createStatement();
-            String sql = "SELECT id "
-                    + "FROM operators "
-                    + "WHERE operatorname = '" + operator + "'";
-
-            rs = st.executeQuery(sql);
+        try (final Connection con = DbUtils.getAxiataDBConnection();
+             final Statement st = con.createStatement();
+             final ResultSet rs = st.executeQuery(sql)){
 
             int operatorid = 0;
             if (rs.next()) {
@@ -1424,41 +1394,36 @@ public class AxiataDbService {
                 throw new Exception("Operator Not Found");
             }
 
-            pst = null;
-
             for (int i = 0; i < merchants.length; i++) {
 
                 if (appID == null) {
                     sql = "DELETE FROM merchantopco_blacklist "
                             + "WHERE application_id is null AND operator_id = ? AND subscriber = ? AND merchant = ?";
 
-                    pst = con.prepareStatement(sql);
-
-                    pst.setInt(1, operatorid);
-                    pst.setString(2, subscriber);
-                    pst.setString(3, merchants[i]);
-                    pst.executeUpdate();
+                    try(final PreparedStatement pst = con.prepareStatement(sql)) {
+                        pst.setInt(1, operatorid);
+                        pst.setString(2, subscriber);
+                        pst.setString(3, merchants[i]);
+                        pst.executeUpdate();
+                    }
 
                 } else {
                     sql = "DELETE FROM merchantopco_blacklist "
                             + "WHERE application_id = ? AND operator_id = ? AND subscriber = ? AND merchant = ?";
 
-                    pst = con.prepareStatement(sql);
-
-                    pst.setInt(1, appID);
-                    pst.setInt(2, operatorid);
-                    pst.setString(3, subscriber);
-                    pst.setString(4, merchants[i]);
-                    pst.executeUpdate();
+                    try(final PreparedStatement pst = con.prepareStatement(sql)) {
+                        pst.setInt(1, appID);
+                        pst.setInt(2, operatorid);
+                        pst.setString(3, subscriber);
+                        pst.setString(4, merchants[i]);
+                        pst.executeUpdate();
+                    }
 
                 }
             }
 
         } catch (Exception e) {
             DbUtils.handleException("Error while Provisioning Merchant. ", e);
-        } finally {
-            DbUtils.closeAllConnections(st, con, rs);
-            DbUtils.closeAllConnections(pst, null, null);
         }
         return true;
     }
