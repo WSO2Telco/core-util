@@ -64,7 +64,7 @@ public class DbUtils {
     /**
      * The axiata datasource.
      */
-    private static volatile DataSource axiataDatasource = null;
+    private static DataSource axiataDatasource = null;
 
     /**
      * The Constant AXIATA_DATA_SOURCE.
@@ -226,7 +226,7 @@ public class DbUtils {
      * @throws Exception the exception
      */
     public static String format(double doubData, int precision, int scale) throws Exception {
-        BigDecimal decData = new BigDecimal(doubData);
+        BigDecimal decData = BigDecimal.valueOf(doubData);
         decData = decData.setScale(scale, BigDecimal.ROUND_HALF_EVEN);
         String strData = decData.toString();
 
