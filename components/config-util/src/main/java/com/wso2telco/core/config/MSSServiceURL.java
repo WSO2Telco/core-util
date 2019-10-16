@@ -15,9 +15,6 @@
  ******************************************************************************/
 package com.wso2telco.core.config;
 
-
-// TODO: Auto-generated Javadoc
-
 /**
  * The Class MSSServiceURL.
  */
@@ -26,10 +23,10 @@ public class MSSServiceURL {
     /**
      * The mss signature service.
      */
-    public static String MSS_SIGNATURE_SERVICE = "%s/services/transactions/msssignatureservice";
+    public static final String MSS_SIGNATURE_SERVICE = "%s/services/transactions/msssignatureservice";
 
     /**
      * The mss signature service get.
      */
-    public static String MSS_SIGNATURE_SERVICE_GET = "%s/services/transactions/getname";
+    public static final String MSS_SIGNATURE_SERVICE_GET = "%s/services/transactions/getname";
 }
