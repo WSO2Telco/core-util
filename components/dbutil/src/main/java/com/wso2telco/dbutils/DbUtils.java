@@ -293,34 +293,6 @@ public class DbUtils {
     } // format(Double, int, int)
 
     /**
-     * Connect.
-     *
-     * @return the connection
-     * @throws Exception the exception
-     */
-    public Connection connect() throws Exception {
-        System.out.println("-------- JDBC Connection Init ------------");
-        Connection connection = null;
-
-        try {
-            Class.forName(driverClass);
-            connection = DriverManager.getConnection(connectionUrl, connectionUsername, connectionPassword);
-
-        } catch (ClassNotFoundException e) {
-            System.out.println("JDBC Driver Error");
-            e.printStackTrace();
-            return null;
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console");
-            e.printStackTrace();
-            return null;
-        }
-        connection.setAutoCommit(false);
-
-        return connection;
-    } // connect
-
-    /**
      * Disconnect.
      *
      * @param con the con
