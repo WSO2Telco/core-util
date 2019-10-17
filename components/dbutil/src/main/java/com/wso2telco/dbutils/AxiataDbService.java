@@ -26,9 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-// TODO: Auto-generated Javadoc
-
 /**
  * The Class AxiataDbService.
  */
@@ -76,7 +73,7 @@ public class AxiataDbService {
 
             new AxiataDbService().insertMerchantProvision(9, "admin", "DIALOG", new String[]{"mahesh", "roshan"});
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 
