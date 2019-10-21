@@ -21,6 +21,9 @@ import java.io.OutputStream;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * The Class SSLClient.
  */
@@ -45,6 +48,8 @@ public class SSLClient {
      * The sslos.
      */
     private OutputStream sslos = null;
+
+    private static Log log = LogFactory.getLog(SSLClient.class);
 
 
     /**
@@ -147,7 +152,7 @@ public class SSLClient {
                 sslsocket.close();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 }

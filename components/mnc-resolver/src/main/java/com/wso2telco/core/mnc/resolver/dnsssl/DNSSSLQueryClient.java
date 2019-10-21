@@ -161,7 +161,7 @@ public class DNSSSLQueryClient implements IProviderNetwork {
             writer.flush();
         } catch (Exception e) {
             System.err.println("Exception occured while sending bulk query");
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -232,7 +232,7 @@ public class DNSSSLQueryClient implements IProviderNetwork {
 
         } catch (Exception e) {
             System.err.println("Exception occured while sending single query");
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
         return TN;
     }
@@ -260,7 +260,7 @@ public class DNSSSLQueryClient implements IProviderNetwork {
             }
         } catch (Exception ioe) {
             System.err.println("Error while creating SSL socket");
-            ioe.printStackTrace();
+            log.error(ioe.getMessage(), ioe);
         }
 
         return TN;
@@ -296,7 +296,7 @@ public class DNSSSLQueryClient implements IProviderNetwork {
 
         } catch (Exception ioe) {
             System.err.println("Error while creating SSL socket");
-            ioe.printStackTrace();
+            log.error(ioe.getMessage(), ioe);
         }
 
         return TN;

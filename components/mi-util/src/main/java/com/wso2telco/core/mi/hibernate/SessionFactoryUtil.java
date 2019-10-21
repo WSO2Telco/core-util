@@ -1,5 +1,7 @@
 package com.wso2telco.core.mi.hibernate;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -17,6 +19,8 @@ public class SessionFactoryUtil {
     private static final ThreadLocal<Session> threadLocal;
     private static ServiceRegistry serviceRegistry;
 
+    private static Log log = LogFactory.getLog(SessionFactoryUtil.class);
+
     static {
         try {
             Configuration configuration = new Configuration();
@@ -32,7 +36,7 @@ public class SessionFactoryUtil {
             threadLocal = new ThreadLocal<Session>();
 
         } catch (Throwable t) {
-            t.printStackTrace();
+            log.error(t.getMessage(), t);
             throw new ExceptionInInitializerError(t);
         }
     }

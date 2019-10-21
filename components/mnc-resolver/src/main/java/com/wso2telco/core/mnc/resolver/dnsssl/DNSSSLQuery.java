@@ -17,6 +17,8 @@ package com.wso2telco.core.mnc.resolver.dnsssl;
 
 import java.util.ArrayList;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.xbill.DNS.DClass;
 import org.xbill.DNS.Message;
 import org.xbill.DNS.Name;
@@ -26,15 +28,12 @@ import org.xbill.DNS.Type;
 import com.wso2telco.core.mnc.resolver.Configuration;
 import com.wso2telco.core.mnc.resolver.MCCConfiguration;
 
-
-// TODO: Auto-generated Javadoc
-
 /**
  * The Class DNSSSLQuery.
  */
 public class DNSSSLQuery implements DNSResponseCode {
 
-
+    private static Log log = LogFactory.getLog(DNSSSLQuery.class);
     /**
      * Execute.
      *
@@ -122,7 +121,7 @@ public class DNSSSLQuery implements DNSResponseCode {
 
             } catch (Exception e) {
                 System.err.println("Error occured in bulk queries flow ");
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
                 queryResult.setRcode(RCODE.UNANTICIPATED);
             }
         } else {

@@ -18,13 +18,13 @@ package com.wso2telco.core.mnc.resolver.dnsssl;
 
 import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.xbill.DNS.Header;
 import org.xbill.DNS.Message;
 import org.xbill.DNS.Options;
 import org.xbill.DNS.WireParseException;
 
-
-// TODO: Auto-generated Javadoc
 
 /**
  * The Class SSLResolver.
@@ -35,6 +35,8 @@ public class SSLResolver {
      * The ssl client.
      */
     private SSLClient sslClient;
+
+    private static Log log = LogFactory.getLog(SSLResolver.class);
 
 
     /**
@@ -59,7 +61,7 @@ public class SSLResolver {
             return new Message(b);
         } catch (IOException e) {
             if (Options.check("verbose")) {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
             }
             if (!(e instanceof WireParseException)) {
                 e = new WireParseException("Error parsing message");
