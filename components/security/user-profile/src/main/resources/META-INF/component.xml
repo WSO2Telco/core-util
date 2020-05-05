@@ -92,5 +92,21 @@
             <DisplayName>Whitelist</DisplayName>
             <ResourceId>/permission/UIModulePermission/whiteList</ResourceId>
         </ManagementPermission>
+         <ManagementPermission>
+            <DisplayName>Edit Tiers</DisplayName>
+            <ResourceId>/permission/UIModulePermission/edit-tiers</ResourceId>
+        </ManagementPermission>
+        <ManagementPermission>
+            <DisplayName>Edit Application Tiers</DisplayName>
+            <ResourceId>/permission/UIModulePermission/edit-tiers/edit-app-tiers</ResourceId>
+        </ManagementPermission>
+        <ManagementPermission>
+            <DisplayName>Edit Subscription Tiers</DisplayName>
+            <ResourceId>/permission/UIModulePermission/edit-tiers/edit-subscription-tiers</ResourceId>
+        </ManagementPermission>
+        <ManagementPermission>
+            <DisplayName>Visible</DisplayName>
+            <ResourceId>/permission/UIModulePermission/edit-tiers/visible</ResourceId>
+        </ManagementPermission>
     </ManagementPermissions>
 </component>
