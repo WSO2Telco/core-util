@@ -116,6 +116,7 @@ public class UserClaimProsser {
 		userClaimDTO.setOrganization(userClaims.get(ClaimName.ORGANIZATION));
 		userClaimDTO.setDepartment(userClaims.get(ClaimName.DEPARTMENT));
 		userClaimDTO.setOperatorName(userClaims.get(ClaimName.OPERATOR_NAME));
+		userClaimDTO.setTheme(userClaims.get(ClaimName.USER_THEME));
 		return userClaimDTO;
 	}
 }
