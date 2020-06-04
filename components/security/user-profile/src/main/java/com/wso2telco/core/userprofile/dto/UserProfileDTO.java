@@ -30,7 +30,7 @@ public class UserProfileDTO {
 	private Map<String,Object> uiPermissions;
 	private boolean isAdmin;
 	private boolean operatorAdmin;
-	
+	private String usertheme;	
 	
 
 	public String getOperatorName() {
@@ -79,6 +79,14 @@ public class UserProfileDTO {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getTheme() {
+		return usertheme;
+	}
+
+	public void setTheme(String theme) {
+		this.usertheme = theme;
 	}
 
 	public String getEmailAddress() {

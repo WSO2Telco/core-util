@@ -47,21 +47,10 @@ public class UserClaimProsser {
 
 		try {
 
-			APIManagerConfiguration config = HostObjectComponent.getAPIManagerConfiguration();
-			String remoteUserStoreManagerServiceEndpoint = config.getFirstProperty(APIConstants.AUTH_MANAGER_URL)
-					+ AdminServicePath.REMOTE_USER_STORE_MANAGER_SERVICE.getTObject();
-			String adminUsername = config.getFirstProperty(APIConstants.AUTH_MANAGER_USERNAME);
-			String adminPassword = config.getFirstProperty(APIConstants.AUTH_MANAGER_PASSWORD);
-
-			RemoteUserStoreManagerServiceStub userStoreManagerStub = new RemoteUserStoreManagerServiceStub(
-					remoteUserStoreManagerServiceEndpoint);
-			CarbonUtils.setBasicAccessSecurityHeaders(adminUsername, adminPassword,
-					userStoreManagerStub._getServiceClient());
-
 			ClaimUtil claimUtil = new ClaimUtil();
 
 			Claim[] claims = claimUtil.convertToClaims(
-					userStoreManagerStub.getUserClaimValues(userName, UserProfileType.DEFAULT.getTObject()));
+					getManagerServiceStub().getUserClaimValues(userName, UserProfileType.DEFAULT.getTObject()));
 
 			List<ClaimName> somethingList = Arrays.asList(ClaimName.values());
 
@@ -79,6 +68,34 @@ public class UserClaimProsser {
 
 		return userClaimDetails;
 	}
+
+	public void setUserClaimsByUserName(String userName, String claimURI, String claimValue ){
+		try {
+			getManagerServiceStub().setUserClaimValue(userName, claimURI, claimValue , UserProfileType.DEFAULT.getTObject());
+			log.info("Updated the UserClaim "+claimURI+ "of user "+userName+" to "+claimValue);
+		}catch (RemoteException | RemoteUserStoreManagerServiceUserStoreExceptionException e){
+			log.error("unable to set claims for user " + userName + " : ", e);
+		}
+	}
+
+	public RemoteUserStoreManagerServiceStub getManagerServiceStub(){
+		try {
+		APIManagerConfiguration config = HostObjectComponent.getAPIManagerConfiguration();
+		String remoteUserStoreManagerServiceEndpoint = config.getFirstProperty(APIConstants.AUTH_MANAGER_URL)
+				+ AdminServicePath.REMOTE_USER_STORE_MANAGER_SERVICE.getTObject();
+		String adminUsername = config.getFirstProperty(APIConstants.AUTH_MANAGER_USERNAME);
+		String adminPassword = config.getFirstProperty(APIConstants.AUTH_MANAGER_PASSWORD);
+		RemoteUserStoreManagerServiceStub userStoreManagerStub = new RemoteUserStoreManagerServiceStub(
+				remoteUserStoreManagerServiceEndpoint);
+			CarbonUtils.setBasicAccessSecurityHeaders(adminUsername, adminPassword, userStoreManagerStub._getServiceClient());
+			return userStoreManagerStub;
+		}catch (RemoteException e){
+			log.error("unable to set claims for user ", e);
+		}
+		return null;
+	}
+
+
 
 	public UserClaimDTO getUserClaims(String userName) {
 
@@ -116,6 +133,7 @@ public class UserClaimProsser {
 		userClaimDTO.setOrganization(userClaims.get(ClaimName.ORGANIZATION));
 		userClaimDTO.setDepartment(userClaims.get(ClaimName.DEPARTMENT));
 		userClaimDTO.setOperatorName(userClaims.get(ClaimName.OPERATOR_NAME));
+		userClaimDTO.setTheme(userClaims.get(ClaimName.USER_THEME));
 		return userClaimDTO;
 	}
 }

@@ -22,7 +22,8 @@ public enum ClaimName {
 	EMAIL_ADDRESS("emailaddress", "http://wso2.org/claims/emailaddress"),
 	ORGANIZATION("organization", "http://wso2.org/claims/organization"),
 	DEPARTMENT("department", "http://wso2.org/claims/department"),
-	OPERATOR_NAME("operatorName", "http://wso2.org/claims/operatorName");
+	OPERATOR_NAME("operatorName", "http://wso2.org/claims/operatorName"),
+	USER_THEME("userTheme", "http://wso2.org/claims/usertheme");
 	
 	ClaimName(String claim, String claimURL) {
 

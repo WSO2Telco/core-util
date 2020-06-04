@@ -24,6 +24,7 @@ public class UserClaimDTO {
 	private String organization;
 	private String department;
 	private String operatorName;
+	private String usertheme;
 
 	
 	
@@ -57,6 +58,14 @@ public class UserClaimDTO {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getTheme() {
+		return usertheme;
+	}
+
+	public void setTheme(String theme) {
+		this.usertheme = theme;
 	}
 
 	public String getEmailAddress() {
