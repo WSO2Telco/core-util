@@ -92,6 +92,10 @@
             <DisplayName>Whitelist</DisplayName>
             <ResourceId>/permission/UIModulePermission/whiteList</ResourceId>
         </ManagementPermission>
+        <ManagementPermission>
+            <DisplayName>Response Filter</DisplayName>
+            <ResourceId>/permission/UIModulePermission/response-filter</ResourceId>
+        </ManagementPermission>
          <ManagementPermission>
             <DisplayName>Edit Tiers</DisplayName>
             <ResourceId>/permission/UIModulePermission/edit-tiers</ResourceId>
