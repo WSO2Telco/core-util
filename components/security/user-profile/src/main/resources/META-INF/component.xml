@@ -5,10 +5,6 @@
             <ResourceId>/permission/UIModulePermission</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>API Blacklist</DisplayName>
-            <ResourceId>/permission/UIModulePermission/apiBlacklist</ResourceId>
-        </ManagementPermission>
-        <ManagementPermission>
             <DisplayName>Workflow History</DisplayName>
             <ResourceId>/permission/UIModulePermission/workFlowHistory</ResourceId>
         </ManagementPermission>
@@ -37,42 +33,6 @@
             <ResourceId>/permission/UIModulePermission/application/visible</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>Edit Subscription</DisplayName>
-            <ResourceId>/permission/UIModulePermission/edit-subscription</ResourceId>
-        </ManagementPermission>
-        <ManagementPermission>
-            <DisplayName>Quota</DisplayName>
-            <ResourceId>/permission/UIModulePermission/quota</ResourceId>
-        </ManagementPermission>
-        <ManagementPermission>
-            <DisplayName>Operator List</DisplayName>
-            <ResourceId>/permission/UIModulePermission/quota/operatorList</ResourceId>
-        </ManagementPermission>
-        <ManagementPermission>
-            <DisplayName>Visible</DisplayName>
-            <ResourceId>/permission/UIModulePermission/quota/visible</ResourceId>
-        </ManagementPermission>
-        <ManagementPermission>
-            <DisplayName>Rate</DisplayName>
-            <ResourceId>/permission/UIModulePermission/rate</ResourceId>
-        </ManagementPermission>
-        <ManagementPermission>
-            <DisplayName>Add</DisplayName>
-            <ResourceId>/permission/UIModulePermission/rate/add</ResourceId>
-        </ManagementPermission>
-        <ManagementPermission>
-            <DisplayName>Assign</DisplayName>
-            <ResourceId>/permission/UIModulePermission/rate/assign</ResourceId>
-        </ManagementPermission>
-        <ManagementPermission>
-            <DisplayName>View</DisplayName>
-            <ResourceId>/permission/UIModulePermission/rate/view</ResourceId>
-        </ManagementPermission>
-        <ManagementPermission>
-            <DisplayName>SP Blacklist</DisplayName>
-            <ResourceId>/permission/UIModulePermission/spBlackList</ResourceId>
-        </ManagementPermission>
-        <ManagementPermission>
             <DisplayName>Subscription</DisplayName>
             <ResourceId>/permission/UIModulePermission/subscription</ResourceId>
         </ManagementPermission>
@@ -87,10 +47,6 @@
         <ManagementPermission>
             <DisplayName>Visible</DisplayName>
             <ResourceId>/permission/UIModulePermission/subscription/visible</ResourceId>
-        </ManagementPermission>
-        <ManagementPermission>
-            <DisplayName>Whitelist</DisplayName>
-            <ResourceId>/permission/UIModulePermission/whiteList</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
             <DisplayName>Response Filter</DisplayName>
