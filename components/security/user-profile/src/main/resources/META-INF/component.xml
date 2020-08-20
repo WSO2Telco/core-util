@@ -5,10 +5,6 @@
             <ResourceId>/permission/UIModulePermission</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>API Blacklist</DisplayName>
-            <ResourceId>/permission/UIModulePermission/apiBlacklist</ResourceId>
-        </ManagementPermission>
-        <ManagementPermission>
             <DisplayName>Workflow History</DisplayName>
             <ResourceId>/permission/UIModulePermission/workFlowHistory</ResourceId>
         </ManagementPermission>
@@ -69,8 +65,16 @@
             <ResourceId>/permission/UIModulePermission/rate/view</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
+            <DisplayName>API Blacklist</DisplayName>
+            <ResourceId>/permission/UIModulePermission/apiBlacklist</ResourceId>
+        </ManagementPermission>
+        <ManagementPermission>
             <DisplayName>SP Blacklist</DisplayName>
             <ResourceId>/permission/UIModulePermission/spBlackList</ResourceId>
+        </ManagementPermission>
+        <ManagementPermission>
+            <DisplayName>Whitelist</DisplayName>
+            <ResourceId>/permission/UIModulePermission/whiteList</ResourceId>
         </ManagementPermission>
         <ManagementPermission>
             <DisplayName>Subscription</DisplayName>
@@ -88,9 +92,29 @@
             <DisplayName>Visible</DisplayName>
             <ResourceId>/permission/UIModulePermission/subscription/visible</ResourceId>
         </ManagementPermission>
+         <ManagementPermission>
+            <DisplayName>Edit Subscription Rate</DisplayName>
+            <ResourceId>/permission/UIModulePermission/edit-subscription-rate</ResourceId>
+        </ManagementPermission>
+         <ManagementPermission>
+            <DisplayName>Edit Tiers</DisplayName>
+            <ResourceId>/permission/UIModulePermission/edit-tiers</ResourceId>
+        </ManagementPermission>
         <ManagementPermission>
-            <DisplayName>Whitelist</DisplayName>
-            <ResourceId>/permission/UIModulePermission/whiteList</ResourceId>
+            <DisplayName>Edit Application Tiers</DisplayName>
+            <ResourceId>/permission/UIModulePermission/edit-tiers/edit-app-tiers</ResourceId>
+        </ManagementPermission>
+        <ManagementPermission>
+            <DisplayName>Edit Subscription Tiers</DisplayName>
+            <ResourceId>/permission/UIModulePermission/edit-tiers/edit-subscription-tiers</ResourceId>
+        </ManagementPermission>
+        <ManagementPermission>
+            <DisplayName>Visible</DisplayName>
+            <ResourceId>/permission/UIModulePermission/edit-tiers/visible</ResourceId>
+        </ManagementPermission>
+        <ManagementPermission>
+            <DisplayName>Response Filter</DisplayName>
+            <ResourceId>/permission/UIModulePermission/response-filter</ResourceId>
         </ManagementPermission>
     </ManagementPermissions>
 </component>
