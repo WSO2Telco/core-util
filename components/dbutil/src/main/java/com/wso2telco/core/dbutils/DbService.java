@@ -15,17 +15,17 @@
  ******************************************************************************/
 package com.wso2telco.core.dbutils;
 
-import java.sql.*;
-import java.util.*;
-import java.util.Date;
-
-import javax.persistence.PersistenceException;
-
 import com.wso2telco.core.dbutils.dao.SpendLimitDAO;
 import com.wso2telco.core.dbutils.model.FederatedIdpMappingDTO;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import javax.persistence.PersistenceException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
 
 // TODO: Auto-generated Javadoc
 
@@ -379,37 +379,24 @@ public class DbService {
      */
     public Integer applicationEntry(int appID, Integer[] operators) throws Exception {
 
-        Connection con = null;
-        PreparedStatement statement = null;
         Integer newid = 0;
 
-        try {
-            con = DbUtils.getDBConnection();
-            if (con == null) {
-                throw new Exception("Connection not found");
-            }
+        StringBuilder queryString = new StringBuilder("INSERT INTO ");
+        queryString.append("operatorapps ");
+        queryString.append("(applicationid,operatorid) ");
+        queryString.append("VALUES (?, ? ) ");
 
+        try (Connection con = DbUtils.getDBConnection();
+             PreparedStatement statement = con.prepareStatement(queryString.toString())) {
             for (Integer d : operators) {
-                StringBuilder queryString = new StringBuilder("INSERT INTO ");
-                queryString.append("operatorapps ");
-                queryString.append("(applicationid,operatorid) ");
-                queryString.append("VALUES (?, ? ) ");
-
-                statement = con.prepareStatement(queryString.toString());
-
                 statement.setInt(1, appID);
                 statement.setInt(2, d);
-
                 statement.executeUpdate();
-
             }
-
         } catch (PersistenceException e) {
             log.error("database operation error in inserting operatorapps", e);
         } catch (Exception e) {
             log.error("database operation error in inserting operatorapps", e);
-        } finally {
-            DbUtils.closeAllConnections(statement, con, null);
         }
 
         return newid;
@@ -707,39 +694,31 @@ public class DbService {
     public boolean removeMerchantProvision(Integer appID, String subscriber, String operator, String[] merchants)
             throws Exception {
 
-        Connection con = null;
-        PreparedStatement selectStatement = null;
-        PreparedStatement deleteStatement = null;
-        ResultSet rs = null;
+        int operatorid = 0;
 
-        try {
-            con = DbUtils.getDBConnection();
-            if (con == null) {
-                throw new Exception("Connection not found.");
-            }
+        StringBuilder selectQueryString = new StringBuilder("SELECT ");
+        selectQueryString.append("id ");
+        selectQueryString.append("FROM ");
+        selectQueryString.append("operators ");
+        selectQueryString.append("WHERE ");
+        selectQueryString.append("operatorname = ? ");
 
-            StringBuilder selectQueryString = new StringBuilder("SELECT ");
-            selectQueryString.append("id ");
-            selectQueryString.append("FROM ");
-            selectQueryString.append("operators ");
-            selectQueryString.append("WHERE ");
-            selectQueryString.append("operatorname = ? ");
-
-            selectStatement = con.prepareStatement(selectQueryString.toString());
+        try (final Connection con = DbUtils.getDBConnection();
+             final PreparedStatement selectStatement = con.prepareStatement(selectQueryString.toString())) {
 
             selectStatement.setString(1, operator);
-            rs = selectStatement.executeQuery();
-
-            int operatorid = 0;
-            if (rs.next()) {
-                operatorid = rs.getInt("id");
-            } else {
-                throw new Exception("Operator Not Found");
+            try (ResultSet rs = selectStatement.executeQuery()) {
+                if (rs.next()) {
+                    operatorid = rs.getInt("id");
+                } else {
+                    throw new Exception("Operator Not Found");
+                }
             }
 
             for (int i = 0; i < merchants.length; i++) {
 
                 if (appID == null) {
+
                     StringBuilder deleteQueryString = new StringBuilder("DELETE ");
                     deleteQueryString.append("FROM ");
                     deleteQueryString.append("merchantopco_blacklist ");
@@ -752,12 +731,12 @@ public class DbService {
                     deleteQueryString.append("AND ");
                     deleteQueryString.append("merchant = ? ");
 
-                    deleteStatement = con.prepareStatement(deleteQueryString.toString());
-
-                    deleteStatement.setInt(1, operatorid);
-                    deleteStatement.setString(2, subscriber);
-                    deleteStatement.setString(3, merchants[i]);
-                    deleteStatement.executeUpdate();
+                    try (final PreparedStatement deleteStatement = con.prepareStatement(deleteQueryString.toString())) {
+                        deleteStatement.setInt(1, operatorid);
+                        deleteStatement.setString(2, subscriber);
+                        deleteStatement.setString(3, merchants[i]);
+                        deleteStatement.executeUpdate();
+                    }
 
                 } else {
 
@@ -773,24 +752,19 @@ public class DbService {
                     queryString.append("AND ");
                     queryString.append("merchant = ? ");
 
-                    deleteStatement = con.prepareStatement(queryString.toString());
-
-                    deleteStatement.setInt(1, appID);
-                    deleteStatement.setInt(2, operatorid);
-                    deleteStatement.setString(3, subscriber);
-                    deleteStatement.setString(4, merchants[i]);
-                    deleteStatement.executeUpdate();
-
+                    try (final PreparedStatement deleteStatement = con.prepareStatement(queryString.toString())) {
+                        deleteStatement.setInt(1, appID);
+                        deleteStatement.setInt(2, operatorid);
+                        deleteStatement.setString(3, subscriber);
+                        deleteStatement.setString(4, merchants[i]);
+                        deleteStatement.executeUpdate();
+                    }
                 }
             }
-
         } catch (PersistenceException e) {
             log.error("database operation error while Provisioning Merchant", e);
         } catch (Exception e) {
             log.error("database operation error while Provisioning Merchant", e);
-        } finally {
-            DbUtils.closeAllConnections(selectStatement, con, rs);
-            DbUtils.closeAllConnections(deleteStatement, null, null);
         }
         return true;
     }
@@ -1042,60 +1016,54 @@ public class DbService {
     public SpendLimitDAO getGroupTotalMonthAmount(String groupName, String operator, String msisdn)
             throws DBUtilException {
 
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
         SpendLimitDAO spendLimitDAO = null;
 
-        try {
-            con = DbUtils.getDBConnection();
+        Calendar calendarFrom = GregorianCalendar.getInstance();
+        calendarFrom.set(Calendar.DAY_OF_MONTH, calendarFrom.getActualMinimum(Calendar.DAY_OF_MONTH));
 
-            Calendar calendarFrom = GregorianCalendar.getInstance();
-            calendarFrom.set(Calendar.DAY_OF_MONTH, calendarFrom.getActualMinimum(Calendar.DAY_OF_MONTH));
+        calendarFrom.set(Calendar.HOUR_OF_DAY, 0);
+        calendarFrom.set(Calendar.MINUTE, 0);
+        calendarFrom.set(Calendar.SECOND, 0);
+        calendarFrom.set(Calendar.MILLISECOND, 0);
 
-            calendarFrom.set(Calendar.HOUR_OF_DAY, 0);
-            calendarFrom.set(Calendar.MINUTE, 0);
-            calendarFrom.set(Calendar.SECOND, 0);
-            calendarFrom.set(Calendar.MILLISECOND, 0);
+        Calendar calendarTo = GregorianCalendar.getInstance();
+        calendarTo.setTime(new Date());
+        calendarTo.set(Calendar.DAY_OF_MONTH,
+                calendarTo.getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendarTo.set(Calendar.HOUR_OF_DAY, 23);
+        calendarTo.set(Calendar.MINUTE, 59);
+        calendarTo.set(Calendar.SECOND, 59);
+        calendarTo.set(Calendar.MILLISECOND, 999);
 
-            Calendar calendarTo = GregorianCalendar.getInstance();
-            calendarTo.setTime(new Date());
-            calendarTo.set(Calendar.DAY_OF_MONTH,
-                    calendarTo.getActualMaximum(Calendar.DAY_OF_MONTH));
-            calendarTo.set(Calendar.HOUR_OF_DAY, 23);
-            calendarTo.set(Calendar.MINUTE, 59);
-            calendarTo.set(Calendar.SECOND, 59);
-            calendarTo.set(Calendar.MILLISECOND, 999);
+        String sql = "SELECT SUM(amount) AS amount "
+                + "FROM spendlimitdata  "
+                + "where effectiveTime between ? and ? "
+                + "and groupName=? "
+                + "and operatorId=? "
+                + "and msisdn=? "
+                + "group by groupName,  operatorId, msisdn";
 
-            String sql = "SELECT SUM(amount) AS amount "
-                    + "FROM spendlimitdata  "
-                    + "where effectiveTime between ? and ? "
-                    + "and groupName=? "
-                    + "and operatorId=? "
-                    + "and msisdn=? "
-                    + "group by groupName,  operatorId, msisdn";
+        try (final Connection con = DbUtils.getDBConnection();
+             final PreparedStatement ps = con.prepareStatement(sql)) {
 
-            ps = con.prepareStatement(sql);
             ps.setLong(1, calendarFrom.getTimeInMillis());
             ps.setLong(2, calendarTo.getTimeInMillis());
             ps.setString(3, groupName);
             ps.setString(4, operator);
             ps.setString(5, msisdn);
-            rs = ps.executeQuery();
 
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                spendLimitDAO = new SpendLimitDAO();
-                spendLimitDAO.setAmount(rs.getDouble("amount"));
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    spendLimitDAO = new SpendLimitDAO();
+                    spendLimitDAO.setAmount(rs.getDouble("amount"));
+                }
             }
-        } catch (Exception e) {
-            DbUtils.handleException("Error while checking Operator Spend Limit. ", e);
-        } finally {
-            DbUtils.closeAllConnections(ps, con, rs);
+
+            } catch (Exception e) {
+                DbUtils.handleException("Error while checking Operator Spend Limit. ", e);
+            }
+            return spendLimitDAO;
         }
-        return spendLimitDAO;
-    }
 
     /**
      * Get payment time
