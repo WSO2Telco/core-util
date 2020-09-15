@@ -99,6 +99,7 @@ public class UserProfileRetriever {
 			userProfileDTO.setEmailAddress(userClaimDTO.getEmailAddress());
 			userProfileDTO.setOrganization(userClaimDTO.getOrganization());
 			userProfileDTO.setDepartment(userClaimDTO.getDepartment());
+			userProfileDTO.setTheme(userClaimDTO.getTheme());
 			if(userProfileDTO.isOperatorAdmin()){
 				userProfileDTO.setOperatorName(userClaimDTO.getOperatorName());
 			}
