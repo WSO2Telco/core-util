@@ -46,7 +46,7 @@
 					<instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
-                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Bundle-Version>2.4.6-SNAPSHOT</Bundle-Version>
                         <Bundle-Description>PCR Service Bundle</Bundle-Description>
                         <Private-Package>com.wso2telco.core.pcrservice.internal</Private-Package>
 						<Export-Package>
