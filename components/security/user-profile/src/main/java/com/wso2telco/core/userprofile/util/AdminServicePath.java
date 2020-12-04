@@ -17,7 +17,9 @@ package com.wso2telco.core.userprofile.util;
 
 public enum AdminServicePath {
 
+	USER_ADMIN_COMPONENT("UserAdmin"),
 	USER_ADMIN("services/UserAdmin"),
+	REMOTE_USER_STORE_MANAGER_SERVICE_COMPONENT("RemoteUserStoreManagerService"),
 	REMOTE_USER_STORE_MANAGER_SERVICE("services/RemoteUserStoreManagerService");
 
 	AdminServicePath(String tObject) {

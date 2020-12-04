@@ -24,9 +24,10 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.wso2.carbon.apimgt.hostobjects.internal.HostObjectComponent;
+//import org.wso2.carbon.apimgt.hostobjects.internal.HostObjectComponent;
 import org.wso2.carbon.apimgt.impl.APIConstants;
 import org.wso2.carbon.apimgt.impl.APIManagerConfiguration;
+import org.wso2.carbon.apimgt.impl.internal.ServiceReferenceHolder;
 import org.wso2.carbon.um.ws.api.stub.RemoteUserStoreManagerServiceStub;
 import org.wso2.carbon.um.ws.api.stub.RemoteUserStoreManagerServiceUserStoreExceptionException;
 import org.wso2.carbon.user.core.claim.Claim;
@@ -80,16 +81,21 @@ public class UserClaimProsser {
 
 	public RemoteUserStoreManagerServiceStub getManagerServiceStub(){
 		try {
-		APIManagerConfiguration config = HostObjectComponent.getAPIManagerConfiguration();
-		String remoteUserStoreManagerServiceEndpoint = config.getFirstProperty(APIConstants.AUTH_MANAGER_URL)
-				+ AdminServicePath.REMOTE_USER_STORE_MANAGER_SERVICE.getTObject();
-		String adminUsername = config.getFirstProperty(APIConstants.AUTH_MANAGER_USERNAME);
-		String adminPassword = config.getFirstProperty(APIConstants.AUTH_MANAGER_PASSWORD);
+
+			APIManagerConfiguration config = ServiceReferenceHolder.getInstance()
+					.getAPIManagerConfigurationService()
+					.getAPIManagerConfiguration();
+
+			String remoteUserStoreManagerServiceEndpoint = config.getFirstProperty(APIConstants.AUTH_MANAGER_URL)
+					+ AdminServicePath.REMOTE_USER_STORE_MANAGER_SERVICE_COMPONENT.getTObject();
+			String adminUsername = config.getFirstProperty(APIConstants.AUTH_MANAGER_USERNAME);
+			String adminPassword = config.getFirstProperty(APIConstants.AUTH_MANAGER_PASSWORD);
+
 		RemoteUserStoreManagerServiceStub userStoreManagerStub = new RemoteUserStoreManagerServiceStub(
 				remoteUserStoreManagerServiceEndpoint);
 			CarbonUtils.setBasicAccessSecurityHeaders(adminUsername, adminPassword, userStoreManagerStub._getServiceClient());
 			return userStoreManagerStub;
-		}catch (RemoteException e){
+		}catch (Exception e){
 			log.error("unable to set claims for user ", e);
 		}
 		return null;

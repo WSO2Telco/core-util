@@ -25,9 +25,11 @@ import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.wso2.carbon.apimgt.hostobjects.internal.HostObjectComponent;
+//import org.wso2.carbon.apimgt.hostobjects.internal.HostObjectComponent;
 import org.wso2.carbon.apimgt.impl.APIConstants;
+//import org.wso2.carbon.apimgt.impl.APIManagerConfiguration;
 import org.wso2.carbon.apimgt.impl.APIManagerConfiguration;
+import org.wso2.carbon.apimgt.impl.internal.ServiceReferenceHolder;
 import org.wso2.carbon.user.mgt.stub.UserAdminStub;
 import org.wso2.carbon.user.mgt.stub.UserAdminUserAdminException;
 import org.wso2.carbon.user.mgt.stub.types.carbon.UIPermissionNode;
@@ -44,11 +46,19 @@ class WSO2PermissionBuilder implements UserRolePermission {
     private static final Integer DEFAULT_CONNECTION_TIMEOUT = 1000 * 60 * 2;
 
     public WSO2PermissionBuilder() throws BusinessException {
-        APIManagerConfiguration config = HostObjectComponent.getAPIManagerConfiguration();
+
+        APIManagerConfiguration config = ServiceReferenceHolder.getInstance()
+                .getAPIManagerConfigurationService()
+                .getAPIManagerConfiguration();
+
         String userAdminServiceEndpoint = config.getFirstProperty(APIConstants.AUTH_MANAGER_URL)
-                + AdminServicePath.USER_ADMIN.getTObject();
+                + AdminServicePath.USER_ADMIN_COMPONENT.getTObject();
         String adminUsername = config.getFirstProperty(APIConstants.AUTH_MANAGER_USERNAME);
         String adminPassword = config.getFirstProperty(APIConstants.AUTH_MANAGER_PASSWORD);
+
+     /*   String adminUsername = "admin";
+        String adminPassword = "admin";
+        String userAdminServiceEndpoint = "https://localhost:9443/services/UserAdmin";*/
         try {
             userAdminStub = new UserAdminStub(userAdminServiceEndpoint);
             userAdminStub._getServiceClient().getOptions().setProperty(HTTPConstants.SO_TIMEOUT, DEFAULT_SO_TIMEOUT); //set so time out and connection timeout to 2min
