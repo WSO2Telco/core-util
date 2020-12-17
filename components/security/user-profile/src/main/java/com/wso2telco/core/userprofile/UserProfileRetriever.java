@@ -15,6 +15,9 @@
  ******************************************************************************/
 package com.wso2telco.core.userprofile;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -22,7 +25,6 @@ import org.apache.commons.logging.LogFactory;
 
 import com.wso2telco.core.dbutils.exception.BusinessException;
 import com.wso2telco.core.userprofile.dto.UserClaimDTO;
-import com.wso2telco.core.userprofile.dto.UserPermissionDTO;
 import com.wso2telco.core.userprofile.dto.UserProfileDTO;
 import com.wso2telco.core.userprofile.dto.UserRoleDTO;
 import com.wso2telco.core.userprofile.permission.impl.UserRolePermission;
@@ -30,6 +32,9 @@ import com.wso2telco.core.userprofile.permission.impl.UserRolePermissionFactory;
 import com.wso2telco.core.userprofile.prosser.UserClaimProsser;
 import com.wso2telco.core.userprofile.prosser.UserRoleProsser;
 import com.wso2telco.core.userprofile.util.UserRolePermissionType;
+import org.wso2.carbon.context.PrivilegedCarbonContext;
+import org.wso2.carbon.user.api.RealmConfiguration;
+import org.wso2.carbon.user.core.service.RealmService;
 
 public class UserProfileRetriever {
 
@@ -64,6 +69,22 @@ public class UserProfileRetriever {
 
 		return fillUserProfileDTO(userName, userRoleDTO, uiPermissionTree, userClaimDTO);
 
+	}
+
+	public List<String> getUserNamesByRole(String userRole) {
+		try {
+			RealmService realmService = (RealmService) PrivilegedCarbonContext
+					.getThreadLocalCarbonContext()
+					.getOSGiService(RealmService.class, null);
+			String[] userNames = realmService
+					.getUserRealm(new RealmConfiguration())
+					.getUserStoreManager()
+					.getUserListOfRole(userRole);
+			return Arrays.asList(userNames);
+		} catch (org.wso2.carbon.user.api.UserStoreException e) {
+			log.error("unable to retrieve users for user-role " + userRole, e);
+		}
+		return Collections.emptyList();
 	}
 
 	private UserProfileDTO fillUserProfileDTO(String userName, UserRoleDTO userRoleDTO,
