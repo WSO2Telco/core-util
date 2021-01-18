@@ -71,7 +71,7 @@
 							</adviceFile>
 							<includedFeatures>
 								<includedFeatureDef>com.wso2telco.core:com.wso2telco.core.dbutils.feature</includedFeatureDef>
-								<!--includedFeatureDef>com.wso2telco.core:com.wso2telco.core.mncresolver.feature</includedFeatureDef-->
+								<includedFeatureDef>com.wso2telco.core:com.wso2telco.core.mncresolver.feature</includedFeatureDef>
 							</includedFeatures>
 						</configuration>
 					</execution>

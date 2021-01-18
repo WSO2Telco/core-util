@@ -30,13 +30,13 @@
     <url>http://wso2.org</url>
 
     <modules>
-      <module>com.wso2telco.core.dbutils.feature</module>
-	    <!--module>com.wso2telco.core.mncresolver.feature</module-->
+        <module>com.wso2telco.core.dbutils.feature</module>
+        <module>com.wso2telco.core.mncresolver.feature</module>
 	    <module>com.wso2telco.core.coreparent.feature</module>
-      <!--module>com.wso2telco.core.msisdnvalidator.feature</module-->
-      <module>com.wso2telco.core.config.feature</module>
-      <!--module>com.wso2telco.core.spconfig.feature</module-->
-      <!--module>com.wso2telco.core.pcrservice.feature</module-->
-      <module>com.wso2telco.core.userprofile.feature</module>
+        <module>com.wso2telco.core.msisdnvalidator.feature</module>
+        <module>com.wso2telco.core.config.feature</module>
+        <module>com.wso2telco.core.spconfig.feature</module>
+        <module>com.wso2telco.core.pcrservice.feature</module>
+        <module>com.wso2telco.core.userprofile.feature</module>
     </modules>
 </project>

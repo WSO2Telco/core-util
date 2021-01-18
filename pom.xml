@@ -37,12 +37,12 @@
     <modules>
         <!--module>components/mi-util</module-->
         <module>components/dbutil</module>
-        <!--module>components/mnc-resolver</module>
+        <module>components/mnc-resolver</module>
         <module>components/msisdn-validator</module>
-        <module>components/pcr-service</module-->
+        <module>components/pcr-service</module>
         <module>components/config-util</module>
-        <!--module>components/redis-client</module>
-        <module>components/sp-config-util</module-->
+        <module>components/redis-client</module>
+        <module>components/sp-config-util</module>
         <module>components/security/auth-filter</module>
         <module>components/security/user-profile</module>
         <module>features</module>
